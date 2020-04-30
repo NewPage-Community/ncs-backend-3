@@ -13,7 +13,7 @@ type App struct {
 	Close func()
 }
 
-func Run(app *App) {
+func Run(name string, close func()) {
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)
 	for {
@@ -21,8 +21,8 @@ func Run(app *App) {
 		fmt.Println("Get a signal", s.String())
 		switch s {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
-			app.Close()
-			fmt.Println(app.Name , "app exit")
+			close()
+			fmt.Println(name , "app exit")
 			time.Sleep(time.Second)
 			return
 		case syscall.SIGHUP:
