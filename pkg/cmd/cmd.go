@@ -22,7 +22,7 @@ func Run(app *App) {
 		switch s {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
 			app.Close()
-			fmt.Println(app.Name , " exit")
+			fmt.Println(app.Name , "app exit")
 			time.Sleep(time.Second)
 			return
 		case syscall.SIGHUP:

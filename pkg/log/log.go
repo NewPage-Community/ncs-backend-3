@@ -7,9 +7,9 @@ var logger *zap.Logger
 func Init(debug bool) {
 	var err error
 	if debug {
-		logger, err = zap.NewDevelopment()
+		logger, err = zap.NewDevelopment(zap.AddCallerSkip(1))
 	} else {
-		logger, err = zap.NewProduction()
+		logger, err = zap.NewProduction(zap.AddCallerSkip(1))
 	}
 
 	if err != nil {

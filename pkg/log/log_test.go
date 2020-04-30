@@ -15,7 +15,7 @@ func TestInit(t *testing.T) {
 			args{false},
 		},
 		{
-			"pro",
+			"debug",
 			args{true},
 		},
 	}

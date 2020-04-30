@@ -1,4 +1,4 @@
-module ncs-backend-2.0
+module backend
 
 go 1.14
 
