@@ -36,3 +36,7 @@ func Warn(args ...interface{}) {
 func Debug(args ...interface{}) {
 	logger.Sugar().Debug(args)
 }
+
+func Panic(args ...interface{}) {
+	logger.Sugar().Panic(args)
+}

@@ -1,6 +1,8 @@
 package log
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestInit(t *testing.T) {
 	type args struct {
@@ -22,11 +24,16 @@ func TestInit(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			Init(tt.args.debug)
-			defer Close()
+			defer func() {
+				Close()
+				recover()
+			}()
+
 			Info("This is a info message")
 			Warn("This is a warn message")
 			Error("This a error message")
 			Debug("This a debug message")
+			Panic("This a panic message")
 		})
 	}
 }
