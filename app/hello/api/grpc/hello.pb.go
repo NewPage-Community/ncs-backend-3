@@ -152,12 +152,12 @@ func file_hello_proto_rawDescGZIP() []byte {
 
 var file_hello_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_hello_proto_goTypes = []interface{}{
-	(*SayReq)(nil),  // 0: grpc.SayReq
-	(*SayResp)(nil), // 1: grpc.SayResp
+	(*SayReq)(nil),  // 0: rpc.SayReq
+	(*SayResp)(nil), // 1: rpc.SayResp
 }
 var file_hello_proto_depIdxs = []int32{
-	0, // 0: grpc.Hello.say:input_type -> grpc.SayReq
-	1, // 1: grpc.Hello.say:output_type -> grpc.SayResp
+	0, // 0: rpc.Hello.say:input_type -> rpc.SayReq
+	1, // 1: rpc.Hello.say:output_type -> rpc.SayResp
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -221,7 +221,7 @@ var _ context.Context
 var _ grpc.ClientConnInterface
 
 // This is a compile-time assertion to ensure that this generated file
-// is compatible with the grpc package it is being compiled against.
+// is compatible with the rpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion6
 
 // HelloClient is the client API for Hello service.
@@ -241,7 +241,7 @@ func NewHelloClient(cc grpc.ClientConnInterface) HelloClient {
 
 func (c *helloClient) Say(ctx context.Context, in *SayReq, opts ...grpc.CallOption) (*SayResp, error) {
 	out := new(SayResp)
-	err := c.cc.Invoke(ctx, "/grpc.Hello/say", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/rpc.Hello/say", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -275,7 +275,7 @@ func _Hello_Say_Handler(srv interface{}, ctx context.Context, dec func(interface
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpc.Hello/Say",
+		FullMethod: "/rpc.Hello/Say",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(HelloServer).Say(ctx, req.(*SayReq))
@@ -284,7 +284,7 @@ func _Hello_Say_Handler(srv interface{}, ctx context.Context, dec func(interface
 }
 
 var _Hello_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "grpc.Hello",
+	ServiceName: "rpc.Hello",
 	HandlerType: (*HelloServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
