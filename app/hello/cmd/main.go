@@ -34,7 +34,7 @@ func main() {
 
 	// cmd
 	cmd.Run("Hello", func(){
-		api.Stop()
-		api.Close()
+		api.StopServer()
+		api.CloseClient()
 	})
 }

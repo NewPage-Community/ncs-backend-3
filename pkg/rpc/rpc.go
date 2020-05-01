@@ -7,7 +7,7 @@ import (
 	"net"
 )
 
-func NewServer(network string, address string, RegFunc func(s *grpc.Server)) *grpc.Server {
+func NewServer(network string, address string, regFunc func(s *grpc.Server)) *grpc.Server {
 	// Options
 	opts := []grpc.ServerOption{
 		grpc.UnaryInterceptor(
@@ -26,7 +26,7 @@ func NewServer(network string, address string, RegFunc func(s *grpc.Server)) *gr
 	s := grpc.NewServer(opts...)
 
 	// Register
-	RegFunc(s)
+	regFunc(s)
 
 	// Serve
 	go func() {

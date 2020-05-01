@@ -16,7 +16,7 @@ func InitServer(network string, address string, srv HelloServer) {
 		})
 }
 
-func Stop() {
+func StopServer() {
 	if server != nil {
 		server.Stop()
 	}

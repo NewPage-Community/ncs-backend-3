@@ -14,7 +14,7 @@ func InitClient(target string) {
 	client = NewHelloClient(conn)
 }
 
-func Close() {
+func CloseClient() {
 	if conn != nil {
 		conn.Close()
 	}
