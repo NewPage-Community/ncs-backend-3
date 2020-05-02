@@ -10,8 +10,9 @@ type Error struct {
 	Message string
 }
 
-func NewError(c codes.Code, format string, a ...interface{}) error {
-	return status.Errorf(c, format, a)
+//Errorf returns an error representing c and msg. If c is OK, returns nil.
+func Errorf(c codes.Code, format string, a ...interface{}) error {
+	return status.Errorf(c, format, a...)
 }
 
 func GetError(err error) *Error {

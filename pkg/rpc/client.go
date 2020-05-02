@@ -64,10 +64,16 @@ func setCliConf(conf *ClientConfig) *ClientConfig {
 		conf = _defaultCliConf
 	}
 	if conf.Dial <= 0 {
-		conf.Timeout = _defaultCliConf.Dial
+		conf.Dial = _defaultCliConf.Dial
 	}
 	if conf.Timeout <= 0 {
 		conf.Timeout = _defaultCliConf.Timeout
+	}
+	if conf.MaxRetry <= 0 {
+		conf.MaxRetry = _defaultCliConf.MaxRetry
+	}
+	if len(conf.RetryCode) <= 0 {
+		conf.RetryCode = _defaultCliConf.RetryCode
 	}
 	return conf
 }
