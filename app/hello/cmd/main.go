@@ -15,14 +15,14 @@ func main() {
 	defer log.Close()
 
 	// rpc
-	api.InitServer("tcp", "0.0.0.0:2333", &service.Hello{})
-	api.InitClient("0.0.0.0:2333")
+	server := api.InitServer("tcp", "0.0.0.0:2333", &service.Hello{})
+	client := api.InitClient("0.0.0.0:2333")
 
 	log.Info("Hello app started!")
 
 	go func() {
 		for {
-			res, err := api.CallSay(context.Background(), "world")
+			res, err := client.Say(context.Background(), "world")
 			if err != nil {
 				log.Error(err.Error())
 			} else {
@@ -34,7 +34,7 @@ func main() {
 
 	// cmd
 	cmd.Run("Hello", func() {
-		api.StopServer()
-		api.CloseClient()
+		client.Close()
+		server.Stop()
 	})
 }

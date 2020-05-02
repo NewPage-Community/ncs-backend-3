@@ -5,20 +5,24 @@ import (
 	"google.golang.org/grpc"
 )
 
-var server *grpc.Server
+type Server struct {
+	server *grpc.Server
+}
 
-func InitServer(network string, address string, srv HelloServer) {
-	server = rpc.NewServer(&rpc.ServerConfig{
+func InitServer(network string, address string, srv HelloServer) (s *Server) {
+	s = &Server{}
+	s.server = rpc.NewServer(&rpc.ServerConfig{
 		Network: network,
 		Addr:    address,
 		RegFunc: func(s *grpc.Server) {
 			RegisterHelloServer(s, srv)
 		},
 	})
+	return
 }
 
-func StopServer() {
-	if server != nil {
-		server.Stop()
+func (s *Server) Stop() {
+	if s.server != nil {
+		s.server.Stop()
 	}
 }

@@ -5,6 +5,7 @@ go 1.14
 require (
 	github.com/go-redis/redis/v7 v7.2.0
 	github.com/golang/protobuf v1.4.0-rc.4.0.20200313231945-b860323f09d0
+	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0
 	github.com/grpc-ecosystem/grpc-opentracing v0.0.0-20180507213350-8e809c8a8645
 	github.com/jinzhu/gorm v1.9.12
 	github.com/opentracing/opentracing-go v1.1.0
