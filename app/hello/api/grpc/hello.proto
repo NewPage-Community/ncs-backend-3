@@ -1,15 +1,16 @@
 syntax = "proto3";
-package grpc;
+
+package ncs.hello;
 option go_package = "grpc";
 
-service Hello{
-   rpc say (SayReq) returns (SayResp);
+service Hello {
+    rpc say (SayReq) returns (SayResp);
 }
 
-message SayReq{
+message SayReq {
     string Message = 1;
 }
 
-message SayResp{
+message SayResp {
     string Message = 1;
 }

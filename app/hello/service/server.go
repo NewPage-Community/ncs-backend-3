@@ -6,7 +6,6 @@ import (
 )
 
 type Hello struct {
-
 }
 
 func (*Hello) Say(ctx context.Context, req *grpc.SayReq) (resp *grpc.SayResp, err error) {

@@ -33,7 +33,7 @@ func main() {
 	}()
 
 	// cmd
-	cmd.Run("Hello", func(){
+	cmd.Run("Hello", func() {
 		api.StopServer()
 		api.CloseClient()
 	})

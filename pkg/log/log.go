@@ -1,6 +1,9 @@
 package log
 
-import "go.uber.org/zap"
+import (
+	"github.com/opentracing/opentracing-go/log"
+	"go.uber.org/zap"
+)
 
 var logger *zap.Logger
 
@@ -18,7 +21,10 @@ func Init(debug bool) {
 }
 
 func Close() {
-	logger.Sync()
+	err := logger.Sync()
+	if err != nil {
+		log.Error(err)
+	}
 }
 
 func Info(args ...interface{}) {

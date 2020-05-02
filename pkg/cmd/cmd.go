@@ -9,7 +9,7 @@ import (
 )
 
 type App struct {
-	Name string
+	Name  string
 	Close func()
 }
 
@@ -22,7 +22,7 @@ func Run(name string, closeFunc func()) {
 		switch s {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
 			closeFunc()
-			fmt.Println(name , "app exit")
+			fmt.Println(name, "app exit")
 			time.Sleep(time.Second)
 			return
 		case syscall.SIGHUP:
