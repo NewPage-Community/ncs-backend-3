@@ -1,7 +1,7 @@
 package log
 
 import (
-	"github.com/opentracing/opentracing-go/log"
+	"fmt"
 	"go.uber.org/zap"
 )
 
@@ -23,7 +23,7 @@ func Init(debug bool) {
 func Close() {
 	err := logger.Sync()
 	if err != nil {
-		log.Error(err)
+		fmt.Println("zap error:", err.Error())
 	}
 }
 
