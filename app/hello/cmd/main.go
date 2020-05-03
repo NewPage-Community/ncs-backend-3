@@ -11,8 +11,7 @@ import (
 
 func main() {
 	// Init
-	log.Init(true)
-	defer log.Close()
+	log.Init(&log.Config{Debug: true})
 
 	// rpc
 	server := api.InitServer("tcp", "0.0.0.0:2333", &service.Hello{})
@@ -22,7 +21,7 @@ func main() {
 
 	go func() {
 		for {
-			res, err := client.Say(context.Background(), "world")
+			res, err := client.Say(context.Background(), &api.SayReq{Message: "world"})
 			if err != nil {
 				log.Error(err.Error())
 			} else {
@@ -34,7 +33,8 @@ func main() {
 
 	// cmd
 	cmd.Run("Hello", func() {
-		client.Close()
+		api.CloseClient()
 		server.Stop()
+		log.Close()
 	})
 }
