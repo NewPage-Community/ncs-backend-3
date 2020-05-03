@@ -4,6 +4,8 @@ option go_package = "grpc";
 
 // Base
 
+// TODO firstjoin & lastseen APIs
+
 message Info {
     int64 steam_id = 1;
     string username = 2;

@@ -6,6 +6,8 @@ import (
 	"backend/pkg/log"
 )
 
+// TODO 默认值&单元测试
+
 type Config struct {
 	Log   *log.Config
 	Mysql *mysql.Config
