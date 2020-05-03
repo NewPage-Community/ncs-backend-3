@@ -5,11 +5,15 @@ import (
 	"go.uber.org/zap"
 )
 
+type Config struct {
+	Debug bool
+}
+
 var logger *zap.Logger
 
-func Init(debug bool) {
+func Init(conf *Config) {
 	var err error
-	if debug {
+	if conf.Debug {
 		logger, err = zap.NewDevelopment(zap.AddCallerSkip(1))
 	} else {
 		logger, err = zap.NewProduction(zap.AddCallerSkip(1))

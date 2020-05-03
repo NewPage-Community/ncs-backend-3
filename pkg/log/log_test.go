@@ -5,25 +5,22 @@ import (
 )
 
 func TestInit(t *testing.T) {
-	type args struct {
-		debug bool
-	}
 	tests := []struct {
 		name string
-		args args
+		args Config
 	}{
 		{
 			"pro",
-			args{false},
+			Config{Debug: false},
 		},
 		{
 			"debug",
-			args{true},
+			Config{Debug: false},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			Init(tt.args.debug)
+			Init(&tt.args)
 			defer func() {
 				Close()
 				recover()
