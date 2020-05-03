@@ -1,0 +1,44 @@
+syntax = "proto3";
+package ncs.user.account;
+option go_package = "grpc";
+
+// Base
+
+message Info {
+    int64 steam_id = 1;
+    string username = 2;
+    int32 first_join = 3;
+    int32 last_seen = 4;
+}
+
+// Message
+
+message UIDReq {
+    int64 steam_id = 1;
+}
+
+message UIDResp {
+    int64 uid = 1;
+}
+
+message InfoReq {
+    int64 uid = 1;
+}
+
+message InfoResp {
+    Info info = 1;
+}
+
+message RegisterReq {
+    int64 steam_id = 1;
+}
+
+message RegisterResp {
+    int64 uid = 1;
+}
+
+service Account {
+    rpc UID (UIDReq) returns (UIDResp);
+    rpc Info (InfoReq) returns (InfoResp);
+    rpc Register (RegisterReq) returns (RegisterResp);
+}
