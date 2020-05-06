@@ -29,8 +29,7 @@ const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 type Info struct {
 	SteamId              int64    `protobuf:"varint,1,opt,name=steam_id,json=steamId,proto3" json:"steam_id,omitempty"`
 	Username             string   `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
-	FirstJoin            int32    `protobuf:"varint,3,opt,name=first_join,json=firstJoin,proto3" json:"first_join,omitempty"`
-	LastSeen             int32    `protobuf:"varint,4,opt,name=last_seen,json=lastSeen,proto3" json:"last_seen,omitempty"`
+	FirstJoin            int64    `protobuf:"varint,3,opt,name=first_join,json=firstJoin,proto3" json:"first_join,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -83,16 +82,9 @@ func (m *Info) GetUsername() string {
 	return ""
 }
 
-func (m *Info) GetFirstJoin() int32 {
+func (m *Info) GetFirstJoin() int64 {
 	if m != nil {
 		return m.FirstJoin
-	}
-	return 0
-}
-
-func (m *Info) GetLastSeen() int32 {
-	if m != nil {
-		return m.LastSeen
 	}
 	return 0
 }
@@ -379,6 +371,100 @@ func (m *RegisterResp) GetUid() int64 {
 	return 0
 }
 
+type ChangeNameReq struct {
+	Uid                  int64    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	Username             string   `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ChangeNameReq) Reset()         { *m = ChangeNameReq{} }
+func (m *ChangeNameReq) String() string { return proto.CompactTextString(m) }
+func (*ChangeNameReq) ProtoMessage()    {}
+func (*ChangeNameReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e28828dcb8d24f0, []int{7}
+}
+func (m *ChangeNameReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ChangeNameReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ChangeNameReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ChangeNameReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ChangeNameReq.Merge(m, src)
+}
+func (m *ChangeNameReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *ChangeNameReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_ChangeNameReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ChangeNameReq proto.InternalMessageInfo
+
+func (m *ChangeNameReq) GetUid() int64 {
+	if m != nil {
+		return m.Uid
+	}
+	return 0
+}
+
+func (m *ChangeNameReq) GetUsername() string {
+	if m != nil {
+		return m.Username
+	}
+	return ""
+}
+
+type ChangeNameResp struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ChangeNameResp) Reset()         { *m = ChangeNameResp{} }
+func (m *ChangeNameResp) String() string { return proto.CompactTextString(m) }
+func (*ChangeNameResp) ProtoMessage()    {}
+func (*ChangeNameResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8e28828dcb8d24f0, []int{8}
+}
+func (m *ChangeNameResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ChangeNameResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ChangeNameResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ChangeNameResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ChangeNameResp.Merge(m, src)
+}
+func (m *ChangeNameResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *ChangeNameResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_ChangeNameResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ChangeNameResp proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*Info)(nil), "ncs.user.account.Info")
 	proto.RegisterType((*UIDReq)(nil), "ncs.user.account.UIDReq")
@@ -387,33 +473,36 @@ func init() {
 	proto.RegisterType((*InfoResp)(nil), "ncs.user.account.InfoResp")
 	proto.RegisterType((*RegisterReq)(nil), "ncs.user.account.RegisterReq")
 	proto.RegisterType((*RegisterResp)(nil), "ncs.user.account.RegisterResp")
+	proto.RegisterType((*ChangeNameReq)(nil), "ncs.user.account.ChangeNameReq")
+	proto.RegisterType((*ChangeNameResp)(nil), "ncs.user.account.ChangeNameResp")
 }
 
 func init() { proto.RegisterFile("account.proto", fileDescriptor_8e28828dcb8d24f0) }
 
 var fileDescriptor_8e28828dcb8d24f0 = []byte{
-	// 329 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x92, 0xc1, 0x4e, 0xfa, 0x40,
-	0x10, 0xc6, 0xff, 0xfb, 0x6f, 0x85, 0x32, 0x68, 0x42, 0xe6, 0x40, 0x4a, 0x09, 0x4d, 0x53, 0x2f,
-	0x8d, 0x87, 0x1e, 0x30, 0xf1, 0x60, 0xe2, 0x41, 0xc3, 0xa5, 0x1e, 0x6b, 0xb8, 0x78, 0x21, 0xb5,
-	0x2c, 0xa4, 0x46, 0x76, 0x97, 0x4e, 0x39, 0xf8, 0x26, 0x3e, 0x92, 0x37, 0x7d, 0x04, 0x83, 0x2f,
-	0x62, 0x76, 0x11, 0x34, 0x22, 0x78, 0xdb, 0x99, 0xdf, 0xb7, 0xfb, 0x7d, 0x3b, 0xbb, 0x70, 0x94,
-	0xe5, 0xb9, 0x5c, 0x88, 0x2a, 0x56, 0xa5, 0xac, 0x24, 0xb6, 0x44, 0x4e, 0xf1, 0x82, 0x78, 0x19,
-	0x7f, 0xf6, 0xc3, 0x47, 0xb0, 0x13, 0x31, 0x91, 0xd8, 0x01, 0x87, 0x2a, 0x9e, 0xcd, 0x46, 0xc5,
-	0xd8, 0x65, 0x01, 0x8b, 0xac, 0xb4, 0x6e, 0xea, 0x64, 0x8c, 0x1e, 0x38, 0x7a, 0x8b, 0xc8, 0x66,
-	0xdc, 0xfd, 0x1f, 0xb0, 0xa8, 0x91, 0x6e, 0x6a, 0xec, 0x01, 0x4c, 0x8a, 0x92, 0xaa, 0xd1, 0xbd,
-	0x2c, 0x84, 0x6b, 0x05, 0x2c, 0x3a, 0x48, 0x1b, 0xa6, 0x73, 0x2d, 0x0b, 0x81, 0x5d, 0x68, 0x3c,
-	0x64, 0x54, 0x8d, 0x88, 0x73, 0xe1, 0xda, 0x86, 0x3a, 0xba, 0x71, 0xc3, 0xb9, 0x08, 0x8f, 0xa1,
-	0x36, 0x4c, 0x06, 0x29, 0x9f, 0xef, 0x31, 0x0f, 0xbb, 0x50, 0x37, 0x22, 0x52, 0xd8, 0x02, 0x6b,
-	0xb1, 0x11, 0xe8, 0xa5, 0x86, 0x3a, 0xbc, 0x3e, 0x62, 0x1b, 0x9e, 0x81, 0xb3, 0x82, 0xa4, 0xf0,
-	0x04, 0xec, 0x42, 0x4c, 0xa4, 0xc1, 0xcd, 0x7e, 0x3b, 0xfe, 0x39, 0x86, 0xd8, 0x28, 0x8d, 0x26,
-	0x8c, 0xa0, 0x99, 0xf2, 0x69, 0x41, 0x15, 0x2f, 0xff, 0xc8, 0x16, 0xc0, 0xe1, 0x97, 0xf2, 0xb7,
-	0x80, 0xfd, 0x17, 0x06, 0xf5, 0xcb, 0x95, 0x05, 0x9e, 0x83, 0x35, 0x4c, 0x06, 0xe8, 0x6e, 0x9b,
-	0xaf, 0xa6, 0xe0, 0x75, 0x76, 0x10, 0x52, 0x78, 0xb1, 0x7e, 0xa5, 0x1d, 0xc9, 0xf9, 0xdc, 0xf3,
-	0x76, 0x21, 0x52, 0x98, 0x80, 0xb3, 0x0e, 0x8a, 0xbd, 0x6d, 0xdd, 0xb7, 0xeb, 0x7a, 0xfe, 0x3e,
-	0x4c, 0xea, 0xaa, 0xfd, 0xbc, 0xf4, 0xd9, 0xeb, 0xd2, 0x67, 0x6f, 0x4b, 0x9f, 0x3d, 0xbd, 0xfb,
-	0xff, 0x6e, 0xed, 0x69, 0xa9, 0xf2, 0xbb, 0x9a, 0xf9, 0x60, 0xa7, 0x1f, 0x01, 0x00, 0x00, 0xff,
-	0xff, 0xa1, 0x27, 0x8b, 0x74, 0x71, 0x02, 0x00, 0x00,
+	// 347 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x92, 0xcd, 0x4e, 0xc2, 0x40,
+	0x14, 0x85, 0x2d, 0x25, 0x50, 0x2e, 0x62, 0xc8, 0x5d, 0x90, 0x52, 0x43, 0x6d, 0xea, 0x86, 0xb8,
+	0xe8, 0x02, 0x13, 0x17, 0x26, 0x2c, 0x54, 0x36, 0x75, 0xa1, 0x49, 0x13, 0x36, 0xc6, 0x84, 0xd4,
+	0x32, 0xe0, 0x98, 0x30, 0x33, 0x74, 0xca, 0xbb, 0xb8, 0xf4, 0x71, 0x5c, 0xfa, 0x08, 0x06, 0x5f,
+	0xc4, 0x74, 0x90, 0x1f, 0x2d, 0xad, 0xbb, 0xce, 0x9c, 0xef, 0xde, 0x9c, 0x73, 0x3a, 0xd0, 0x08,
+	0xa3, 0x88, 0x2f, 0x58, 0xe2, 0x89, 0x98, 0x27, 0x1c, 0x9b, 0x2c, 0x92, 0xde, 0x42, 0x92, 0xd8,
+	0xfb, 0xb9, 0x77, 0x1f, 0xa1, 0xec, 0xb3, 0x09, 0xc7, 0x36, 0x18, 0x32, 0x21, 0xe1, 0x6c, 0x44,
+	0xc7, 0xa6, 0xe6, 0x68, 0x5d, 0x3d, 0xa8, 0xaa, 0xb3, 0x3f, 0x46, 0x0b, 0x8c, 0x74, 0x84, 0x85,
+	0x33, 0x62, 0x96, 0x1c, 0xad, 0x5b, 0x0b, 0x36, 0x67, 0xec, 0x00, 0x4c, 0x68, 0x2c, 0x93, 0xd1,
+	0x0b, 0xa7, 0xcc, 0xd4, 0xd5, 0x60, 0x4d, 0xdd, 0xdc, 0x72, 0xca, 0xdc, 0x53, 0xa8, 0x0c, 0xfd,
+	0x41, 0x40, 0xe6, 0x05, 0xfb, 0xdd, 0x63, 0xa8, 0x2a, 0x48, 0x0a, 0x6c, 0x82, 0xbe, 0xd8, 0x00,
+	0xe9, 0x67, 0x2a, 0xa6, 0xfe, 0xd2, 0x15, 0x59, 0xf1, 0x02, 0x8c, 0x95, 0x28, 0x05, 0x9e, 0x41,
+	0x99, 0xb2, 0x09, 0x57, 0x72, 0xbd, 0xd7, 0xf2, 0xfe, 0x26, 0xf5, 0x14, 0xa9, 0x18, 0xb7, 0x0b,
+	0xf5, 0x80, 0x4c, 0xa9, 0x4c, 0x48, 0xfc, 0x8f, 0x37, 0x07, 0x0e, 0xb7, 0xe4, 0x5e, 0x83, 0x7d,
+	0x68, 0xdc, 0x3c, 0x87, 0x6c, 0x4a, 0xee, 0xc2, 0x19, 0xd9, 0x6b, 0xb3, 0xa8, 0x40, 0xb7, 0x09,
+	0x47, 0xbb, 0xe3, 0x52, 0xf4, 0xde, 0x4a, 0x50, 0xbd, 0x5a, 0x79, 0xc6, 0x4b, 0xd0, 0x87, 0xfe,
+	0x00, 0xcd, 0x6c, 0x9a, 0x55, 0xad, 0x56, 0x3b, 0x47, 0x91, 0x02, 0xfb, 0xeb, 0x3f, 0x9b, 0x53,
+	0x05, 0x99, 0x5b, 0x56, 0x9e, 0x24, 0x05, 0xfa, 0x60, 0xac, 0x93, 0x63, 0x27, 0xcb, 0xed, 0xf4,
+	0x67, 0xd9, 0x45, 0xb2, 0x14, 0x78, 0x0f, 0xb0, 0xcd, 0x88, 0x27, 0x59, 0xfa, 0x57, 0x81, 0x96,
+	0x53, 0x0c, 0x48, 0x71, 0xdd, 0x7a, 0x5f, 0xda, 0xda, 0xc7, 0xd2, 0xd6, 0x3e, 0x97, 0xb6, 0xf6,
+	0xfa, 0x65, 0x1f, 0x3c, 0x94, 0xa7, 0xb1, 0x88, 0x9e, 0x2a, 0xea, 0x95, 0x9f, 0x7f, 0x07, 0x00,
+	0x00, 0xff, 0xff, 0xae, 0x01, 0x04, 0x4d, 0xf6, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -431,6 +520,7 @@ type AccountClient interface {
 	UID(ctx context.Context, in *UIDReq, opts ...grpc.CallOption) (*UIDResp, error)
 	Info(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
 	Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
+	ChangeName(ctx context.Context, in *ChangeNameReq, opts ...grpc.CallOption) (*ChangeNameResp, error)
 }
 
 type accountClient struct {
@@ -468,11 +558,21 @@ func (c *accountClient) Register(ctx context.Context, in *RegisterReq, opts ...g
 	return out, nil
 }
 
+func (c *accountClient) ChangeName(ctx context.Context, in *ChangeNameReq, opts ...grpc.CallOption) (*ChangeNameResp, error) {
+	out := new(ChangeNameResp)
+	err := c.cc.Invoke(ctx, "/ncs.user.account.Account/ChangeName", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AccountServer is the server API for Account service.
 type AccountServer interface {
 	UID(context.Context, *UIDReq) (*UIDResp, error)
 	Info(context.Context, *InfoReq) (*InfoResp, error)
 	Register(context.Context, *RegisterReq) (*RegisterResp, error)
+	ChangeName(context.Context, *ChangeNameReq) (*ChangeNameResp, error)
 }
 
 // UnimplementedAccountServer can be embedded to have forward compatible implementations.
@@ -487,6 +587,9 @@ func (*UnimplementedAccountServer) Info(ctx context.Context, req *InfoReq) (*Inf
 }
 func (*UnimplementedAccountServer) Register(ctx context.Context, req *RegisterReq) (*RegisterResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
+}
+func (*UnimplementedAccountServer) ChangeName(ctx context.Context, req *ChangeNameReq) (*ChangeNameResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChangeName not implemented")
 }
 
 func RegisterAccountServer(s *grpc.Server, srv AccountServer) {
@@ -547,6 +650,24 @@ func _Account_Register_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Account_ChangeName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChangeNameReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).ChangeName(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ncs.user.account.Account/ChangeName",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).ChangeName(ctx, req.(*ChangeNameReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Account_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "ncs.user.account.Account",
 	HandlerType: (*AccountServer)(nil),
@@ -562,6 +683,10 @@ var _Account_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Register",
 			Handler:    _Account_Register_Handler,
+		},
+		{
+			MethodName: "ChangeName",
+			Handler:    _Account_ChangeName_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -591,11 +716,6 @@ func (m *Info) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.LastSeen != 0 {
-		i = encodeVarintAccount(dAtA, i, uint64(m.LastSeen))
-		i--
-		dAtA[i] = 0x20
 	}
 	if m.FirstJoin != 0 {
 		i = encodeVarintAccount(dAtA, i, uint64(m.FirstJoin))
@@ -816,6 +936,72 @@ func (m *RegisterResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *ChangeNameReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ChangeNameReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ChangeNameReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Username) > 0 {
+		i -= len(m.Username)
+		copy(dAtA[i:], m.Username)
+		i = encodeVarintAccount(dAtA, i, uint64(len(m.Username)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Uid != 0 {
+		i = encodeVarintAccount(dAtA, i, uint64(m.Uid))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ChangeNameResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ChangeNameResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ChangeNameResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintAccount(dAtA []byte, offset int, v uint64) int {
 	offset -= sovAccount(v)
 	base := offset
@@ -842,9 +1028,6 @@ func (m *Info) Size() (n int) {
 	}
 	if m.FirstJoin != 0 {
 		n += 1 + sovAccount(uint64(m.FirstJoin))
-	}
-	if m.LastSeen != 0 {
-		n += 1 + sovAccount(uint64(m.LastSeen))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -937,6 +1120,37 @@ func (m *RegisterResp) Size() (n int) {
 	if m.Uid != 0 {
 		n += 1 + sovAccount(uint64(m.Uid))
 	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ChangeNameReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Uid != 0 {
+		n += 1 + sovAccount(uint64(m.Uid))
+	}
+	l = len(m.Username)
+	if l > 0 {
+		n += 1 + l + sovAccount(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ChangeNameResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -1043,26 +1257,7 @@ func (m *Info) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.FirstJoin |= int32(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 4:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field LastSeen", wireType)
-			}
-			m.LastSeen = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowAccount
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.LastSeen |= int32(b&0x7F) << shift
+				m.FirstJoin |= int64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -1522,6 +1717,165 @@ func (m *RegisterResp) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAccount(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthAccount
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthAccount
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ChangeNameReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAccount
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ChangeNameReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ChangeNameReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Uid", wireType)
+			}
+			m.Uid = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAccount
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Uid |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Username", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAccount
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAccount
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAccount
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Username = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAccount(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthAccount
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthAccount
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ChangeNameResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAccount
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ChangeNameResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ChangeNameResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
 		default:
 			iNdEx = preIndex
 			skippy, err := skipAccount(dAtA[iNdEx:])

@@ -1,32 +1,35 @@
 package dao
 
 import (
+	"backend/app/user/account/conf"
 	"backend/app/user/account/model"
-	"backend/pkg/database/mysql"
-	"backend/pkg/log"
+	cache "backend/pkg/cache/redis"
+	db "backend/pkg/database/mysql"
+	"github.com/go-redis/redis/v7"
 	"github.com/jinzhu/gorm"
 )
 
 type Dao interface {
-	UID(steamID int64) (uid int64, err error)
-	Info(uid int64) (info *model.Info, err error)
-	Register(steamID int64) (uid int64, err error)
+	UID(steamID int64) (*model.Info, error)
+	Info(uid int64) (*model.Info, error)
+	Register(steamID int64) (*model.Info, error)
+	ChangeName(info *model.Info) error
 	Close()
 }
 
 type dao struct {
-	db *gorm.DB
+	db    *gorm.DB
+	cache *redis.Client
 }
 
-func New(config *mysql.Config) Dao {
+func New(config *conf.Config) *dao {
 	return &dao{
-		db: mysql.Init(config),
+		db:    db.Init(config.Mysql),
+		cache: cache.Init(config.Redis),
 	}
 }
 
 func (d *dao) Close() {
-	err := d.db.Close()
-	if err != nil {
-		log.Error(err)
-	}
+	d.db.Close()
+	d.cache.Close()
 }

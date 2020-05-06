@@ -27,7 +27,7 @@ func Init(conf *Config) {
 func Close() {
 	err := logger.Sync()
 	if err != nil {
-		fmt.Println("zap error:", err.Error())
+		fmt.Println("zap ecode:", err.Error())
 	}
 }
 

@@ -4,13 +4,10 @@ option go_package = "grpc";
 
 // Base
 
-// TODO firstjoin & lastseen APIs
-
 message Info {
     int64 steam_id = 1;
     string username = 2;
-    int32 first_join = 3;
-    int32 last_seen = 4;
+    int64 first_join = 3;
 }
 
 // Message
@@ -39,8 +36,17 @@ message RegisterResp {
     int64 uid = 1;
 }
 
+message ChangeNameReq {
+    int64 uid = 1;
+    string username = 2;
+}
+
+message ChangeNameResp {
+}
+
 service Account {
     rpc UID (UIDReq) returns (UIDResp);
     rpc Info (InfoReq) returns (InfoResp);
     rpc Register (RegisterReq) returns (RegisterResp);
+    rpc ChangeName (ChangeNameReq) returns (ChangeNameResp);
 }

@@ -30,7 +30,7 @@ func TestHello_Say(t *testing.T) {
 			he := &Hello{}
 			gotResp, err := he.Say(tt.args.ctx, tt.args.req)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("Say() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Say() ecode = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(gotResp, tt.wantResp) {

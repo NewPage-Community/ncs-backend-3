@@ -11,7 +11,7 @@ type Service struct {
 
 func Init(c *conf.Config) *Service {
 	return &Service{
-		dao: dao.New(c.Mysql),
+		dao: dao.New(c),
 	}
 }
 

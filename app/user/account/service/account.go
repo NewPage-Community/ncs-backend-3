@@ -2,38 +2,56 @@ package service
 
 import (
 	pb "backend/app/user/account/api/grpc"
+	"backend/app/user/account/model"
 	"context"
 )
 
-func (s *Service) UID(ctx context.Context, req *pb.UIDReq) (*pb.UIDResp, error) {
-	res, err := s.dao.UID(req.SteamId)
+func (s *Service) UID(ctx context.Context, req *pb.UIDReq) (res *pb.UIDResp, err error) {
+	res = &pb.UIDResp{}
+
+	r, err := s.dao.UID(req.SteamId)
 	if err != nil {
-		return nil, err
+		return
 	}
-	return &pb.UIDResp{Uid: res}, nil
+
+	res.Uid = r.UID
+	return
 }
 
-func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (*pb.InfoResp, error) {
-	res, err := s.dao.Info(req.Uid)
+func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (res *pb.InfoResp, err error) {
+	res = &pb.InfoResp{}
+
+	r, err := s.dao.Info(req.Uid)
 	if err != nil {
-		return nil, err
+		return
 	}
-	return &pb.InfoResp{
-		Info: &pb.Info{
-			SteamId:   res.SteamId,
-			Username:  res.Username,
-			FirstJoin: res.FirstJoin,
-			LastSeen:  res.LastSeen,
-		},
-	}, nil
+
+	res.Info = &pb.Info{
+		SteamId:   r.SteamID,
+		Username:  r.Username,
+		FirstJoin: r.FirstJoin,
+	}
+	return
 }
 
-func (s *Service) Register(ctx context.Context, req *pb.RegisterReq) (*pb.RegisterResp, error) {
-	res, err := s.dao.Register(req.SteamId)
+func (s *Service) Register(ctx context.Context, req *pb.RegisterReq) (res *pb.RegisterResp, err error) {
+	res = &pb.RegisterResp{}
+
+	r, err := s.dao.Register(req.SteamId)
 	if err != nil {
-		return nil, err
+		return
 	}
-	return &pb.RegisterResp{
-		Uid: res,
-	}, nil
+
+	res.Uid = r.UID
+	return
+}
+
+func (s *Service) ChangeName(ctx context.Context, req *pb.ChangeNameReq) (res *pb.ChangeNameResp, err error) {
+	res = &pb.ChangeNameResp{}
+
+	err = s.dao.ChangeName(&model.Info{
+		UID:      req.Uid,
+		Username: req.Username,
+	})
+	return
 }
