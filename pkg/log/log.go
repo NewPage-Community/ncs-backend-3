@@ -20,14 +20,14 @@ func Init(conf *Config) {
 	}
 
 	if err != nil {
-		panic("Panic: " + err.Error())
+		panic(err)
 	}
 }
 
 func Close() {
 	err := logger.Sync()
 	if err != nil {
-		fmt.Println("zap ecode:", err.Error())
+		fmt.Println("zap error:", err.Error())
 	}
 }
 

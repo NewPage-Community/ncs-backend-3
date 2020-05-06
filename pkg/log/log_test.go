@@ -28,7 +28,7 @@ func TestInit(t *testing.T) {
 
 			Info("This is a info message")
 			Warn("This is a warn message")
-			Error("This a ecode message")
+			Error("This a error message")
 			Debug("This a debug message")
 			Panic("This a panic message")
 		})

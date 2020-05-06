@@ -10,7 +10,7 @@ type Error struct {
 	Message string
 }
 
-//Errorf returns an ecode representing c and msg. If c is OK, returns nil.
+//Errorf returns an error representing c and msg. If c is OK, returns nil.
 func Errorf(c codes.Code, format string, a ...interface{}) error {
 	return status.Errorf(c, format, a...)
 }
