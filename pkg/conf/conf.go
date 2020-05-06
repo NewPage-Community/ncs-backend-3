@@ -4,12 +4,16 @@ import (
 	"github.com/spf13/viper"
 )
 
-// TODO unit test
-
 func Load(v interface{}) {
 	viper.SetConfigName("ncs")
+	viper.SetConfigType("yaml")
 	viper.AddConfigPath("/ncs/")
-	err := viper.Unmarshal(v)
+	viper.AddConfigPath(".")
+	err := viper.ReadInConfig()
+	if err != nil {
+		panic(err)
+	}
+	err = viper.Unmarshal(v)
 	if err != nil {
 		panic(err)
 	}
