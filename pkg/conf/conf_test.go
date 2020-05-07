@@ -1,6 +1,8 @@
 package conf
 
-import "testing"
+import (
+	"testing"
+)
 
 type Config struct {
 	Test struct {
