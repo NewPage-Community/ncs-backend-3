@@ -1,0 +1,24 @@
+image:
+  name: registry.new-page.xyz/cloud-builders/bazel
+
+before_script:
+  - echo "build --disk_cache=$CI_PROJECT_DIR/.cache" >> .bazelrc
+
+cache:
+  key: bazel_cache
+  paths:
+    - .cache/
+
+stages:
+  - build
+  - test
+
+build:
+  stage: build
+  script:
+    - bazel version
+    - bazel build ...
+test:
+  stage: test
+  script:
+  - bazel test ...
