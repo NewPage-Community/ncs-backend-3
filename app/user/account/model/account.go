@@ -4,7 +4,7 @@ type Info struct {
 	UID       int64  `gorm:"primary_key" json:"UID"`
 	SteamID   int64  `gorm:"column:steamid;;unique;not null;UNIQUE_INDEX" json:"SteamID"`
 	Username  string `gorm:"column:username" json:"Username"`
-	FirstJoin int64  `gorm:"column:firstjoin;not null" json:"FirstJoin"`
+	FirstJoin int64  `gorm:"column:firstjoin;not null;INDEX" json:"FirstJoin"`
 }
 
 // TableName return table name

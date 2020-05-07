@@ -22,11 +22,14 @@ type dao struct {
 	cache *redis.Client
 }
 
-func New(config *conf.Config) *dao {
-	return &dao{
+func New(config *conf.Config) (d *dao) {
+	d = &dao{
 		db:    db.Init(config.Mysql),
 		cache: cache.Init(config.Redis),
 	}
+	// Auto migrate db
+	d.db.AutoMigrate(&model.Info{})
+	return
 }
 
 func (d *dao) Close() {
