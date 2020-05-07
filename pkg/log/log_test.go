@@ -15,7 +15,7 @@ func TestInit(t *testing.T) {
 		},
 		{
 			"debug",
-			Config{Debug: false},
+			Config{Debug: true},
 		},
 	}
 	for _, tt := range tests {
