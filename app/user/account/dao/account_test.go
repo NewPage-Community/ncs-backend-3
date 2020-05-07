@@ -2,16 +2,11 @@ package dao
 
 import (
 	"backend/app/user/account/model"
+	. "backend/app/user/account/test"
 	"github.com/DATA-DOG/go-sqlmock"
 	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 	"time"
-)
-
-const (
-	TestSteamID  = int64(76561198029350216)
-	TestUID      = int64(1)
-	TestUserName = "Gunslinger"
 )
 
 var info = model.Info{UID: TestUID, Username: TestUserName}

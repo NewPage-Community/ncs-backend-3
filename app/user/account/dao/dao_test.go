@@ -6,16 +6,16 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 )
 
-type MockDao struct {
+type mockDao struct {
 	dao
 	Mock sqlmock.Sqlmock
 }
 
-var testdao *MockDao
+var testdao *mockDao
 
 func init() {
 	mock, db := db.InitMock()
-	testdao = &MockDao{
+	testdao = &mockDao{
 		dao: dao{
 			db:    db,
 			cache: cache.InitMock(),

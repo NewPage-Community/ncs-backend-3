@@ -3,113 +3,97 @@ package service
 import (
 	pb "backend/app/user/account/api/grpc"
 	"backend/app/user/account/dao"
+	"backend/app/user/account/model"
+	. "backend/app/user/account/test"
 	"context"
-	"reflect"
+	"github.com/golang/mock/gomock"
+	. "github.com/smartystreets/goconvey/convey"
 	"testing"
+	"time"
 )
 
 func TestService_ChangeName(t *testing.T) {
-	// TODO: Add test cases.
+	ctl := gomock.NewController(t)
+	defer ctl.Finish()
+
+	m := dao.NewMockDao(ctl)
+	m.EXPECT().ChangeName(gomock.Eq(&model.Info{
+		UID:      TestUID,
+		Username: TestUserName,
+	})).Return(nil)
+
+	srv := &Service{dao: m}
+	Convey("Test service ChangeName", t, func() {
+		res, err := srv.ChangeName(context.Background(),
+			&pb.ChangeNameReq{Uid: TestUID, Username: TestUserName})
+		Convey("Then check it work", func() {
+			So(res, ShouldNotBeNil)
+			So(err, ShouldBeNil)
+		})
+	})
 }
 
 func TestService_Info(t *testing.T) {
-	type fields struct {
-		dao dao.Dao
-	}
-	type args struct {
-		ctx context.Context
-		req *pb.InfoReq
-	}
-	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		wantRes *pb.InfoResp
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			s := &Service{
-				dao: tt.fields.dao,
-			}
-			gotRes, err := s.Info(tt.args.ctx, tt.args.req)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("Info() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(gotRes, tt.wantRes) {
-				t.Errorf("Info() gotRes = %v, want %v", gotRes, tt.wantRes)
-			}
+	ctl := gomock.NewController(t)
+	defer ctl.Finish()
+
+	m := dao.NewMockDao(ctl)
+	m.EXPECT().Info(gomock.Eq(TestUID)).Return(&model.Info{
+		SteamID:   TestSteamID,
+		Username:  TestUserName,
+		FirstJoin: time.Now().Unix(),
+	}, nil)
+
+	srv := &Service{dao: m}
+	Convey("Test service Info", t, func() {
+		res, err := srv.Info(context.Background(),
+			&pb.InfoReq{Uid: TestUID})
+		Convey("Then check it work", func() {
+			So(res, ShouldNotBeNil)
+			So(err, ShouldBeNil)
 		})
-	}
+		t.Log(res)
+	})
 }
 
 func TestService_Register(t *testing.T) {
-	type fields struct {
-		dao dao.Dao
-	}
-	type args struct {
-		ctx context.Context
-		req *pb.RegisterReq
-	}
-	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		wantRes *pb.RegisterResp
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			s := &Service{
-				dao: tt.fields.dao,
-			}
-			gotRes, err := s.Register(tt.args.ctx, tt.args.req)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("Register() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(gotRes, tt.wantRes) {
-				t.Errorf("Register() gotRes = %v, want %v", gotRes, tt.wantRes)
-			}
+	ctl := gomock.NewController(t)
+	defer ctl.Finish()
+
+	m := dao.NewMockDao(ctl)
+	m.EXPECT().Register(gomock.Eq(TestSteamID)).Return(&model.Info{
+		UID: TestUID,
+	}, nil)
+
+	srv := &Service{dao: m}
+	Convey("Test service Register", t, func() {
+		res, err := srv.Register(context.Background(),
+			&pb.RegisterReq{SteamId: TestSteamID})
+		Convey("Then check it work", func() {
+			So(res, ShouldNotBeNil)
+			So(err, ShouldBeNil)
 		})
-	}
+		t.Log(res)
+	})
 }
 
 func TestService_UID(t *testing.T) {
-	type fields struct {
-		dao dao.Dao
-	}
-	type args struct {
-		ctx context.Context
-		req *pb.UIDReq
-	}
-	tests := []struct {
-		name    string
-		fields  fields
-		args    args
-		wantRes *pb.UIDResp
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			s := &Service{
-				dao: tt.fields.dao,
-			}
-			gotRes, err := s.UID(tt.args.ctx, tt.args.req)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("UID() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(gotRes, tt.wantRes) {
-				t.Errorf("UID() gotRes = %v, want %v", gotRes, tt.wantRes)
-			}
+	ctl := gomock.NewController(t)
+	defer ctl.Finish()
+
+	m := dao.NewMockDao(ctl)
+	m.EXPECT().UID(gomock.Eq(TestSteamID)).Return(&model.Info{
+		UID: TestUID,
+	}, nil)
+
+	srv := &Service{dao: m}
+	Convey("Test service UID", t, func() {
+		res, err := srv.UID(context.Background(),
+			&pb.UIDReq{SteamId: TestSteamID})
+		Convey("Then check it work", func() {
+			So(res, ShouldNotBeNil)
+			So(err, ShouldBeNil)
 		})
-	}
+		t.Log(res)
+	})
 }
