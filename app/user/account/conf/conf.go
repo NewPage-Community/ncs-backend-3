@@ -14,7 +14,11 @@ type Config struct {
 }
 
 func Init() (c *Config) {
-	c = &Config{}
+	c = &Config{
+		&log.Config{},
+		&mysql.Config{},
+		&redis.Options{},
+	}
 	conf.Load(c)
 	return
 }
