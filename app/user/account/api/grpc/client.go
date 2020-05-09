@@ -1,7 +1,6 @@
 package grpc
 
 import (
-	"backend/pkg/log"
 	"backend/pkg/rpc"
 	"context"
 	"google.golang.org/grpc"
@@ -16,9 +15,6 @@ func InitClient(target string, opts ...grpc.CallOption) AccountClient {
 
 func Close() {
 	if conn != nil {
-		err := conn.Close()
-		if err != nil {
-			log.Error(err)
-		}
+		conn.Close()
 	}
 }

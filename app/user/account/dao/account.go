@@ -4,6 +4,7 @@ import (
 	"backend/app/user/account/model"
 	"backend/pkg/ecode"
 	"backend/pkg/json"
+	"fmt"
 	"github.com/go-redis/redis/v7"
 	"google.golang.org/grpc/codes"
 	"strconv"
@@ -17,7 +18,9 @@ const (
 )
 
 func (d *dao) UID(steamID int64) (res *model.Info, err error) {
+	var notFound interface{}
 	res = &model.Info{}
+	defer errorProcess(err, notFound)
 
 	// Cache
 	cacheRes, err := d.cache.HGet(UIDCache, strconv.FormatInt(steamID, 10)).Int64()
@@ -25,32 +28,25 @@ func (d *dao) UID(steamID int64) (res *model.Info, err error) {
 		res.UID = cacheRes
 		return
 	}
-	if err != nil && err != redis.Nil {
-		err = ecode.Errorf(codes.Unknown, "Redis: %v", err)
-	}
 
 	// DB
 	dbRes := d.db.Where(&model.Info{SteamID: steamID}).First(res)
-	if dbRes.Error != nil {
-		err = ecode.Errorf(codes.Unknown, "DB: %v", dbRes.Error)
-		return
-	}
+	err = dbRes.Error
 	// Not found
 	if dbRes.RecordNotFound() || !res.IsValid() {
-		err = ecode.Errorf(codes.NotFound, "Can not found steamID: %v", steamID)
+		notFound = fmt.Sprintf("SteamID(%v)", steamID)
 		return
 	}
 
 	// Set cache
 	err = d.cache.HSet(UIDCache, strconv.FormatInt(steamID, 10), res.UID).Err()
-	if err != nil {
-		err = ecode.Errorf(codes.Unknown, "Redis: %v", err)
-	}
 	return
 }
 
 func (d *dao) Info(uid int64) (res *model.Info, err error) {
+	var notFound interface{}
 	res = &model.Info{}
+	defer errorProcess(err, notFound)
 
 	// Cache (json)
 	cacheRes, err := d.cache.HGet(InfoCache, strconv.FormatInt(uid, 10)).Result()
@@ -60,19 +56,13 @@ func (d *dao) Info(uid int64) (res *model.Info, err error) {
 			return
 		}
 	}
-	if err != nil && err != redis.Nil {
-		err = ecode.Errorf(codes.Unknown, "Redis: %v", err)
-	}
 
 	// DB
 	dbRes := d.db.Where(&model.Info{UID: uid}).First(res)
-	if dbRes.Error != nil {
-		err = ecode.Errorf(codes.Unknown, "DB: %v", dbRes.Error)
-		return
-	}
+	err = dbRes.Error
 	// Not found
 	if dbRes.RecordNotFound() || !res.IsValid() {
-		err = ecode.Errorf(codes.NotFound, "Can not found uid: %v", uid)
+		notFound = fmt.Sprintf("UID(%v)", uid)
 		return
 	}
 
@@ -82,22 +72,17 @@ func (d *dao) Info(uid int64) (res *model.Info, err error) {
 		return
 	}
 	err = d.cache.HSet(InfoCache, strconv.FormatInt(uid, 10), string(CacheData)).Err()
-	if err != nil {
-		err = ecode.Errorf(codes.Unknown, "Redis: %v", err)
-	}
 	return
 }
 
 func (d *dao) Register(steamID int64) (res *model.Info, err error) {
 	res = &model.Info{SteamID: steamID, Username: "", FirstJoin: time.Now().Unix()}
+	defer errorProcess(err, nil)
 
 	// DB
 	if d.db.NewRecord(res) {
 		dbRes := d.db.Create(res)
-		if dbRes.Error != nil {
-			err = ecode.Errorf(codes.Unknown, "DB: %v", dbRes.Error)
-			return
-		}
+		err = dbRes.Error
 	}
 
 	// Set cache
@@ -106,24 +91,26 @@ func (d *dao) Register(steamID int64) (res *model.Info, err error) {
 		return
 	}
 	err = d.cache.HSet(InfoCache, strconv.FormatInt(res.UID, 10), string(CacheData)).Err()
-	if err != nil {
-		err = ecode.Errorf(codes.Unknown, "Redis: %v", err)
-	}
 	return
 }
 
 func (d *dao) ChangeName(info *model.Info) (err error) {
+	defer errorProcess(err, nil)
 	// DB
 	err = d.db.Model(info).Update("username", info.Username).Error
 	if err != nil {
-		err = ecode.Errorf(codes.Unknown, "DB: %v", err)
 		return
 	}
 
 	// Remove cache
 	err = d.cache.HDel(InfoCache, strconv.FormatInt(info.UID, 10)).Err()
-	if err != nil {
-		err = ecode.Errorf(codes.Unknown, "Redis: %v", err)
-	}
 	return
+}
+
+func errorProcess(err error, notFound interface{}) {
+	if notFound != nil {
+		err = ecode.Errorf(codes.NotFound, "Can not found: %v", notFound)
+	} else if err != nil && err != redis.Nil {
+		err = ecode.Errorf(codes.Unknown, "dao: %v", err)
+	}
 }
