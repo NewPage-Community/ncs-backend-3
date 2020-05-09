@@ -1,5 +1,5 @@
 image:
-  name: registry.new-page.xyz/cloud-builders/bazel
+  name: registry.new-page.xyz/google/bazel:latest
 
 variables:
   GIT_CLEAN_FLAGS: -ffdx -e .cache/
@@ -21,7 +21,9 @@ build:
   script:
     - bazel version
     - bazel build ...
+
 test:
   stage: test
   script:
-  - bazel test ...
+    - bazel version
+    - bazel test --test_output=errors ...
