@@ -1,0 +1,2 @@
+build --disk_cache=/.cache
+build --disk_cache=./.cache

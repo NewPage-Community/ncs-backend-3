@@ -6,7 +6,6 @@ variables:
 
 before_script:
   - export HTTP_PROXY=http://hkt.v2ray:1080 HTTPS_PROXY=http://hkt.v2ray:1080
-  - echo "build --disk_cache=$CI_PROJECT_DIR/.cache" >> .bazelrc
 
 cache:
   key: bazel_cache
