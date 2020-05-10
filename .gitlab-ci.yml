@@ -7,6 +7,7 @@ variables:
 before_script:
   - chmod -R +x build
   - export HTTP_PROXY=http://hkt.v2ray:1080 HTTPS_PROXY=http://hkt.v2ray:1080
+  - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
 
 cache:
   key: bazel_cache
@@ -32,8 +33,6 @@ test:
 
 push_images:
   stage: push_images
-  before_script:
-    - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
   script:
     - bazel version
     - build/push-images.sh
