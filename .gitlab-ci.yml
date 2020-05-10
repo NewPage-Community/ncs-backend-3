@@ -5,6 +5,7 @@ variables:
   GIT_CLEAN_FLAGS: -ffdx -e .cache/
 
 before_script:
+  - chmod -R +x build
   - export HTTP_PROXY=http://hkt.v2ray:1080 HTTPS_PROXY=http://hkt.v2ray:1080
 
 cache:
