@@ -36,4 +36,4 @@ push_images:
   stage: push_images
   script:
     - bazel version
-    - build/push-images.sh
+    - build/push-images.sh changed
