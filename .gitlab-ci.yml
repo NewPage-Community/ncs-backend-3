@@ -20,10 +20,10 @@ build:
   stage: build
   script:
     - bazel version
-    - bazel build ...
+    - make build
 
 test:
   stage: test
   script:
     - bazel version
-    - bazel test --test_output=errors ...
+    - make test
