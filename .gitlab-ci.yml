@@ -16,6 +16,7 @@ cache:
 stages:
   - build
   - test
+  - push_images
 
 build:
   stage: build
@@ -28,3 +29,9 @@ test:
   script:
     - bazel version
     - bazel test //...
+
+push_images:
+  stage: push_images
+  script:
+    - bazel version
+    - build/push-images.sh update
