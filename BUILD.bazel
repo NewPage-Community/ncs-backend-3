@@ -1,5 +1,1 @@
-load("@bazel_gazelle//:def.bzl", "gazelle")
-
-# gazelle:prefix backend
-# gazelle:proto disable_global
-gazelle(name = "gazelle")
+build/root/BUILD.bazel
