@@ -20,10 +20,10 @@ build:
   stage: build
   script:
     - bazel version
-    - make build
+    - bazel build //...
 
 test:
   stage: test
   script:
     - bazel version
-    - make test
+    - bazel test //...

@@ -6,11 +6,19 @@ dep:
 
 .PHONY: push_docker
 push_docker:
-	bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //app/user/account/cmd:account
+	build/push-images.sh
+
+.PHONY: push_docker_changed
+push_docker_changed:
+	build/push-images.sh changed
 
 .PHONY: build
 build:
-	bazel build //...
+	build/build.sh
+
+.PHONY: build_changed
+build_changed:
+	build/build.sh changed
 
 .PHONY: test
 test:
