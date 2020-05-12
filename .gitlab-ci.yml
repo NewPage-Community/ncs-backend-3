@@ -18,7 +18,7 @@ cache:
 stages:
   - build
   - test
-  - push_images
+  - push images
 
 build:
   stage: build
@@ -32,8 +32,29 @@ test:
     - bazel version
     - bazel test //...
 
-push_images:
-  stage: push_images
+push changed images:
+  stage: push images
   script:
     - bazel version
     - build/push-images.sh changed
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+      changes:
+      - pkg/*
+      - build/*
+      - .gitlab-ci.yml
+      when: never
+    - when: on_success
+
+push all images:
+  stage: push images
+  script:
+    - bazel version
+    - build/push-images.sh
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+      changes:
+      - pkg/*
+      - build/*
+      - .gitlab-ci.yml
+    - when: manual
