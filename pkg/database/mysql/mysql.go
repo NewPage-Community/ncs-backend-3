@@ -25,7 +25,7 @@ func Init(conf *Config) *gorm.DB {
 
 func getDSN(conf *Config) string {
 	return fmt.Sprintf(
-		"%s:%s@%s/%s?charset=%s&parseTime=True&loc=Local",
+		"%s:%s@(%s)/%s?charset=%s&parseTime=True&loc=Local",
 		conf.User,
 		conf.Password,
 		conf.Host,

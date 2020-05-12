@@ -17,6 +17,5 @@ func Test_getDSN(t *testing.T) {
 		Convey("Then dsn should not be empty", func() {
 			So(dsn, ShouldNotBeEmpty)
 		})
-		//t.Log(dsn)
 	})
 }
