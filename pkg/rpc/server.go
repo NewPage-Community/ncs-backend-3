@@ -5,6 +5,7 @@ import (
 	ot "github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
+	"google.golang.org/grpc/reflection"
 	"net"
 	"time"
 )
@@ -65,6 +66,9 @@ func NewServer(conf *ServerConfig) *grpc.Server {
 	if conf.RegFunc != nil {
 		conf.RegFunc(s)
 	}
+
+	// Register reflection service on gRPC server.
+	reflection.Register(s)
 
 	// Serve
 	go func() {
