@@ -8,8 +8,8 @@ func Load(v interface{}) {
 	viper.SetConfigName("ncs")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath("/ncs/")
+	viper.AddConfigPath("/Users/gunslinger/ncs-test/")
 	viper.AddConfigPath(".")
-	err := viper.ReadInConfig()
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 			viper.SafeWriteConfig()
@@ -17,8 +17,7 @@ func Load(v interface{}) {
 			panic(err)
 		}
 	}
-	err = viper.Unmarshal(v)
-	if err != nil {
+	if err := viper.Unmarshal(v); err != nil {
 		panic(err)
 	}
 }

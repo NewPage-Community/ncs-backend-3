@@ -5,7 +5,7 @@ import (
 )
 
 type Config struct {
-	Test struct {
+	Test *struct {
 		Port   int
 		Enable bool
 	}
@@ -15,7 +15,7 @@ func TestLoad(t *testing.T) {
 	c := &Config{}
 	Load(c)
 	t.Log(c)
-	if c.Test.Port == 1 && c.Test.Enable {
+	if c.Test.Port != 2 && !c.Test.Enable {
 		t.Errorf("Load(): Test config v[%v, %v], want[2, true]", c.Test.Port, c.Test.Enable)
 	}
 }
