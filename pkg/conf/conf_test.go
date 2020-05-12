@@ -5,7 +5,7 @@ import (
 )
 
 type Config struct {
-	Test *struct {
+	Test struct {
 		Port   int
 		Enable bool
 	}
