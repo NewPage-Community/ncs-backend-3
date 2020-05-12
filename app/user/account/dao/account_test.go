@@ -90,7 +90,7 @@ func Test_dao_ChangeName(t *testing.T) {
 }
 
 func MockDaoUid() {
-	rows := testdao.Mock.NewRows([]string{"uid", "steamid", "username", "firstjoin"}).
+	rows := testdao.Mock.NewRows([]string{"uid", "steam_id", "username", "first_join"}).
 		AddRow(TestUID, TestSteamID, TestUserName, time.Now().Unix())
 
 	testdao.Mock.ExpectQuery("SELECT (.+) FROM `" + info.TableName() + "`").
@@ -102,7 +102,7 @@ func MockDaoUid() {
 }
 
 func MockDaoInfo() {
-	rows := testdao.Mock.NewRows([]string{"uid", "steamid", "username", "firstjoin"}).
+	rows := testdao.Mock.NewRows([]string{"uid", "steam_id", "username", "first_join"}).
 		AddRow(TestUID, TestSteamID, TestUserName, time.Now().Unix())
 
 	testdao.Mock.ExpectQuery("SELECT (.+) FROM `" + info.TableName() + "`").
@@ -122,6 +122,12 @@ func MockDaoRegister() {
 }
 
 func MockDaoChangeName() {
+	rows := testdao.Mock.NewRows([]string{"uid", "steam_id", "username", "first_join"}).
+		AddRow(TestUID, TestSteamID, TestUserName, time.Now().Unix())
+
+	testdao.Mock.ExpectQuery("SELECT (.+) FROM `" + info.TableName() + "`").
+		WithArgs(TestUID).
+		WillReturnRows(rows)
 	testdao.Mock.ExpectBegin()
 	testdao.Mock.ExpectExec("UPDATE `"+info.TableName()+"` SET `username`").
 		WithArgs(info.Username, TestUID).

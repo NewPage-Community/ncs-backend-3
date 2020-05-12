@@ -4,7 +4,6 @@ import (
 	"backend/app/user/account/model"
 	"backend/pkg/ecode"
 	"backend/pkg/json"
-	"fmt"
 	"github.com/go-redis/redis/v7"
 	"google.golang.org/grpc/codes"
 	"strconv"
@@ -18,9 +17,13 @@ const (
 )
 
 func (d *dao) UID(steamID int64) (res *model.Info, err error) {
-	var notFound interface{}
 	res = &model.Info{}
-	defer errorProcess(err, notFound)
+
+	// Invalid
+	if steamID == 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "SteamID invalid")
+		return
+	}
 
 	// Cache
 	cacheRes, err := d.cache.HGet(UIDCache, strconv.FormatInt(steamID, 10)).Int64()
@@ -28,13 +31,16 @@ func (d *dao) UID(steamID int64) (res *model.Info, err error) {
 		res.UID = cacheRes
 		return
 	}
+	if err == redis.Nil {
+		err = nil
+	}
 
 	// DB
 	dbRes := d.db.Where(&model.Info{SteamID: steamID}).First(res)
 	err = dbRes.Error
 	// Not found
 	if dbRes.RecordNotFound() || !res.IsValid() {
-		notFound = fmt.Sprintf("SteamID(%v)", steamID)
+		err = ecode.Errorf(codes.NotFound, "Can not found: SteamID(%v)", steamID)
 		return
 	}
 
@@ -44,9 +50,13 @@ func (d *dao) UID(steamID int64) (res *model.Info, err error) {
 }
 
 func (d *dao) Info(uid int64) (res *model.Info, err error) {
-	var notFound interface{}
 	res = &model.Info{}
-	defer errorProcess(err, notFound)
+
+	// Invalid
+	if uid == 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "UID invalid")
+		return
+	}
 
 	// Cache (json)
 	cacheRes, err := d.cache.HGet(InfoCache, strconv.FormatInt(uid, 10)).Result()
@@ -56,13 +66,16 @@ func (d *dao) Info(uid int64) (res *model.Info, err error) {
 			return
 		}
 	}
+	if err == redis.Nil {
+		err = nil
+	}
 
 	// DB
 	dbRes := d.db.Where(&model.Info{UID: uid}).First(res)
 	err = dbRes.Error
 	// Not found
 	if dbRes.RecordNotFound() || !res.IsValid() {
-		notFound = fmt.Sprintf("UID(%v)", uid)
+		err = ecode.Errorf(codes.NotFound, "Can not found: UID(%v)", uid)
 		return
 	}
 
@@ -76,13 +89,21 @@ func (d *dao) Info(uid int64) (res *model.Info, err error) {
 }
 
 func (d *dao) Register(steamID int64) (res *model.Info, err error) {
-	res = &model.Info{SteamID: steamID, Username: "", FirstJoin: time.Now().Unix()}
-	defer errorProcess(err, nil)
+	res = &model.Info{SteamID: steamID, FirstJoin: time.Now().Unix()}
+
+	// Invalid
+	if steamID == 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "SteamID invalid")
+		return
+	}
 
 	// DB
 	if d.db.NewRecord(res) {
 		dbRes := d.db.Create(res)
 		err = dbRes.Error
+		if err != nil {
+			return
+		}
 	}
 
 	// Set cache
@@ -95,9 +116,19 @@ func (d *dao) Register(steamID int64) (res *model.Info, err error) {
 }
 
 func (d *dao) ChangeName(info *model.Info) (err error) {
-	defer errorProcess(err, nil)
+	// Invalid
+	if !info.IsValid() {
+		err = ecode.Errorf(codes.InvalidArgument, "UID invalid")
+		return
+	}
+
 	// DB
-	err = d.db.Model(info).Update("username", info.Username).Error
+	tmp := &model.Info{}
+	err = d.db.Where(&model.Info{UID: info.UID}).Find(tmp).Error
+	if err != nil {
+		return
+	}
+	err = d.db.Model(tmp).Update("username", info.Username).Error
 	if err != nil {
 		return
 	}
@@ -105,12 +136,4 @@ func (d *dao) ChangeName(info *model.Info) (err error) {
 	// Remove cache
 	err = d.cache.HDel(InfoCache, strconv.FormatInt(info.UID, 10)).Err()
 	return
-}
-
-func errorProcess(err error, notFound interface{}) {
-	if notFound != nil {
-		err = ecode.Errorf(codes.NotFound, "Can not found: %v", notFound)
-	} else if err != nil && err != redis.Nil {
-		err = ecode.Errorf(codes.Unknown, "dao: %v", err)
-	}
 }
