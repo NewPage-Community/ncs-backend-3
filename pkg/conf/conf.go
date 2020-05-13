@@ -7,9 +7,9 @@ import (
 func Load(v interface{}) {
 	viper.SetConfigName("ncs")
 	viper.SetConfigType("yaml")
+	viper.AddConfigPath(".")
 	viper.AddConfigPath("/ncs/")
 	viper.AddConfigPath("/Users/gunslinger/ncs-test/")
-	viper.AddConfigPath(".")
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 			viper.SafeWriteConfig()

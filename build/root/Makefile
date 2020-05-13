@@ -1,3 +1,6 @@
+.PHONY: all
+all: dep build test
+
 .PHONY: dep
 dep:
 	go mod tidy
@@ -14,11 +17,7 @@ push_docker_changed:
 
 .PHONY: build
 build:
-	build/build.sh
-
-.PHONY: build_changed
-build_changed:
-	build/build.sh changed
+	bazel build //...
 
 .PHONY: test
 test:

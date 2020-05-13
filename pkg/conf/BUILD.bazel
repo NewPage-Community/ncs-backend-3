@@ -11,6 +11,6 @@ go_library(
 go_test(
     name = "go_default_test",
     srcs = ["conf_test.go"],
-    embed = [":go_default_library"],
     data = ["ncs.yaml"],
+    embed = [":go_default_library"],
 )
