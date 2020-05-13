@@ -1,0 +1,43 @@
+syntax = "proto3";
+package ncs.user.vip;
+option go_package = "grpc";
+
+// Base
+
+message Info {
+    int32 point = 1;
+    int32 level = 2;
+    bool is_vip = 3;
+    int64 expire_date = 4;
+}
+
+message InfoReq {
+    int64 uid = 1;
+}
+
+message InfoResp {
+    Info info = 1;
+}
+
+message GrantReq {
+    int64 uid = 1;
+}
+
+message GrantResp {
+    int64 expire_date = 1;
+}
+
+message AddPointReq {
+    int64 uid = 1;
+    int32 add_point = 2;
+}
+
+message AddPointResp {
+    int32 point = 3;
+}
+
+service VIP {
+    rpc Info (InfoReq) returns (InfoResp);
+    rpc Grant (GrantReq) returns (GrantResp);
+    rpc AddPoint (AddPointReq) returns (AddPointResp);
+}

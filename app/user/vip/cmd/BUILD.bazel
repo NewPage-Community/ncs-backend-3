@@ -1,0 +1,21 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "backend/app/user/vip/cmd",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//app/user/vip/api/grpc:go_default_library",
+        "//app/user/vip/conf:go_default_library",
+        "//app/user/vip/service:go_default_library",
+        "//pkg/cmd:go_default_library",
+        "//pkg/log:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "cmd",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
