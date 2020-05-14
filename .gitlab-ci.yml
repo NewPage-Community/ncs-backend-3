@@ -38,7 +38,7 @@ push changed images:
     - bazel version
     - build/push-images.sh changed
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master"
       changes:
       - pkg/*
       - build/*
@@ -52,9 +52,9 @@ push all images:
     - bazel version
     - build/push-images.sh
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master"
       changes:
       - pkg/*
       - build/*
       - .gitlab-ci.yml
-    - when: manual
+      when: manual
