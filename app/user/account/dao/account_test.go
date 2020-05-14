@@ -3,7 +3,6 @@ package dao
 import (
 	"backend/app/user/account/model"
 	. "backend/app/user/account/test"
-	"fmt"
 	"github.com/DATA-DOG/go-sqlmock"
 	. "github.com/smartystreets/goconvey/convey"
 	"testing"
@@ -30,12 +29,6 @@ func Test_dao_UID(t *testing.T) {
 			So(err, ShouldBeNil)
 		})
 	})
-	Convey("Test error", t, func() {
-		_, err := testdao.UID(2)
-		Convey("Then error should not be nil", func() {
-			So(err, ShouldNotBeNil)
-		})
-	})
 }
 
 func Test_dao_Info(t *testing.T) {
@@ -54,12 +47,6 @@ func Test_dao_Info(t *testing.T) {
 		Convey("Then steamid should be 76561198029350216 and err should be nil", func() {
 			So(res.SteamID, ShouldEqual, TestSteamID)
 			So(err, ShouldBeNil)
-		})
-	})
-	Convey("Test error", t, func() {
-		_, err := testdao.Info(2)
-		Convey("Then err should not be nil", func() {
-			So(err, ShouldNotBeNil)
 		})
 	})
 }
@@ -96,9 +83,6 @@ func MockDaoUid() {
 	testdao.Mock.ExpectQuery("SELECT (.+) FROM `" + info.TableName() + "`").
 		WithArgs(TestSteamID).
 		WillReturnRows(rows)
-	testdao.Mock.ExpectQuery("SELECT (.+) FROM `" + info.TableName() + "`").
-		WithArgs(2).
-		WillReturnError(fmt.Errorf("not found"))
 }
 
 func MockDaoInfo() {
@@ -108,9 +92,6 @@ func MockDaoInfo() {
 	testdao.Mock.ExpectQuery("SELECT (.+) FROM `" + info.TableName() + "`").
 		WithArgs(TestUID).
 		WillReturnRows(rows)
-	testdao.Mock.ExpectQuery("SELECT (.+) FROM `" + info.TableName() + "`").
-		WithArgs(2).
-		WillReturnError(fmt.Errorf("not found"))
 }
 
 func MockDaoRegister() {
@@ -122,12 +103,6 @@ func MockDaoRegister() {
 }
 
 func MockDaoChangeName() {
-	rows := testdao.Mock.NewRows([]string{"uid", "steam_id", "username", "first_join"}).
-		AddRow(TestUID, TestSteamID, TestUserName, time.Now().Unix())
-
-	testdao.Mock.ExpectQuery("SELECT (.+) FROM `" + info.TableName() + "`").
-		WithArgs(TestUID).
-		WillReturnRows(rows)
 	testdao.Mock.ExpectBegin()
 	testdao.Mock.ExpectExec("UPDATE `"+info.TableName()+"` SET `username`").
 		WithArgs(info.Username, TestUID).

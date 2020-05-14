@@ -19,12 +19,6 @@ const (
 func (d *dao) UID(steamID int64) (res *model.Info, err error) {
 	res = &model.Info{}
 
-	// Invalid
-	if steamID == 0 {
-		err = ecode.Errorf(codes.InvalidArgument, "SteamID invalid")
-		return
-	}
-
 	// Cache
 	cacheRes, err := d.cache.HGet(UIDCache, strconv.FormatInt(steamID, 10)).Int64()
 	if err == nil && cacheRes != 0 {
@@ -39,7 +33,7 @@ func (d *dao) UID(steamID int64) (res *model.Info, err error) {
 	dbRes := d.db.Where(&model.Info{SteamID: steamID}).First(res)
 	err = dbRes.Error
 	// Not found
-	if dbRes.RecordNotFound() || !res.IsValid() {
+	if dbRes.RecordNotFound() {
 		err = ecode.Errorf(codes.NotFound, "Can not found: SteamID(%v)", steamID)
 		return
 	}
@@ -51,12 +45,6 @@ func (d *dao) UID(steamID int64) (res *model.Info, err error) {
 
 func (d *dao) Info(uid int64) (res *model.Info, err error) {
 	res = &model.Info{}
-
-	// Invalid
-	if uid == 0 {
-		err = ecode.Errorf(codes.InvalidArgument, "UID invalid")
-		return
-	}
 
 	// Cache (json)
 	cacheRes, err := d.cache.HGet(InfoCache, strconv.FormatInt(uid, 10)).Result()
@@ -74,7 +62,7 @@ func (d *dao) Info(uid int64) (res *model.Info, err error) {
 	dbRes := d.db.Where(&model.Info{UID: uid}).First(res)
 	err = dbRes.Error
 	// Not found
-	if dbRes.RecordNotFound() || !res.IsValid() {
+	if dbRes.RecordNotFound() {
 		err = ecode.Errorf(codes.NotFound, "Can not found: UID(%v)", uid)
 		return
 	}
@@ -91,19 +79,11 @@ func (d *dao) Info(uid int64) (res *model.Info, err error) {
 func (d *dao) Register(steamID int64) (res *model.Info, err error) {
 	res = &model.Info{SteamID: steamID, FirstJoin: time.Now().Unix()}
 
-	// Invalid
-	if steamID == 0 {
-		err = ecode.Errorf(codes.InvalidArgument, "SteamID invalid")
-		return
-	}
-
 	// DB
-	if d.db.NewRecord(res) {
-		dbRes := d.db.Create(res)
-		err = dbRes.Error
-		if err != nil {
-			return
-		}
+	dbRes := d.db.Create(res)
+	err = dbRes.Error
+	if err != nil {
+		return
 	}
 
 	// Set cache
@@ -116,19 +96,8 @@ func (d *dao) Register(steamID int64) (res *model.Info, err error) {
 }
 
 func (d *dao) ChangeName(info *model.Info) (err error) {
-	// Invalid
-	if !info.IsValid() {
-		err = ecode.Errorf(codes.InvalidArgument, "UID invalid")
-		return
-	}
-
 	// DB
-	tmp := &model.Info{}
-	err = d.db.Where(&model.Info{UID: info.UID}).Find(tmp).Error
-	if err != nil {
-		return
-	}
-	err = d.db.Model(tmp).Update("username", info.Username).Error
+	err = d.db.Model(info).Update("username", info.Username).Error
 	if err != nil {
 		return
 	}

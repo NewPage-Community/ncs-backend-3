@@ -13,6 +13,8 @@ go_library(
         "//app/user/account/conf:go_default_library",
         "//app/user/account/dao:go_default_library",
         "//app/user/account/model:go_default_library",
+        "//pkg/ecode:go_default_library",
+        "@org_golang_google_grpc//codes:go_default_library",
     ],
 )
 
