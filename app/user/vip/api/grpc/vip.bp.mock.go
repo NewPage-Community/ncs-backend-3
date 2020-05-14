@@ -54,24 +54,24 @@ func (mr *MockVIPClientMockRecorder) Info(ctx, in interface{}, opts ...interface
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockVIPClient)(nil).Info), varargs...)
 }
 
-// Grant mocks base method
-func (m *MockVIPClient) Grant(ctx context.Context, in *GrantReq, opts ...grpc.CallOption) (*GrantResp, error) {
+// Renewal mocks base method
+func (m *MockVIPClient) Renewal(ctx context.Context, in *RenewalReq, opts ...grpc.CallOption) (*RenewalResp, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "Grant", varargs...)
-	ret0, _ := ret[0].(*GrantResp)
+	ret := m.ctrl.Call(m, "Renewal", varargs...)
+	ret0, _ := ret[0].(*RenewalResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Grant indicates an expected call of Grant
-func (mr *MockVIPClientMockRecorder) Grant(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+// Renewal indicates an expected call of Renewal
+func (mr *MockVIPClientMockRecorder) Renewal(ctx, in interface{}, opts ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Grant", reflect.TypeOf((*MockVIPClient)(nil).Grant), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Renewal", reflect.TypeOf((*MockVIPClient)(nil).Renewal), varargs...)
 }
 
 // AddPoint mocks base method
@@ -132,19 +132,19 @@ func (mr *MockVIPServerMockRecorder) Info(arg0, arg1 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockVIPServer)(nil).Info), arg0, arg1)
 }
 
-// Grant mocks base method
-func (m *MockVIPServer) Grant(arg0 context.Context, arg1 *GrantReq) (*GrantResp, error) {
+// Renewal mocks base method
+func (m *MockVIPServer) Renewal(arg0 context.Context, arg1 *RenewalReq) (*RenewalResp, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Grant", arg0, arg1)
-	ret0, _ := ret[0].(*GrantResp)
+	ret := m.ctrl.Call(m, "Renewal", arg0, arg1)
+	ret0, _ := ret[0].(*RenewalResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Grant indicates an expected call of Grant
-func (mr *MockVIPServerMockRecorder) Grant(arg0, arg1 interface{}) *gomock.Call {
+// Renewal indicates an expected call of Renewal
+func (mr *MockVIPServerMockRecorder) Renewal(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Grant", reflect.TypeOf((*MockVIPServer)(nil).Grant), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Renewal", reflect.TypeOf((*MockVIPServer)(nil).Renewal), arg0, arg1)
 }
 
 // AddPoint mocks base method

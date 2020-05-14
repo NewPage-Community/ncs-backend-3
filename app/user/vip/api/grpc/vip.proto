@@ -7,8 +7,7 @@ option go_package = "grpc";
 message Info {
     int32 point = 1;
     int32 level = 2;
-    bool is_vip = 3;
-    int64 expire_date = 4;
+    int64 expire_date = 3;
 }
 
 message InfoReq {
@@ -19,11 +18,12 @@ message InfoResp {
     Info info = 1;
 }
 
-message GrantReq {
+message RenewalReq {
     int64 uid = 1;
+    int64 length = 2;
 }
 
-message GrantResp {
+message RenewalResp {
     int64 expire_date = 1;
 }
 
@@ -38,6 +38,6 @@ message AddPointResp {
 
 service VIP {
     rpc Info (InfoReq) returns (InfoResp);
-    rpc Grant (GrantReq) returns (GrantResp);
+    rpc Renewal (RenewalReq) returns (RenewalResp);
     rpc AddPoint (AddPointReq) returns (AddPointResp);
 }

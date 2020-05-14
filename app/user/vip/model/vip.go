@@ -18,7 +18,18 @@ func (v *VIP) IsValid() bool {
 	return v.UID > 0
 }
 
-// IsExpired .
-func (v *VIP) IsExpired() bool {
-	return time.Now().Unix() > v.ExpireDate
+// Level .
+// TODO: Level
+func (v *VIP) Level() int {
+	return 0
+}
+
+// Renewal .
+func (v *VIP) Renewal(length int64) {
+	now := time.Now().Unix()
+	if v.ExpireDate > now {
+		v.ExpireDate += length
+	} else {
+		v.ExpireDate = now + length
+	}
 }

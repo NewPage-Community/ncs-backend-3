@@ -5,8 +5,8 @@ go_library(
     srcs = [
         "client.go",
         "server.go",
+        "vip.bp.mock.go",
         "vip.pb.go",
-        "vip.pb.mock.go",
     ],
     importpath = "backend/app/user/vip/api/grpc",
     visibility = ["//visibility:public"],

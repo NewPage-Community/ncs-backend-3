@@ -16,7 +16,6 @@ func TestGrpc(t *testing.T) {
 		Info: &Info{
 			Point:      1,
 			Level:      1,
-			IsVip:      true,
 			ExpireDate: time.Now().Unix(),
 		},
 	}, nil)
