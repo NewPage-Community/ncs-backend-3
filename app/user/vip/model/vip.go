@@ -19,9 +19,8 @@ func (v *VIP) IsValid() bool {
 }
 
 // Level .
-// TODO: Level
 func (v *VIP) Level() int {
-	return 0
+	return v.Point/200 + 1
 }
 
 // Renewal .
