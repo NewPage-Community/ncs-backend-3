@@ -1,5 +1,5 @@
 image:
-  name: registry.new-page.xyz/cloud-builders/bazel:latest
+  name: registry.new-page.xyz/cloud-marketplace-containers/google/bazel:3.1.0
 
 variables:
   GIT_CLEAN_FLAGS: -ffdx -e .cache/
