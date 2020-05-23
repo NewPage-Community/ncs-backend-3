@@ -1,9 +1,10 @@
 # Disk cache
-build --disk_cache=./.cache
+build --disk_cache=./.cache/bazel
 
 # Include git version info
 build --workspace_status_command build/print-workspace-status.sh
 
 # Show us information about failures.
+startup --noshow_progress
 build --verbose_failures
 test --test_output=errors
