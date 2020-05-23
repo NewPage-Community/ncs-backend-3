@@ -26,13 +26,13 @@ build:
   stage: build
   script:
     - bazel version
-    - bazel build //...
+    - bazel build --noshow_progress //...
 
 test:
   stage: test
   script:
     - bazel version
-    - bazel test //...
+    - bazel test --noshow_progress //...
 
 push changed images:
   stage: push images

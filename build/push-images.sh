@@ -25,13 +25,13 @@ function push_changed() {
 
     echo "Pushing image to docker..."
     query=$(bazel query "${paths}")
-    bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 -k $(echo -e "${query}" | grep push)
+    bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 --noshow_progress -k $(echo -e "${query}" | grep push)
 }
 
 function push_all() {
     echo "Pushing all image to docker..."
     query=$(bazel query //app/...)
-    bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 -k $(echo -e "${query}" | grep push)
+    bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 --noshow_progress -k $(echo -e "${query}" | grep push)
 }
 
 if [[ "${1}" = "changed" ]]; then
