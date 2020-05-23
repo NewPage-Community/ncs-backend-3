@@ -13,6 +13,10 @@ load(
     "@io_bazel_rules_go//go/private:sdk.bzl",
     "go_host_sdk",
     "go_download_sdk",
+)
+
+load(
+    "@io_bazel_rules_go//go/private:nogo.bzl",
     "go_register_nogo",
 )
 
