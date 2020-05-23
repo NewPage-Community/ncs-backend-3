@@ -8,10 +8,10 @@ http_archive(
     urls = ["https://raw.new-page.xyz/bazel/rules_go/rules_go-v0.22.4.tar.gz"],
 )
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies")
+load("//build:go.bzl", "go_register_toolchains")
 
 go_rules_dependencies()
-
 go_register_toolchains()
 
 # gazelle
