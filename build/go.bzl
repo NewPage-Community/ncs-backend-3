@@ -1,6 +1,12 @@
 load(
     "@io_bazel_rules_go//go/private:sdk_list.bzl",
     "DEFAULT_VERSION",
+    "MIN_SUPPORTED_VERSION",
+)
+
+load(
+    "@io_bazel_rules_go//go/private:skylib/lib/versions.bzl",
+    "versions",
 )
 
 load(
