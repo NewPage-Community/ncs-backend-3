@@ -19,7 +19,6 @@ func (i *Info) IsValid() bool {
 	return i.ServerID > 0
 }
 
-//TODO: random
 func (i *Info) GenerateRcon() {
-	i.Rcon = ""
+	i.Rcon = getRandomString(24)
 }
