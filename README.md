@@ -15,6 +15,9 @@ mockgen -source=xxx.go -destination=xxx.mock.go -package xxx
 本仓库采用Bazel来进行构建，请自行安装环境。
 
 ```shell script
+go mod tidy
+bazel run //:gazelle -- update-repos -from_file=go.mod
+bazel run //:gazelle
 bazel build //...
 bazel test //...
 ```
