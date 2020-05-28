@@ -1,0 +1,28 @@
+syntax = "proto3";
+package ncs.server;
+option go_package = "grpc";
+
+// Base
+
+message Info {
+    int64 server_id = 1;
+    int64 mod_id = 2;
+    int64 game_id = 3;
+    string rcon = 4;
+    string hostname = 5;
+    string Address = 6;
+}
+
+// Message
+
+message InfoReq {
+    string address = 1;
+}
+
+message InfoResp {
+    Info info = 1;
+}
+
+service Server {
+    rpc Info (InfoReq) returns (InfoResp);
+}
