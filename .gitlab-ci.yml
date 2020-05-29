@@ -19,7 +19,6 @@ cache:
 
 stages:
   - build
-  - test
   - push images
 
 build:
@@ -27,26 +26,8 @@ build:
   script:
     - bazel version
     - bazel build --noshow_progress //...
-
-test:
-  stage: test
-  script:
-    - bazel version
     - bazel test --noshow_progress //...
-
-push changed images:
-  stage: push images
-  script:
-    - bazel version
     - build/push-images.sh changed
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master"
-      changes:
-      - pkg/*
-      - build/*
-      - .gitlab-ci.yml
-      when: never
-    - when: on_success
 
 push all images:
   stage: push images
