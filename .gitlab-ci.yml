@@ -53,10 +53,4 @@ push all images:
   script:
     - bazel version
     - build/push-images.sh
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH != "master"
-      changes:
-      - pkg/*
-      - build/*
-      - .gitlab-ci.yml
-      when: manual
+  when: manual
