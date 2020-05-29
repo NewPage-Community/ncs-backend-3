@@ -4,12 +4,12 @@ load("//build:docker.bzl", "push_docker")
 go_library(
     name = "go_default_library",
     srcs = ["main.go"],
-    importpath = "backend/app/user/vip/cmd",
+    importpath = "backend/app/server/cmd",
     visibility = ["//visibility:private"],
     deps = [
-        "//app/user/vip/api/grpc:go_default_library",
-        "//app/user/vip/conf:go_default_library",
-        "//app/user/vip/service:go_default_library",
+        "//app/server/api/grpc:go_default_library",
+        "//app/server/conf:go_default_library",
+        "//app/server/service:go_default_library",
         "//pkg/cmd:go_default_library",
         "//pkg/log:go_default_library",
     ],
@@ -23,6 +23,6 @@ go_binary(
 
 push_docker(
     name = "push",
-    app_name = "vip",
+    app_name = "server",
     embed = [":go_default_library"],
 )
