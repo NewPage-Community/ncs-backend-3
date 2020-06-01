@@ -1,14 +1,17 @@
 package dao
 
 import (
-	"backend/app/server/conf"
+	"backend/app/user/ban/conf"
 	"backend/app/user/ban/model"
 	db "backend/pkg/database/mysql"
 	"github.com/jinzhu/gorm"
 )
 
-// TODO: DAO interface
 type Dao interface {
+	Info(uid int64) (*model.Ban, error)
+	Add(info *model.Ban) error
+	Remove(info *model.Ban) error
+	Close()
 }
 
 type dao struct {

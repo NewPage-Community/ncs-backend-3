@@ -10,16 +10,14 @@ const (
 )
 
 type Ban struct {
-	ID         int64  `gorm:"primary_key;unique;not null" json:"id"`
-	SteamID    int64  `gorm:"not null" json:"steam_id"`
+	ID         int64  `gorm:"primary_key;not null" json:"id"`
+	UID        int64  `gorm:"not null" json:"uid"`
 	CreateTime int64  `gorm:"not null;INDEX" json:"create_time"'`
-	Length     int64  `gorm:"not null;INDEX" json:"length"`
-	Type       int8   `gorm:"not null" json:"type"`
+	ExpireTime int64  `gorm:"not null;INDEX" json:"expire_time"`
+	Type       int    `gorm:"not null" json:"type"`
 	ServerID   int64  `gorm:"not null" json:"server_id"`
 	ModID      int64  `gorm:"not null" json:"mod_id"`
 	GameID     int64  `gorm:"not null" json:"game_id"`
-	OpUID      int64  `gorm:"not null" json:"op_uid"`
-	RemoveUID  int64  `gorm:"not null" json:"remove_uid"`
 	Reason     string `gorm:"not null" json:"reason"`
 }
 
@@ -35,7 +33,7 @@ func (i *Ban) IsValid() bool {
 
 // IsExpired check ban record is expired?
 func (i *Ban) IsExpired() bool {
-	return i.CreateTime+i.Length < time.Now().Unix() && i.Length != 0
+	return i.ExpireTime < time.Now().Unix()
 }
 
 // IsBanned .
