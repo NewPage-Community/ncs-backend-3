@@ -4,10 +4,11 @@ import (
 	"backend/app/user/account/model"
 	"backend/pkg/ecode"
 	"backend/pkg/json"
-	"github.com/go-redis/redis/v7"
-	"google.golang.org/grpc/codes"
 	"strconv"
 	"time"
+
+	"github.com/go-redis/redis/v7"
+	"google.golang.org/grpc/codes"
 )
 
 const (
@@ -77,7 +78,7 @@ func (d *dao) Info(uid int64) (res *model.Info, err error) {
 }
 
 func (d *dao) Register(steamID int64) (res *model.Info, err error) {
-	res = &model.Info{SteamID: steamID, FirstJoin: time.Now().Unix()}
+	res = &model.Info{SteamID: steamID, FirstJoin: time.Now().UTC().Unix()}
 
 	// DB
 	dbRes := d.db.Create(res)

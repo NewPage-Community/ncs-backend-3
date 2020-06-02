@@ -2,10 +2,11 @@ package grpc
 
 import (
 	"context"
-	"github.com/golang/mock/gomock"
-	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 	"time"
+
+	"github.com/golang/mock/gomock"
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 func TestGrpc(t *testing.T) {
@@ -16,7 +17,7 @@ func TestGrpc(t *testing.T) {
 		Info: &Info{
 			Point:      1,
 			Level:      1,
-			ExpireDate: time.Now().Unix(),
+			ExpireDate: time.Now().UTC().Unix(),
 		},
 	}, nil)
 

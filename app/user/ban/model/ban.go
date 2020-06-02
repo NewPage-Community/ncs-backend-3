@@ -33,7 +33,7 @@ func (i *Ban) IsValid() bool {
 
 // IsExpired check ban record is expired?
 func (i *Ban) IsExpired() bool {
-	return i.ExpireTime < time.Now().Unix()
+	return i.ExpireTime < time.Now().UTC().Unix()
 }
 
 // IsBanned .

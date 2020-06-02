@@ -5,10 +5,11 @@ import (
 	"backend/app/user/vip/dao"
 	"backend/app/user/vip/model"
 	"context"
-	"github.com/golang/mock/gomock"
-	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 	"time"
+
+	"github.com/golang/mock/gomock"
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 func TestService_AddPoint(t *testing.T) {
@@ -39,7 +40,7 @@ func TestService_AddPoint(t *testing.T) {
 
 func TestService_Renewal(t *testing.T) {
 	length := int64(10)
-	expireTime := time.Now().Unix() + length
+	expireTime := time.Now().UTC().Unix() + length
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 

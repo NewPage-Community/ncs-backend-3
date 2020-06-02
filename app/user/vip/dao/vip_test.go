@@ -2,17 +2,18 @@ package dao
 
 import (
 	"backend/app/user/vip/model"
-	"github.com/DATA-DOG/go-sqlmock"
-	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 	"time"
+
+	"github.com/DATA-DOG/go-sqlmock"
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 func TestAll(t *testing.T) {
 	testdata := &model.VIP{
 		UID:        1,
 		Point:      1,
-		ExpireDate: time.Now().Unix(),
+		ExpireDate: time.Now().UTC().Unix(),
 	}
 
 	testdao.Mock.ExpectBegin()

@@ -3,10 +3,11 @@ package dao
 import (
 	"backend/app/user/account/model"
 	. "backend/app/user/account/test"
-	"github.com/DATA-DOG/go-sqlmock"
-	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 	"time"
+
+	"github.com/DATA-DOG/go-sqlmock"
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 var info = model.Info{UID: TestUID, Username: TestUserName}
@@ -78,7 +79,7 @@ func Test_dao_ChangeName(t *testing.T) {
 
 func MockDaoUid() {
 	rows := testdao.Mock.NewRows([]string{"uid", "steam_id", "username", "first_join"}).
-		AddRow(TestUID, TestSteamID, TestUserName, time.Now().Unix())
+		AddRow(TestUID, TestSteamID, TestUserName, time.Now().UTC().Unix())
 
 	testdao.Mock.ExpectQuery("SELECT (.+) FROM `" + info.TableName() + "`").
 		WithArgs(TestSteamID).
@@ -87,7 +88,7 @@ func MockDaoUid() {
 
 func MockDaoInfo() {
 	rows := testdao.Mock.NewRows([]string{"uid", "steam_id", "username", "first_join"}).
-		AddRow(TestUID, TestSteamID, TestUserName, time.Now().Unix())
+		AddRow(TestUID, TestSteamID, TestUserName, time.Now().UTC().Unix())
 
 	testdao.Mock.ExpectQuery("SELECT (.+) FROM `" + info.TableName() + "`").
 		WithArgs(TestUID).
@@ -97,7 +98,7 @@ func MockDaoInfo() {
 func MockDaoRegister() {
 	testdao.Mock.ExpectBegin()
 	testdao.Mock.ExpectExec("INSERT INTO `"+info.TableName()+"`").
-		WithArgs(TestSteamID, "", time.Now().Unix()).
+		WithArgs(TestSteamID, "", time.Now().UTC().Unix()).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	testdao.Mock.ExpectCommit()
 }

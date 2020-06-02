@@ -6,10 +6,11 @@ import (
 	"backend/app/user/account/model"
 	. "backend/app/user/account/test"
 	"context"
-	"github.com/golang/mock/gomock"
-	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 	"time"
+
+	"github.com/golang/mock/gomock"
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 func TestService_ChangeName(t *testing.T) {
@@ -41,7 +42,7 @@ func TestService_Info(t *testing.T) {
 	m.EXPECT().Info(gomock.Eq(TestUID)).Return(&model.Info{
 		SteamID:   TestSteamID,
 		Username:  TestUserName,
-		FirstJoin: time.Now().Unix(),
+		FirstJoin: time.Now().UTC().Unix(),
 	}, nil)
 
 	srv := &Service{dao: m}

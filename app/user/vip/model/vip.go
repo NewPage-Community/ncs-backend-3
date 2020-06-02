@@ -25,7 +25,7 @@ func (v *VIP) Level() int {
 
 // Renewal .
 func (v *VIP) Renewal(length int64) {
-	now := time.Now().Unix()
+	now := time.Now().UTC().Unix()
 	if v.ExpireDate > now {
 		v.ExpireDate += length
 	} else {

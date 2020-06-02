@@ -34,7 +34,7 @@ func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp,
 
 func (s *Service) Add(ctx context.Context, req *pb.AddReq) (resp *pb.AddResp, err error) {
 	resp = &pb.AddResp{}
-	now := time.Now()
+	now := time.Now().UTC()
 
 	if req.Info == nil {
 		err = ecode.Errorf(codes.InvalidArgument, "Invalid Info")
