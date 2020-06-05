@@ -1,0 +1,8 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["admin.go"],
+    importpath = "backend/app/user/admin/model",
+    visibility = ["//visibility:public"],
+)
