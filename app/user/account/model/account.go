@@ -1,10 +1,10 @@
 package model
 
 type Info struct {
-	UID       int64  `gorm:"primary_key;unique;not null" json:"UID"`
-	SteamID   int64  `gorm:"unique;not null;INDEX" json:"SteamID"`
-	Username  string `json:"Username"`
-	FirstJoin int64  `gorm:"not null;INDEX" json:"FirstJoin"`
+	UID       int64  `gorm:"primary_key;unique;not null" json:"uid"`
+	SteamID   int64  `gorm:"unique;not null;INDEX" json:"steam_id"`
+	Username  string `json:"username"`
+	FirstJoin int64  `gorm:"not null;INDEX" json:"first_join"`
 }
 
 // TableName return table name

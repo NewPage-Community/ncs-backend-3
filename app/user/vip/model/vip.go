@@ -3,9 +3,9 @@ package model
 import "time"
 
 type VIP struct {
-	UID        int64 `gorm:"primary_key;unique;not null" json:"UID"`
-	Point      int   `gorm:"not null;INDEX" json:"Point"`
-	ExpireDate int64 `gorm:"not null;INDEX" json:"ExpireDate"`
+	UID        int64 `gorm:"primary_key;unique;not null" json:"uid"`
+	Point      int   `gorm:"not null;INDEX" json:"point"`
+	ExpireDate int64 `gorm:"not null;INDEX" json:"expire_date"`
 }
 
 // TableName return table name
