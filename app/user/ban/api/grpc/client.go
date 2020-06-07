@@ -6,6 +6,8 @@ import (
 	"google.golang.org/grpc"
 )
 
+const ServiceName = "ncs-user-ban"
+
 var conn *grpc.ClientConn
 
 func InitClient(target string, opts ...grpc.CallOption) BanClient {

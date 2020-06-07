@@ -6,6 +6,10 @@ import (
 	"google.golang.org/grpc"
 )
 
+const (
+	ServiceName = "ncs-user-account"
+)
+
 var conn *grpc.ClientConn
 
 func InitClient(target string, opts ...grpc.CallOption) AccountClient {

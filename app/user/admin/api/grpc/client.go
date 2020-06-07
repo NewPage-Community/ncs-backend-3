@@ -6,6 +6,8 @@ import (
 	"google.golang.org/grpc"
 )
 
+const ServiceName = "ncs-user-admin"
+
 var conn *grpc.ClientConn
 
 func InitClient(target string, opts ...grpc.CallOption) AdminClient {
