@@ -78,8 +78,42 @@ load(
     "@io_bazel_rules_docker//repositories:repositories.bzl",
     container_repositories = "repositories",
 )
+load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_pull",
+)
+load("@io_bazel_rules_docker//go:go.bzl", BASE_DIGESTS = "DIGESTS")
+load("@io_bazel_rules_docker//go:static.bzl", STATIC_DIGESTS = "DIGESTS")
 
 container_repositories()
+
+container_pull(
+    name = "go_image_base",
+    registry = "registry.new-page.xyz",
+    repository = "distroless/base",
+    digest = BASE_DIGESTS["latest"],
+)
+
+container_pull(
+    name = "go_debug_image_base",
+    registry = "registry.new-page.xyz",
+    repository = "distroless/base",
+    digest = BASE_DIGESTS["debug"],
+)
+
+container_pull(
+    name = "go_image_static",
+    registry = "registry.new-page.xyz",
+    repository = "distroless/static",
+    digest = STATIC_DIGESTS["latest"],
+)
+
+container_pull(
+    name = "go_debug_image_static",
+    registry = "registry.new-page.xyz",
+    repository = "distroless/static",
+    digest = STATIC_DIGESTS["debug"],
+)
 
 load(
     "@io_bazel_rules_docker//go:image.bzl",
