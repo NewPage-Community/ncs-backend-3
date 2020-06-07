@@ -2,6 +2,8 @@ syntax = "proto3";
 package ncs.user.account;
 option go_package = "grpc";
 
+import "google/api/annotations.proto";
+
 // Base
 
 message Info {
@@ -45,8 +47,26 @@ message ChangeNameResp {
 }
 
 service Account {
-    rpc UID (UIDReq) returns (UIDResp);
-    rpc Info (InfoReq) returns (InfoResp);
-    rpc Register (RegisterReq) returns (RegisterResp);
-    rpc ChangeName (ChangeNameReq) returns (ChangeNameResp);
+    rpc UID (UIDReq) returns (UIDResp) {
+        option (google.api.http) = {
+            get: "/uid/{steam_id}"
+        };
+    }
+    rpc Info (InfoReq) returns (InfoResp) {
+        option (google.api.http) = {
+            get: "/info/{uid}"
+        };
+    }
+    rpc Register (RegisterReq) returns (RegisterResp) {
+        option (google.api.http) = {
+            post: "/register"
+            body: "*"
+        };
+    }
+    rpc ChangeName (ChangeNameReq) returns (ChangeNameResp)  {
+        option (google.api.http) = {
+            put: "/info/{uid}"
+            body: "username"
+        };
+    }
 }

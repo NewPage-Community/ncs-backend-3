@@ -26,3 +26,7 @@ test:
 .PHONY: clean
 clean:
 	bazel clean
+
+%.pb: %.proto
+	protoc -I. --gofast_out=plugins=grpc:. --grpc-gateway_out=logtostderr=true:. --swagger_out=logtostderr=true:. $<
+	mockgen -source=$@.go -destination=$@.mock.go -package grpc

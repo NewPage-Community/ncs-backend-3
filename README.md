@@ -4,7 +4,7 @@
 
 ```shell script
 # grpc
-protoc --gofast_out=plugins=grpc:. *.proto
+make app/hello/api/grpc/hello.pb
 
 # mock
 mockgen -source=xxx.go -destination=xxx.mock.go -package xxx

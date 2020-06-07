@@ -7,15 +7,20 @@ require (
 	github.com/alicebob/miniredis/v2 v2.11.4
 	github.com/go-redis/redis/v7 v7.2.0
 	github.com/golang/mock v1.4.3
-	github.com/golang/protobuf v1.4.0-rc.4.0.20200313231945-b860323f09d0
+	github.com/golang/protobuf v1.4.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0
+	github.com/grpc-ecosystem/grpc-gateway v1.9.0
 	github.com/grpc-ecosystem/grpc-opentracing v0.0.0-20180507213350-8e809c8a8645
 	github.com/jinzhu/gorm v1.9.12
 	github.com/json-iterator/go v1.1.9
+	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/spf13/viper v1.6.3
 	go.uber.org/zap v1.15.0
+	golang.org/x/sys v0.0.0-20200602225109-6fdc65e7d980 // indirect
+	google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013
 	google.golang.org/grpc v1.29.1
-	google.golang.org/protobuf v1.21.0 // indirect
+	google.golang.org/protobuf v1.24.0 // indirect
+	gopkg.in/yaml.v2 v2.3.0 // indirect
 )
