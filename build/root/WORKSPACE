@@ -249,6 +249,7 @@ go_repository(
 
 go_repository(
     name = "com_github_envoyproxy_protoc_gen_validate",
+    build_file_proto_mode = "disable_global",
     importpath = "github.com/envoyproxy/protoc-gen-validate",
     sum = "h1:EQciDnbrYxy13PgWoY8AqoxGiPrpgBZ1R8UNe3ddc+A=",
     version = "v0.1.0",
@@ -418,6 +419,7 @@ go_repository(
 
 go_repository(
     name = "com_github_grpc_ecosystem_grpc_gateway",
+    build_file_proto_mode = "disable_global",
     importpath = "github.com/grpc-ecosystem/grpc-gateway",
     sum = "h1:bM6ZAFZmc/wPFaRDi0d5L7hGEZEx/2u+Tmr2evNHDiI=",
     version = "v1.9.0",
@@ -923,6 +925,7 @@ go_repository(
 
 go_repository(
     name = "org_golang_google_grpc",
+    build_file_proto_mode = "disable_global",
     importpath = "google.golang.org/grpc",
     sum = "h1:EC2SB8S04d2r73uptxphDSUG+kTKVgjRPF+N3xpxRB4=",
     version = "v1.29.1",
