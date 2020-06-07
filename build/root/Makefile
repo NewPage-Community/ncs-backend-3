@@ -17,11 +17,11 @@ push_docker_changed:
 
 .PHONY: build
 build:
-	bazel build //app/... //pkg/...
+	bazel build -k //app/... //pkg/...
 
 .PHONY: test
 test:
-	bazel test //app/... //pkg/...
+	bazel test -k //app/... //pkg/...
 
 .PHONY: clean
 clean:
