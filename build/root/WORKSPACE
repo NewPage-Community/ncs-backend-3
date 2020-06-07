@@ -1,6 +1,5 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
-# go rules
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 http_archive(
     name = "io_bazel_rules_go",
@@ -8,26 +7,24 @@ http_archive(
     urls = ["https://raw.new-page.xyz/bazel/rules_go/rules_go-v0.22.4.tar.gz"],
 )
 
-load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies")
-load("//build:go.bzl", "go_register_toolchains")
-
-go_rules_dependencies()
-
-go_register_toolchains()
-
-# gazelle
-
 http_archive(
     name = "bazel_gazelle",
     urls = ["https://raw.new-page.xyz/bazel/bazel-gazelle/bazel-gazelle-v0.20.0.tar.gz"],
     sha256 = "d8c45ee70ec39a57e7a05e5027c32b1576cc7f16d9dd37135b0eddde45cf1b10",
 )
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+http_archive(
+    name = "io_bazel_rules_docker",
+    sha256 = "dc97fccceacd4c6be14e800b2a00693d5e8d07f69ee187babfd04a80a9f8e250",
+    strip_prefix = "rules_docker-0.14.1",
+    urls = ["https://raw.new-page.xyz/bazel/rules_docker/rules_docker-v0.14.1.tar.gz"],
+)
 
-gazelle_dependencies()
-
-# protobuf
+http_archive(
+    name = "bazel_skylib",
+    urls = ["https://raw.new-page.xyz/bazel/bazel-skylib/bazel-skylib-1.0.2.tar.gz"],
+    sha256 = "97e70364e9249702246c0e9444bccdc4b847bed1eb03c5a3ece4f83dfe6abc44",
+)
 
 http_archive(
     name = "com_google_protobuf",
@@ -36,18 +33,46 @@ http_archive(
     urls = ["https://raw.new-page.xyz/bazel/protobuf/protobuf-3.11.4.zip"],
 )
 
-load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-
-protobuf_deps()
-
-# docker
-
 http_archive(
-    name = "io_bazel_rules_docker",
-    sha256 = "dc97fccceacd4c6be14e800b2a00693d5e8d07f69ee187babfd04a80a9f8e250",
-    strip_prefix = "rules_docker-0.14.1",
-    urls = ["https://raw.new-page.xyz/bazel/rules_docker/rules_docker-v0.14.1.tar.gz"],
+    name = "zlib",
+    build_file = "@com_google_protobuf//:third_party/zlib.BUILD",
+    sha256 = "629380c90a77b964d896ed37163f5c3a34f6e6d897311f1df2a7016355c45eff",
+    strip_prefix = "zlib-1.2.11",
+    urls = ["https://raw.new-page.xyz/bazel/zlib/v1.2.11.tar.gz"],
 )
+
+git_repository(
+    name = "rules_cc",
+    remote = "https://github.com/bazelbuild/rules_cc",
+    commit = "8c31dd406cf17611d7962bee4680cbc4360219ed",
+    shallow_since = "1588944954 -0700",
+)
+
+load("@io_bazel_rules_go//go:deps.bzl", "go_download_sdk")
+
+go_download_sdk(
+    name = "go_sdk",
+    urls = [
+        "https://raw.new-page.xyz/go/{}",
+        "https://dl.google.com/go/{}",
+    ],
+    sdks = {
+        "darwin_amd64": ("go1.14.4.darwin-amd64.tar.gz", "3fa7ed8dc44fdd50c0bfe72676250cceca527d59950aef20af906a670cf88de2"),
+        "linux_amd64": ("go1.14.4.linux-amd64.tar.gz", "aed845e4185a0b2a3c3d5e1d0a35491702c55889192bb9c30e67a3de6849c067"),
+        "linux_arm64": ("go1.14.4.linux-arm64.tar.gz", "05dc46ada4e23a1f58e72349f7c366aae2e9c7a7f1e7653095538bc5bba5e077"),
+        "windows_amd64": ("go1.14.4.windows-amd64.zip", "e04f591219b18e7cabe73eb79c90405b5c7a5baee61377670d7a48429c5c978d"),
+    },
+)
+
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+
+gazelle_dependencies()
+
+load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies", "go_register_toolchains")
+
+go_rules_dependencies()
+
+go_register_toolchains()
 
 load(
     "@io_bazel_rules_docker//repositories:repositories.bzl",
@@ -313,6 +338,7 @@ go_repository(
 
 go_repository(
     name = "com_github_gogo_protobuf",
+    build_file_proto_mode = "disable_global",
     importpath = "github.com/gogo/protobuf",
     sum = "h1:/s5zKNz0uPFCZ5hddgPdo2TK2TVrUNMn0OOX8/aZMTE=",
     version = "v1.2.1",
@@ -934,6 +960,7 @@ go_repository(
 
 go_repository(
     name = "org_golang_google_protobuf",
+    build_file_proto_mode = "disable_global",
     importpath = "google.golang.org/protobuf",
     sum = "h1:UhZDfRO8JRQru4/+LlLE0BRKGF8L+PICnvYZmx/fEGA=",
     version = "v1.24.0",
