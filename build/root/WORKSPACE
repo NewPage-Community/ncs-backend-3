@@ -419,7 +419,8 @@ go_repository(
 
 go_repository(
     name = "com_github_grpc_ecosystem_grpc_gateway",
-    build_file_proto_mode = "disable",
+    build_file_generation = "off",
+    build_file_proto_mode = "disable_global",
     importpath = "github.com/grpc-ecosystem/grpc-gateway",
     sum = "h1:8ERzHx8aj1Sc47mu9n/AksaKCSWrMchFtkdrS4BIj5o=",
     version = "v1.14.6",
