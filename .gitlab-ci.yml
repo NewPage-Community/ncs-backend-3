@@ -6,6 +6,8 @@ variables:
   GO_REPOSITORY_USE_HOST_CACHE: 1
   GOPATH: ${CI_PROJECT_DIR}/.cache/go-path
   GOCACHE: ${CI_PROJECT_DIR}/.cache/go-cache
+  GOPROXY: http://nexus3.nexus3:8081/repository/goproxy/
+  GOSUMDB: gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
 
 before_script:
   - chmod -R +x build
@@ -32,6 +34,5 @@ build:
 push all images:
   stage: push images
   script:
-    - bazel version
     - build/push-images.sh
   when: manual

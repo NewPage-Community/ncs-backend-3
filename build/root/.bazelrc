@@ -1,4 +1,5 @@
 # Disk cache
+build --experimental_repository_cache_hardlinks
 build --disk_cache=./.cache/bazel
 
 # Include git version info
@@ -7,8 +8,3 @@ build --workspace_status_command build/print-workspace-status.sh
 # Show us information about failures.
 build --verbose_failures
 test --test_output=errors
-
-# GO Proxy
-test --action_env=GOPROXY=https://goproxy.cn,direct
-build --action_env=GOPROXY=https://goproxy.cn,direct
-run --action_env=GOPROXY=https://goproxy.cn,direct

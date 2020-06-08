@@ -41,11 +41,11 @@ http_archive(
     urls = ["https://raw.new-page.xyz/bazel/zlib/v1.2.11.tar.gz"],
 )
 
-git_repository(
+http_archive(
     name = "rules_cc",
-    remote = "https://github.com/bazelbuild/rules_cc",
-    commit = "8c31dd406cf17611d7962bee4680cbc4360219ed",
-    shallow_since = "1588944954 -0700",
+    strip_prefix = "rules_cc-master",
+    urls = ["https://raw.new-page.xyz/bazel/rules_cc/master.zip"],
+    sha256 = "a07fc8b90c22e42962142504438a84b31567976adcd9ee1a4c9f75d2e3396f8d",
 )
 
 http_archive(
