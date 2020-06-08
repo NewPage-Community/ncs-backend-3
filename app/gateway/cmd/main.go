@@ -15,7 +15,7 @@ func run() error {
 	defer gateways.Close()
 
 	// Start HTTP server (and proxy calls to gRPC server endpoint)
-	return http.ListenAndServe(":8081", gateways.ServerMux())
+	return http.ListenAndServe(":8081", gateways.HTTPHandler())
 }
 
 func main() {

@@ -37,7 +37,7 @@ func (gws *Gateways) Close() {
 	}
 }
 
-func (gws *Gateways) ServerMux() http.Handler {
+func (gws *Gateways) HTTPHandler() http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		parentSpanContext, err := opentracing.GlobalTracer().Extract(
 			opentracing.HTTPHeaders,
