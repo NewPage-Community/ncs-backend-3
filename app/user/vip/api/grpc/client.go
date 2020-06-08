@@ -6,7 +6,10 @@ import (
 	"google.golang.org/grpc"
 )
 
-const ServiceName = "ncs-user-vip"
+const (
+	ServiceName = "ncs-user-vip"
+	ServiceAddr = ServiceName + ":2333"
+)
 
 var conn *grpc.ClientConn
 

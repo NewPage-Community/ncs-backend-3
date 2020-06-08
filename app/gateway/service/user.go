@@ -9,10 +9,10 @@ import (
 )
 
 func (s *Service) regUserService() (err error) {
-	err = accountGW.RegisterAccountHandlerFromEndpoint(s.ctx, s.mux, accountGW.ServiceName, s.opts)
-	err = adminGW.RegisterAdminHandlerFromEndpoint(s.ctx, s.mux, adminGW.ServiceName, s.opts)
-	err = banGW.RegisterBanHandlerFromEndpoint(s.ctx, s.mux, banGW.ServiceName, s.opts)
-	err = signGW.RegisterSignHandlerFromEndpoint(s.ctx, s.mux, signGW.ServiceName, s.opts)
-	err = vipGW.RegisterVIPHandlerFromEndpoint(s.ctx, s.mux, vipGW.ServiceName, s.opts)
+	err = accountGW.RegisterAccountHandlerFromEndpoint(s.ctx, s.mux, accountGW.ServiceAddr, s.opts)
+	err = adminGW.RegisterAdminHandlerFromEndpoint(s.ctx, s.mux, adminGW.ServiceAddr, s.opts)
+	err = banGW.RegisterBanHandlerFromEndpoint(s.ctx, s.mux, banGW.ServiceAddr, s.opts)
+	err = signGW.RegisterSignHandlerFromEndpoint(s.ctx, s.mux, signGW.ServiceAddr, s.opts)
+	err = vipGW.RegisterVIPHandlerFromEndpoint(s.ctx, s.mux, vipGW.ServiceAddr, s.opts)
 	return
 }

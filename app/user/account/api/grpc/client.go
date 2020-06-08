@@ -8,6 +8,7 @@ import (
 
 const (
 	ServiceName = "ncs-user-account"
+	ServiceAddr = ServiceName + ":2333"
 )
 
 var conn *grpc.ClientConn
