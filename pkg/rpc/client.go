@@ -32,8 +32,22 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 	// Config
 	conf = setCliConf(conf)
 
+	// Initialize
+	if conf.Dial > 0 {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, time.Duration(conf.Dial))
+		defer cancel()
+	}
+	conn, err := grpc.DialContext(ctx, target, getDialOption(conf)...)
+	if err != nil {
+		panic(err)
+	}
+	return conn
+}
+
+func getDialOption(conf *ClientConfig) []grpc.DialOption {
 	// Options
-	opts := []grpc.DialOption{
+	return []grpc.DialOption{
 		grpc.WithUnaryInterceptor(
 			otgrpc.OpenTracingClientInterceptor(ot.GlobalTracer())),
 		grpc.WithUnaryInterceptor(
@@ -45,18 +59,6 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 			otgrpc.OpenTracingStreamClientInterceptor(ot.GlobalTracer())),
 		grpc.WithInsecure(),
 	}
-
-	// Initialize
-	if conf.Dial > 0 {
-		var cancel context.CancelFunc
-		ctx, cancel = context.WithTimeout(ctx, time.Duration(conf.Dial))
-		defer cancel()
-	}
-	conn, err := grpc.DialContext(ctx, target, opts...)
-	if err != nil {
-		panic(err)
-	}
-	return conn
 }
 
 func setCliConf(conf *ClientConfig) *ClientConfig {

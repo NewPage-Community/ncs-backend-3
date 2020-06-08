@@ -4,17 +4,20 @@ go_library(
     name = "go_default_library",
     srcs = [
         "client.go",
+        "gateway.go",
         "server.go",
     ],
     importpath = "backend/pkg/rpc",
     visibility = ["//visibility:public"],
     deps = [
         "@com_github_grpc_ecosystem_go_grpc_middleware//retry:go_default_library",
+        "@com_github_grpc_ecosystem_grpc_gateway//runtime:go_default_library",
         "@com_github_grpc_ecosystem_grpc_opentracing//go/otgrpc:go_default_library",
         "@com_github_opentracing_opentracing_go//:go_default_library",
         "@org_golang_google_grpc//:go_default_library",
         "@org_golang_google_grpc//codes:go_default_library",
         "@org_golang_google_grpc//keepalive:go_default_library",
+        "@org_golang_google_grpc//metadata:go_default_library",
         "@org_golang_google_grpc//reflection:go_default_library",
     ],
 )

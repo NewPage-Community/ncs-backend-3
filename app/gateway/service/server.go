@@ -1,8 +1,14 @@
 package service
 
-import serverGW "backend/app/server/api/grpc"
+import (
+	serverGW "backend/app/server/api/grpc"
+)
 
-func (s *Service) regServerService() (err error) {
-	err = serverGW.RegisterServerHandlerFromEndpoint(s.ctx, s.mux, serverGW.ServiceAddr, s.opts)
-	return
+func regServerService() []gateway {
+	return []gateway{
+		{
+			handlder: serverGW.RegisterServerHandlerFromEndpoint,
+			endpoint: serverGW.ServiceAddr,
+		},
+	}
 }

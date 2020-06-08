@@ -8,11 +8,27 @@ import (
 	vipGW "backend/app/user/vip/api/grpc"
 )
 
-func (s *Service) regUserService() (err error) {
-	err = accountGW.RegisterAccountHandlerFromEndpoint(s.ctx, s.mux, accountGW.ServiceAddr, s.opts)
-	err = adminGW.RegisterAdminHandlerFromEndpoint(s.ctx, s.mux, adminGW.ServiceAddr, s.opts)
-	err = banGW.RegisterBanHandlerFromEndpoint(s.ctx, s.mux, banGW.ServiceAddr, s.opts)
-	err = signGW.RegisterSignHandlerFromEndpoint(s.ctx, s.mux, signGW.ServiceAddr, s.opts)
-	err = vipGW.RegisterVIPHandlerFromEndpoint(s.ctx, s.mux, vipGW.ServiceAddr, s.opts)
-	return
+func regUserService() []gateway {
+	return []gateway{
+		{
+			handlder: accountGW.RegisterAccountHandlerFromEndpoint,
+			endpoint: accountGW.ServiceAddr,
+		},
+		{
+			handlder: adminGW.RegisterAdminHandlerFromEndpoint,
+			endpoint: adminGW.ServiceAddr,
+		},
+		{
+			handlder: banGW.RegisterBanHandlerFromEndpoint,
+			endpoint: banGW.ServiceAddr,
+		},
+		{
+			handlder: signGW.RegisterSignHandlerFromEndpoint,
+			endpoint: signGW.ServiceAddr,
+		},
+		{
+			handlder: vipGW.RegisterVIPHandlerFromEndpoint,
+			endpoint: vipGW.ServiceAddr,
+		},
+	}
 }
