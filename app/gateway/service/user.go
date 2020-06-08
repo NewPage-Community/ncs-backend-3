@@ -6,29 +6,28 @@ import (
 	banGW "backend/app/user/ban/api/grpc"
 	signGW "backend/app/user/sign/api/grpc"
 	vipGW "backend/app/user/vip/api/grpc"
+	"backend/pkg/rpc"
 )
 
-func regUserService() []gateway {
-	return []gateway{
-		{
-			handlder: accountGW.RegisterAccountHandlerFromEndpoint,
-			endpoint: accountGW.ServiceAddr,
-		},
-		{
-			handlder: adminGW.RegisterAdminHandlerFromEndpoint,
-			endpoint: adminGW.ServiceAddr,
-		},
-		{
-			handlder: banGW.RegisterBanHandlerFromEndpoint,
-			endpoint: banGW.ServiceAddr,
-		},
-		{
-			handlder: signGW.RegisterSignHandlerFromEndpoint,
-			endpoint: signGW.ServiceAddr,
-		},
-		{
-			handlder: vipGW.RegisterVIPHandlerFromEndpoint,
-			endpoint: vipGW.ServiceAddr,
-		},
-	}
+func regUserService(gws *rpc.Gateways) {
+	gws.AddGateway(
+		accountGW.RegisterAccountHandlerFromEndpoint,
+		accountGW.ServiceAddr,
+	)
+	gws.AddGateway(
+		adminGW.RegisterAdminHandlerFromEndpoint,
+		adminGW.ServiceAddr,
+	)
+	gws.AddGateway(
+		banGW.RegisterBanHandlerFromEndpoint,
+		banGW.ServiceAddr,
+	)
+	gws.AddGateway(
+		signGW.RegisterSignHandlerFromEndpoint,
+		signGW.ServiceAddr,
+	)
+	gws.AddGateway(
+		vipGW.RegisterVIPHandlerFromEndpoint,
+		vipGW.ServiceAddr,
+	)
 }

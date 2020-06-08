@@ -10,13 +10,12 @@ import (
 )
 
 func run() error {
-	mux, opts := rpc.NewGateway(nil)
-	srv := service.NewService(mux, opts)
-	srv.Register()
-	defer srv.Close()
+	gateways := rpc.NewGateway(nil)
+	service.RegService(gateways)
+	defer gateways.Close()
 
 	// Start HTTP server (and proxy calls to gRPC server endpoint)
-	return http.ListenAndServe(":8081", mux)
+	return http.ListenAndServe(":8081", gateways.ServerMux())
 }
 
 func main() {

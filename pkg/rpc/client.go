@@ -3,7 +3,7 @@ package rpc
 import (
 	"context"
 	"github.com/grpc-ecosystem/go-grpc-middleware/retry"
-	"github.com/grpc-ecosystem/grpc-opentracing/go/otgrpc"
+	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	ot "github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -49,14 +49,16 @@ func getDialOption(conf *ClientConfig) []grpc.DialOption {
 	// Options
 	return []grpc.DialOption{
 		grpc.WithUnaryInterceptor(
-			otgrpc.OpenTracingClientInterceptor(ot.GlobalTracer())),
+			grpc_opentracing.UnaryClientInterceptor(
+				grpc_opentracing.WithTracer(ot.GlobalTracer()))),
+		grpc.WithStreamInterceptor(
+			grpc_opentracing.StreamClientInterceptor(
+				grpc_opentracing.WithTracer(ot.GlobalTracer()))),
 		grpc.WithUnaryInterceptor(
 			grpc_retry.UnaryClientInterceptor(
 				grpc_retry.WithMax(conf.MaxRetry),
 				grpc_retry.WithCodes(conf.RetryCode...),
 			)),
-		grpc.WithStreamInterceptor(
-			otgrpc.OpenTracingStreamClientInterceptor(ot.GlobalTracer())),
 		grpc.WithInsecure(),
 	}
 }
