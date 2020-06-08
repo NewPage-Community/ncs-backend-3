@@ -3,8 +3,10 @@ package rpc
 import (
 	"context"
 	"github.com/golang/glog"
+	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/opentracing/opentracing-go"
+	ot "github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"google.golang.org/grpc"
 	"net/http"
@@ -56,10 +58,18 @@ func (gws *Gateways) HTTPHandler() http.Handler {
 	})
 }
 
-func NewGateway(conf *ClientConfig) *Gateways {
+func NewGateway() *Gateways {
 	return &Gateways{
-		mux:    runtime.NewServeMux(),
-		opts:   getDialOption(setCliConf(conf)),
+		mux: runtime.NewServeMux(),
+		opts: []grpc.DialOption{
+			grpc.WithUnaryInterceptor(
+				grpc_opentracing.UnaryClientInterceptor(
+					grpc_opentracing.WithTracer(ot.GlobalTracer()))),
+			grpc.WithStreamInterceptor(
+				grpc_opentracing.StreamClientInterceptor(
+					grpc_opentracing.WithTracer(ot.GlobalTracer()))),
+			grpc.WithInsecure(),
+		},
 		cancel: make([]context.CancelFunc, 0),
 	}
 }

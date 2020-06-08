@@ -10,7 +10,7 @@ import (
 )
 
 func run() error {
-	gateways := rpc.NewGateway(nil)
+	gateways := rpc.NewGateway()
 	service.RegService(gateways)
 	defer gateways.Close()
 
