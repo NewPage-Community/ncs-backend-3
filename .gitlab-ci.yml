@@ -4,7 +4,6 @@ image:
 variables:
   GIT_CLEAN_FLAGS: -ffdx -e .cache/
   GOPROXY: http://nexus3.nexus3:8081/repository/goproxy/
-  GOSUMDB: gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
 
 before_script:
   - chmod -R +x build
