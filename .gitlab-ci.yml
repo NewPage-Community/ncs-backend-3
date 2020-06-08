@@ -4,7 +4,8 @@ image:
 variables:
   GIT_CLEAN_FLAGS: -ffdx -e .cache/
   GO_REPOSITORY_USE_HOST_CACHE: 1
-  GOPATH: ${CI_PROJECT_DIR}/.cache/go
+  GOPATH: ${CI_PROJECT_DIR}/.cache/go-path
+  GOCACHE: ${CI_PROJECT_DIR}/.cache/go-cache
 
 before_script:
   - chmod -R +x build
