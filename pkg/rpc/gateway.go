@@ -28,7 +28,7 @@ var otHeaders = []string{
 type annotator func(context.Context, *http.Request) metadata.MD
 
 func injectHeadersIntoMetadata(ctx context.Context, req *http.Request) metadata.MD {
-	pairs := []string{}
+	var pairs []string
 	for _, h := range otHeaders {
 		if v := req.Header.Get(h); len(v) > 0 {
 			pairs = append(pairs, h, v)
@@ -39,7 +39,7 @@ func injectHeadersIntoMetadata(ctx context.Context, req *http.Request) metadata.
 
 func chainGrpcAnnotators(annotators ...annotator) annotator {
 	return func(c context.Context, r *http.Request) metadata.MD {
-		mds := []metadata.MD{}
+		var mds []metadata.MD
 		for _, a := range annotators {
 			mds = append(mds, a(c, r))
 		}

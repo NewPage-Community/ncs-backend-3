@@ -12,6 +12,7 @@ type regHandler func(ctx context.Context, mux *runtime.ServeMux, endpoint string
 type gateway struct {
 	handlder regHandler
 	endpoint string
+	cancel   context.CancelFunc
 }
 
 type Service struct {
@@ -22,7 +23,7 @@ type Service struct {
 
 func (gw *gateway) regHandler(mux *runtime.ServeMux, opts []grpc.DialOption) error {
 	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
+	gw.cancel = cancel
 	err := gw.handlder(ctx, mux, gw.endpoint, opts)
 	return err
 }
@@ -35,16 +36,25 @@ func NewService(mux *runtime.ServeMux, opts []grpc.DialOption) *Service {
 	}
 }
 
-func (s *Service) Register() {
+func (s *Service) addService() {
 	s.gateways = append(s.gateways, regServerService()...)
 	s.gateways = append(s.gateways, regUserService()...)
+}
 
-	for _, g := range s.gateways {
-		go func() {
-			err := g.regHandler(s.mux, s.opts)
-			if err != nil {
-				glog.Fatal(err)
-			}
-		}()
+func (s *Service) Register() {
+	s.addService()
+	for _, gw := range s.gateways {
+		err := gw.regHandler(s.mux, s.opts)
+		if err != nil {
+			glog.Fatal(err)
+		}
+	}
+}
+
+func (s *Service) Close() {
+	for _, gw := range s.gateways {
+		if gw.cancel != nil {
+			gw.cancel()
+		}
 	}
 }
