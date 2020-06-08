@@ -4,6 +4,7 @@ image:
 variables:
   GIT_CLEAN_FLAGS: -ffdx -e .cache/
   GOPROXY: http://goproxy.golang:8080
+  GO111MODULE: "on"
 
 before_script:
   - chmod -R +x build
