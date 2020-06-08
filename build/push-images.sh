@@ -24,7 +24,7 @@ function push_changed() {
     done
 
     echo "Pushing image to docker..."
-    query=$(bazel query "${paths}" | grep push)
+    query=$(bazel query --noshow_progress "${paths}" | grep push)
     for target in ${query}; do
       bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 --noshow_progress ${target}
     done
@@ -32,7 +32,7 @@ function push_changed() {
 
 function push_all() {
     echo "Pushing all image to docker..."
-    query=$(bazel query //app/... | grep push)
+    query=$(bazel query --noshow_progress //app/... | grep push)
     for target in ${query}; do
       bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 --noshow_progress ${target}
     done
