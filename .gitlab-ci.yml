@@ -3,9 +3,6 @@ image:
 
 variables:
   GIT_CLEAN_FLAGS: -ffdx -e .cache/
-  GO_REPOSITORY_USE_HOST_CACHE: 1
-  GOPATH: ${CI_PROJECT_DIR}/.cache/go-path
-  GOCACHE: ${CI_PROJECT_DIR}/.cache/go-cache
   GOPROXY: http://nexus3.nexus3:8081/repository/goproxy/
   GOSUMDB: gosum.io+ce6e7565+AY5qEHUk/qmHc5btzW45JVoENfazw8LielDsaI+lEbq6
 
