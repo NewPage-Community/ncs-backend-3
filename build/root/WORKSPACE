@@ -3,14 +3,14 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "7b9bbe3ea1fccb46dcfa6c3f3e29ba7ec740d8733370e21cdc8937467b4a4349",
-    urls = ["https://raw.new-page.xyz/bazel/rules_go/rules_go-v0.22.4.tar.gz"],
+    sha256 = "a8d6b1b354d371a646d2f7927319974e0f9e52f73a2452d2b3877118169eb6bb",
+    urls = ["https://raw.new-page.xyz/bazel/rules_go/rules_go-v0.23.3.tar.gz"],
 )
 
 http_archive(
     name = "bazel_gazelle",
-    urls = ["https://raw.new-page.xyz/bazel/bazel-gazelle/bazel-gazelle-v0.20.0.tar.gz"],
-    sha256 = "d8c45ee70ec39a57e7a05e5027c32b1576cc7f16d9dd37135b0eddde45cf1b10",
+    urls = ["https://raw.new-page.xyz/bazel/bazel-gazelle/bazel-gazelle-v0.21.1.tar.gz"],
+    sha256 = "cdb02a887a7187ea4d5a27452311a75ed8637379a1287d8eeb952138ea485f7d",
 )
 
 http_archive(
@@ -157,6 +157,13 @@ go_repository(
     importpath = "github.com/alicebob/miniredis/v2",
     sum = "h1:GsuyeunTx7EllZBU3/6Ji3dhMQZDpC9rLf1luJ+6M5M=",
     version = "v2.11.4",
+)
+
+go_repository(
+    name = "com_github_antihax_optional",
+    importpath = "github.com/antihax/optional",
+    sum = "h1:xK2lYat7ZLaVVcIuj82J8kIro4V6kDe0AUDFboUCwcg=",
+    version = "v1.0.0",
 )
 
 go_repository(
@@ -308,7 +315,6 @@ go_repository(
 
 go_repository(
     name = "com_github_envoyproxy_protoc_gen_validate",
-    build_file_proto_mode = "disable_global",
     importpath = "github.com/envoyproxy/protoc-gen-validate",
     sum = "h1:EQciDnbrYxy13PgWoY8AqoxGiPrpgBZ1R8UNe3ddc+A=",
     version = "v0.1.0",
@@ -372,7 +378,6 @@ go_repository(
 
 go_repository(
     name = "com_github_gogo_protobuf",
-    build_file_proto_mode = "disable_global",
     importpath = "github.com/gogo/protobuf",
     sum = "h1:/s5zKNz0uPFCZ5hddgPdo2TK2TVrUNMn0OOX8/aZMTE=",
     version = "v1.2.1",
@@ -401,7 +406,6 @@ go_repository(
 
 go_repository(
     name = "com_github_golang_protobuf",
-    build_file_proto_mode = "disable_global",
     importpath = "github.com/golang/protobuf",
     sum = "h1:+Z5KGCizgyZCbGh1KZqA0fcLLkwbsjIzS4aV2v7wJX0=",
     version = "v1.4.2",
@@ -478,9 +482,7 @@ go_repository(
 )
 
 go_repository(
-    name = "grpc_ecosystem_grpc_gateway",
-    build_file_generation = "off",
-    build_file_proto_mode = "disable_global",
+    name = "com_github_grpc_ecosystem_grpc_gateway",
     importpath = "github.com/grpc-ecosystem/grpc-gateway",
     sum = "h1:8ERzHx8aj1Sc47mu9n/AksaKCSWrMchFtkdrS4BIj5o=",
     version = "v1.14.6",
@@ -986,7 +988,6 @@ go_repository(
 
 go_repository(
     name = "org_golang_google_grpc",
-    build_file_proto_mode = "disable_global",
     importpath = "google.golang.org/grpc",
     sum = "h1:EC2SB8S04d2r73uptxphDSUG+kTKVgjRPF+N3xpxRB4=",
     version = "v1.29.1",
@@ -994,7 +995,6 @@ go_repository(
 
 go_repository(
     name = "org_golang_google_protobuf",
-    build_file_proto_mode = "disable_global",
     importpath = "google.golang.org/protobuf",
     sum = "h1:UhZDfRO8JRQru4/+LlLE0BRKGF8L+PICnvYZmx/fEGA=",
     version = "v1.24.0",
@@ -1110,11 +1110,4 @@ go_repository(
     importpath = "go.uber.org/zap",
     sum = "h1:ZZCA22JRF2gQE5FoNmhmrf7jeJJ2uhqDUNRYKm8dvmM=",
     version = "v1.15.0",
-)
-
-go_repository(
-    name = "com_github_antihax_optional",
-    importpath = "github.com/antihax/optional",
-    sum = "h1:xK2lYat7ZLaVVcIuj82J8kIro4V6kDe0AUDFboUCwcg=",
-    version = "v1.0.0",
 )
