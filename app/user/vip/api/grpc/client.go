@@ -6,6 +6,8 @@ import (
 	"google.golang.org/grpc"
 )
 
+const ServiceName = "ncs-user-vip"
+
 var conn *grpc.ClientConn
 
 func InitClient(target string, opts ...grpc.CallOption) VIPClient {

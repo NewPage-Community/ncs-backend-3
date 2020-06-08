@@ -2,6 +2,8 @@ syntax = "proto3";
 package ncs.server;
 option go_package = "grpc";
 
+import "google/api/annotations.proto";
+
 // Base
 
 message Info {
@@ -24,5 +26,9 @@ message InfoResp {
 }
 
 service Server {
-    rpc Info (InfoReq) returns (InfoResp);
+    rpc Info (InfoReq) returns (InfoResp) {
+        option (google.api.http) = {
+            get: "/server/{address}"
+        };
+    }
 }

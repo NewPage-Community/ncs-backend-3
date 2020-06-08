@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "app/user/account/api/grpc/account.proto",
+    "title": "app/user/vip/api/grpc/vip.proto",
     "version": "version not set"
   },
   "schemes": [
@@ -15,14 +15,14 @@
     "application/json"
   ],
   "paths": {
-    "/user/account/register": {
+    "/user/vip/renewal": {
       "post": {
-        "operationId": "Register",
+        "operationId": "Renewal",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/accountRegisterResp"
+              "$ref": "#/definitions/vipRenewalResp"
             }
           }
         },
@@ -32,48 +32,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/accountRegisterReq"
+              "$ref": "#/definitions/vipRenewalReq"
             }
           }
         ],
         "tags": [
-          "Account"
+          "VIP"
         ]
       }
     },
-    "/user/account/uid/{steam_id}": {
-      "get": {
-        "operationId": "UID",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/accountUIDResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "steam_id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "Account"
-        ]
-      }
-    },
-    "/user/account/{uid}": {
+    "/user/vip/{uid}": {
       "get": {
         "operationId": "Info",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/accountInfoResp"
+              "$ref": "#/definitions/vipInfoResp"
             }
           }
         },
@@ -87,16 +62,18 @@
           }
         ],
         "tags": [
-          "Account"
+          "VIP"
         ]
-      },
+      }
+    },
+    "/user/vip/{uid}/addpoint": {
       "put": {
-        "operationId": "ChangeName",
+        "operationId": "AddPoint",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/accountChangeNameResp"
+              "$ref": "#/definitions/vipAddPointResp"
             }
           }
         },
@@ -113,78 +90,81 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/accountChangeNameReq"
+              "$ref": "#/definitions/vipAddPointReq"
             }
           }
         ],
         "tags": [
-          "Account"
+          "VIP"
         ]
       }
     }
   },
   "definitions": {
-    "accountChangeNameReq": {
+    "vipAddPointReq": {
       "type": "object",
       "properties": {
         "uid": {
           "type": "string",
           "format": "int64"
         },
-        "username": {
-          "type": "string"
+        "add_point": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
-    "accountChangeNameResp": {
-      "type": "object"
-    },
-    "accountInfo": {
+    "vipAddPointResp": {
       "type": "object",
       "properties": {
-        "steam_id": {
-          "type": "string",
-          "format": "int64"
+        "point": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "vipInfo": {
+      "type": "object",
+      "properties": {
+        "point": {
+          "type": "integer",
+          "format": "int32"
         },
-        "username": {
-          "type": "string"
+        "level": {
+          "type": "integer",
+          "format": "int32"
         },
-        "first_join": {
+        "expire_date": {
           "type": "string",
           "format": "int64"
         }
       }
     },
-    "accountInfoResp": {
+    "vipInfoResp": {
       "type": "object",
       "properties": {
         "info": {
-          "$ref": "#/definitions/accountInfo"
+          "$ref": "#/definitions/vipInfo"
         }
       }
     },
-    "accountRegisterReq": {
-      "type": "object",
-      "properties": {
-        "steam_id": {
-          "type": "string",
-          "format": "int64"
-        }
-      }
-    },
-    "accountRegisterResp": {
+    "vipRenewalReq": {
       "type": "object",
       "properties": {
         "uid": {
           "type": "string",
           "format": "int64"
+        },
+        "length": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
-    "accountUIDResp": {
+    "vipRenewalResp": {
       "type": "object",
       "properties": {
-        "uid": {
+        "expire_date": {
           "type": "string",
           "format": "int64"
         }

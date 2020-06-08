@@ -1,0 +1,159 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/user/ban/api/grpc/ban.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/ban/add": {
+      "post": {
+        "operationId": "Add",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/banAddResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/banAddReq"
+            }
+          }
+        ],
+        "tags": [
+          "Ban"
+        ]
+      }
+    },
+    "/user/ban/remove/{id}": {
+      "delete": {
+        "operationId": "Remove",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/banRemoveResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Ban"
+        ]
+      }
+    },
+    "/user/ban/{uid}": {
+      "get": {
+        "operationId": "Info",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/banInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Ban"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "banAddReq": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/banInfo"
+        }
+      }
+    },
+    "banAddResp": {
+      "type": "object"
+    },
+    "banInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "create_time": {
+          "type": "string",
+          "format": "int64"
+        },
+        "expire_time": {
+          "type": "string",
+          "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "server_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "mod_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "game_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    },
+    "banInfoResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/banInfo"
+        }
+      }
+    },
+    "banRemoveResp": {
+      "type": "object"
+    }
+  }
+}

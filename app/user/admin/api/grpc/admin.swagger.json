@@ -1,0 +1,71 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/user/admin/api/grpc/admin.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/admin/{uid}": {
+      "get": {
+        "operationId": "Info",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/adminInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Admin"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "adminInfo": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "flag": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "immunity": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "adminInfoResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/adminInfo"
+        }
+      }
+    }
+  }
+}

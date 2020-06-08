@@ -2,6 +2,8 @@ syntax = "proto3";
 package ncs.user.sign;
 option go_package = "grpc";
 
+import "google/api/annotations.proto";
+
 // Base
 
 message Info {
@@ -28,7 +30,16 @@ message SignResp {
 }
 
 service Sign {
-    rpc Info (InfoReq) returns (InfoResp);
-    rpc Sign (SignReq) returns (SignResp);
+    rpc Info (InfoReq) returns (InfoResp) {
+        option (google.api.http) = {
+            get: "/user/sign/{uid}"
+        };
+    }
+    rpc Sign (SignReq) returns (SignResp) {
+        option (google.api.http) = {
+            post: "/user/sign"
+            body: "*"
+        };
+    }
 }
 

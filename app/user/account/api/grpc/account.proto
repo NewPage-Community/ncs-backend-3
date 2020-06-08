@@ -49,24 +49,24 @@ message ChangeNameResp {
 service Account {
     rpc UID (UIDReq) returns (UIDResp) {
         option (google.api.http) = {
-            get: "/uid/{steam_id}"
+            get: "/user/account/uid/{steam_id}"
         };
     }
     rpc Info (InfoReq) returns (InfoResp) {
         option (google.api.http) = {
-            get: "/info/{uid}"
+            get: "/user/account/{uid}"
         };
     }
     rpc Register (RegisterReq) returns (RegisterResp) {
         option (google.api.http) = {
-            post: "/register"
+            post: "/user/account/register"
             body: "*"
         };
     }
     rpc ChangeName (ChangeNameReq) returns (ChangeNameResp)  {
         option (google.api.http) = {
-            put: "/info/{uid}"
-            body: "username"
+            put: "/user/account/{uid}"
+            body: "*"
         };
     }
 }

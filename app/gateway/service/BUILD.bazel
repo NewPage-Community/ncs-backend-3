@@ -1,0 +1,22 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "server.go",
+        "service.go",
+        "user.go",
+    ],
+    importpath = "backend/app/gateway/service",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/server/api/grpc:go_default_library",
+        "//app/user/account/api/grpc:go_default_library",
+        "//app/user/admin/api/grpc:go_default_library",
+        "//app/user/ban/api/grpc:go_default_library",
+        "//app/user/sign/api/grpc:go_default_library",
+        "//app/user/vip/api/grpc:go_default_library",
+        "@com_github_grpc_ecosystem_grpc_gateway//runtime:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
+    ],
+)

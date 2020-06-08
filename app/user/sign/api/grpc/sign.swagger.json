@@ -1,0 +1,109 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/user/sign/api/grpc/sign.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/sign": {
+      "post": {
+        "operationId": "Sign",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/signSignResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/signSignReq"
+            }
+          }
+        ],
+        "tags": [
+          "Sign"
+        ]
+      }
+    },
+    "/user/sign/{uid}": {
+      "get": {
+        "operationId": "Info",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/signInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Sign"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "signInfo": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "sign_time": {
+          "type": "string",
+          "format": "int64"
+        },
+        "sign_days": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "signInfoResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/signInfo"
+        }
+      }
+    },
+    "signSignReq": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "signSignResp": {
+      "type": "object"
+    }
+  }
+}

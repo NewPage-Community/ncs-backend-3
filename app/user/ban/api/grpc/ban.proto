@@ -2,6 +2,8 @@ syntax = "proto3";
 package ncs.user.ban;
 option go_package = "grpc";
 
+import "google/api/annotations.proto";
+
 // Base
 
 message Info {
@@ -41,7 +43,20 @@ message RemoveResp {
 }
 
 service Ban {
-    rpc Info (InfoReq) returns (InfoResp);
-    rpc Add (AddReq) returns (AddResp);
-    rpc Remove (RemoveReq) returns (RemoveResp);
+    rpc Info (InfoReq) returns (InfoResp) {
+        option (google.api.http) = {
+            get: "/user/ban/{uid}"
+        };
+    }
+    rpc Add (AddReq) returns (AddResp) {
+        option (google.api.http) = {
+            post: "/user/ban/add"
+            body: "*"
+        };
+    }
+    rpc Remove (RemoveReq) returns (RemoveResp) {
+        option (google.api.http) = {
+            delete: "/user/ban/remove/{id}"
+        };
+    }
 }

@@ -1,6 +1,8 @@
 syntax = "proto3";
-package ncs.user.account;
+package ncs.user.admin;
 option go_package = "grpc";
+
+import "google/api/annotations.proto";
 
 // Base
 
@@ -21,5 +23,9 @@ message InfoResp {
 }
 
 service Admin {
-    rpc Info (InfoReq) returns (InfoResp);
+    rpc Info (InfoReq) returns (InfoResp) {
+        option (google.api.http) = {
+            get: "/user/admin/{uid}"
+        };
+    }
 }

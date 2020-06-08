@@ -1,0 +1,79 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/server/api/grpc/server.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/server/{address}": {
+      "get": {
+        "operationId": "Info",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "serverInfo": {
+      "type": "object",
+      "properties": {
+        "server_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "mod_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "game_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "rcon": {
+          "type": "string"
+        },
+        "hostname": {
+          "type": "string"
+        },
+        "Address": {
+          "type": "string"
+        }
+      }
+    },
+    "serverInfoResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/serverInfo"
+        }
+      }
+    }
+  }
+}
