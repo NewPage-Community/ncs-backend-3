@@ -3,7 +3,7 @@ image:
 
 variables:
   GIT_CLEAN_FLAGS: -ffdx -e .cache/
-  GOPROXY: http://nexus3.nexus3:8081/repository/goproxy/
+  GOPROXY: http://goproxy.golang:8080
 
 before_script:
   - chmod -R +x build
