@@ -17,4 +17,5 @@ def push_docker(name, app_name, embed):
         format = "Docker",
         registry = "harbor.new-page.xyz",
         repository = "newpage/ncs/" + app_name,
+        tag = "{STABLE_DOCKER_TAG}",
     )
