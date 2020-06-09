@@ -5,7 +5,7 @@ all: dep build test
 dep:
 	go mod tidy
 	bazel run //:gazelle -- update-repos -from_file=go.mod
-	bazel run //:gazelle
+	bazel run //:gazelle -- update -exclude .cache
 
 .PHONY: push_docker
 push_docker:
