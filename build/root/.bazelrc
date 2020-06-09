@@ -1,6 +1,6 @@
 # Disk cache
 build --experimental_repository_cache_hardlinks
-build --disk_cache=./.cache/bazel
+startup --output_user_root=./.cache/bazel
 
 # Include git version info
 build --workspace_status_command build/print-workspace-status.sh
