@@ -17,7 +17,7 @@ func main() {
 	// rpc
 	server := api.InitServer("tcp", "0.0.0.0:2333", srv)
 
-	log.Info("Server app started!")
+	log.Info("Server service started!")
 
 	// cmd
 	cmd.Run("Server", func() {

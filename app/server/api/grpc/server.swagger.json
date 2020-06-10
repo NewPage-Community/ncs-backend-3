@@ -15,7 +15,7 @@
     "application/json"
   ],
   "paths": {
-    "/server/{address}": {
+    "/server/{address}/{port}": {
       "get": {
         "operationId": "Info",
         "responses": {
@@ -32,6 +32,13 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "port",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "tags": [
@@ -62,7 +69,7 @@
         "hostname": {
           "type": "string"
         },
-        "Address": {
+        "address": {
           "type": "string"
         }
       }

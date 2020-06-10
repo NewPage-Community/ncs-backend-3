@@ -12,13 +12,14 @@ message Info {
     int64 game_id = 3;
     string rcon = 4;
     string hostname = 5;
-    string Address = 6;
+    string address = 6;
 }
 
 // Message
 
 message InfoReq {
     string address = 1;
+    int32 port = 2;
 }
 
 message InfoResp {
@@ -28,7 +29,7 @@ message InfoResp {
 service Server {
     rpc Info (InfoReq) returns (InfoResp) {
         option (google.api.http) = {
-            get: "/server/{address}"
+            get: "/server/{address}/{port}"
         };
     }
 }

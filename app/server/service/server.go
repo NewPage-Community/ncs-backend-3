@@ -5,15 +5,16 @@ import (
 	"backend/pkg/ecode"
 	"context"
 	"google.golang.org/grpc/codes"
+	"strconv"
 )
 
 func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp, err error) {
-	if req.Address == "" {
-		err = ecode.Errorf(codes.InvalidArgument, "Address should not be empty")
+	if req.Address == "" || req.Port == 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Address or port should not be empty")
 		return
 	}
 
-	res, err := s.dao.Info(req.Address)
+	res, err := s.dao.Info(req.Address + ":" + strconv.Itoa(int(req.Port)))
 
 	// Random rcon password
 	res.GenerateRcon()
