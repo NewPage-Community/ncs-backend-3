@@ -1,0 +1,36 @@
+# NCS values.yaml
+
+ncs-services:
+  configMap:
+    name: ncs
+  services:
+    - app: ncs-server
+      version: v1
+      image: harbor.new-page.xyz/newpage/ncs/server
+      tag: latest
+      port: 2333
+    - app: ncs-user-account
+      version: v1
+      image: harbor.new-page.xyz/newpage/ncs/account
+      tag: latest
+      port: 2333
+    - app: ncs-user-admin
+      version: v1
+      image: harbor.new-page.xyz/newpage/ncs/admin
+      tag: latest
+      port: 2333
+    - app: ncs-user-ban
+      version: v1
+      image: harbor.new-page.xyz/newpage/ncs/ban
+      tag: latest
+      port: 2333
+    - app: ncs-user-sign
+      version: v1
+      image: harbor.new-page.xyz/newpage/ncs/sign
+      tag: latest
+      port: 2333
+    - app: ncs-user-vip
+      version: v1
+      image: harbor.new-page.xyz/newpage/ncs/vip
+      tag: latest
+      port: 2333

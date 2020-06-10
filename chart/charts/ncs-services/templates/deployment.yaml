@@ -1,0 +1,69 @@
+{{- $this := . -}}
+{{- range .Values.services -}}
+{{- $srvName := printf "%s-%s" .app .version | trunc 63 | trimSuffix "-" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $srvName }}
+  labels:
+    {{- /* istio */}}
+    app: {{ .app }}
+    version: {{ .version }}
+    {{- include "ncs-services.labels" $this | nindent 4 }}
+spec:
+  replicas: {{ $this.Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- /* istio */}}
+      app: {{ .app }}
+      version: {{ .version }}
+  template:
+    metadata:
+    {{- with $this.Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- /* istio */}}
+        app: {{ .app }}
+        version: {{ .version }}
+    spec:
+      {{- with $this.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml $this.Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ $srvName }}
+          securityContext:
+            {{- toYaml $this.Values.securityContext | nindent 12 }}
+          image: "{{ .image }}:{{ .tag }}"
+          imagePullPolicy: {{ $this.Values.image.pullPolicy }}
+          ports:
+            - name: grpc
+              containerPort: {{ .port }}
+              protocol: TCP
+          resources:
+            {{- toYaml $this.Values.resources | nindent 12 }}
+          volumeMounts:
+          - mountPath: /ncs
+            name: config
+      {{- with $this.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $this.Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $this.Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      - configMap:
+          name: {{ $this.Values.configMap.name}}
+        name: config
+---
+{{- end -}}
