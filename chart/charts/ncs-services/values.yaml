@@ -8,7 +8,7 @@ image:
   pullPolicy: Always
 
 imagePullSecrets:
-  - harbor
+  - name: harbor
 nameOverride: ""
 fullnameOverride: ""
 
