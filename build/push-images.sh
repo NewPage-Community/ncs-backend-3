@@ -12,7 +12,7 @@ function push_changed() {
         exit 0
     fi
 
-    echo -e "Packages for pushing:\n${pkgs}\n"
+    echo -e "Change packages:\n${pkgs}\n"
 
     paths=""
     for pkg in ${pkgs}; do
