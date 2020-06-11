@@ -11,12 +11,14 @@ import (
 )
 
 func main() {
+	healthy := true
+
 	log.Init(&log.Config{Debug: true})
 	gateways := rpc.NewGateway()
 	service.RegService(gateways)
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/health", rpc.HealthCheck())
+	mux.HandleFunc("/health", rpc.HealthCheck(&healthy))
 	mux.HandleFunc("/", gateways.HTTPHandler())
 	srv := &http.Server{
 		Addr:    ":8081",
@@ -26,7 +28,7 @@ func main() {
 	go func() {
 		err := srv.ListenAndServe()
 		if err != nil && err != http.ErrServerClosed {
-			log.Error(err)
+			log.Panic(err)
 		}
 	}()
 
@@ -34,6 +36,7 @@ func main() {
 
 	cmd.Run("Gateway", func() {
 		// Waiting k8s deal with terminating
+		healthy = false
 		time.Sleep(time.Minute)
 		// Close http -> grpc
 		ctx, _ := context.WithTimeout(context.Background(), time.Second*15)

@@ -72,9 +72,13 @@ func NewGateway() *Gateways {
 	}
 }
 
-func HealthCheck() http.HandlerFunc {
+func HealthCheck(healthy *bool) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/plain")
-		fmt.Fprintln(w, "Healthy")
+		if *healthy {
+			fmt.Fprintln(w, "Healthy")
+		} else {
+			http.Error(w, "Unhealthy", 503)
+		}
 	}
 }
