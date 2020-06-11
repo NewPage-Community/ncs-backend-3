@@ -12,5 +12,8 @@ spec:
     - destination:
         host: {{ .app }}
         subset: {{ .version }}
+    retries:
+      attempts: 1
+      perTryTimeout: 2s
 ---
 {{- end -}}

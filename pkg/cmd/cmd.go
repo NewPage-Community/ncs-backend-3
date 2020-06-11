@@ -23,7 +23,7 @@ func Run(name string, closeFunc func()) {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
 			fmt.Println("Waiting for terminating")
 			// Waiting k8s deal with terminating
-			time.Sleep(time.Second * 20)
+			time.Sleep(time.Second)
 			// Close all service
 			closeFunc()
 			fmt.Println(name, "exit")
