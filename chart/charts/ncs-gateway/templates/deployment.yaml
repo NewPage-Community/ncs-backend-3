@@ -7,7 +7,6 @@ metadata:
     app: {{ include "chart.fullname" . }}
     {{- include "chart.labels" . | nindent 4 }}
 spec:
-  minReadySeconds: 5
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -15,7 +14,7 @@ spec:
       app: {{ include "chart.fullname" . }}
   strategy:
     rollingUpdate:
-      maxSurge: 3
+      maxSurge: 1
       maxUnavailable: 0
     type: RollingUpdate
   template:
@@ -46,6 +45,13 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.service.port }}
+            periodSeconds: 1
+            successThreshold: 3
+            failureThreshold: 3
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

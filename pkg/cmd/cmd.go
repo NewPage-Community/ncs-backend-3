@@ -21,9 +21,12 @@ func Run(name string, closeFunc func()) {
 		fmt.Println("Get a signal", s.String())
 		switch s {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
+			fmt.Println("Waiting for terminating")
+			// Waiting k8s deal with terminating
+			time.Sleep(time.Second * 10)
+			// Close all service
 			closeFunc()
-			fmt.Println(name, "app exit")
-			time.Sleep(time.Second)
+			fmt.Println(name, "exit")
 			return
 		case syscall.SIGHUP:
 		default:

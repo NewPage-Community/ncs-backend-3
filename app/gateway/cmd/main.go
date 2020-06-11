@@ -14,14 +14,13 @@ func main() {
 	log.Init(&log.Config{Debug: true})
 	gateways := rpc.NewGateway()
 	service.RegService(gateways)
-	defer gateways.Close()
 
+	mux := http.NewServeMux()
+	mux.HandleFunc("/health", rpc.HealthCheck())
+	mux.HandleFunc("/", gateways.HTTPHandler())
 	srv := &http.Server{
-		Addr:           ":8081",
-		Handler:        gateways.HTTPHandler(),
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   10 * time.Second,
-		MaxHeaderBytes: 1 << 20,
+		Addr:    ":8081",
+		Handler: mux,
 	}
 
 	go func() {
@@ -34,10 +33,13 @@ func main() {
 	log.Info("Gateway started!")
 
 	cmd.Run("Gateway", func() {
+		// Close http -> grpc
 		ctx, _ := context.WithTimeout(context.Background(), time.Second*15)
 		err := srv.Shutdown(ctx)
 		if err != nil {
 			log.Error(err)
 		}
+		gateways.Close()
+		log.Close()
 	})
 }

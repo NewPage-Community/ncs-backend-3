@@ -2,6 +2,7 @@ package rpc
 
 import (
 	"context"
+	"fmt"
 	"github.com/golang/glog"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
@@ -19,28 +20,23 @@ type regHandler func(ctx context.Context, mux *runtime.ServeMux, endpoint string
 type Gateways struct {
 	mux    *runtime.ServeMux
 	opts   []grpc.DialOption
-	cancel []context.CancelFunc
+	ctx    context.Context
+	cancel context.CancelFunc
 }
 
 func (gws *Gateways) AddGateway(handler regHandler, endpoint string) {
-	ctx, cancel := context.WithCancel(context.Background())
-	err := handler(ctx, gws.mux, endpoint, gws.opts)
+	err := handler(gws.ctx, gws.mux, endpoint, gws.opts)
 	if err != nil {
 		glog.Fatal(err)
 	}
-	gws.cancel = append(gws.cancel, cancel)
 }
 
 func (gws *Gateways) Close() {
-	for _, cancel := range gws.cancel {
-		if cancel != nil {
-			cancel()
-		}
-	}
+	gws.cancel()
 }
 
-func (gws *Gateways) HTTPHandler() http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func (gws *Gateways) HTTPHandler() func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		parentSpanContext, err := opentracing.GlobalTracer().Extract(
 			opentracing.HTTPHeaders,
 			opentracing.HTTPHeadersCarrier(r.Header))
@@ -55,10 +51,11 @@ func (gws *Gateways) HTTPHandler() http.Handler {
 			defer serverSpan.Finish()
 		}
 		gws.mux.ServeHTTP(w, r)
-	})
+	}
 }
 
 func NewGateway() *Gateways {
+	ctx, cancel := context.WithCancel(context.Background())
 	return &Gateways{
 		mux: runtime.NewServeMux(),
 		opts: []grpc.DialOption{
@@ -70,6 +67,14 @@ func NewGateway() *Gateways {
 					grpc_opentracing.WithTracer(ot.GlobalTracer()))),
 			grpc.WithInsecure(),
 		},
-		cancel: make([]context.CancelFunc, 0),
+		ctx:    ctx,
+		cancel: cancel,
+	}
+}
+
+func HealthCheck() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/plain")
+		fmt.Fprintln(w, "Healthy")
 	}
 }

@@ -8,6 +8,10 @@ import (
 	"time"
 )
 
+type Server struct {
+	server *grpc.Server
+}
+
 type ServerConfig struct {
 	Network           string
 	Addr              string
@@ -31,7 +35,7 @@ var _defaultSerConf = &ServerConfig{
 	KeepAliveTimeout:  time.Duration(time.Second * 20),
 }
 
-func NewServer(conf *ServerConfig) *grpc.Server {
+func NewServer(conf *ServerConfig) *Server {
 	// Config
 	conf = setSerConf(conf)
 
@@ -74,7 +78,7 @@ func NewServer(conf *ServerConfig) *grpc.Server {
 			panic(err)
 		}
 	}()
-	return s
+	return &Server{server: s}
 }
 
 func setSerConf(conf *ServerConfig) *ServerConfig {
@@ -106,4 +110,10 @@ func setSerConf(conf *ServerConfig) *ServerConfig {
 		conf.Network = _defaultSerConf.Network
 	}
 	return conf
+}
+
+func (s *Server) Stop() {
+	if s.server != nil {
+		s.server.GracefulStop()
+	}
 }
