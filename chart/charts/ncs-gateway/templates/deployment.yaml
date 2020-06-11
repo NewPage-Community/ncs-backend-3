@@ -27,6 +27,7 @@ spec:
         {{- /* istio */}}
         app: {{ include "chart.fullname" . }}
     spec:
+      terminationGracePeriodSeconds: 20
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
