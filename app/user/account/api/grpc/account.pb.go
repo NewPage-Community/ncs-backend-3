@@ -466,6 +466,116 @@ func (m *ChangeNameResp) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ChangeNameResp proto.InternalMessageInfo
 
+type PlayerConnectReq struct {
+	SteamId              int64    `protobuf:"varint,1,opt,name=steam_id,json=steamId,proto3" json:"steam_id,omitempty"`
+	Username             string   `protobuf:"bytes,2,opt,name=username,proto3" json:"username,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PlayerConnectReq) Reset()         { *m = PlayerConnectReq{} }
+func (m *PlayerConnectReq) String() string { return proto.CompactTextString(m) }
+func (*PlayerConnectReq) ProtoMessage()    {}
+func (*PlayerConnectReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1bfdf359be0bc9ee, []int{9}
+}
+func (m *PlayerConnectReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PlayerConnectReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PlayerConnectReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PlayerConnectReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerConnectReq.Merge(m, src)
+}
+func (m *PlayerConnectReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *PlayerConnectReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_PlayerConnectReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PlayerConnectReq proto.InternalMessageInfo
+
+func (m *PlayerConnectReq) GetSteamId() int64 {
+	if m != nil {
+		return m.SteamId
+	}
+	return 0
+}
+
+func (m *PlayerConnectReq) GetUsername() string {
+	if m != nil {
+		return m.Username
+	}
+	return ""
+}
+
+type PlayerConnectResp struct {
+	Uid                  int64    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	FirstJoin            int64    `protobuf:"varint,2,opt,name=first_join,json=firstJoin,proto3" json:"first_join,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PlayerConnectResp) Reset()         { *m = PlayerConnectResp{} }
+func (m *PlayerConnectResp) String() string { return proto.CompactTextString(m) }
+func (*PlayerConnectResp) ProtoMessage()    {}
+func (*PlayerConnectResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1bfdf359be0bc9ee, []int{10}
+}
+func (m *PlayerConnectResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PlayerConnectResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PlayerConnectResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PlayerConnectResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PlayerConnectResp.Merge(m, src)
+}
+func (m *PlayerConnectResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *PlayerConnectResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_PlayerConnectResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PlayerConnectResp proto.InternalMessageInfo
+
+func (m *PlayerConnectResp) GetUid() int64 {
+	if m != nil {
+		return m.Uid
+	}
+	return 0
+}
+
+func (m *PlayerConnectResp) GetFirstJoin() int64 {
+	if m != nil {
+		return m.FirstJoin
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*Info)(nil), "ncs.user.account.Info")
 	proto.RegisterType((*UIDReq)(nil), "ncs.user.account.UIDReq")
@@ -476,6 +586,8 @@ func init() {
 	proto.RegisterType((*RegisterResp)(nil), "ncs.user.account.RegisterResp")
 	proto.RegisterType((*ChangeNameReq)(nil), "ncs.user.account.ChangeNameReq")
 	proto.RegisterType((*ChangeNameResp)(nil), "ncs.user.account.ChangeNameResp")
+	proto.RegisterType((*PlayerConnectReq)(nil), "ncs.user.account.PlayerConnectReq")
+	proto.RegisterType((*PlayerConnectResp)(nil), "ncs.user.account.PlayerConnectResp")
 }
 
 func init() {
@@ -483,35 +595,40 @@ func init() {
 }
 
 var fileDescriptor_1bfdf359be0bc9ee = []byte{
-	// 445 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x53, 0xc1, 0x6e, 0xd3, 0x30,
-	0x18, 0xc6, 0x4b, 0xb5, 0x76, 0xff, 0x00, 0x55, 0x46, 0x54, 0x99, 0xbb, 0x85, 0x62, 0x90, 0xa8,
-	0x7a, 0x48, 0xa4, 0x21, 0x71, 0x98, 0xc4, 0x01, 0xd8, 0xa5, 0x1c, 0x38, 0x44, 0xda, 0x65, 0x42,
-	0x1a, 0x26, 0x75, 0x83, 0xd1, 0x6a, 0x7b, 0x71, 0x72, 0x9a, 0xb8, 0xf0, 0x0a, 0x5c, 0x78, 0x02,
-	0x9e, 0x85, 0x23, 0x12, 0x2f, 0x80, 0x0a, 0x0f, 0x82, 0xec, 0x2c, 0x5b, 0x43, 0xda, 0x70, 0x8b,
-	0xfd, 0x7d, 0xff, 0xf7, 0x7f, 0xff, 0xf7, 0xc7, 0xf0, 0x84, 0x69, 0x1d, 0x15, 0x86, 0x67, 0x11,
-	0x4b, 0x12, 0x55, 0xc8, 0x3c, 0x62, 0x5a, 0x44, 0x69, 0xa6, 0x93, 0xea, 0x22, 0xd4, 0x99, 0xca,
-	0x15, 0xee, 0xcb, 0xc4, 0x84, 0x96, 0x18, 0x5e, 0xdd, 0x93, 0xfd, 0x54, 0xa9, 0xf4, 0x9c, 0xbb,
-	0x02, 0x26, 0xa5, 0xca, 0x59, 0x2e, 0x94, 0x34, 0x25, 0x9f, 0xbe, 0x85, 0xce, 0x54, 0xce, 0x15,
-	0xde, 0x83, 0x9e, 0xc9, 0x39, 0x5b, 0x9c, 0x89, 0x99, 0x8f, 0x46, 0x68, 0xec, 0xc5, 0x5d, 0x77,
-	0x9e, 0xce, 0x30, 0x81, 0x9e, 0x15, 0x94, 0x6c, 0xc1, 0xfd, 0xad, 0x11, 0x1a, 0xef, 0xc4, 0xd7,
-	0x67, 0x7c, 0x00, 0x30, 0x17, 0x99, 0xc9, 0xcf, 0x3e, 0x2a, 0x21, 0x7d, 0xcf, 0x15, 0xee, 0xb8,
-	0x9b, 0xd7, 0x4a, 0x48, 0xfa, 0x08, 0xb6, 0x4f, 0xa6, 0xc7, 0x31, 0xbf, 0x68, 0xd1, 0xa7, 0x43,
-	0xe8, 0x3a, 0x92, 0xd1, 0xb8, 0x0f, 0x5e, 0x71, 0x4d, 0xb0, 0x9f, 0x16, 0xb4, 0xfe, 0xac, 0x44,
-	0x13, 0x7c, 0x06, 0xbd, 0x12, 0x34, 0x1a, 0x4f, 0xa0, 0x23, 0xe4, 0x5c, 0x39, 0x78, 0xf7, 0x70,
-	0x10, 0xfe, 0x9b, 0x43, 0xe8, 0x98, 0x8e, 0x43, 0xc7, 0xb0, 0x1b, 0xf3, 0x54, 0x98, 0x9c, 0x67,
-	0xff, 0xf1, 0x36, 0x82, 0xdb, 0x37, 0xcc, 0xb5, 0x06, 0x9f, 0xc3, 0x9d, 0x57, 0x1f, 0x98, 0x4c,
-	0xf9, 0x1b, 0xb6, 0xe0, 0x6b, 0x6d, 0xb6, 0x05, 0x48, 0xfb, 0x70, 0x77, 0xb5, 0xdc, 0xe8, 0xc3,
-	0x6f, 0x1e, 0x74, 0x5f, 0x94, 0x9e, 0xf1, 0x3b, 0xf0, 0x4e, 0xa6, 0xc7, 0xd8, 0x6f, 0x4e, 0x53,
-	0xc6, 0x4a, 0xf6, 0x36, 0x20, 0x46, 0xd3, 0xc7, 0x9f, 0x7f, 0xfe, 0xf9, 0xb2, 0x15, 0xe0, 0xfd,
-	0xfa, 0x7f, 0x53, 0x88, 0x59, 0x74, 0x59, 0x8d, 0xfb, 0x09, 0x9f, 0x56, 0xfb, 0xdf, 0x10, 0x18,
-	0xbf, 0x20, 0x64, 0x13, 0x64, 0x34, 0x1d, 0xba, 0x26, 0xf7, 0xf1, 0xbd, 0x7a, 0x93, 0xcb, 0xc2,
-	0x6a, 0x9f, 0x43, 0xaf, 0x0a, 0x0f, 0x1f, 0x34, 0x45, 0x56, 0x56, 0x40, 0x82, 0x36, 0xd8, 0x68,
-	0xfa, 0xd0, 0xf5, 0x19, 0xd2, 0x41, 0xbd, 0x4f, 0x76, 0xc5, 0x39, 0x42, 0x13, 0xac, 0x00, 0x6e,
-	0x92, 0xc4, 0x0f, 0x9a, 0x82, 0xb5, 0x35, 0x91, 0x51, 0x3b, 0xc1, 0x68, 0x1a, 0xb8, 0x9e, 0x3e,
-	0x59, 0x37, 0xdb, 0x11, 0x9a, 0xbc, 0x1c, 0x7c, 0x5f, 0x06, 0xe8, 0xc7, 0x32, 0x40, 0xbf, 0x96,
-	0x01, 0xfa, 0xfa, 0x3b, 0xb8, 0x75, 0xda, 0xb1, 0x0f, 0xf2, 0xfd, 0xb6, 0x7b, 0x59, 0x4f, 0xff,
-	0x06, 0x00, 0x00, 0xff, 0xff, 0x85, 0x19, 0xb1, 0x10, 0xb4, 0x03, 0x00, 0x00,
+	// 515 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x54, 0xc1, 0x6e, 0xd3, 0x4a,
+	0x14, 0x7d, 0x4e, 0xa2, 0x26, 0xbd, 0x7d, 0x45, 0x61, 0x10, 0x91, 0xeb, 0xb4, 0xc6, 0x4c, 0x41,
+	0x44, 0x41, 0xb2, 0xa5, 0x22, 0xb1, 0xa8, 0xc4, 0x02, 0x9a, 0x8d, 0x59, 0x20, 0x14, 0xa9, 0x9b,
+	0x0a, 0xa9, 0x0c, 0xce, 0xc4, 0x0c, 0x4a, 0x66, 0xa6, 0x1e, 0x7b, 0x81, 0x2a, 0x36, 0x48, 0x7c,
+	0x01, 0x1b, 0xbe, 0x82, 0xef, 0x60, 0x89, 0xc4, 0x0f, 0xa0, 0xc0, 0x87, 0xa0, 0x19, 0x37, 0x6d,
+	0x6d, 0x27, 0xee, 0xce, 0x9e, 0x73, 0xe6, 0x9c, 0x7b, 0xef, 0xb9, 0x1a, 0x78, 0x44, 0xa4, 0x0c,
+	0x32, 0x45, 0x93, 0x80, 0x44, 0x91, 0xc8, 0x78, 0x1a, 0x10, 0xc9, 0x82, 0x38, 0x91, 0xd1, 0xf2,
+	0xc0, 0x97, 0x89, 0x48, 0x05, 0xea, 0xf2, 0x48, 0xf9, 0x9a, 0xe8, 0x5f, 0x9c, 0x3b, 0xbb, 0xb1,
+	0x10, 0xf1, 0x8c, 0x9a, 0x0b, 0x84, 0x73, 0x91, 0x92, 0x94, 0x09, 0xae, 0x72, 0x3e, 0x7e, 0x03,
+	0xad, 0x90, 0x4f, 0x05, 0xda, 0x81, 0x8e, 0x4a, 0x29, 0x99, 0x9f, 0xb2, 0x89, 0x6d, 0x79, 0xd6,
+	0xa0, 0x39, 0x6e, 0x9b, 0xff, 0x70, 0x82, 0x1c, 0xe8, 0x68, 0x41, 0x4e, 0xe6, 0xd4, 0x6e, 0x78,
+	0xd6, 0x60, 0x73, 0x7c, 0xf9, 0x8f, 0xf6, 0x00, 0xa6, 0x2c, 0x51, 0xe9, 0xe9, 0x07, 0xc1, 0xb8,
+	0xdd, 0x34, 0x17, 0x37, 0xcd, 0xc9, 0x4b, 0xc1, 0x38, 0xde, 0x87, 0x8d, 0xe3, 0x70, 0x34, 0xa6,
+	0x67, 0x35, 0xfa, 0xb8, 0x0f, 0x6d, 0x43, 0x52, 0x12, 0x75, 0xa1, 0x99, 0x5d, 0x12, 0xf4, 0xa7,
+	0x06, 0x75, 0x7d, 0x5a, 0xa2, 0x0a, 0x3e, 0x85, 0x4e, 0x0e, 0x2a, 0x89, 0x86, 0xd0, 0x62, 0x7c,
+	0x2a, 0x0c, 0xbc, 0x75, 0xd0, 0xf3, 0xcb, 0x73, 0xf0, 0x0d, 0xd3, 0x70, 0xf0, 0x00, 0xb6, 0xc6,
+	0x34, 0x66, 0x2a, 0xa5, 0xc9, 0x0d, 0xb5, 0x79, 0xf0, 0xff, 0x15, 0x73, 0x65, 0x81, 0xcf, 0x60,
+	0xfb, 0xe8, 0x3d, 0xe1, 0x31, 0x7d, 0x45, 0xe6, 0x74, 0x65, 0x99, 0x75, 0x03, 0xc4, 0x5d, 0xb8,
+	0x75, 0xfd, 0xba, 0x92, 0x38, 0x84, 0xee, 0xeb, 0x19, 0xf9, 0x48, 0x93, 0x23, 0xc1, 0x39, 0x8d,
+	0xd2, 0xfa, 0x0a, 0x6b, 0xc5, 0x47, 0x70, 0xbb, 0x24, 0xb5, 0xaa, 0x85, 0x52, 0x88, 0x8d, 0x52,
+	0x88, 0x07, 0xdf, 0x5b, 0xd0, 0x7e, 0x9e, 0x0f, 0x11, 0xbd, 0x85, 0xe6, 0x71, 0x38, 0x42, 0x76,
+	0x75, 0xbc, 0x79, 0xce, 0xce, 0xce, 0x1a, 0x44, 0x49, 0xfc, 0xe0, 0xf3, 0xaf, 0xbf, 0x5f, 0x1b,
+	0x2e, 0xda, 0x2d, 0x2e, 0x72, 0xc6, 0x26, 0xc1, 0xf9, 0xb2, 0xbb, 0x4f, 0xe8, 0x64, 0xb9, 0x90,
+	0x6b, 0x12, 0xa4, 0x67, 0x8e, 0xb3, 0x0e, 0x52, 0x12, 0xf7, 0x8d, 0xc9, 0x5d, 0x74, 0xa7, 0x68,
+	0x72, 0x9e, 0x69, 0xed, 0x19, 0x74, 0x96, 0x69, 0xa2, 0xbd, 0xaa, 0xc8, 0xb5, 0x9d, 0x70, 0xdc,
+	0x3a, 0x58, 0x49, 0x7c, 0xdf, 0xf8, 0xf4, 0x71, 0xaf, 0xe8, 0x93, 0x5c, 0x70, 0x0e, 0xad, 0x21,
+	0x12, 0x00, 0x57, 0xd1, 0xa2, 0x7b, 0x55, 0xc1, 0xc2, 0xde, 0x38, 0x5e, 0x3d, 0x41, 0x49, 0xec,
+	0x1a, 0x4f, 0xdb, 0x59, 0xd5, 0x9b, 0x36, 0xfc, 0x62, 0xc1, 0x76, 0x21, 0x6f, 0x84, 0xab, 0x9a,
+	0xe5, 0xdd, 0x72, 0xf6, 0x6f, 0xe4, 0x28, 0x89, 0x1f, 0x1b, 0xeb, 0x87, 0xd8, 0x2b, 0x5a, 0xc7,
+	0x64, 0x4e, 0x03, 0x69, 0xd8, 0x51, 0xce, 0x3e, 0xb4, 0x86, 0x2f, 0x7a, 0x3f, 0x16, 0xae, 0xf5,
+	0x73, 0xe1, 0x5a, 0xbf, 0x17, 0xae, 0xf5, 0xed, 0x8f, 0xfb, 0xdf, 0x49, 0x4b, 0xbf, 0x54, 0xef,
+	0x36, 0xcc, 0x93, 0xf3, 0xe4, 0x5f, 0x00, 0x00, 0x00, 0xff, 0xff, 0xc4, 0xed, 0x3c, 0xe6, 0xcd,
+	0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -530,6 +647,7 @@ type AccountClient interface {
 	Info(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
 	Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
 	ChangeName(ctx context.Context, in *ChangeNameReq, opts ...grpc.CallOption) (*ChangeNameResp, error)
+	PlayerConnect(ctx context.Context, in *PlayerConnectReq, opts ...grpc.CallOption) (*PlayerConnectResp, error)
 }
 
 type accountClient struct {
@@ -576,12 +694,22 @@ func (c *accountClient) ChangeName(ctx context.Context, in *ChangeNameReq, opts 
 	return out, nil
 }
 
+func (c *accountClient) PlayerConnect(ctx context.Context, in *PlayerConnectReq, opts ...grpc.CallOption) (*PlayerConnectResp, error) {
+	out := new(PlayerConnectResp)
+	err := c.cc.Invoke(ctx, "/ncs.user.account.Account/PlayerConnect", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AccountServer is the server API for Account service.
 type AccountServer interface {
 	UID(context.Context, *UIDReq) (*UIDResp, error)
 	Info(context.Context, *InfoReq) (*InfoResp, error)
 	Register(context.Context, *RegisterReq) (*RegisterResp, error)
 	ChangeName(context.Context, *ChangeNameReq) (*ChangeNameResp, error)
+	PlayerConnect(context.Context, *PlayerConnectReq) (*PlayerConnectResp, error)
 }
 
 // UnimplementedAccountServer can be embedded to have forward compatible implementations.
@@ -599,6 +727,9 @@ func (*UnimplementedAccountServer) Register(ctx context.Context, req *RegisterRe
 }
 func (*UnimplementedAccountServer) ChangeName(ctx context.Context, req *ChangeNameReq) (*ChangeNameResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeName not implemented")
+}
+func (*UnimplementedAccountServer) PlayerConnect(ctx context.Context, req *PlayerConnectReq) (*PlayerConnectResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PlayerConnect not implemented")
 }
 
 func RegisterAccountServer(s *grpc.Server, srv AccountServer) {
@@ -677,6 +808,24 @@ func _Account_ChangeName_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Account_PlayerConnect_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PlayerConnectReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServer).PlayerConnect(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ncs.user.account.Account/PlayerConnect",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServer).PlayerConnect(ctx, req.(*PlayerConnectReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Account_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "ncs.user.account.Account",
 	HandlerType: (*AccountServer)(nil),
@@ -696,6 +845,10 @@ var _Account_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ChangeName",
 			Handler:    _Account_ChangeName_Handler,
+		},
+		{
+			MethodName: "PlayerConnect",
+			Handler:    _Account_PlayerConnect_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -1011,6 +1164,82 @@ func (m *ChangeNameResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *PlayerConnectReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PlayerConnectReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PlayerConnectReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Username) > 0 {
+		i -= len(m.Username)
+		copy(dAtA[i:], m.Username)
+		i = encodeVarintAccount(dAtA, i, uint64(len(m.Username)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.SteamId != 0 {
+		i = encodeVarintAccount(dAtA, i, uint64(m.SteamId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *PlayerConnectResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PlayerConnectResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PlayerConnectResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.FirstJoin != 0 {
+		i = encodeVarintAccount(dAtA, i, uint64(m.FirstJoin))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Uid != 0 {
+		i = encodeVarintAccount(dAtA, i, uint64(m.Uid))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintAccount(dAtA []byte, offset int, v uint64) int {
 	offset -= sovAccount(v)
 	base := offset
@@ -1160,6 +1389,43 @@ func (m *ChangeNameResp) Size() (n int) {
 	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PlayerConnectReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.SteamId != 0 {
+		n += 1 + sovAccount(uint64(m.SteamId))
+	}
+	l = len(m.Username)
+	if l > 0 {
+		n += 1 + l + sovAccount(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *PlayerConnectResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Uid != 0 {
+		n += 1 + sovAccount(uint64(m.Uid))
+	}
+	if m.FirstJoin != 0 {
+		n += 1 + sovAccount(uint64(m.FirstJoin))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -1885,6 +2151,203 @@ func (m *ChangeNameResp) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: ChangeNameResp: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAccount(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthAccount
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthAccount
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PlayerConnectReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAccount
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PlayerConnectReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PlayerConnectReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SteamId", wireType)
+			}
+			m.SteamId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAccount
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.SteamId |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Username", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAccount
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthAccount
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthAccount
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Username = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipAccount(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthAccount
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthAccount
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *PlayerConnectResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowAccount
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PlayerConnectResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PlayerConnectResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Uid", wireType)
+			}
+			m.Uid = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAccount
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Uid |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field FirstJoin", wireType)
+			}
+			m.FirstJoin = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowAccount
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.FirstJoin |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipAccount(dAtA[iNdEx:])

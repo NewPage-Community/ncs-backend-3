@@ -15,6 +15,32 @@
     "application/json"
   ],
   "paths": {
+    "/user/account/game/playerconnect": {
+      "post": {
+        "operationId": "PlayerConnect",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/accountPlayerConnectResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/accountPlayerConnectReq"
+            }
+          }
+        ],
+        "tags": [
+          "Account"
+        ]
+      }
+    },
     "/user/account/register": {
       "post": {
         "operationId": "Register",
@@ -160,6 +186,31 @@
       "properties": {
         "info": {
           "$ref": "#/definitions/accountInfo"
+        }
+      }
+    },
+    "accountPlayerConnectReq": {
+      "type": "object",
+      "properties": {
+        "steam_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "accountPlayerConnectResp": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "first_join": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
