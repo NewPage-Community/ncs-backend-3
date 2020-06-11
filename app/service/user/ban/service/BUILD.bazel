@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "ban.go",
+        "service.go",
+    ],
+    importpath = "backend/app/service/user/ban/service",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/service/user/ban/api/grpc:go_default_library",
+        "//app/service/user/ban/conf:go_default_library",
+        "//app/service/user/ban/dao:go_default_library",
+        "//app/service/user/ban/model:go_default_library",
+        "//pkg/ecode:go_default_library",
+        "@org_golang_google_grpc//codes:go_default_library",
+    ],
+)

@@ -10,12 +10,12 @@ go_library(
     importpath = "backend/app/gateway/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/server/api/grpc:go_default_library",
-        "//app/user/account/api/grpc:go_default_library",
-        "//app/user/admin/api/grpc:go_default_library",
-        "//app/user/ban/api/grpc:go_default_library",
-        "//app/user/sign/api/grpc:go_default_library",
-        "//app/user/vip/api/grpc:go_default_library",
+        "//app/game/server/api/grpc:go_default_library",
+        "//app/service/user/account/api/grpc:go_default_library",
+        "//app/service/user/admin/api/grpc:go_default_library",
+        "//app/service/user/ban/api/grpc:go_default_library",
+        "//app/service/user/sign/api/grpc:go_default_library",
+        "//app/service/user/vip/api/grpc:go_default_library",
         "//pkg/rpc:go_default_library",
     ],
 )
