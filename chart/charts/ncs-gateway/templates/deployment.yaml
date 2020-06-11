@@ -50,7 +50,7 @@ spec:
               path: /health
               port: {{ .Values.service.port }}
             periodSeconds: 1
-            successThreshold: 3
+            successThreshold: 2
             failureThreshold: 3
       {{- with .Values.nodeSelector }}
       nodeSelector:
