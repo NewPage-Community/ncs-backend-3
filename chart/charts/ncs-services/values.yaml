@@ -53,13 +53,8 @@ configMap:
   name: ncs
 
 services:
-  - app: ncs-server
+  - app: ncs-game-server
     version: v1
-    image: harbor.new-page.xyz/newpage/ncs/server
-    tag: latest
-    port: 2333
-  - app: ncs-user-account
-    version: v1
-    image: harbor.new-page.xyz/newpage/ncs/account
+    image: harbor.new-page.xyz/newpage/ncs/game-server
     tag: latest
     port: 2333

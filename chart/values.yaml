@@ -4,33 +4,33 @@ ncs-services:
   configMap:
     name: ncs
   services:
-    - app: ncs-server
+    - app: ncs-game-server
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/server
+      image: harbor.new-page.xyz/newpage/ncs/game-server
       tag: latest
       port: 2333
-    - app: ncs-user-account
+    - app: ncs-service-user-account
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/account
+      image: harbor.new-page.xyz/newpage/ncs/service-user-account
       tag: latest
       port: 2333
-    - app: ncs-user-admin
+    - app: ncs-service-user-admin
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/admin
+      image: harbor.new-page.xyz/newpage/ncs/service-user-admin
       tag: latest
       port: 2333
-    - app: ncs-user-ban
+    - app: ncs-service-user-ban
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/ban
+      image: harbor.new-page.xyz/newpage/ncs/service-user-ban
       tag: latest
       port: 2333
-    - app: ncs-user-sign
+    - app: ncs-service-user-sign
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/sign
+      image: harbor.new-page.xyz/newpage/ncs/service-user-sign
       tag: latest
       port: 2333
-    - app: ncs-user-vip
+    - app: ncs-service-user-vip
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/vip
+      image: harbor.new-page.xyz/newpage/ncs/service-user-vip
       tag: latest
       port: 2333
