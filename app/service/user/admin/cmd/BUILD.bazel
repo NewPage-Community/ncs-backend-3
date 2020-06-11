@@ -23,6 +23,6 @@ go_binary(
 
 push_docker(
     name = "push",
-    app_name = "admin",
+    app_name = "service-user-admin",
     embed = [":go_default_library"],
 )

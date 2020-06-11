@@ -23,6 +23,6 @@ go_binary(
 
 push_docker(
     name = "push",
-    app_name = "server",
+    app_name = "game-server",
     embed = [":go_default_library"],
 )

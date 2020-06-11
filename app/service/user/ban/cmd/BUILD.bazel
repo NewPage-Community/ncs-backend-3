@@ -23,6 +23,6 @@ go_binary(
 
 push_docker(
     name = "push",
-    app_name = "ban",
+    app_name = "service-user-ban",
     embed = [":go_default_library"],
 )

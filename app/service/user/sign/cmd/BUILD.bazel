@@ -23,6 +23,6 @@ go_binary(
 
 push_docker(
     name = "push",
-    app_name = "sign",
+    app_name = "service-user-sign",
     embed = [":go_default_library"],
 )
