@@ -34,6 +34,7 @@ spec:
         app: {{ .app }}
         version: {{ .version }}
     spec:
+      terminationGracePeriodSeconds: 20
       {{- with $this.Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}

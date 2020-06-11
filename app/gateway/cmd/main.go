@@ -37,7 +37,6 @@ func main() {
 	cmd.Run("Gateway", func() {
 		// Waiting k8s deal with terminating
 		healthy = false
-		time.Sleep(time.Second * 10)
 		// Close http -> grpc
 		ctx, _ := context.WithTimeout(context.Background(), time.Second*15)
 		err := srv.Shutdown(ctx)

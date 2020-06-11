@@ -7,6 +7,7 @@ metadata:
     app: {{ include "chart.fullname" . }}
     {{- include "chart.labels" . | nindent 4 }}
 spec:
+  minReadySeconds: 5
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -50,6 +51,7 @@ spec:
             httpGet:
               path: /health
               port: {{ .Values.service.port }}
+            initialDelaySeconds: 5
             periodSeconds: 1
             successThreshold: 2
             failureThreshold: 3
