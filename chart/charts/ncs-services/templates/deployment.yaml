@@ -11,12 +11,18 @@ metadata:
     version: {{ .version }}
     {{- include "ncs-services.labels" $this | nindent 4 }}
 spec:
+  minReadySeconds: 5
   replicas: {{ $this.Values.replicaCount }}
   selector:
     matchLabels:
       {{- /* istio */}}
       app: {{ .app }}
       version: {{ .version }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
     {{- with $this.Values.podAnnotations }}

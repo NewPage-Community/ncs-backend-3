@@ -7,11 +7,17 @@ metadata:
     app: {{ include "chart.fullname" . }}
     {{- include "chart.labels" . | nindent 4 }}
 spec:
+  minReadySeconds: 5
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- /* istio */}}
       app: {{ include "chart.fullname" . }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 0
+    type: RollingUpdate
   template:
     metadata:
     {{- with .Values.podAnnotations }}
