@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/golang/glog"
+	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/opentracing/opentracing-go"
@@ -65,6 +66,12 @@ func NewGateway() *Gateways {
 			grpc.WithStreamInterceptor(
 				grpc_opentracing.StreamClientInterceptor(
 					grpc_opentracing.WithTracer(ot.GlobalTracer()))),
+			grpc.WithUnaryInterceptor(
+				grpc_retry.UnaryClientInterceptor(
+					grpc_retry.WithMax(_defaultCliConf.MaxRetry),
+					grpc_retry.WithCodes(_defaultCliConf.RetryCode...),
+					grpc_retry.WithPerRetryTimeout(_defaultCliConf.Timeout),
+				)),
 			grpc.WithInsecure(),
 		},
 		ctx:    ctx,

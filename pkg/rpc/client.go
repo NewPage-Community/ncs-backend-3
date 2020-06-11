@@ -44,6 +44,7 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 			grpc_retry.UnaryClientInterceptor(
 				grpc_retry.WithMax(conf.MaxRetry),
 				grpc_retry.WithCodes(conf.RetryCode...),
+				grpc_retry.WithPerRetryTimeout(conf.Timeout),
 			)),
 		grpc.WithInsecure(),
 	}
