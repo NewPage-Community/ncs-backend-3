@@ -43,3 +43,4 @@ deploy:
     - mkdir ~/.kube && echo -n $KUBE_CONFIG | base64 -d > ~/.kube/config
     - helm upgrade --install --namespace ncs ncs ./chart
   when: always
+  cache: {}
