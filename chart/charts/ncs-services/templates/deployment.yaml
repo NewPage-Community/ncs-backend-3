@@ -49,13 +49,21 @@ spec:
           imagePullPolicy: {{ $this.Values.image.pullPolicy }}
           ports:
             - name: grpc
-              containerPort: {{ .port }}
+              containerPort: 2333
               protocol: TCP
           resources:
             {{- toYaml $this.Values.resources | nindent 12 }}
           volumeMounts:
           - mountPath: /ncs
             name: config
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 23333
+            initialDelaySeconds: 5
+            periodSeconds: 1
+            successThreshold: 2
+            failureThreshold: 3
       {{- with $this.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
