@@ -11,7 +11,7 @@ metadata:
 spec:
   type: {{ $this.Values.service.type }}
   ports:
-    - port: {{ $this.Values.service.port }}
+    - port: 2333
       targetPort: grpc
       protocol: TCP
       name: grpc
