@@ -4,7 +4,6 @@ load("//build:docker.bzl", "push_docker")
 go_library(
     name = "go_default_library",
     srcs = ["main.go"],
-    data = ["ncs.yaml"],
     importpath = "backend/app/service/user/account/cmd",
     visibility = ["//visibility:private"],
     deps = [
