@@ -46,16 +46,6 @@ message ChangeNameReq {
 message ChangeNameResp {
 }
 
-message PlayerConnectReq {
-    int64 steam_id = 1;
-    string username = 2;
-}
-
-message PlayerConnectResp {
-    int64 uid = 1;
-    int64 first_join = 2;
-}
-
 service Account {
     rpc UID (UIDReq) returns (UIDResp) {
         option (google.api.http) = {
@@ -73,15 +63,9 @@ service Account {
             body: "*"
         };
     }
-    rpc ChangeName (ChangeNameReq) returns (ChangeNameResp)  {
+    rpc ChangeName (ChangeNameReq) returns (ChangeNameResp) {
         option (google.api.http) = {
             put: "/user/account/{uid}"
-            body: "*"
-        };
-    }
-    rpc PlayerConnect (PlayerConnectReq) returns (PlayerConnectResp) {
-        option (google.api.http) = {
-            post: "/user/account/game/playerconnect"
             body: "*"
         };
     }

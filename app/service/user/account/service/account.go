@@ -81,34 +81,3 @@ func (s *Service) ChangeName(ctx context.Context, req *pb.ChangeNameReq) (res *p
 	})
 	return
 }
-
-func (s *Service) PlayerConnect(ctx context.Context, req *pb.PlayerConnectReq) (res *pb.PlayerConnectResp, err error) {
-	res = &pb.PlayerConnectResp{}
-
-	// Get UID
-	r, err := s.UID(ctx, &pb.UIDReq{
-		SteamId: req.SteamId,
-	})
-	if err != nil {
-		return
-	}
-	// Get info
-	r2, err := s.Info(ctx, &pb.InfoReq{
-		Uid: r.Uid,
-	})
-	if err != nil {
-		return
-	}
-	// Update username
-	_, err = s.ChangeName(ctx, &pb.ChangeNameReq{
-		Uid:      r.Uid,
-		Username: req.Username,
-	})
-	if err != nil {
-		return
-	}
-
-	res.Uid = r.Uid
-	res.FirstJoin = r2.Info.FirstJoin
-	return
-}
