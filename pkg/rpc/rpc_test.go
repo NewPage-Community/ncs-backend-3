@@ -7,9 +7,10 @@ import (
 )
 
 func TestAll(t *testing.T) {
-	server := NewServer(&ServerConfig{RegFunc: func(s *grpc.Server) {
-		t.Log("RegFunc()")
-	}})
+	server := NewServer(nil)
+	server.Grpc(func(s *grpc.Server) {
+		t.Log("regGRPC()")
+	})
 	defer server.Stop()
 
 	client := Dial(context.Background(), "0.0.0.0:2333", &ClientConfig{})

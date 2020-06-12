@@ -5,13 +5,11 @@ import (
 	"google.golang.org/grpc"
 )
 
-func InitServer(network string, address string, srv SignServer) (s *rpc.Server) {
-	s = rpc.NewServer(&rpc.ServerConfig{
-		Network: network,
-		Addr:    address,
-		RegFunc: func(s *grpc.Server) {
-			RegisterSignServer(s, srv)
-		},
+func InitServer(srv SignServer, health func() bool) (s *rpc.Server) {
+	s = rpc.NewServer(nil)
+	s.Grpc(func(s *grpc.Server) {
+		RegisterSignServer(s, srv)
 	})
+	s.HealthCheck(health)
 	return
 }

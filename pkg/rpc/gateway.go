@@ -2,7 +2,6 @@ package rpc
 
 import (
 	"context"
-	"fmt"
 	"github.com/golang/glog"
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
@@ -12,6 +11,7 @@ import (
 	"github.com/opentracing/opentracing-go/ext"
 	"google.golang.org/grpc"
 	"net/http"
+	"time"
 )
 
 var grpcGatewayTag = opentracing.Tag{Key: string(ext.Component), Value: "grpc-gateway"}
@@ -19,6 +19,7 @@ var grpcGatewayTag = opentracing.Tag{Key: string(ext.Component), Value: "grpc-ga
 type regHandler func(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error)
 
 type Gateways struct {
+	server *http.Server
 	mux    *runtime.ServeMux
 	opts   []grpc.DialOption
 	ctx    context.Context
@@ -33,6 +34,10 @@ func (gws *Gateways) AddGateway(handler regHandler, endpoint string) {
 }
 
 func (gws *Gateways) Close() {
+	if gws.server != nil {
+		ctx, _ := context.WithTimeout(context.Background(), time.Second*10)
+		gws.server.Shutdown(ctx)
+	}
 	gws.cancel()
 }
 
@@ -79,13 +84,19 @@ func NewGateway() *Gateways {
 	}
 }
 
-func HealthCheck(healthy *bool) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "text/plain")
-		if *healthy {
-			fmt.Fprintln(w, "Healthy")
-		} else {
-			http.Error(w, "Unhealthy", 503)
-		}
+func (gws *Gateways) Gateway(health func() bool) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/healthz", HealthCheck(health))
+	mux.HandleFunc("/", gws.HTTPHandler())
+	gws.server = &http.Server{
+		Addr:    ":23333",
+		Handler: mux,
 	}
+
+	go func() {
+		err := gws.server.ListenAndServe()
+		if err != nil && err != http.ErrServerClosed {
+			panic(err)
+		}
+	}()
 }

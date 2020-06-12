@@ -15,6 +15,10 @@ func Init(c *conf.Config) *Service {
 	}
 }
 
+func (s *Service) Healthy() bool {
+	return s.dao.Healthy()
+}
+
 func (s *Service) Close() {
 	s.dao.Close()
 }

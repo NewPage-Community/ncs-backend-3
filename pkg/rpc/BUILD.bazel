@@ -5,6 +5,7 @@ go_library(
     srcs = [
         "client.go",
         "gateway.go",
+        "health.go",
         "server.go",
     ],
     importpath = "backend/pkg/rpc",

@@ -4,12 +4,14 @@ import (
 	"backend/app/game/server/conf"
 	"backend/app/game/server/model"
 	db "backend/pkg/database/mysql"
+	"backend/pkg/log"
 	"github.com/jinzhu/gorm"
 )
 
 type Dao interface {
 	Info(address string) (*model.Info, error)
 	UpdateRcon(server *model.Info) error
+	Healthy() bool
 	Close()
 }
 
@@ -28,4 +30,13 @@ func New(config *conf.Config) (d *dao) {
 
 func (d *dao) Close() {
 	d.db.Close()
+}
+
+func (d *dao) Healthy() bool {
+	err := d.db.DB().Ping()
+	if err != nil {
+		log.Error(err)
+		return false
+	}
+	return true
 }

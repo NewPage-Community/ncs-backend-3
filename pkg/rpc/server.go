@@ -1,32 +1,38 @@
 package rpc
 
 import (
+	"context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/reflection"
 	"net"
+	"net/http"
+	"strconv"
 	"time"
 )
 
 type Server struct {
-	server *grpc.Server
+	config      *ServerConfig
+	grpcServer  *grpc.Server
+	healthCheck *http.Server
 }
 
 type ServerConfig struct {
 	Network           string
-	Addr              string
+	GrpcPort          int
+	HealthPort        int
 	Timeout           time.Duration
 	IdleTimeout       time.Duration
 	MaxLifeTime       time.Duration
 	ForceCloseWait    time.Duration
 	KeepAliveInterval time.Duration
 	KeepAliveTimeout  time.Duration
-	RegFunc           func(s *grpc.Server)
 }
 
 var _defaultSerConf = &ServerConfig{
 	Network:           "tcp",
-	Addr:              "0.0.0.0:2333",
+	GrpcPort:          2333,
+	HealthPort:        23333,
 	Timeout:           time.Duration(time.Second),
 	IdleTimeout:       time.Duration(time.Second * 60),
 	MaxLifeTime:       time.Duration(time.Hour * 2),
@@ -38,47 +44,7 @@ var _defaultSerConf = &ServerConfig{
 func NewServer(conf *ServerConfig) *Server {
 	// Config
 	conf = setSerConf(conf)
-
-	// Options
-	keepParam := grpc.KeepaliveParams(keepalive.ServerParameters{
-		MaxConnectionIdle:     time.Duration(conf.IdleTimeout),
-		MaxConnectionAgeGrace: time.Duration(conf.ForceCloseWait),
-		Time:                  time.Duration(conf.KeepAliveInterval),
-		Timeout:               time.Duration(conf.KeepAliveTimeout),
-		MaxConnectionAge:      time.Duration(conf.MaxLifeTime),
-	})
-	opts := []grpc.ServerOption{
-		//grpc.UnaryInterceptor(
-		//	otgrpc.OpenTracingServerInterceptor(ot.GlobalTracer())),
-		//grpc.StreamInterceptor(
-		//	otgrpc.OpenTracingStreamServerInterceptor(ot.GlobalTracer())),
-		keepParam,
-	}
-
-	// Network
-	lis, err := net.Listen(conf.Network, conf.Addr)
-	if err != nil {
-		panic(err)
-	}
-
-	// Initialize
-	s := grpc.NewServer(opts...)
-
-	// Register
-	if conf.RegFunc != nil {
-		conf.RegFunc(s)
-	}
-
-	// Register reflection service on gRPC server.
-	reflection.Register(s)
-
-	// Serve
-	go func() {
-		if err := s.Serve(lis); err != nil {
-			panic(err)
-		}
-	}()
-	return &Server{server: s}
+	return &Server{config: conf}
 }
 
 func setSerConf(conf *ServerConfig) *ServerConfig {
@@ -103,17 +69,82 @@ func setSerConf(conf *ServerConfig) *ServerConfig {
 	if conf.KeepAliveTimeout <= 0 {
 		conf.KeepAliveTimeout = _defaultSerConf.KeepAliveTimeout
 	}
-	if conf.Addr == "" {
-		conf.Addr = _defaultSerConf.Addr
+	if conf.GrpcPort == 0 {
+		conf.GrpcPort = _defaultSerConf.GrpcPort
 	}
 	if conf.Network == "" {
 		conf.Network = _defaultSerConf.Network
 	}
+	if conf.HealthPort == 0 {
+		conf.HealthPort = _defaultSerConf.HealthPort
+	}
 	return conf
 }
 
+func (s *Server) Grpc(reg func(s *grpc.Server)) {
+	// Options
+	keepParam := grpc.KeepaliveParams(keepalive.ServerParameters{
+		MaxConnectionIdle:     time.Duration(s.config.IdleTimeout),
+		MaxConnectionAgeGrace: time.Duration(s.config.ForceCloseWait),
+		Time:                  time.Duration(s.config.KeepAliveInterval),
+		Timeout:               time.Duration(s.config.KeepAliveTimeout),
+		MaxConnectionAge:      time.Duration(s.config.MaxLifeTime),
+	})
+	opts := []grpc.ServerOption{
+		//grpc.UnaryInterceptor(
+		//	otgrpc.OpenTracingServerInterceptor(ot.GlobalTracer())),
+		//grpc.StreamInterceptor(
+		//	otgrpc.OpenTracingStreamServerInterceptor(ot.GlobalTracer())),
+		keepParam,
+	}
+
+	// Network
+	lis, err := net.Listen(s.config.Network, "0.0.0.0:"+strconv.Itoa(s.config.GrpcPort))
+	if err != nil {
+		panic(err)
+	}
+
+	// Initialize
+	s.grpcServer = grpc.NewServer(opts...)
+
+	// Register
+	if reg != nil {
+		reg(s.grpcServer)
+	}
+
+	// Register reflection service on gRPC server.
+	reflection.Register(s.grpcServer)
+
+	// grpc server
+	go func() {
+		if err := s.grpcServer.Serve(lis); err != nil {
+			panic(err)
+		}
+	}()
+}
+
+func (s *Server) HealthCheck(health func() bool) {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/healthz", HealthCheck(health))
+	s.healthCheck = &http.Server{
+		Addr:    "0.0.0.0:" + strconv.Itoa(s.config.HealthPort),
+		Handler: mux,
+	}
+	// health check
+	go func() {
+		err := s.healthCheck.ListenAndServe()
+		if err != nil && err != http.ErrServerClosed {
+			panic(err)
+		}
+	}()
+}
+
 func (s *Server) Stop() {
-	if s.server != nil {
-		s.server.GracefulStop()
+	if s.grpcServer != nil {
+		s.grpcServer.GracefulStop()
+	}
+	if s.healthCheck != nil {
+		ctx, _ := context.WithTimeout(context.Background(), time.Second*10)
+		s.healthCheck.Shutdown(ctx)
 	}
 }

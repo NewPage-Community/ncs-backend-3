@@ -15,7 +15,9 @@ func main() {
 	srv := service.Init(config)
 
 	// rpc
-	server := api.InitServer("tcp", "0.0.0.0:2333", srv)
+	server := api.InitServer(srv, func() bool {
+		return srv.Healthy()
+	})
 
 	log.Info("Admin service started!")
 

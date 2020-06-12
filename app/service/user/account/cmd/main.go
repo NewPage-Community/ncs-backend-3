@@ -15,9 +15,12 @@ func main() {
 	srv := service.Init(config)
 
 	// rpc
-	server := api.InitServer("tcp", "0.0.0.0:2333", srv)
+	// TODO: health check
+	server := api.InitServer(srv, func() bool {
+		return true
+	})
 
-	log.Info("Account app started!")
+	log.Info("Account service started!")
 
 	// cmd
 	cmd.Run("Account", func() {
