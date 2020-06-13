@@ -3,6 +3,7 @@ package rpc
 import (
 	"context"
 	"github.com/golang/glog"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
@@ -65,14 +66,15 @@ func NewGateway() *Gateways {
 		mux: runtime.NewServeMux(),
 		opts: []grpc.DialOption{
 			grpc.WithUnaryInterceptor(
-				grpc_opentracing.UnaryClientInterceptor(
-					grpc_opentracing.WithTracer(opentracing.GlobalTracer()))),
-			grpc.WithUnaryInterceptor(
-				grpc_retry.UnaryClientInterceptor(
-					grpc_retry.WithMax(_defaultCliConf.MaxRetry),
-					grpc_retry.WithCodes(_defaultCliConf.RetryCode...),
-					grpc_retry.WithPerRetryTimeout(_defaultCliConf.Timeout),
-				)),
+				grpc_middleware.ChainUnaryClient(
+					grpc_opentracing.UnaryClientInterceptor(),
+					grpc_retry.UnaryClientInterceptor(
+						grpc_retry.WithMax(_defaultCliConf.MaxRetry),
+						grpc_retry.WithCodes(_defaultCliConf.RetryCode...),
+						grpc_retry.WithPerRetryTimeout(_defaultCliConf.Timeout),
+					),
+				),
+			),
 			grpc.WithInsecure(),
 		},
 		ctx:    ctx,
