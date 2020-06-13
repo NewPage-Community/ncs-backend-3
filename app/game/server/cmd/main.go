@@ -6,11 +6,15 @@ import (
 	"backend/app/game/server/service"
 	"backend/pkg/cmd"
 	"backend/pkg/log"
+	"backend/pkg/tracer"
 )
+
+const serviceName = "game-server"
 
 func main() {
 	// Init
 	config := conf.Init()
+	tracer.Init(serviceName)
 	log.Init(config.Log)
 	srv := service.Init(config)
 
@@ -19,12 +23,13 @@ func main() {
 		return srv.Healthy()
 	})
 
-	log.Info("Server service started!")
+	log.Info(serviceName, "service started!")
 
 	// cmd
-	cmd.Run("Server", func() {
+	cmd.Run(serviceName, func() {
 		server.Stop()
 		srv.Close()
+		tracer.Close()
 		log.Close()
 	})
 }

@@ -1,0 +1,46 @@
+package tracer
+
+import (
+	opentracing "github.com/opentracing/opentracing-go"
+	jaegercfg "github.com/uber/jaeger-client-go/config"
+	jaegerlog "github.com/uber/jaeger-client-go/log"
+	"github.com/uber/jaeger-client-go/zipkin"
+	"github.com/uber/jaeger-lib/metrics"
+	"io"
+)
+
+var tracerCloser io.Closer
+
+func Init(serviceName string) {
+	// Recommended configuration for production.
+	cfg := jaegercfg.Configuration{}
+
+	// Example logger and metrics factory. Use github.com/uber/jaeger-client-go/log
+	// and github.com/uber/jaeger-lib/metrics respectively to bind to real logging and metrics
+	// frameworks.
+	jLogger := jaegerlog.StdLogger
+	jMetricsFactory := metrics.NullFactory
+
+	// Zipkin shares span ID between client and server spans; it must be enabled via the following option.
+	zipkinPropagator := zipkin.NewZipkinB3HTTPHeaderPropagator()
+
+	// Create tracer and then initialize global tracer
+	closer, err := cfg.InitGlobalTracer(
+		serviceName,
+		jaegercfg.Logger(jLogger),
+		jaegercfg.Metrics(jMetricsFactory),
+		jaegercfg.Injector(opentracing.HTTPHeaders, zipkinPropagator),
+		jaegercfg.Extractor(opentracing.HTTPHeaders, zipkinPropagator),
+		jaegercfg.ZipkinSharedRPCSpan(true),
+	)
+	if err != nil {
+		panic("Could not initialize jaeger tracer: " + err.Error())
+	}
+	tracerCloser = closer
+}
+
+func Close() {
+	if tracerCloser != nil {
+		tracerCloser.Close()
+	}
+}

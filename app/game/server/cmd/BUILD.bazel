@@ -12,6 +12,7 @@ go_library(
         "//app/game/server/service:go_default_library",
         "//pkg/cmd:go_default_library",
         "//pkg/log:go_default_library",
+        "//pkg/tracer:go_default_library",
     ],
 )
 

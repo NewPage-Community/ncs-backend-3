@@ -4,6 +4,7 @@ import (
 	"context"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
+	ot "github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/reflection"
@@ -35,12 +36,12 @@ var _defaultSerConf = &ServerConfig{
 	Network:           "tcp",
 	GrpcPort:          2333,
 	HealthPort:        23333,
-	Timeout:           time.Duration(time.Second),
-	IdleTimeout:       time.Duration(time.Second * 60),
-	MaxLifeTime:       time.Duration(time.Hour * 2),
-	ForceCloseWait:    time.Duration(time.Second * 20),
-	KeepAliveInterval: time.Duration(time.Second * 60),
-	KeepAliveTimeout:  time.Duration(time.Second * 20),
+	Timeout:           time.Second,
+	IdleTimeout:       time.Second * 60,
+	MaxLifeTime:       time.Hour * 2,
+	ForceCloseWait:    time.Second * 20,
+	KeepAliveInterval: time.Second * 60,
+	KeepAliveTimeout:  time.Second * 20,
 }
 
 func NewServer(conf *ServerConfig) *Server {
@@ -86,15 +87,16 @@ func setSerConf(conf *ServerConfig) *ServerConfig {
 func (s *Server) Grpc(reg func(s *grpc.Server)) {
 	// Options
 	keepParam := grpc.KeepaliveParams(keepalive.ServerParameters{
-		MaxConnectionIdle:     time.Duration(s.config.IdleTimeout),
-		MaxConnectionAgeGrace: time.Duration(s.config.ForceCloseWait),
-		Time:                  time.Duration(s.config.KeepAliveInterval),
-		Timeout:               time.Duration(s.config.KeepAliveTimeout),
-		MaxConnectionAge:      time.Duration(s.config.MaxLifeTime),
+		MaxConnectionIdle:     s.config.IdleTimeout,
+		MaxConnectionAgeGrace: s.config.ForceCloseWait,
+		Time:                  s.config.KeepAliveInterval,
+		Timeout:               s.config.KeepAliveTimeout,
+		MaxConnectionAge:      s.config.MaxLifeTime,
 	})
+	tracer := grpc_opentracing.WithTracer(ot.GlobalTracer())
 	opts := []grpc.ServerOption{
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
-			grpc_opentracing.UnaryServerInterceptor(),
+			grpc_opentracing.UnaryServerInterceptor(tracer),
 		)),
 		grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
 			grpc_opentracing.StreamServerInterceptor(),

@@ -5,6 +5,7 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
+	ot "github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"time"
@@ -18,8 +19,8 @@ type ClientConfig struct {
 }
 
 var _defaultCliConf = &ClientConfig{
-	Dial:     time.Duration(time.Second * 10),
-	Timeout:  time.Duration(time.Millisecond * 250),
+	Dial:     time.Second * 10,
+	Timeout:  time.Millisecond * 250,
 	MaxRetry: 3,
 	RetryCode: []codes.Code{
 		codes.Canceled,
@@ -38,15 +39,16 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 		grpc_retry.WithCodes(conf.RetryCode...),
 		grpc_retry.WithPerRetryTimeout(conf.Timeout),
 	}
+	tracer := grpc_opentracing.WithTracer(ot.GlobalTracer())
 	opts := []grpc.DialOption{
 		grpc.WithUnaryInterceptor(
 			grpc_middleware.ChainUnaryClient(
-				grpc_opentracing.UnaryClientInterceptor(),
+				grpc_opentracing.UnaryClientInterceptor(tracer),
 				grpc_retry.UnaryClientInterceptor(retry...),
 			)),
 		grpc.WithStreamInterceptor(
 			grpc_middleware.ChainStreamClient(
-				grpc_opentracing.StreamClientInterceptor(),
+				grpc_opentracing.StreamClientInterceptor(tracer),
 				grpc_retry.StreamClientInterceptor(retry...),
 			),
 		),
@@ -56,7 +58,7 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 	// Initialize
 	if conf.Dial > 0 {
 		var cancel context.CancelFunc
-		ctx, cancel = context.WithTimeout(ctx, time.Duration(conf.Dial))
+		ctx, cancel = context.WithTimeout(ctx, conf.Dial)
 		defer cancel()
 	}
 	conn, err := grpc.DialContext(ctx, target, opts...)

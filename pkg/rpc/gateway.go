@@ -8,6 +8,7 @@ import (
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/opentracing/opentracing-go"
+	ot "github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"google.golang.org/grpc"
 	"net/http"
@@ -62,12 +63,13 @@ func (gws *Gateways) Close() {
 
 func NewGateway() *Gateways {
 	ctx, cancel := context.WithCancel(context.Background())
+	tracer := grpc_opentracing.WithTracer(ot.GlobalTracer())
 	return &Gateways{
 		mux: runtime.NewServeMux(),
 		opts: []grpc.DialOption{
 			grpc.WithUnaryInterceptor(
 				grpc_middleware.ChainUnaryClient(
-					grpc_opentracing.UnaryClientInterceptor(),
+					grpc_opentracing.UnaryClientInterceptor(tracer),
 					grpc_retry.UnaryClientInterceptor(
 						grpc_retry.WithMax(_defaultCliConf.MaxRetry),
 						grpc_retry.WithCodes(_defaultCliConf.RetryCode...),

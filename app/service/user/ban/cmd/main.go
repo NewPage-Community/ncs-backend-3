@@ -6,12 +6,16 @@ import (
 	"backend/app/service/user/ban/service"
 	"backend/pkg/cmd"
 	"backend/pkg/log"
+	"backend/pkg/tracer"
 )
+
+const serviceName = "user-ban"
 
 func main() {
 	// Init
 	config := conf.Init()
 	log.Init(config.Log)
+	tracer.Init(serviceName)
 	srv := service.Init(config)
 
 	// rpc
@@ -19,12 +23,13 @@ func main() {
 		return srv.Healthy()
 	})
 
-	log.Info("Ban app started!")
+	log.Info(serviceName, "service started!")
 
 	// cmd
-	cmd.Run("Ban", func() {
+	cmd.Run(serviceName, func() {
 		server.Stop()
 		srv.Close()
+		tracer.Close()
 		log.Close()
 	})
 }

@@ -6,12 +6,16 @@ import (
 	"backend/app/service/user/vip/service"
 	"backend/pkg/cmd"
 	"backend/pkg/log"
+	"backend/pkg/tracer"
 )
+
+const serviceName = "Gateway"
 
 func main() {
 	// Init
 	config := conf.Init()
 	log.Init(config.Log)
+	tracer.Init(serviceName)
 	srv := service.Init(config)
 
 	// rpc
@@ -20,12 +24,13 @@ func main() {
 		return true
 	})
 
-	log.Info("VIP app started!")
+	log.Info(serviceName, "service started!")
 
 	// cmd
-	cmd.Run("VIP", func() {
+	cmd.Run(serviceName, func() {
 		server.Stop()
 		srv.Close()
+		tracer.Close()
 		log.Close()
 	})
 }
