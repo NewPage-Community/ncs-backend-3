@@ -4,25 +4,18 @@ import (
 	"context"
 	"github.com/golang/glog"
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
+	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go/ext"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/metadata"
 	"net/http"
 	"time"
 )
 
-const (
-	prefixTracerState  = "x-b3-"
-	zipkinTraceID      = prefixTracerState + "traceid"
-	zipkinSpanID       = prefixTracerState + "spanid"
-	zipkinParentSpanID = prefixTracerState + "parentspanid"
-	zipkinSampled      = prefixTracerState + "sampled"
-	zipkinFlags        = prefixTracerState + "flags"
-)
+var grpcGatewayTag = opentracing.Tag{Key: string(ext.Component), Value: "grpc-gateway"}
 
 type regHandler func(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error)
-
-type annotator func(context.Context, *http.Request) metadata.MD
 
 type Gateways struct {
 	server *http.Server
@@ -32,31 +25,22 @@ type Gateways struct {
 	cancel context.CancelFunc
 }
 
-var otHeaders = []string{
-	zipkinTraceID,
-	zipkinSpanID,
-	zipkinParentSpanID,
-	zipkinSampled,
-	zipkinFlags,
-}
-
-func injectHeadersIntoMetadata(ctx context.Context, req *http.Request) metadata.MD {
-	var pairs []string
-	for _, h := range otHeaders {
-		if v := req.Header.Get(h); len(v) > 0 {
-			pairs = append(pairs, h, v)
+func tracingWrapper(h http.Handler) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		parentSpanContext, err := opentracing.GlobalTracer().Extract(
+			opentracing.HTTPHeaders,
+			opentracing.HTTPHeadersCarrier(r.Header))
+		if err == nil || err == opentracing.ErrSpanContextNotFound {
+			serverSpan := opentracing.GlobalTracer().StartSpan(
+				"ServeHTTP",
+				// this is magical, it attaches the new span to the parent parentSpanContext, and creates an unparented one if empty.
+				ext.RPCServerOption(parentSpanContext),
+				grpcGatewayTag,
+			)
+			r = r.WithContext(opentracing.ContextWithSpan(r.Context(), serverSpan))
+			defer serverSpan.Finish()
 		}
-	}
-	return metadata.Pairs(pairs...)
-}
-
-func chainGrpcAnnotators(annotators ...annotator) annotator {
-	return func(c context.Context, r *http.Request) metadata.MD {
-		var mds []metadata.MD
-		for _, a := range annotators {
-			mds = append(mds, a(c, r))
-		}
-		return metadata.Join(mds...)
+		h.ServeHTTP(w, r)
 	}
 }
 
@@ -78,11 +62,11 @@ func (gws *Gateways) Close() {
 func NewGateway() *Gateways {
 	ctx, cancel := context.WithCancel(context.Background())
 	return &Gateways{
-		mux: runtime.NewServeMux(
-			runtime.WithMetadata(chainGrpcAnnotators([]annotator{
-				injectHeadersIntoMetadata,
-			}...))),
+		mux: runtime.NewServeMux(),
 		opts: []grpc.DialOption{
+			grpc.WithUnaryInterceptor(
+				grpc_opentracing.UnaryClientInterceptor(
+					grpc_opentracing.WithTracer(opentracing.GlobalTracer()))),
 			grpc.WithUnaryInterceptor(
 				grpc_retry.UnaryClientInterceptor(
 					grpc_retry.WithMax(_defaultCliConf.MaxRetry),
@@ -99,7 +83,7 @@ func NewGateway() *Gateways {
 func (gws *Gateways) Gateway(health func() bool) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", HealthCheck(health))
-	mux.HandleFunc("/", gws.mux.ServeHTTP)
+	mux.HandleFunc("/", tracingWrapper(gws.mux))
 	gws.server = &http.Server{
 		Addr:    ":23333",
 		Handler: mux,
