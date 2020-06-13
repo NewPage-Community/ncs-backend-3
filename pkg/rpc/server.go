@@ -2,8 +2,6 @@ package rpc
 
 import (
 	"context"
-	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
-	ot "github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/reflection"
@@ -93,12 +91,12 @@ func (s *Server) Grpc(reg func(s *grpc.Server)) {
 		MaxConnectionAge:      time.Duration(s.config.MaxLifeTime),
 	})
 	opts := []grpc.ServerOption{
-		grpc.UnaryInterceptor(
-			grpc_opentracing.UnaryServerInterceptor(
-				grpc_opentracing.WithTracer(ot.GlobalTracer()))),
-		grpc.StreamInterceptor(
-			grpc_opentracing.StreamServerInterceptor(
-				grpc_opentracing.WithTracer(ot.GlobalTracer()))),
+		//grpc.UnaryInterceptor(
+		//	grpc_opentracing.UnaryServerInterceptor(
+		//		grpc_opentracing.WithTracer(ot.GlobalTracer()))),
+		//grpc.StreamInterceptor(
+		//	grpc_opentracing.StreamServerInterceptor(
+		//		grpc_opentracing.WithTracer(ot.GlobalTracer()))),
 		keepParam,
 	}
 
