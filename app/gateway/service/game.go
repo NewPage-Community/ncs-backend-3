@@ -2,12 +2,17 @@ package service
 
 import (
 	serverGW "backend/app/game/server/api/grpc"
+	userGW "backend/app/game/user/api/grpc"
 	"backend/pkg/rpc"
 )
 
-func regServerService(gws *rpc.Gateways) {
+func regGameService(gws *rpc.Gateways) {
 	gws.AddGateway(
 		serverGW.RegisterServerHandlerFromEndpoint,
 		serverGW.ServiceAddr,
+	)
+	gws.AddGateway(
+		userGW.RegisterGameHandlerFromEndpoint,
+		userGW.ServiceAddr,
 	)
 }
