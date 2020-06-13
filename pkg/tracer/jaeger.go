@@ -2,40 +2,34 @@ package tracer
 
 import (
 	opentracing "github.com/opentracing/opentracing-go"
-	jaegercfg "github.com/uber/jaeger-client-go/config"
-	jaegerlog "github.com/uber/jaeger-client-go/log"
+	"github.com/uber/jaeger-client-go"
 	"github.com/uber/jaeger-client-go/zipkin"
-	"github.com/uber/jaeger-lib/metrics"
 	"io"
+	"time"
 )
 
 var tracerCloser io.Closer
 
 func Init(serviceName string) {
-	// Recommended configuration for production.
-	cfg := jaegercfg.Configuration{}
-
-	// Example logger and metrics factory. Use github.com/uber/jaeger-client-go/log
-	// and github.com/uber/jaeger-lib/metrics respectively to bind to real logging and metrics
-	// frameworks.
-	jLogger := jaegerlog.StdLogger
-	jMetricsFactory := metrics.NullFactory
+	zipkinPropagator := zipkin.NewZipkinB3HTTPHeaderPropagator()
+	injector := jaeger.TracerOptions.Injector(opentracing.HTTPHeaders, zipkinPropagator)
+	extractor := jaeger.TracerOptions.Extractor(opentracing.HTTPHeaders, zipkinPropagator)
 
 	// Zipkin shares span ID between client and server spans; it must be enabled via the following option.
-	zipkinPropagator := zipkin.NewZipkinB3HTTPHeaderPropagator()
+	zipkinSharedRPCSpan := jaeger.TracerOptions.ZipkinSharedRPCSpan(true)
 
-	// Create tracer and then initialize global tracer
-	closer, err := cfg.InitGlobalTracer(
+	sender, _ := jaeger.NewUDPTransport("jaeger-agent.istio-system:5775", 0)
+	tracer, closer := jaeger.NewTracer(
 		serviceName,
-		jaegercfg.Logger(jLogger),
-		jaegercfg.Metrics(jMetricsFactory),
-		jaegercfg.Injector(opentracing.HTTPHeaders, zipkinPropagator),
-		jaegercfg.Extractor(opentracing.HTTPHeaders, zipkinPropagator),
-		jaegercfg.ZipkinSharedRPCSpan(true),
+		jaeger.NewConstSampler(true),
+		jaeger.NewRemoteReporter(
+			sender,
+			jaeger.ReporterOptions.BufferFlushInterval(1*time.Second)),
+		injector,
+		extractor,
+		zipkinSharedRPCSpan,
 	)
-	if err != nil {
-		panic("Could not initialize jaeger tracer: " + err.Error())
-	}
+	opentracing.SetGlobalTracer(tracer)
 	tracerCloser = closer
 }
 

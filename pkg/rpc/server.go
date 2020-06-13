@@ -99,7 +99,7 @@ func (s *Server) Grpc(reg func(s *grpc.Server)) {
 			grpc_opentracing.UnaryServerInterceptor(tracer),
 		)),
 		grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
-			grpc_opentracing.StreamServerInterceptor(),
+			grpc_opentracing.StreamServerInterceptor(tracer),
 		)),
 		keepParam,
 	}

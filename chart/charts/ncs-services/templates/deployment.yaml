@@ -64,9 +64,6 @@ spec:
             periodSeconds: 1
             successThreshold: 2
             failureThreshold: 3
-          env:
-            - name: JAEGER_AGENT_HOST
-              value: "jaeger-agent.istio-system"
       {{- with $this.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
