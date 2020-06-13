@@ -1,0 +1,109 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/game/user/api/grpc/user.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/account/game/playerconnect": {
+      "post": {
+        "operationId": "PlayerConnect",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/accountPlayerConnectResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/accountPlayerConnectReq"
+            }
+          }
+        ],
+        "tags": [
+          "Game"
+        ]
+      }
+    },
+    "/user/account/game/playerdisconnect": {
+      "post": {
+        "operationId": "PlayerDisconnect",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/accountPlayerDisconnectResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/accountPlayerDisconnectReq"
+            }
+          }
+        ],
+        "tags": [
+          "Game"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "accountPlayerConnectReq": {
+      "type": "object",
+      "properties": {
+        "steam_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "accountPlayerConnectResp": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "accountPlayerDisconnectReq": {
+      "type": "object",
+      "properties": {
+        "steam_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "accountPlayerDisconnectResp": {
+      "type": "object"
+    }
+  }
+}

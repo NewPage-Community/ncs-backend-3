@@ -1,0 +1,64 @@
+package service
+
+import (
+	pb "backend/app/game/user/api/grpc"
+	account_pb "backend/app/service/user/account/api/grpc"
+	"backend/pkg/ecode"
+	"context"
+	"google.golang.org/grpc/codes"
+)
+
+func (s *Service) PlayerConnect(ctx context.Context, req *pb.PlayerConnectReq) (resp *pb.PlayerConnectResp, err error) {
+	resp = &pb.PlayerConnectResp{}
+
+	// Get UID
+	// If player is first time join in our server
+	// he do not have UID in our database
+	// we help him to register
+	uid, err := s.account.UID(ctx, &account_pb.UIDReq{
+		SteamId: req.SteamId,
+	})
+	if err != nil {
+		if ecode.GetError(err).Code != codes.NotFound {
+			return
+		}
+		// Not found -> Register -> Get UID
+		info, err1 := s.account.Register(ctx, &account_pb.RegisterReq{
+			SteamId: req.SteamId,
+		})
+		if err1 != nil {
+			err = err1
+			return
+		}
+		resp.Uid = info.Uid
+	} else {
+		// Found UID
+		resp.Uid = uid.Uid
+	}
+
+	// Change name
+	_, err = s.account.ChangeName(ctx, &account_pb.ChangeNameReq{
+		Uid:      resp.Uid,
+		Username: req.Username,
+	})
+	return
+}
+
+func (s *Service) PlayerDisconnect(ctx context.Context, req *pb.PlayerDisconnectReq) (resp *pb.PlayerDisconnectResp, err error) {
+	resp = &pb.PlayerDisconnectResp{}
+
+	// Get UID
+	uid, err := s.account.UID(ctx, &account_pb.UIDReq{
+		SteamId: req.SteamId,
+	})
+	if err != nil {
+		return
+	}
+
+	// Change name
+	_, err = s.account.ChangeName(ctx, &account_pb.ChangeNameReq{
+		Uid:      uid.Uid,
+		Username: req.Username,
+	})
+	return
+}
