@@ -10,7 +10,7 @@ message GetTitleReq {
 
 message GetTitleResp {
     string title = 1;
-    repeated string ab_title = 2;
+    repeated string ab_titles = 2;
 }
 
 message SetTitleReq {
