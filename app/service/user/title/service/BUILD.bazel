@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "service.go",
+        "title.go",
+    ],
+    importpath = "backend/app/service/user/title/service",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/service/user/title/api/grpc:go_default_library",
+        "//app/service/user/title/conf:go_default_library",
+        "//app/service/user/title/dao:go_default_library",
+        "//app/service/user/title/model:go_default_library",
+    ],
+)
