@@ -21,11 +21,15 @@ func (d *dao) Title(uid int64) (res *model.Title, err error) {
 func (d *dao) Update(title *model.Title) (err error) {
 	// DB
 	if !d.db.NewRecord(title) {
-		DBRes := d.db.Save(title)
+		DBRes := d.db.Model(title).Update(*title)
 		err = DBRes.Error
-		if DBRes.RowsAffected == 0 {
-			err = ecode.Errorf(codes.NotFound, "Can not found uid(%d)", title.UID)
-		}
 	}
+	return
+}
+
+func (d *dao) Create(title *model.Title) (err error) {
+	// DB
+	DBRes := d.db.Create(title)
+	err = DBRes.Error
 	return
 }
