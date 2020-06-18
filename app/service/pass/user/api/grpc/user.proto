@@ -1,0 +1,49 @@
+syntax = "proto3";
+package ncs.pass.user;
+option go_package = "grpc";
+
+import "google/api/annotations.proto";
+
+message Info {
+    int64 uid = 1;
+    int32 type = 2;
+    int32 point = 3;
+}
+
+message InfoReq {
+    int64 uid = 1;
+}
+
+message InfoResp {
+    Info info = 1;
+}
+
+message UpdateReq {
+    Info info = 1;
+}
+
+message UpdateResp {
+}
+
+message AddPointReq {
+    int64 uid = 1;
+    int32 point = 2;
+}
+
+message AddPointResp {
+}
+
+service User {
+    rpc Info (InfoReq) returns (InfoResp) {
+        option (google.api.http) = {
+            get: "/pass/user/{uid}"
+        };
+    }
+    rpc AddPoint (AddPointReq) returns (AddPointResp) {
+        option (google.api.http) = {
+            post: "/pass/user/addpoint"
+            body: "*"
+        };
+    }
+    rpc Update (UpdateReq) returns (UpdateResp);
+}

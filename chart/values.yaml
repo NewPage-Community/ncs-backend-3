@@ -39,3 +39,13 @@ ncs-services:
       image: harbor.new-page.xyz/newpage/ncs/game-user
       tag: latest
       port: 2333
+    - app: ncs-user-title
+      version: v1
+      image: harbor.new-page.xyz/newpage/ncs/user-title
+      tag: latest
+      port: 2333
+    - app: ncs-pass-user
+      version: v1
+      image: harbor.new-page.xyz/newpage/ncs/pass-user
+      tag: latest
+      port: 2333
