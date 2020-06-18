@@ -1,4 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("//build:docker.bzl", "push_docker")
 
 go_library(
     name = "go_default_library",
@@ -19,4 +20,10 @@ go_binary(
     name = "cmd",
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
+)
+
+push_docker(
+    name = "push",
+    app_name = "service-user-title",
+    embed = [":go_default_library"],
 )
