@@ -3,10 +3,8 @@ package mysql
 import (
 	"backend/pkg/log"
 	"fmt"
-	"github.com/DATA-DOG/go-sqlmock"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 )
 
 type Config struct {
@@ -34,21 +32,6 @@ func getDSN(conf *Config) string {
 		conf.DBName,
 		conf.Charset,
 	)
-}
-
-func InitMock() (sqlmock.Sqlmock, *gorm.DB) {
-	test, mock, err := sqlmock.New()
-	if err != nil {
-		panic(err)
-	}
-	db, err := gorm.Open(mysql.Open(""), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
-	})
-	if err != nil {
-		panic(err)
-	}
-	db.ConnPool = test
-	return mock, db
 }
 
 func Healthy(db *gorm.DB) bool {

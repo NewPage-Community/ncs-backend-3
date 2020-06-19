@@ -3,7 +3,6 @@ module backend
 go 1.14
 
 require (
-	github.com/DATA-DOG/go-sqlmock v1.4.1
 	github.com/alicebob/miniredis/v2 v2.11.4
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd // indirect
 	github.com/go-redis/redis/v7 v7.4.0
@@ -21,6 +20,7 @@ require (
 	go.uber.org/zap v1.15.0
 	google.golang.org/genproto v0.0.0-20200608115520-7c474a2e3482
 	google.golang.org/grpc v1.29.1
+	gorm.io/datatypes v0.0.0-20200607154708-7302016b1914
 	gorm.io/driver/mysql v0.2.0
 	gorm.io/gorm v0.2.7
 )
