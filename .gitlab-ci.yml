@@ -57,4 +57,5 @@ deploy:
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
       when: on_success
+  needs: ["push changed images"]
   cache: {}
