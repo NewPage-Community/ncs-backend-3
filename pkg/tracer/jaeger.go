@@ -1,7 +1,7 @@
 package tracer
 
 import (
-	opentracing "github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
 	"github.com/uber/jaeger-client-go/zipkin"
 	"io"

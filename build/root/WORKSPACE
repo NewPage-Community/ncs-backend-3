@@ -440,8 +440,8 @@ go_repository(
 go_repository(
     name = "com_github_go_sql_driver_mysql",
     importpath = "github.com/go-sql-driver/mysql",
-    sum = "h1:g24URVg0OFbNUTx9qqY1IRZ9D9z3iPyi5zKhQZpNwpA=",
-    version = "v1.4.1",
+    sum = "h1:ozyZYNQW3x3HtqT1jira07DN2PArx2v7/mN66gGcHOs=",
+    version = "v1.5.0",
 )
 
 go_repository(
@@ -735,8 +735,8 @@ go_repository(
 go_repository(
     name = "com_github_jinzhu_now",
     importpath = "github.com/jinzhu/now",
-    sum = "h1:HjfetcXq097iXP0uoPCdnM4Efp5/9MsM0/M+XOTeR3M=",
-    version = "v1.0.1",
+    sum = "h1:g39TucaRWyV3dwDO++eEc6qf8TVIQ/Da48WmqjZ3i7E=",
+    version = "v1.1.1",
 )
 
 go_repository(
@@ -1358,8 +1358,8 @@ go_repository(
 go_repository(
     name = "org_golang_x_crypto",
     importpath = "golang.org/x/crypto",
-    sum = "h1:GGJVjV8waZKRHrgwvtH66z9ZGVurTD1MT0n1Bb+q4aM=",
-    version = "v0.0.0-20191205180655-e7c4368fe9dd",
+    sum = "h1:58fnuSXlxZmFdJyvtTFVmVhcMLU6v5fEb/ok4wyqtNU=",
+    version = "v0.0.0-20190605123033-f99c8df09eb5",
 )
 
 go_repository(
@@ -1500,4 +1500,18 @@ go_repository(
     importpath = "github.com/uber/jaeger-lib",
     sum = "h1:MxZXOiR2JuoANZ3J6DE/U0kSFv/eJ/GfSYVCjK7dyaw=",
     version = "v2.2.0+incompatible",
+)
+
+go_repository(
+    name = "io_gorm_driver_mysql",
+    importpath = "gorm.io/driver/mysql",
+    sum = "h1:sMtE3XjZJEhOCLhHy2oeM8CdenxK53M/aP47EQsUIdA=",
+    version = "v0.2.0",
+)
+
+go_repository(
+    name = "io_gorm_gorm",
+    importpath = "gorm.io/gorm",
+    sum = "h1:hpXSTXLQfOUaITMjnQJ2ah+0uuQJLMsKcLytfqdteBw=",
+    version = "v0.2.7",
 )

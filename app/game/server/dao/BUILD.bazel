@@ -13,8 +13,7 @@ go_library(
         "//app/game/server/model:go_default_library",
         "//pkg/database/mysql:go_default_library",
         "//pkg/ecode:go_default_library",
-        "//pkg/log:go_default_library",
-        "@com_github_jinzhu_gorm//:go_default_library",
+        "@io_gorm_gorm//:go_default_library",
         "@org_golang_google_grpc//codes:go_default_library",
     ],
 )

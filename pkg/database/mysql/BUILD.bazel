@@ -6,9 +6,11 @@ go_library(
     importpath = "backend/pkg/database/mysql",
     visibility = ["//visibility:public"],
     deps = [
+        "//pkg/log:go_default_library",
         "@com_github_data_dog_go_sqlmock//:go_default_library",
-        "@com_github_jinzhu_gorm//:go_default_library",
-        "@com_github_jinzhu_gorm//dialects/mysql:go_default_library",
+        "@io_gorm_driver_mysql//:go_default_library",
+        "@io_gorm_gorm//:go_default_library",
+        "@io_gorm_gorm//logger:go_default_library",
     ],
 )
 

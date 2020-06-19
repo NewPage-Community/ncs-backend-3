@@ -18,16 +18,18 @@ func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp,
 	}
 
 	res, err := s.dao.Info(req.Uid)
-	resp.Info = &pb.Info{
-		Id:         res.ID,
-		Uid:        res.UID,
-		CreateTime: res.CreateTime,
-		ExpireTime: res.ExpireTime,
-		Type:       int32(res.Type),
-		ServerId:   res.ServerID,
-		ModId:      res.ModID,
-		GameId:     res.GameID,
-		Reason:     res.Reason,
+	if res != nil {
+		resp.Info = &pb.Info{
+			Id:         res.ID,
+			Uid:        res.UID,
+			CreateTime: res.CreateTime,
+			ExpireTime: res.ExpireTime,
+			Type:       int32(res.Type),
+			ServerId:   res.ServerID,
+			ModId:      res.ModID,
+			GameId:     res.GameID,
+			Reason:     res.Reason,
+		}
 	}
 	return
 }

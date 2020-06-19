@@ -31,13 +31,22 @@ build:
     - bazel version
     - bazel build --noshow_progress -k //app/... //pkg/...
     - bazel test --noshow_progress -k //app/... //pkg/...
+
+push changed images:
+  stage: push images
+  script:
     - build/push-images.sh changed
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: on_success
 
 push all images:
   stage: push images
   script:
     - build/push-images.sh
-  when: manual
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: manual
 
 deploy:
   stage: deploy
@@ -45,5 +54,7 @@ deploy:
   script:
     - mkdir ~/.kube && echo -n $KUBE_CONFIG | base64 -d > ~/.kube/config
     - helm upgrade --install --namespace ncs ncs ./chart
-  when: always
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+      when: on_success
   cache: {}

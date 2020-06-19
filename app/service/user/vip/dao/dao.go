@@ -4,7 +4,7 @@ import (
 	"backend/app/service/user/vip/conf"
 	"backend/app/service/user/vip/model"
 	db "backend/pkg/database/mysql"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type Dao interface {
@@ -12,6 +12,7 @@ type Dao interface {
 	Info(info *model.VIP) error
 	ExpireTime(info *model.VIP) error
 	Point(info *model.VIP) error
+	Healthy() bool
 	Close()
 }
 
@@ -29,5 +30,8 @@ func New(config *conf.Config) (d *dao) {
 }
 
 func (d *dao) Close() {
-	d.db.Close()
+}
+
+func (d *dao) Healthy() bool {
+	return db.Healthy(d.db)
 }

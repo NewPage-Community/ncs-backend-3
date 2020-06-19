@@ -6,7 +6,7 @@ import (
 	cache "backend/pkg/cache/redis"
 	db "backend/pkg/database/mysql"
 	"github.com/go-redis/redis/v7"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type Dao interface {
@@ -14,6 +14,7 @@ type Dao interface {
 	Info(uid int64) (*model.Info, error)
 	Register(steamID int64) (*model.Info, error)
 	ChangeName(info *model.Info) error
+	Healthy() bool
 	Close()
 }
 
@@ -33,6 +34,9 @@ func New(config *conf.Config) (d *dao) {
 }
 
 func (d *dao) Close() {
-	d.db.Close()
 	d.cache.Close()
+}
+
+func (d *dao) Healthy() bool {
+	return db.Healthy(d.db)
 }

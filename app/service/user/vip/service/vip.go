@@ -11,10 +11,12 @@ import (
 func (s *Service) Info(ctx context.Context, req *grpc.InfoReq) (resp *grpc.InfoResp, err error) {
 	resp = &grpc.InfoResp{}
 	info, err := s._Info(req.Uid)
-	resp.Info = &grpc.Info{
-		Point:      int32(info.Point),
-		Level:      int32(info.Level()),
-		ExpireDate: info.ExpireDate,
+	if info != nil {
+		resp.Info = &grpc.Info{
+			Point:      int32(info.Point),
+			Level:      int32(info.Level()),
+			ExpireDate: info.ExpireDate,
+		}
 	}
 	return
 }

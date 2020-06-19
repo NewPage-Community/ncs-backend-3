@@ -4,6 +4,7 @@ import (
 	"backend/app/service/user/vip/model"
 	"backend/pkg/ecode"
 	"google.golang.org/grpc/codes"
+	"gorm.io/gorm"
 )
 
 func (d *dao) Register(info *model.VIP) (err error) {
@@ -12,9 +13,8 @@ func (d *dao) Register(info *model.VIP) (err error) {
 }
 
 func (d *dao) Info(info *model.VIP) (err error) {
-	dbRes := d.db.Where(info.UID).First(info)
-	err = dbRes.Error
-	if dbRes.RecordNotFound() {
+	err = d.db.Where(info.UID).First(info).Error
+	if err == gorm.ErrRecordNotFound {
 		err = ecode.Errorf(codes.NotFound, "Can not found: UID(%v)", info.UID)
 	}
 	return
