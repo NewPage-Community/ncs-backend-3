@@ -4,6 +4,7 @@ import (
 	"backend/app/service/user/title/model"
 	"backend/pkg/ecode"
 	"google.golang.org/grpc/codes"
+	"gorm.io/gorm"
 )
 
 func (d *dao) Title(uid int64) (res *model.Title, err error) {
@@ -12,7 +13,7 @@ func (d *dao) Title(uid int64) (res *model.Title, err error) {
 	// DB
 	DBRes := d.db.Where(uid).First(&res)
 	err = DBRes.Error
-	if DBRes.RecordNotFound() {
+	if err == gorm.ErrRecordNotFound {
 		err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
 	}
 	return
@@ -20,8 +21,8 @@ func (d *dao) Title(uid int64) (res *model.Title, err error) {
 
 func (d *dao) Update(title *model.Title) (err error) {
 	// DB
-	if !d.db.NewRecord(title) {
-		DBRes := d.db.Model(title).Update(*title)
+	if title.IsValid() {
+		DBRes := d.db.Model(title).Updates(*title)
 		err = DBRes.Error
 	}
 	return

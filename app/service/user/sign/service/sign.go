@@ -15,10 +15,12 @@ func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp,
 	}
 
 	res, err := s.dao.Info(req.Uid)
-	resp.Info = &pb.Info{
-		Uid:      res.UID,
-		SignTime: res.SignTime.Unix(),
-		SignDays: int32(res.SignDays),
+	if res != nil {
+		resp.Info = &pb.Info{
+			Uid:      res.UID,
+			SignTime: res.SignTime.Unix(),
+			SignDays: int32(res.SignDays),
+		}
 	}
 	return
 }

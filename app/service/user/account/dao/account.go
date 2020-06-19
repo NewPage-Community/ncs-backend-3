@@ -4,6 +4,7 @@ import (
 	"backend/app/service/user/account/model"
 	"backend/pkg/ecode"
 	"backend/pkg/json"
+	"gorm.io/gorm"
 	"strconv"
 	"time"
 
@@ -31,10 +32,9 @@ func (d *dao) UID(steamID int64) (res *model.Info, err error) {
 	}
 
 	// DB
-	dbRes := d.db.Where(&model.Info{SteamID: steamID}).First(res)
-	err = dbRes.Error
+	err = d.db.Where(&model.Info{SteamID: steamID}).First(res).Error
 	// Not found
-	if dbRes.RecordNotFound() {
+	if err == gorm.ErrRecordNotFound {
 		err = ecode.Errorf(codes.NotFound, "Can not found: SteamID(%v)", steamID)
 		return
 	}
@@ -60,10 +60,9 @@ func (d *dao) Info(uid int64) (res *model.Info, err error) {
 	}
 
 	// DB
-	dbRes := d.db.Where(&model.Info{UID: uid}).First(res)
-	err = dbRes.Error
+	err = d.db.Where(&model.Info{UID: uid}).First(res).Error
 	// Not found
-	if dbRes.RecordNotFound() {
+	if err == gorm.ErrRecordNotFound {
 		err = ecode.Errorf(codes.NotFound, "Can not found: UID(%v)", uid)
 		return
 	}

@@ -12,7 +12,6 @@ require (
 	github.com/golang/protobuf v1.4.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0
 	github.com/grpc-ecosystem/grpc-gateway v1.14.6
-	github.com/jinzhu/gorm v1.9.12
 	github.com/json-iterator/go v1.1.9
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/smartystreets/goconvey v1.6.4
@@ -22,4 +21,6 @@ require (
 	go.uber.org/zap v1.15.0
 	google.golang.org/genproto v0.0.0-20200608115520-7c474a2e3482
 	google.golang.org/grpc v1.29.1
+	gorm.io/driver/mysql v0.2.0
+	gorm.io/gorm v0.2.7
 )

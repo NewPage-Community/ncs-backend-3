@@ -15,6 +15,10 @@ func (*Sign) TableName() string {
 	return "np_sign"
 }
 
+func (s *Sign) IsValid() bool {
+	return s.UID > 0
+}
+
 // GetNowTime .
 func (*Sign) GetNowTime() time.Time {
 	return time.Now().UTC()

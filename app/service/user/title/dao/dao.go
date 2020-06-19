@@ -4,8 +4,7 @@ import (
 	"backend/app/service/user/title/conf"
 	"backend/app/service/user/title/model"
 	"backend/pkg/database/mysql"
-	"backend/pkg/log"
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type Dao interface {
@@ -30,14 +29,8 @@ func Init(config *conf.Config) (d *dao) {
 }
 
 func (d *dao) Close() {
-	d.db.Close()
 }
 
 func (d *dao) Healthy() bool {
-	err := d.db.DB().Ping()
-	if err != nil {
-		log.Error(err)
-		return false
-	}
-	return true
+	return mysql.Healthy(d.db)
 }

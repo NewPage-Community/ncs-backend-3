@@ -10,3 +10,7 @@ type Title struct {
 func (*Title) TableName() string {
 	return "np_title"
 }
+
+func (t *Title) IsValid() bool {
+	return t.UID > 0
+}

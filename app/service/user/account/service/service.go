@@ -18,3 +18,7 @@ func Init(c *conf.Config) *Service {
 func (s *Service) Close() {
 	s.dao.Close()
 }
+
+func (s *Service) Healthy() bool {
+	return s.dao.Healthy()
+}

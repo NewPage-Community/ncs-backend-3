@@ -4,15 +4,15 @@ import (
 	"backend/app/game/server/model"
 	"backend/pkg/ecode"
 	"google.golang.org/grpc/codes"
+	"gorm.io/gorm"
 )
 
 func (d *dao) Info(address string) (res *model.Info, err error) {
 	res = &model.Info{}
 
 	// DB
-	DBres := d.db.Where(&model.Info{Address: address}).First(res)
-	err = DBres.Error
-	if DBres.RecordNotFound() {
+	err = d.db.Where(&model.Info{Address: address}).First(res).Error
+	if err == gorm.ErrRecordNotFound {
 		err = ecode.Errorf(codes.NotFound, "Can not found server (%s)", address)
 	}
 	return

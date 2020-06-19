@@ -1,10 +1,12 @@
 package mysql
 
 import (
+	"backend/pkg/log"
 	"fmt"
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type Config struct {
@@ -16,7 +18,7 @@ type Config struct {
 }
 
 func Init(conf *Config) *gorm.DB {
-	db, err := gorm.Open("mysql", getDSN(conf))
+	db, err := gorm.Open(mysql.Open(getDSN(conf)), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
@@ -39,10 +41,28 @@ func InitMock() (sqlmock.Sqlmock, *gorm.DB) {
 	if err != nil {
 		panic(err)
 	}
-	db, err := gorm.Open("mysql", test)
+	db, err := gorm.Open(mysql.Open(""), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 	if err != nil {
 		panic(err)
 	}
-	db.LogMode(true)
+	db.ConnPool = test
 	return mock, db
+}
+
+func Healthy(db *gorm.DB) bool {
+	if db == nil {
+		return false
+	}
+	d, err := db.DB()
+	if err != nil {
+		log.Error(err)
+		return false
+	}
+	if err = d.Ping(); err != nil {
+		log.Error(err)
+		return false
+	}
+	return true
 }

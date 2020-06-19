@@ -16,6 +16,10 @@ func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp,
 
 	res, err := s.dao.Info(req.Address + ":" + strconv.Itoa(int(req.Port)))
 
+	if res == nil {
+		return
+	}
+
 	// Random rcon password
 	res.GenerateRcon()
 	s.dao.UpdateRcon(res)

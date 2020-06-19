@@ -19,7 +19,6 @@ func main() {
 	srv := service.Init()
 
 	// rpc
-	// TODO: health check
 	server := api.InitServer(srv, func() bool {
 		return true
 	})

@@ -92,6 +92,20 @@ func (mr *MockDaoMockRecorder) ChangeName(info interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChangeName", reflect.TypeOf((*MockDao)(nil).ChangeName), info)
 }
 
+// Healthy mocks base method
+func (m *MockDao) Healthy() bool {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Healthy")
+	ret0, _ := ret[0].(bool)
+	return ret0
+}
+
+// Healthy indicates an expected call of Healthy
+func (mr *MockDaoMockRecorder) Healthy() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Healthy", reflect.TypeOf((*MockDao)(nil).Healthy))
+}
+
 // Close mocks base method
 func (m *MockDao) Close() {
 	m.ctrl.T.Helper()

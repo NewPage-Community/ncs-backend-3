@@ -19,9 +19,8 @@ func main() {
 	srv := service.Init(config)
 
 	// rpc
-	// TODO: Health check
 	server := api.InitServer(srv, func() bool {
-		return true
+		return srv.Healthy()
 	})
 
 	log.Info(serviceName, "service started!")
