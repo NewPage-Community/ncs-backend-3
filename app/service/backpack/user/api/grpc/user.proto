@@ -17,7 +17,6 @@ message Info {
 
 message GetItemsReq {
     int64 uid = 1;
-    int32 type = 2;
 }
 
 message GetItemsResp {
@@ -46,9 +45,6 @@ service User {
     rpc GetItems (GetItemsReq) returns (GetItemsResp) {
         option (google.api.http) = {
             get: "/backpack/user/{uid}"
-            additional_bindings {
-                get: "/backpack/user/{uid}/type/{type}"
-            }
         };
     }
     rpc AddItem (AddItemReq) returns (AddItemResp) {

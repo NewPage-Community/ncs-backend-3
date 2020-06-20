@@ -10,12 +10,27 @@ import (
 
 func (d *dao) Get(uid int64) (res *model.User, err error) {
 	res = &model.User{}
+	defer func() {
+		// To release lock
+		d.db.Commit()
+	}()
 
 	// DB
-	err = d.db.Where(uid).First(res).Error
+	err = d.db.Where(uid).First(res).
+		Clauses(clause.Locking{Strength: "UPDATE"}).Error
 	if err == gorm.ErrRecordNotFound {
 		err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
 	}
+	if err != nil {
+		return
+	}
+
+	err = res.CheckItem()
+	if err != nil {
+		return
+	}
+
+	err = d.db.Model(res).Updates(*res).Error
 	return
 }
 

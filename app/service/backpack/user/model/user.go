@@ -48,3 +48,13 @@ func (i *User) SearchItem(id int32) (item Item, found bool) {
 	}
 	return Item{}, false
 }
+
+func (i *User) CheckItem() (err error) {
+	// Unmarshal -> Check -> Marshal
+	items, err := LoadItemsFromJSON(i.Items)
+	if err == nil {
+		items.Check()
+		i.Items, err = items.JSON()
+	}
+	return
+}

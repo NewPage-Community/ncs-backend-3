@@ -86,3 +86,11 @@ func (items *Items) Swap(i, j int) {
 func (items *Items) JSON() ([]byte, error) {
 	return json.Marshal(items)
 }
+
+func (items *Items) Check() {
+	for index := range *items {
+		if (*items)[index].IsExpired() || (*items)[index].Amount <= 0 {
+			*items = append((*items)[:index], (*items)[index+1:]...)
+		}
+	}
+}

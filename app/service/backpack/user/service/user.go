@@ -34,9 +34,6 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 	if err != nil {
 		return
 	}
-	if req.Type != 0 {
-		// TODO: type filter
-	}
 
 	resp.Info = &pb.Info{
 		Uid:   res.UID,
