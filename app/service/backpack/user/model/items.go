@@ -27,6 +27,9 @@ func LoadItemsFromJSON(data []byte) (items *Items, err error) {
 
 func (items *Items) AddItem(item Item, repeat bool) {
 	index, found := items.search(item.ID)
+	if item.Amount <= 0 {
+		item.Amount = 1
+	}
 
 	if found {
 		// found the same item and +1
@@ -62,13 +65,22 @@ func (items *Items) SearchItem(id int32) (item Item, found bool) {
 	return
 }
 
+//search items Binary Search
 func (items *Items) search(id int32) (index int, found bool) {
-	itemsNum := len(*items)
-	index = sort.Search(itemsNum, func(j int) bool {
-		return (*items)[j].ID == id
-	})
-	found = index != itemsNum
-	return
+	length := len(*items)
+	low := 0
+	high := length - 1
+	for low <= high {
+		mid := (low + high) / 2
+		if (*items)[mid].ID > id {
+			high = mid - 1
+		} else if (*items)[mid].ID < id {
+			low = mid + 1
+		} else {
+			return mid, true
+		}
+	}
+	return length, false
 }
 
 func (items *Items) Len() int {
