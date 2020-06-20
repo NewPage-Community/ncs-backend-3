@@ -1,7 +1,6 @@
 package model
 
 import (
-	itemsModel "backend/app/service/backpack/items/model"
 	"gorm.io/datatypes"
 )
 
@@ -13,7 +12,7 @@ type User struct {
 
 // TableName return table name
 func (*User) TableName() string {
-	return "np_accounts"
+	return "np_backpack_users"
 }
 
 // IsValid .
@@ -21,9 +20,9 @@ func (i *User) IsValid() bool {
 	return i.UID > 0
 }
 
-func (i *User) AddItem(item itemsModel.Item, repeat bool) (err error) {
+func (i *User) AddItem(item Item, repeat bool) (err error) {
 	// Unmarshal -> Add -> Marshal
-	items, err := itemsModel.LoadItemsFromJSON(i.Items)
+	items, err := LoadItemsFromJSON(i.Items)
 	if err == nil {
 		items.AddItem(item, repeat)
 		i.Items, err = items.JSON()
@@ -31,9 +30,9 @@ func (i *User) AddItem(item itemsModel.Item, repeat bool) (err error) {
 	return
 }
 
-func (i *User) RemoveItem(item itemsModel.Item, all bool) (err error) {
+func (i *User) RemoveItem(item Item, all bool) (err error) {
 	// Unmarshal -> Remove -> Marshal
-	items, err := itemsModel.LoadItemsFromJSON(i.Items)
+	items, err := LoadItemsFromJSON(i.Items)
 	if err == nil {
 		items.RemoveItem(item, all)
 		i.Items, err = items.JSON()
@@ -41,11 +40,11 @@ func (i *User) RemoveItem(item itemsModel.Item, all bool) (err error) {
 	return
 }
 
-func (i *User) SearchItem(id int32) (item itemsModel.Item, found bool) {
+func (i *User) SearchItem(id int32) (item Item, found bool) {
 	// Unmarshal -> Search
-	items, err := itemsModel.LoadItemsFromJSON(i.Items)
+	items, err := LoadItemsFromJSON(i.Items)
 	if err == nil {
 		return items.SearchItem(id)
 	}
-	return itemsModel.Item{}, false
+	return Item{}, false
 }

@@ -1,0 +1,62 @@
+syntax = "proto3";
+package ncs.backpack.user;
+option go_package = "grpc";
+
+import "google/api/annotations.proto";
+
+message Item {
+    int32 id = 1;
+    int32 amount = 2;
+    int64 expr_time = 3;
+}
+
+message Info {
+    int64 uid = 1;
+    repeated Item items = 2;
+}
+
+message GetItemsReq {
+    int64 uid = 1;
+    int32 type = 2;
+}
+
+message GetItemsResp {
+    Info info = 1;
+}
+
+message AddItemReq {
+    int64 uid = 1;
+    Item item = 2;
+    bool repeat = 3;
+}
+
+message AddItemResp {
+}
+
+message RemoveItemReq {
+    int64 uid = 1;
+    Item item = 2;
+    bool all = 3;
+}
+
+message RemoveItemResp {
+}
+
+service User {
+    rpc GetItems (GetItemsReq) returns (GetItemsResp) {
+        option (google.api.http) = {
+            get: "/backpack/user/{uid}"
+            additional_bindings {
+                get: "/backpack/user/{uid}/type/{type}"
+            }
+        };
+    }
+    rpc AddItem (AddItemReq) returns (AddItemResp) {
+        option (google.api.http) = {
+            post: "/backpack/user/{uid}/item"
+            body: "*"
+        };
+    }
+    rpc RemoveItem (RemoveItemReq) returns (RemoveItemResp);
+}
+
