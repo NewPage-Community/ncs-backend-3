@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	ServiceName = "ncs-service-user-admin"
+	ServiceName = "ncs-service-user-title"
 	ServiceAddr = ServiceName + ":2333"
 )
 

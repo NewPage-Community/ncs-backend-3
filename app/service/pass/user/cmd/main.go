@@ -6,6 +6,7 @@ import (
 	"backend/app/service/pass/user/service"
 	"backend/pkg/cmd"
 	"backend/pkg/log"
+	"backend/pkg/tracer"
 )
 
 const serviceName = "pass-user"
@@ -14,7 +15,7 @@ func main() {
 	// Init
 	config := conf.Init()
 	log.Init(config.Log)
-	//tracer.Init(serviceName)
+	tracer.Init(serviceName)
 	srv := service.Init(config)
 
 	// rpc
@@ -28,7 +29,7 @@ func main() {
 	cmd.Run(serviceName, func() {
 		server.Stop()
 		srv.Close()
-		//tracer.Close()
+		tracer.Close()
 		log.Close()
 	})
 }

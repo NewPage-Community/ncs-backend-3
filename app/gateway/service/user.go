@@ -5,6 +5,7 @@ import (
 	adminGW "backend/app/service/user/admin/api/grpc"
 	banGW "backend/app/service/user/ban/api/grpc"
 	signGW "backend/app/service/user/sign/api/grpc"
+	titleGW "backend/app/service/user/title/api/grpc"
 	vipGW "backend/app/service/user/vip/api/grpc"
 	"backend/pkg/rpc"
 )
@@ -29,5 +30,9 @@ func regUserService(gws *rpc.Gateways) {
 	gws.AddGateway(
 		vipGW.RegisterVIPHandlerFromEndpoint,
 		vipGW.ServiceAddr,
+	)
+	gws.AddGateway(
+		titleGW.RegisterTitleHandlerFromEndpoint,
+		titleGW.ServiceAddr,
 	)
 }
