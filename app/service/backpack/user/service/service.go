@@ -16,7 +16,7 @@ func Init(config *conf.Config) *Service {
 }
 
 func (s *Service) Healthy() bool {
-	return s.Healthy()
+	return s.dao.Healthy()
 }
 
 func (s *Service) Close() {
