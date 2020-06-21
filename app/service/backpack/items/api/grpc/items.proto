@@ -1,0 +1,29 @@
+syntax = "proto3";
+package ncs.backpack.items;
+option go_package = "grpc";
+
+import "google/api/annotations.proto";
+
+message Item {
+    int32 id = 1;
+    string name = 2;
+    string description = 3;
+    int32 type = 4;
+    int32 price = 5;
+    map<string, string> attributes = 6;
+}
+
+message GetItemsReq {
+}
+
+message GetItemsResp {
+    repeated Item items = 1;
+}
+
+service Items {
+    rpc GetItems (GetItemsReq) returns (GetItemsResp) {
+        option (google.api.http) = {
+            get: "/backpack/items"
+        };
+    }
+}

@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "dao.go",
+        "items.go",
+    ],
+    importpath = "backend/app/service/backpack/items/dao",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/service/backpack/items/conf:go_default_library",
+        "//app/service/backpack/items/model:go_default_library",
+        "//pkg/database/mysql:go_default_library",
+        "//pkg/log:go_default_library",
+        "@io_gorm_gorm//:go_default_library",
+    ],
+)

@@ -54,3 +54,8 @@ ncs-services:
       image: harbor.new-page.xyz/newpage/ncs/service-backpack-user
       tag: latest
       port: 2333
+    - app: ncs-service-backpack-items
+      version: v1
+      image: harbor.new-page.xyz/newpage/ncs/service-backpack-items
+      tag: latest
+      port: 2333

@@ -2,7 +2,10 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
-    srcs = ["items.go"],
+    srcs = [
+        "attributes.go",
+        "items.go",
+    ],
     importpath = "backend/app/service/backpack/items/model",
     visibility = ["//visibility:public"],
     deps = [
