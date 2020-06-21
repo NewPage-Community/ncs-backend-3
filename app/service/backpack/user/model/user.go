@@ -4,15 +4,33 @@ import (
 	"gorm.io/datatypes"
 )
 
-type User struct {
+type UserModel struct {
 	UID int64 `gorm:"primary_key" json:"uid"`
 	// []Item{}
 	Items datatypes.JSON `json:"items"`
 }
 
 // TableName return table name
-func (*User) TableName() string {
+func (*UserModel) TableName() string {
 	return "np_backpack_users"
+}
+
+// IsValid .
+func (i *UserModel) IsValid() bool {
+	return i.UID > 0
+}
+
+func (i *UserModel) GetUser() (*User, error) {
+	items, err := LoadItemsFromJSON(i.Items)
+	return &User{
+		UID:   i.UID,
+		Items: items,
+	}, err
+}
+
+type User struct {
+	UID   int64  `json:"uid"`
+	Items *Items `json:"items"`
 }
 
 // IsValid .
@@ -20,41 +38,26 @@ func (i *User) IsValid() bool {
 	return i.UID > 0
 }
 
-func (i *User) AddItem(item Item, repeat bool) (err error) {
-	// Unmarshal -> Add -> Marshal
-	items, err := LoadItemsFromJSON(i.Items)
-	if err == nil {
-		items.AddItem(item, repeat)
-		i.Items, err = items.JSON()
-	}
-	return
+func (i *User) AddItems(items *Items) {
+	i.Items.AddItems(items)
 }
 
-func (i *User) RemoveItem(item Item, all bool) (err error) {
-	// Unmarshal -> Remove -> Marshal
-	items, err := LoadItemsFromJSON(i.Items)
-	if err == nil {
-		items.RemoveItem(item, all)
-		i.Items, err = items.JSON()
-	}
-	return
+func (i *User) RemoveItem(item Item, all bool) {
+	i.Items.RemoveItem(item, all)
 }
 
 func (i *User) SearchItem(id int32) (item Item, found bool) {
-	// Unmarshal -> Search
-	items, err := LoadItemsFromJSON(i.Items)
-	if err == nil {
-		return items.SearchItem(id)
-	}
-	return Item{}, false
+	return i.Items.SearchItem(id)
 }
 
-func (i *User) CheckItem() (err error) {
-	// Unmarshal -> Check -> Marshal
-	items, err := LoadItemsFromJSON(i.Items)
-	if err == nil {
-		items.Check()
-		i.Items, err = items.JSON()
-	}
-	return
+func (i *User) CheckItem() {
+	i.Items.Check()
+}
+
+func (i *User) GetModel() (*UserModel, error) {
+	json, err := i.Items.JSON()
+	return &UserModel{
+		UID:   i.UID,
+		Items: json,
+	}, err
 }

@@ -4,7 +4,6 @@ import (
 	pb "backend/app/service/backpack/user/api/grpc"
 	"backend/app/service/backpack/user/model"
 	"backend/pkg/ecode"
-	"backend/pkg/json"
 	"context"
 	"google.golang.org/grpc/codes"
 )
@@ -22,6 +21,7 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 
 	res, err = s.dao.Get(req.Uid)
 	if err != nil {
+		// not found -> create
 		if ecode.GetError(err).Code != codes.NotFound {
 			return
 		}
@@ -30,9 +30,13 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 			return
 		}
 	}
-	err = json.Unmarshal(res.Items, &items)
-	if err != nil {
-		return
+
+	for i := range *res.Items {
+		items = append(items, &pb.Item{
+			Id:       (*res.Items)[i].ID,
+			Amount:   (*res.Items)[i].Amount,
+			ExprTime: (*res.Items)[i].ExprTime,
+		})
 	}
 
 	resp.Info = &pb.Info{
@@ -42,27 +46,30 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 	return
 }
 
-func (s *Service) AddItem(ctx context.Context, req *pb.AddItemReq) (resp *pb.AddItemResp, err error) {
-	resp = &pb.AddItemResp{}
+func (s *Service) AddItems(ctx context.Context, req *pb.AddItemsReq) (resp *pb.AddItemsResp, err error) {
+	resp = &pb.AddItemsResp{}
 
 	if req.Uid <= 0 {
 		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID")
 		return
 	}
-	if req.Item == nil {
-		err = ecode.Errorf(codes.InvalidArgument, "Invalid Item")
-		return
-	}
-	if req.Item.Id <= 0 {
-		err = ecode.Errorf(codes.InvalidArgument, "Invalid Item ID")
+	if len(req.Items) == 0 {
 		return
 	}
 
-	err = s.dao.AddItem(req.Uid, model.Item{
-		ID:       req.Item.Id,
-		Amount:   req.Item.Amount,
-		ExprTime: req.Item.ExprTime,
-	}, req.Repeat)
+	var items model.Items
+	for i := range req.Items {
+		item := &model.Item{
+			ID:       req.Items[i].Id,
+			Amount:   req.Items[i].Amount,
+			ExprTime: req.Items[i].ExprTime,
+		}
+		if item.IsValid() {
+			items = append(items, item)
+		}
+	}
+
+	err = s.dao.AddItems(req.Uid, &items)
 	return
 }
 

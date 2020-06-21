@@ -23,13 +23,12 @@ message GetItemsResp {
     Info info = 1;
 }
 
-message AddItemReq {
+message AddItemsReq {
     int64 uid = 1;
-    Item item = 2;
-    bool repeat = 3;
+    repeated Item items = 2;
 }
 
-message AddItemResp {
+message AddItemsResp {
 }
 
 message RemoveItemReq {
@@ -47,7 +46,7 @@ service User {
             get: "/backpack/user/{uid}"
         };
     }
-    rpc AddItem (AddItemReq) returns (AddItemResp) {
+    rpc AddItems (AddItemsReq) returns (AddItemsResp) {
         option (google.api.http) = {
             post: "/backpack/user/{uid}/item"
             body: "*"

@@ -54,24 +54,24 @@ func (mr *MockUserClientMockRecorder) GetItems(ctx, in interface{}, opts ...inte
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetItems", reflect.TypeOf((*MockUserClient)(nil).GetItems), varargs...)
 }
 
-// AddItem mocks base method
-func (m *MockUserClient) AddItem(ctx context.Context, in *AddItemReq, opts ...grpc.CallOption) (*AddItemResp, error) {
+// AddItems mocks base method
+func (m *MockUserClient) AddItems(ctx context.Context, in *AddItemsReq, opts ...grpc.CallOption) (*AddItemsResp, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "AddItem", varargs...)
-	ret0, _ := ret[0].(*AddItemResp)
+	ret := m.ctrl.Call(m, "AddItems", varargs...)
+	ret0, _ := ret[0].(*AddItemsResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// AddItem indicates an expected call of AddItem
-func (mr *MockUserClientMockRecorder) AddItem(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+// AddItems indicates an expected call of AddItems
+func (mr *MockUserClientMockRecorder) AddItems(ctx, in interface{}, opts ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddItem", reflect.TypeOf((*MockUserClient)(nil).AddItem), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddItems", reflect.TypeOf((*MockUserClient)(nil).AddItems), varargs...)
 }
 
 // RemoveItem mocks base method
@@ -132,19 +132,19 @@ func (mr *MockUserServerMockRecorder) GetItems(arg0, arg1 interface{}) *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetItems", reflect.TypeOf((*MockUserServer)(nil).GetItems), arg0, arg1)
 }
 
-// AddItem mocks base method
-func (m *MockUserServer) AddItem(arg0 context.Context, arg1 *AddItemReq) (*AddItemResp, error) {
+// AddItems mocks base method
+func (m *MockUserServer) AddItems(arg0 context.Context, arg1 *AddItemsReq) (*AddItemsResp, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddItem", arg0, arg1)
-	ret0, _ := ret[0].(*AddItemResp)
+	ret := m.ctrl.Call(m, "AddItems", arg0, arg1)
+	ret0, _ := ret[0].(*AddItemsResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// AddItem indicates an expected call of AddItem
-func (mr *MockUserServerMockRecorder) AddItem(arg0, arg1 interface{}) *gomock.Call {
+// AddItems indicates an expected call of AddItems
+func (mr *MockUserServerMockRecorder) AddItems(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddItem", reflect.TypeOf((*MockUserServer)(nil).AddItem), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddItems", reflect.TypeOf((*MockUserServer)(nil).AddItems), arg0, arg1)
 }
 
 // RemoveItem mocks base method

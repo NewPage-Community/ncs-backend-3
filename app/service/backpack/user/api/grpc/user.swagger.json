@@ -42,12 +42,12 @@
     },
     "/backpack/user/{uid}/item": {
       "post": {
-        "operationId": "AddItem",
+        "operationId": "AddItems",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/userAddItemResp"
+              "$ref": "#/definitions/userAddItemsResp"
             }
           }
         },
@@ -64,7 +64,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userAddItemReq"
+              "$ref": "#/definitions/userAddItemsReq"
             }
           }
         ],
@@ -75,23 +75,22 @@
     }
   },
   "definitions": {
-    "userAddItemReq": {
+    "userAddItemsReq": {
       "type": "object",
       "properties": {
         "uid": {
           "type": "string",
           "format": "int64"
         },
-        "item": {
-          "$ref": "#/definitions/userItem"
-        },
-        "repeat": {
-          "type": "boolean",
-          "format": "boolean"
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/userItem"
+          }
         }
       }
     },
-    "userAddItemResp": {
+    "userAddItemsResp": {
       "type": "object"
     },
     "userGetItemsResp": {

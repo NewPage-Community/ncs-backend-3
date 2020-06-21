@@ -6,6 +6,12 @@ import (
 	"time"
 )
 
+const (
+	ItemCalTypeUnlimited = iota
+	ItemCalTypeAmount
+	ItemCalTypeTime
+)
+
 type Item struct {
 	ID     int32 `json:"id"`
 	Amount int32 `json:"amount"`
@@ -13,11 +19,25 @@ type Item struct {
 	ExprTime int64 `json:"expr_time"`
 }
 
+func (item *Item) IsValid() bool {
+	return item.ID > 0
+}
+
 func (item *Item) IsExpired() bool {
 	return item.ExprTime != 0 && item.ExprTime < time.Now().Unix()
 }
 
-type Items []Item
+func (item *Item) CalType() int {
+	if item.Amount == 0 && item.ExprTime == 0 {
+		return ItemCalTypeUnlimited
+	}
+	if item.ExprTime == 0 {
+		return ItemCalTypeAmount
+	}
+	return ItemCalTypeTime
+}
+
+type Items []*Item
 
 func LoadItemsFromJSON(data []byte) (items *Items, err error) {
 	items = &Items{}
@@ -25,22 +45,26 @@ func LoadItemsFromJSON(data []byte) (items *Items, err error) {
 	return
 }
 
-func (items *Items) AddItem(item Item, repeat bool) {
-	index, found := items.search(item.ID)
-	if item.Amount <= 0 {
-		item.Amount = 1
+func (items *Items) AddItems(_items *Items) {
+	for i := range *_items {
+		items.addItem(*(*_items)[i])
 	}
+	sort.Sort(items)
+}
+
+func (items *Items) addItem(item Item) {
+	index, found := items.search(item.ID)
 
 	if found {
-		// found the same item and +1
-		// check it allow repeat
-		if repeat {
+		if (*items)[index].CalType() == ItemCalTypeAmount {
 			(*items)[index].Amount += item.Amount
+		}
+		if (*items)[index].CalType() == ItemCalTypeTime {
+			(*items)[index].ExprTime += item.ExprTime
 		}
 	} else {
 		// not found
-		*items = append(*items, item)
-		sort.Sort(items)
+		*items = append(*items, &item)
 	}
 }
 
@@ -60,7 +84,7 @@ func (items *Items) SearchItem(id int32) (item Item, found bool) {
 	index, found := items.search(id)
 
 	if found {
-		item = (*items)[index]
+		item = *(*items)[index]
 	}
 	return
 }
@@ -101,7 +125,7 @@ func (items *Items) JSON() ([]byte, error) {
 
 func (items *Items) Check() {
 	for index := range *items {
-		if (*items)[index].IsExpired() || (*items)[index].Amount <= 0 {
+		if (*items)[index].IsExpired() {
 			*items = append((*items)[:index], (*items)[index+1:]...)
 		}
 	}

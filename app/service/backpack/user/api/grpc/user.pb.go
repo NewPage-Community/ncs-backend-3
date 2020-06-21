@@ -239,27 +239,26 @@ func (m *GetItemsResp) GetInfo() *Info {
 	return nil
 }
 
-type AddItemReq struct {
+type AddItemsReq struct {
 	Uid                  int64    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
-	Item                 *Item    `protobuf:"bytes,2,opt,name=item,proto3" json:"item,omitempty"`
-	Repeat               bool     `protobuf:"varint,3,opt,name=repeat,proto3" json:"repeat,omitempty"`
+	Items                []*Item  `protobuf:"bytes,2,rep,name=items,proto3" json:"items,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *AddItemReq) Reset()         { *m = AddItemReq{} }
-func (m *AddItemReq) String() string { return proto.CompactTextString(m) }
-func (*AddItemReq) ProtoMessage()    {}
-func (*AddItemReq) Descriptor() ([]byte, []int) {
+func (m *AddItemsReq) Reset()         { *m = AddItemsReq{} }
+func (m *AddItemsReq) String() string { return proto.CompactTextString(m) }
+func (*AddItemsReq) ProtoMessage()    {}
+func (*AddItemsReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9cf14bc8dee96b17, []int{4}
 }
-func (m *AddItemReq) XXX_Unmarshal(b []byte) error {
+func (m *AddItemsReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *AddItemReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *AddItemsReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_AddItemReq.Marshal(b, m, deterministic)
+		return xxx_messageInfo_AddItemsReq.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -269,57 +268,50 @@ func (m *AddItemReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return b[:n], nil
 	}
 }
-func (m *AddItemReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddItemReq.Merge(m, src)
+func (m *AddItemsReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddItemsReq.Merge(m, src)
 }
-func (m *AddItemReq) XXX_Size() int {
+func (m *AddItemsReq) XXX_Size() int {
 	return m.Size()
 }
-func (m *AddItemReq) XXX_DiscardUnknown() {
-	xxx_messageInfo_AddItemReq.DiscardUnknown(m)
+func (m *AddItemsReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_AddItemsReq.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_AddItemReq proto.InternalMessageInfo
+var xxx_messageInfo_AddItemsReq proto.InternalMessageInfo
 
-func (m *AddItemReq) GetUid() int64 {
+func (m *AddItemsReq) GetUid() int64 {
 	if m != nil {
 		return m.Uid
 	}
 	return 0
 }
 
-func (m *AddItemReq) GetItem() *Item {
+func (m *AddItemsReq) GetItems() []*Item {
 	if m != nil {
-		return m.Item
+		return m.Items
 	}
 	return nil
 }
 
-func (m *AddItemReq) GetRepeat() bool {
-	if m != nil {
-		return m.Repeat
-	}
-	return false
-}
-
-type AddItemResp struct {
+type AddItemsResp struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *AddItemResp) Reset()         { *m = AddItemResp{} }
-func (m *AddItemResp) String() string { return proto.CompactTextString(m) }
-func (*AddItemResp) ProtoMessage()    {}
-func (*AddItemResp) Descriptor() ([]byte, []int) {
+func (m *AddItemsResp) Reset()         { *m = AddItemsResp{} }
+func (m *AddItemsResp) String() string { return proto.CompactTextString(m) }
+func (*AddItemsResp) ProtoMessage()    {}
+func (*AddItemsResp) Descriptor() ([]byte, []int) {
 	return fileDescriptor_9cf14bc8dee96b17, []int{5}
 }
-func (m *AddItemResp) XXX_Unmarshal(b []byte) error {
+func (m *AddItemsResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *AddItemResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *AddItemsResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_AddItemResp.Marshal(b, m, deterministic)
+		return xxx_messageInfo_AddItemsResp.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -329,17 +321,17 @@ func (m *AddItemResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-func (m *AddItemResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddItemResp.Merge(m, src)
+func (m *AddItemsResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddItemsResp.Merge(m, src)
 }
-func (m *AddItemResp) XXX_Size() int {
+func (m *AddItemsResp) XXX_Size() int {
 	return m.Size()
 }
-func (m *AddItemResp) XXX_DiscardUnknown() {
-	xxx_messageInfo_AddItemResp.DiscardUnknown(m)
+func (m *AddItemsResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_AddItemsResp.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_AddItemResp proto.InternalMessageInfo
+var xxx_messageInfo_AddItemsResp proto.InternalMessageInfo
 
 type RemoveItemReq struct {
 	Uid                  int64    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
@@ -448,8 +440,8 @@ func init() {
 	proto.RegisterType((*Info)(nil), "ncs.backpack.user.Info")
 	proto.RegisterType((*GetItemsReq)(nil), "ncs.backpack.user.GetItemsReq")
 	proto.RegisterType((*GetItemsResp)(nil), "ncs.backpack.user.GetItemsResp")
-	proto.RegisterType((*AddItemReq)(nil), "ncs.backpack.user.AddItemReq")
-	proto.RegisterType((*AddItemResp)(nil), "ncs.backpack.user.AddItemResp")
+	proto.RegisterType((*AddItemsReq)(nil), "ncs.backpack.user.AddItemsReq")
+	proto.RegisterType((*AddItemsResp)(nil), "ncs.backpack.user.AddItemsResp")
 	proto.RegisterType((*RemoveItemReq)(nil), "ncs.backpack.user.RemoveItemReq")
 	proto.RegisterType((*RemoveItemResp)(nil), "ncs.backpack.user.RemoveItemResp")
 }
@@ -459,35 +451,35 @@ func init() {
 }
 
 var fileDescriptor_9cf14bc8dee96b17 = []byte{
-	// 443 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x53, 0xcd, 0x6e, 0x13, 0x31,
-	0x10, 0x66, 0x7f, 0x5a, 0xc2, 0x84, 0x56, 0xc1, 0x42, 0x21, 0x84, 0xb2, 0x5d, 0x2c, 0x0e, 0x11,
-	0xa8, 0xbb, 0x52, 0xb9, 0xc1, 0x09, 0x2e, 0x55, 0xc5, 0x09, 0x0b, 0x2e, 0x5c, 0xc0, 0xdd, 0x9d,
-	0x44, 0x56, 0xb3, 0xb6, 0x59, 0x7b, 0x2b, 0x24, 0xc4, 0x85, 0x57, 0xe0, 0xc2, 0x83, 0xf0, 0x10,
-	0x1c, 0x91, 0x78, 0x01, 0x14, 0x78, 0x10, 0x64, 0x77, 0x4b, 0x0a, 0x59, 0xc2, 0xa5, 0xb7, 0xf9,
-	0xf9, 0xfc, 0x7d, 0x33, 0x9f, 0x3c, 0xb0, 0xc7, 0xb5, 0xce, 0x0d, 0xd6, 0x27, 0xa2, 0xc0, 0xfc,
-	0x88, 0x17, 0xc7, 0x9a, 0x17, 0xc7, 0x79, 0x63, 0xb0, 0xce, 0xb9, 0x16, 0xf9, 0xac, 0xd6, 0x85,
-	0xcf, 0x32, 0x5d, 0x2b, 0xab, 0xc8, 0x35, 0x59, 0x98, 0xec, 0x0c, 0x96, 0xb9, 0xc6, 0x78, 0x67,
-	0xa6, 0xd4, 0x6c, 0x8e, 0x1e, 0xce, 0xa5, 0x54, 0x96, 0x5b, 0xa1, 0xa4, 0x39, 0x7d, 0x40, 0x9f,
-	0x42, 0x7c, 0x68, 0xb1, 0x22, 0xdb, 0x10, 0x8a, 0x72, 0x14, 0xa4, 0xc1, 0x64, 0x83, 0x85, 0xa2,
-	0x24, 0x43, 0xd8, 0xe4, 0x95, 0x6a, 0xa4, 0x1d, 0x85, 0xbe, 0xd6, 0x66, 0xe4, 0x16, 0x5c, 0xc1,
-	0xb7, 0xba, 0x7e, 0x65, 0x45, 0x85, 0xa3, 0x28, 0x0d, 0x26, 0x11, 0xeb, 0xb9, 0xc2, 0x73, 0x51,
-	0x21, 0x3d, 0x80, 0xf8, 0x50, 0x4e, 0x15, 0x19, 0x40, 0xd4, 0xb4, 0x6c, 0x11, 0x73, 0x21, 0xd9,
-	0x83, 0x0d, 0x61, 0xb1, 0x32, 0xa3, 0x30, 0x8d, 0x26, 0xfd, 0xfd, 0x1b, 0xd9, 0xca, 0x9c, 0x99,
-	0x1b, 0x83, 0x9d, 0xa2, 0xe8, 0x2e, 0xf4, 0x0f, 0xd0, 0xba, 0x8a, 0x61, 0xf8, 0x66, 0x95, 0x8f,
-	0x3e, 0x82, 0xab, 0x4b, 0x80, 0xd1, 0xe4, 0x3e, 0xc4, 0x42, 0x4e, 0x95, 0x87, 0xfc, 0x83, 0x5e,
-	0x4e, 0x15, 0xf3, 0x20, 0x5a, 0x00, 0x3c, 0x2e, 0x4b, 0xaf, 0xd7, 0x45, 0xee, 0xc9, 0x2c, 0x56,
-	0x7e, 0xf3, 0x35, 0xb3, 0x7a, 0x90, 0x33, 0xaa, 0x46, 0x8d, 0xdc, 0x7a, 0x37, 0x7a, 0xac, 0xcd,
-	0xe8, 0x16, 0xf4, 0x7f, 0x8b, 0x18, 0x4d, 0x5f, 0xc3, 0x16, 0xc3, 0x4a, 0x9d, 0xe0, 0x05, 0xc9,
-	0x0e, 0x20, 0xe2, 0xf3, 0x79, 0xab, 0xe9, 0x42, 0x3a, 0x80, 0xed, 0xf3, 0x0a, 0x46, 0xef, 0x7f,
-	0x0e, 0x21, 0x7e, 0x61, 0xb0, 0x26, 0x02, 0x7a, 0x67, 0x6e, 0x91, 0xa4, 0x83, 0xf7, 0x9c, 0xd7,
-	0xe3, 0xdd, 0xb5, 0x7d, 0xa3, 0xe9, 0xce, 0x87, 0x6f, 0x3f, 0x3f, 0x86, 0x43, 0x72, 0xfd, 0xaf,
-	0xef, 0xf8, 0xae, 0x11, 0xe5, 0x7b, 0x22, 0xe1, 0x72, 0xbb, 0x36, 0xb9, 0xdd, 0xc1, 0xb4, 0xf4,
-	0x7d, 0x9c, 0xac, 0x6b, 0x1b, 0x4d, 0xef, 0x7a, 0x9d, 0x84, 0xde, 0xec, 0xd2, 0xc9, 0x9d, 0x09,
-	0x0f, 0x83, 0x7b, 0xe4, 0x19, 0xc0, 0x72, 0x6b, 0x92, 0x76, 0x70, 0xfe, 0x61, 0xfb, 0xf8, 0xce,
-	0x7f, 0x10, 0x46, 0x3f, 0x19, 0x7e, 0x59, 0x24, 0xc1, 0xd7, 0x45, 0x12, 0x7c, 0x5f, 0x24, 0xc1,
-	0xa7, 0x1f, 0xc9, 0xa5, 0x97, 0xb1, 0x3b, 0xb3, 0xa3, 0x4d, 0x7f, 0x31, 0x0f, 0x7e, 0x05, 0x00,
-	0x00, 0xff, 0xff, 0x4e, 0x1d, 0x61, 0x0a, 0x93, 0x03, 0x00, 0x00,
+	// 434 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0x4f, 0x8b, 0x13, 0x31,
+	0x18, 0xc6, 0x9d, 0x3f, 0xbb, 0x8c, 0x6f, 0xd7, 0xb2, 0x06, 0xa9, 0x63, 0x5d, 0x66, 0xc7, 0xe0,
+	0xa1, 0x28, 0x3b, 0x03, 0xeb, 0x4d, 0x4f, 0x7a, 0x59, 0x16, 0x41, 0x30, 0xe8, 0xc5, 0x8b, 0x66,
+	0x67, 0xd2, 0x12, 0xb6, 0x93, 0x64, 0x27, 0x99, 0x22, 0x88, 0x17, 0xbf, 0x82, 0x17, 0xbf, 0x89,
+	0x5f, 0xc1, 0xa3, 0xe0, 0x17, 0x90, 0xea, 0x07, 0x91, 0xa4, 0x2d, 0x6d, 0xed, 0xb4, 0xe2, 0x2d,
+	0x79, 0xf3, 0xcb, 0xf3, 0xbc, 0x79, 0xc8, 0x0b, 0x27, 0x54, 0xa9, 0x5c, 0xb3, 0x7a, 0xc2, 0x0b,
+	0x96, 0x5f, 0xd0, 0xe2, 0x52, 0xd1, 0xe2, 0x32, 0x6f, 0x34, 0xab, 0x73, 0xaa, 0x78, 0x3e, 0xaa,
+	0x55, 0xe1, 0x76, 0x99, 0xaa, 0xa5, 0x91, 0xe8, 0xa6, 0x28, 0x74, 0xb6, 0xc0, 0x32, 0x7b, 0xd0,
+	0x3f, 0x1a, 0x49, 0x39, 0x1a, 0x33, 0x87, 0x53, 0x21, 0xa4, 0xa1, 0x86, 0x4b, 0xa1, 0x67, 0x17,
+	0xf0, 0x73, 0x08, 0xcf, 0x0d, 0xab, 0x50, 0x17, 0x7c, 0x5e, 0xc6, 0x5e, 0xea, 0x0d, 0xf6, 0x88,
+	0xcf, 0x4b, 0xd4, 0x83, 0x7d, 0x5a, 0xc9, 0x46, 0x98, 0xd8, 0x77, 0xb5, 0xf9, 0x0e, 0xdd, 0x85,
+	0xeb, 0xec, 0xbd, 0xaa, 0xdf, 0x1a, 0x5e, 0xb1, 0x38, 0x48, 0xbd, 0x41, 0x40, 0x22, 0x5b, 0x78,
+	0xc5, 0x2b, 0x86, 0xcf, 0x20, 0x3c, 0x17, 0x43, 0x89, 0x0e, 0x21, 0x68, 0xe6, 0x6a, 0x01, 0xb1,
+	0x4b, 0x74, 0x02, 0x7b, 0xdc, 0xb0, 0x4a, 0xc7, 0x7e, 0x1a, 0x0c, 0x3a, 0xa7, 0xb7, 0xb3, 0x8d,
+	0x3e, 0x33, 0xdb, 0x06, 0x99, 0x51, 0xf8, 0x18, 0x3a, 0x67, 0xcc, 0xd8, 0x8a, 0x26, 0xec, 0x6a,
+	0x53, 0x0f, 0x3f, 0x81, 0x83, 0x25, 0xa0, 0x15, 0x7a, 0x08, 0x21, 0x17, 0x43, 0xe9, 0x90, 0x2d,
+	0xf2, 0x62, 0x28, 0x89, 0x83, 0xf0, 0x0b, 0xe8, 0x3c, 0x2d, 0xcb, 0xed, 0xea, 0xff, 0xdb, 0x6d,
+	0x17, 0x0e, 0x96, 0x7a, 0x5a, 0xe1, 0x77, 0x70, 0x83, 0xb0, 0x4a, 0x4e, 0x98, 0x83, 0x5a, 0x1d,
+	0x6c, 0xbf, 0x86, 0x55, 0x2e, 0xdc, 0x1d, 0x06, 0x0e, 0xb2, 0xd7, 0xe9, 0x78, 0xec, 0xd2, 0x8e,
+	0x88, 0x5d, 0xe2, 0x43, 0xe8, 0xae, 0x3a, 0x68, 0x75, 0xfa, 0xd5, 0x87, 0xf0, 0xb5, 0x66, 0x35,
+	0xe2, 0x10, 0x2d, 0x92, 0x41, 0x49, 0x8b, 0xee, 0x4a, 0xae, 0xfd, 0xe3, 0x9d, 0xe7, 0x5a, 0xe1,
+	0xa3, 0x4f, 0x3f, 0x7e, 0x7f, 0xf6, 0x7b, 0xe8, 0xd6, 0x5f, 0x5f, 0xef, 0x43, 0xc3, 0xcb, 0x8f,
+	0xe8, 0x0a, 0xa2, 0xc5, 0xbb, 0x5b, 0xad, 0x56, 0x42, 0x6e, 0xb5, 0x5a, 0x0b, 0xed, 0xbe, 0xb3,
+	0x4a, 0xf0, 0x9d, 0x36, 0xab, 0xdc, 0xe6, 0xf0, 0xd8, 0x7b, 0x80, 0x5e, 0x02, 0x2c, 0x1f, 0x8e,
+	0xd2, 0x16, 0xd1, 0xb5, 0xe4, 0xfb, 0xf7, 0xfe, 0x41, 0x68, 0xf5, 0xac, 0xf7, 0x6d, 0x9a, 0x78,
+	0xdf, 0xa7, 0x89, 0xf7, 0x73, 0x9a, 0x78, 0x5f, 0x7e, 0x25, 0xd7, 0xde, 0x84, 0x76, 0xaa, 0x2e,
+	0xf6, 0xdd, 0x80, 0x3c, 0xfa, 0x13, 0x00, 0x00, 0xff, 0xff, 0x9f, 0x0d, 0xad, 0x7f, 0x82, 0x03,
+	0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -503,7 +495,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type UserClient interface {
 	GetItems(ctx context.Context, in *GetItemsReq, opts ...grpc.CallOption) (*GetItemsResp, error)
-	AddItem(ctx context.Context, in *AddItemReq, opts ...grpc.CallOption) (*AddItemResp, error)
+	AddItems(ctx context.Context, in *AddItemsReq, opts ...grpc.CallOption) (*AddItemsResp, error)
 	RemoveItem(ctx context.Context, in *RemoveItemReq, opts ...grpc.CallOption) (*RemoveItemResp, error)
 }
 
@@ -524,9 +516,9 @@ func (c *userClient) GetItems(ctx context.Context, in *GetItemsReq, opts ...grpc
 	return out, nil
 }
 
-func (c *userClient) AddItem(ctx context.Context, in *AddItemReq, opts ...grpc.CallOption) (*AddItemResp, error) {
-	out := new(AddItemResp)
-	err := c.cc.Invoke(ctx, "/ncs.backpack.user.User/AddItem", in, out, opts...)
+func (c *userClient) AddItems(ctx context.Context, in *AddItemsReq, opts ...grpc.CallOption) (*AddItemsResp, error) {
+	out := new(AddItemsResp)
+	err := c.cc.Invoke(ctx, "/ncs.backpack.user.User/AddItems", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -545,7 +537,7 @@ func (c *userClient) RemoveItem(ctx context.Context, in *RemoveItemReq, opts ...
 // UserServer is the server API for User service.
 type UserServer interface {
 	GetItems(context.Context, *GetItemsReq) (*GetItemsResp, error)
-	AddItem(context.Context, *AddItemReq) (*AddItemResp, error)
+	AddItems(context.Context, *AddItemsReq) (*AddItemsResp, error)
 	RemoveItem(context.Context, *RemoveItemReq) (*RemoveItemResp, error)
 }
 
@@ -556,8 +548,8 @@ type UnimplementedUserServer struct {
 func (*UnimplementedUserServer) GetItems(ctx context.Context, req *GetItemsReq) (*GetItemsResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetItems not implemented")
 }
-func (*UnimplementedUserServer) AddItem(ctx context.Context, req *AddItemReq) (*AddItemResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddItem not implemented")
+func (*UnimplementedUserServer) AddItems(ctx context.Context, req *AddItemsReq) (*AddItemsResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddItems not implemented")
 }
 func (*UnimplementedUserServer) RemoveItem(ctx context.Context, req *RemoveItemReq) (*RemoveItemResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveItem not implemented")
@@ -585,20 +577,20 @@ func _User_GetItems_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_AddItem_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddItemReq)
+func _User_AddItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddItemsReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).AddItem(ctx, in)
+		return srv.(UserServer).AddItems(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ncs.backpack.user.User/AddItem",
+		FullMethod: "/ncs.backpack.user.User/AddItems",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).AddItem(ctx, req.(*AddItemReq))
+		return srv.(UserServer).AddItems(ctx, req.(*AddItemsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -630,8 +622,8 @@ var _User_serviceDesc = grpc.ServiceDesc{
 			Handler:    _User_GetItems_Handler,
 		},
 		{
-			MethodName: "AddItem",
-			Handler:    _User_AddItem_Handler,
+			MethodName: "AddItems",
+			Handler:    _User_AddItems_Handler,
 		},
 		{
 			MethodName: "RemoveItem",
@@ -801,7 +793,7 @@ func (m *GetItemsResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *AddItemReq) Marshal() (dAtA []byte, err error) {
+func (m *AddItemsReq) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -811,12 +803,12 @@ func (m *AddItemReq) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *AddItemReq) MarshalTo(dAtA []byte) (int, error) {
+func (m *AddItemsReq) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *AddItemReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *AddItemsReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -825,27 +817,19 @@ func (m *AddItemReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.Repeat {
-		i--
-		if m.Repeat {
-			dAtA[i] = 1
-		} else {
-			dAtA[i] = 0
-		}
-		i--
-		dAtA[i] = 0x18
-	}
-	if m.Item != nil {
-		{
-			size, err := m.Item.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
+	if len(m.Items) > 0 {
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintUser(dAtA, i, uint64(size))
 			}
-			i -= size
-			i = encodeVarintUser(dAtA, i, uint64(size))
+			i--
+			dAtA[i] = 0x12
 		}
-		i--
-		dAtA[i] = 0x12
 	}
 	if m.Uid != 0 {
 		i = encodeVarintUser(dAtA, i, uint64(m.Uid))
@@ -855,7 +839,7 @@ func (m *AddItemReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *AddItemResp) Marshal() (dAtA []byte, err error) {
+func (m *AddItemsResp) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -865,12 +849,12 @@ func (m *AddItemResp) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *AddItemResp) MarshalTo(dAtA []byte) (int, error) {
+func (m *AddItemsResp) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *AddItemResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *AddItemsResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1047,7 +1031,7 @@ func (m *GetItemsResp) Size() (n int) {
 	return n
 }
 
-func (m *AddItemReq) Size() (n int) {
+func (m *AddItemsReq) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1056,12 +1040,11 @@ func (m *AddItemReq) Size() (n int) {
 	if m.Uid != 0 {
 		n += 1 + sovUser(uint64(m.Uid))
 	}
-	if m.Item != nil {
-		l = m.Item.Size()
-		n += 1 + l + sovUser(uint64(l))
-	}
-	if m.Repeat {
-		n += 2
+	if len(m.Items) > 0 {
+		for _, e := range m.Items {
+			l = e.Size()
+			n += 1 + l + sovUser(uint64(l))
+		}
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1069,7 +1052,7 @@ func (m *AddItemReq) Size() (n int) {
 	return n
 }
 
-func (m *AddItemResp) Size() (n int) {
+func (m *AddItemsResp) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1502,7 +1485,7 @@ func (m *GetItemsResp) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *AddItemReq) Unmarshal(dAtA []byte) error {
+func (m *AddItemsReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1525,10 +1508,10 @@ func (m *AddItemReq) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: AddItemReq: wiretype end group for non-group")
+			return fmt.Errorf("proto: AddItemsReq: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AddItemReq: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: AddItemsReq: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1552,7 +1535,7 @@ func (m *AddItemReq) Unmarshal(dAtA []byte) error {
 			}
 		case 2:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Item", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
 			}
 			var msglen int
 			for shift := uint(0); ; shift += 7 {
@@ -1579,33 +1562,11 @@ func (m *AddItemReq) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			if m.Item == nil {
-				m.Item = &Item{}
-			}
-			if err := m.Item.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+			m.Items = append(m.Items, &Item{})
+			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
-		case 3:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Repeat", wireType)
-			}
-			var v int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowUser
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				v |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			m.Repeat = bool(v != 0)
 		default:
 			iNdEx = preIndex
 			skippy, err := skipUser(dAtA[iNdEx:])
@@ -1631,7 +1592,7 @@ func (m *AddItemReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *AddItemResp) Unmarshal(dAtA []byte) error {
+func (m *AddItemsResp) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1654,10 +1615,10 @@ func (m *AddItemResp) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: AddItemResp: wiretype end group for non-group")
+			return fmt.Errorf("proto: AddItemsResp: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AddItemResp: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: AddItemsResp: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:

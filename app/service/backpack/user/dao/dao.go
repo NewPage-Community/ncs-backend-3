@@ -11,7 +11,7 @@ import (
 type Dao interface {
 	Create(uid int64) (*model.User, error)
 	Get(uid int64) (*model.User, error)
-	AddItem(uid int64, item model.Item, repeat bool) error
+	AddItems(uid int64, item *model.Items) error
 	RemoveItem(uid int64, item model.Item, all bool) error
 	Healthy() bool
 	Close()
@@ -25,7 +25,7 @@ func Init(config *conf.Config) (d *dao) {
 	d = &dao{
 		db: mysql.Init(config.Mysql),
 	}
-	if err := d.db.AutoMigrate(&model.User{}); err != nil {
+	if err := d.db.AutoMigrate(&model.UserModel{}); err != nil {
 		log.Error(err)
 	}
 	return

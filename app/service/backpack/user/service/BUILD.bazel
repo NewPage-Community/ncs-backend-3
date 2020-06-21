@@ -14,7 +14,6 @@ go_library(
         "//app/service/backpack/user/dao:go_default_library",
         "//app/service/backpack/user/model:go_default_library",
         "//pkg/ecode:go_default_library",
-        "//pkg/json:go_default_library",
         "@org_golang_google_grpc//codes:go_default_library",
     ],
 )
