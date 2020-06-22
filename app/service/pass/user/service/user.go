@@ -23,16 +23,16 @@ func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp,
 		}
 		// not found -> create
 		res = &model.User{
-			UID:   req.Uid,
-			Type:  0,
-			Point: 0,
+			UID:      req.Uid,
+			PassType: 0,
+			Point:    0,
 		}
 		err = s.dao.Create(res)
 	}
 	resp.Info = &pb.Info{
-		Uid:   res.UID,
-		Type:  res.Type,
-		Point: res.Point,
+		Uid:      res.UID,
+		PassType: res.PassType,
+		Point:    res.Point,
 	}
 	return
 }
@@ -49,7 +49,11 @@ func (s *Service) AddPoint(ctx context.Context, req *pb.AddPointReq) (resp *pb.A
 		return
 	}
 
-	err = s.dao.AddPoint(req.Uid, req.Point)
+	upgrade, err := s.dao.AddPoint(req.Uid, req.Point)
+	if upgrade > 0 {
+		err = s.Upgrade(ctx, req.Uid, upgrade)
+	}
+
 	return
 }
 
@@ -66,9 +70,14 @@ func (s *Service) Update(ctx context.Context, req *pb.UpdateReq) (resp *pb.Updat
 	}
 
 	err = s.dao.Update(&model.User{
-		UID:   req.Info.Uid,
-		Type:  req.Info.Type,
-		Point: req.Info.Point,
+		UID:      req.Info.Uid,
+		PassType: req.Info.PassType,
+		Point:    req.Info.Point,
 	})
+	return
+}
+
+func (s *Service) Upgrade(ctx context.Context, uid int64, level int32) (err error) {
+	// TODO: give gift
 	return
 }

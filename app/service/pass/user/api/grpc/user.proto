@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 
 message Info {
     int64 uid = 1;
-    int32 type = 2;
+    int32 pass_type = 2;
     int32 point = 3;
 }
 

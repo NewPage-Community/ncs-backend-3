@@ -130,6 +130,10 @@
         "expr_time": {
           "type": "string",
           "format": "int64"
+        },
+        "length": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },

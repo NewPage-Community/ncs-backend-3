@@ -8,6 +8,7 @@ message Item {
     int32 id = 1;
     int32 amount = 2;
     int64 expr_time = 3;
+    int64 length = 4;
 }
 
 message Info {

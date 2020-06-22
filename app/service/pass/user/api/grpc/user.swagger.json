@@ -91,7 +91,7 @@
           "type": "string",
           "format": "int64"
         },
-        "type": {
+        "pass_type": {
           "type": "integer",
           "format": "int32"
         },

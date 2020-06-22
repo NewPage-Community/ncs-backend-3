@@ -24,7 +24,7 @@ func (d *dao) Update(info *model.User) (err error) {
 	return
 }
 
-func (d *dao) AddPoint(uid int64, addPoint int32) (err error) {
+func (d *dao) AddPoint(uid int64, addPoint int32) (upgrade int32, err error) {
 	res := &model.User{}
 
 	// DB
@@ -35,7 +35,14 @@ func (d *dao) AddPoint(uid int64, addPoint int32) (err error) {
 	if err != nil {
 		return
 	}
-	err = d.db.Model(res).Update("point", res.Point+addPoint).Error
+
+	_level := res.Level()
+	res.Point += addPoint
+	if upgrade = res.Level(); _level == upgrade {
+		upgrade = 0
+	}
+
+	err = d.db.Model(res).Update("point", res.Point).Error
 	return
 }
 
