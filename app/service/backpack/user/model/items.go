@@ -54,6 +54,7 @@ func (items *Items) AddItems(_items *Items) {
 
 func (items *Items) addItem(item Item) {
 	index, found := items.search(item.ID)
+	now := time.Now().Unix()
 
 	if found {
 		if (*items)[index].CalType() == ItemCalTypeAmount {
@@ -64,6 +65,10 @@ func (items *Items) addItem(item Item) {
 		}
 	} else {
 		// not found
+		// fix expr time
+		if item.CalType() == ItemCalTypeTime {
+			item.ExprTime = now + item.ExprTime
+		}
 		*items = append(*items, &item)
 	}
 }

@@ -6,7 +6,6 @@ import (
 	"backend/pkg/ecode"
 	"context"
 	"google.golang.org/grpc/codes"
-	"time"
 )
 
 func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.GetItemsResp, err error) {
@@ -49,7 +48,6 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 
 func (s *Service) AddItems(ctx context.Context, req *pb.AddItemsReq) (resp *pb.AddItemsResp, err error) {
 	resp = &pb.AddItemsResp{}
-	now := time.Now().Unix()
 
 	if req.Uid <= 0 {
 		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID")
@@ -64,7 +62,7 @@ func (s *Service) AddItems(ctx context.Context, req *pb.AddItemsReq) (resp *pb.A
 		item := &model.Item{
 			ID:       req.Items[i].Id,
 			Amount:   req.Items[i].Amount,
-			ExprTime: now + req.Items[i].Length,
+			ExprTime: req.Items[i].Length,
 		}
 		if item.IsValid() {
 			items = append(items, item)
