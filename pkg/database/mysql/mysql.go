@@ -16,7 +16,9 @@ type Config struct {
 }
 
 func Init(conf *Config) *gorm.DB {
-	db, err := gorm.Open(mysql.Open(getDSN(conf)), &gorm.Config{})
+	db, err := gorm.Open(mysql.Open(getDSN(conf)), &gorm.Config{
+		SkipDefaultTransaction: true,
+	})
 	if err != nil {
 		panic(err)
 	}
