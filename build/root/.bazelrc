@@ -1,3 +1,5 @@
+startup --host_jvm_args=-XX:+UseParallelGC --host_jvm_args=-Xmx6g --host_jvm_args=-Xms1g
+
 # Disk cache
 build --experimental_repository_cache_hardlinks
 startup --output_user_root=./.cache/bazel
@@ -8,3 +10,11 @@ build --workspace_status_command build/print-workspace-status.sh
 # Show us information about failures.
 build --verbose_failures
 test --test_output=errors
+
+# CI
+build:ci -j 4
+build:ci --genrule_strategy=local --spawn_strategy=local
+test:ci -j 4
+test:ci --genrule_strategy=local --spawn_strategy=local
+run:ci -j 4
+run:ci --genrule_strategy=local --spawn_strategy=local
