@@ -99,6 +99,10 @@ func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp
 	if err != nil {
 		return
 	}
+	if info.Info.PassType > 0 {
+		err = ecode.Errorf(codes.Unknown, "User already is AdvPass UID(%d)", req.Uid)
+		return
+	}
 	err = s.dao.UpgradePass(req.Uid)
 	if err != nil {
 		return

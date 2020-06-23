@@ -5,6 +5,7 @@ import (
 	"backend/pkg/ecode"
 	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 func (d *dao) Info(uid int64) (res *model.User, err error) {
@@ -21,9 +22,14 @@ func (d *dao) Info(uid int64) (res *model.User, err error) {
 func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, upgrade bool, err error) {
 	res = &model.User{}
 	upgrade = false
+	defer func() {
+		// To release lock
+		d.db.Commit()
+	}()
 
 	// DB
-	err = d.db.Where(uid).First(res).Set("gorm:query_option", "FOR UPDATE").Error
+	err = d.db.Where(uid).First(res).
+		Clauses(clause.Locking{Strength: "UPDATE"}).Error
 	if err == gorm.ErrRecordNotFound {
 		err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
 	}
