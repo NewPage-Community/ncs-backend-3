@@ -18,19 +18,19 @@ message InfoResp {
     Info info = 1;
 }
 
-message UpdateReq {
-    Info info = 1;
-}
-
-message UpdateResp {
-}
-
 message AddPointReq {
     int64 uid = 1;
     int32 point = 2;
 }
 
 message AddPointResp {
+}
+
+message UpgradePassReq {
+    int64 uid = 1;
+}
+
+message UpgradePassResp {
 }
 
 service User {
@@ -45,5 +45,10 @@ service User {
             body: "*"
         };
     }
-    rpc Update (UpdateReq) returns (UpdateResp);
+    rpc UpgradePass (UpgradePassReq) returns (UpgradePassResp) {
+        option (google.api.http) = {
+            post: "/pass/user/{uid}/upgrade"
+            body: "*"
+        };
+    }
 }

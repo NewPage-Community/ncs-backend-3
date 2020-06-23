@@ -18,14 +18,9 @@ func (d *dao) Info(uid int64) (res *model.User, err error) {
 	return
 }
 
-func (d *dao) Update(info *model.User) (err error) {
-	// DB
-	err = d.db.Model(info).Updates(*info).Error
-	return
-}
-
-func (d *dao) AddPoint(uid int64, addPoint int32) (upgrade int32, err error) {
-	res := &model.User{}
+func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, upgrade bool, err error) {
+	res = &model.User{}
+	upgrade = false
 
 	// DB
 	err = d.db.Where(uid).First(res).Set("gorm:query_option", "FOR UPDATE").Error
@@ -38,8 +33,8 @@ func (d *dao) AddPoint(uid int64, addPoint int32) (upgrade int32, err error) {
 
 	_level := res.Level()
 	res.Point += addPoint
-	if upgrade = res.Level(); _level == upgrade {
-		upgrade = 0
+	if res.Level() == _level {
+		upgrade = true
 	}
 
 	err = d.db.Model(res).Update("point", res.Point).Error
@@ -49,5 +44,11 @@ func (d *dao) AddPoint(uid int64, addPoint int32) (upgrade int32, err error) {
 func (d *dao) Create(info *model.User) (err error) {
 	// DB
 	err = d.db.Create(info).Error
+	return
+}
+
+func (d *dao) UpgradePass(uid int64) (err error) {
+	// DB
+	err = d.db.Model(&model.User{UID: uid}).Update("pass_type", 1).Error
 	return
 }

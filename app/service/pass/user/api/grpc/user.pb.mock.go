@@ -74,24 +74,24 @@ func (mr *MockUserClientMockRecorder) AddPoint(ctx, in interface{}, opts ...inte
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddPoint", reflect.TypeOf((*MockUserClient)(nil).AddPoint), varargs...)
 }
 
-// Update mocks base method
-func (m *MockUserClient) Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateResp, error) {
+// UpgradePass mocks base method
+func (m *MockUserClient) UpgradePass(ctx context.Context, in *UpgradePassReq, opts ...grpc.CallOption) (*UpgradePassResp, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "Update", varargs...)
-	ret0, _ := ret[0].(*UpdateResp)
+	ret := m.ctrl.Call(m, "UpgradePass", varargs...)
+	ret0, _ := ret[0].(*UpgradePassResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Update indicates an expected call of Update
-func (mr *MockUserClientMockRecorder) Update(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+// UpgradePass indicates an expected call of UpgradePass
+func (mr *MockUserClientMockRecorder) UpgradePass(ctx, in interface{}, opts ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockUserClient)(nil).Update), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpgradePass", reflect.TypeOf((*MockUserClient)(nil).UpgradePass), varargs...)
 }
 
 // MockUserServer is a mock of UserServer interface
@@ -147,17 +147,17 @@ func (mr *MockUserServerMockRecorder) AddPoint(arg0, arg1 interface{}) *gomock.C
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddPoint", reflect.TypeOf((*MockUserServer)(nil).AddPoint), arg0, arg1)
 }
 
-// Update mocks base method
-func (m *MockUserServer) Update(arg0 context.Context, arg1 *UpdateReq) (*UpdateResp, error) {
+// UpgradePass mocks base method
+func (m *MockUserServer) UpgradePass(arg0 context.Context, arg1 *UpgradePassReq) (*UpgradePassResp, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Update", arg0, arg1)
-	ret0, _ := ret[0].(*UpdateResp)
+	ret := m.ctrl.Call(m, "UpgradePass", arg0, arg1)
+	ret0, _ := ret[0].(*UpgradePassResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Update indicates an expected call of Update
-func (mr *MockUserServerMockRecorder) Update(arg0, arg1 interface{}) *gomock.Call {
+// UpgradePass indicates an expected call of UpgradePass
+func (mr *MockUserServerMockRecorder) UpgradePass(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockUserServer)(nil).Update), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpgradePass", reflect.TypeOf((*MockUserServer)(nil).UpgradePass), arg0, arg1)
 }

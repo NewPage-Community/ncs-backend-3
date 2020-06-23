@@ -49,35 +49,32 @@ func (s *Service) AddPoint(ctx context.Context, req *pb.AddPointReq) (resp *pb.A
 		return
 	}
 
-	upgrade, err := s.dao.AddPoint(req.Uid, req.Point)
-	if upgrade > 0 {
-		err = s.Upgrade(ctx, req.Uid, upgrade)
+	res, upgrade, err := s.dao.AddPoint(req.Uid, req.Point)
+	if upgrade && res != nil {
+		err = s.Upgrade(ctx, res.UID, res.Level(), res.PassType)
 	}
 
 	return
 }
 
-func (s *Service) Update(ctx context.Context, req *pb.UpdateReq) (resp *pb.UpdateResp, err error) {
-	resp = &pb.UpdateResp{}
-
-	if req.Info == nil {
-		err = ecode.Errorf(codes.InvalidArgument, "Invalid Info")
-		return
-	}
-	if req.Info.Uid <= 0 {
-		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%d)", req.Info.Uid)
-		return
-	}
-
-	err = s.dao.Update(&model.User{
-		UID:      req.Info.Uid,
-		PassType: req.Info.PassType,
-		Point:    req.Info.Point,
-	})
-	return
-}
-
-func (s *Service) Upgrade(ctx context.Context, uid int64, level int32) (err error) {
+func (s *Service) Upgrade(ctx context.Context, uid int64, level int32, passType int32) (err error) {
 	// TODO: give gift
+	return
+}
+
+func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp *pb.UpgradePassResp, err error) {
+	resp = &pb.UpgradePassResp{}
+
+	if req.Uid <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%d)", req.Uid)
+		return
+	}
+
+	err = s.dao.UpgradePass(req.Uid)
+	if err != nil {
+		return
+	}
+
+	// TODO: give all reward before current level
 	return
 }

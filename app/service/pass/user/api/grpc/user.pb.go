@@ -184,92 +184,6 @@ func (m *InfoResp) GetInfo() *Info {
 	return nil
 }
 
-type UpdateReq struct {
-	Info                 *Info    `protobuf:"bytes,1,opt,name=info,proto3" json:"info,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *UpdateReq) Reset()         { *m = UpdateReq{} }
-func (m *UpdateReq) String() string { return proto.CompactTextString(m) }
-func (*UpdateReq) ProtoMessage()    {}
-func (*UpdateReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0a69a6a29070951a, []int{3}
-}
-func (m *UpdateReq) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *UpdateReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_UpdateReq.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *UpdateReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateReq.Merge(m, src)
-}
-func (m *UpdateReq) XXX_Size() int {
-	return m.Size()
-}
-func (m *UpdateReq) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateReq.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdateReq proto.InternalMessageInfo
-
-func (m *UpdateReq) GetInfo() *Info {
-	if m != nil {
-		return m.Info
-	}
-	return nil
-}
-
-type UpdateResp struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *UpdateResp) Reset()         { *m = UpdateResp{} }
-func (m *UpdateResp) String() string { return proto.CompactTextString(m) }
-func (*UpdateResp) ProtoMessage()    {}
-func (*UpdateResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0a69a6a29070951a, []int{4}
-}
-func (m *UpdateResp) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *UpdateResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_UpdateResp.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *UpdateResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_UpdateResp.Merge(m, src)
-}
-func (m *UpdateResp) XXX_Size() int {
-	return m.Size()
-}
-func (m *UpdateResp) XXX_DiscardUnknown() {
-	xxx_messageInfo_UpdateResp.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_UpdateResp proto.InternalMessageInfo
-
 type AddPointReq struct {
 	Uid                  int64    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
 	Point                int32    `protobuf:"varint,2,opt,name=point,proto3" json:"point,omitempty"`
@@ -282,7 +196,7 @@ func (m *AddPointReq) Reset()         { *m = AddPointReq{} }
 func (m *AddPointReq) String() string { return proto.CompactTextString(m) }
 func (*AddPointReq) ProtoMessage()    {}
 func (*AddPointReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0a69a6a29070951a, []int{5}
+	return fileDescriptor_0a69a6a29070951a, []int{3}
 }
 func (m *AddPointReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -335,7 +249,7 @@ func (m *AddPointResp) Reset()         { *m = AddPointResp{} }
 func (m *AddPointResp) String() string { return proto.CompactTextString(m) }
 func (*AddPointResp) ProtoMessage()    {}
 func (*AddPointResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0a69a6a29070951a, []int{6}
+	return fileDescriptor_0a69a6a29070951a, []int{4}
 }
 func (m *AddPointResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -364,14 +278,100 @@ func (m *AddPointResp) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_AddPointResp proto.InternalMessageInfo
 
+type UpgradePassReq struct {
+	Uid                  int64    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UpgradePassReq) Reset()         { *m = UpgradePassReq{} }
+func (m *UpgradePassReq) String() string { return proto.CompactTextString(m) }
+func (*UpgradePassReq) ProtoMessage()    {}
+func (*UpgradePassReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a69a6a29070951a, []int{5}
+}
+func (m *UpgradePassReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpgradePassReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpgradePassReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpgradePassReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpgradePassReq.Merge(m, src)
+}
+func (m *UpgradePassReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpgradePassReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpgradePassReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpgradePassReq proto.InternalMessageInfo
+
+func (m *UpgradePassReq) GetUid() int64 {
+	if m != nil {
+		return m.Uid
+	}
+	return 0
+}
+
+type UpgradePassResp struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UpgradePassResp) Reset()         { *m = UpgradePassResp{} }
+func (m *UpgradePassResp) String() string { return proto.CompactTextString(m) }
+func (*UpgradePassResp) ProtoMessage()    {}
+func (*UpgradePassResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a69a6a29070951a, []int{6}
+}
+func (m *UpgradePassResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *UpgradePassResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_UpgradePassResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *UpgradePassResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpgradePassResp.Merge(m, src)
+}
+func (m *UpgradePassResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *UpgradePassResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpgradePassResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpgradePassResp proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*Info)(nil), "ncs.pass.user.Info")
 	proto.RegisterType((*InfoReq)(nil), "ncs.pass.user.InfoReq")
 	proto.RegisterType((*InfoResp)(nil), "ncs.pass.user.InfoResp")
-	proto.RegisterType((*UpdateReq)(nil), "ncs.pass.user.UpdateReq")
-	proto.RegisterType((*UpdateResp)(nil), "ncs.pass.user.UpdateResp")
 	proto.RegisterType((*AddPointReq)(nil), "ncs.pass.user.AddPointReq")
 	proto.RegisterType((*AddPointResp)(nil), "ncs.pass.user.AddPointResp")
+	proto.RegisterType((*UpgradePassReq)(nil), "ncs.pass.user.UpgradePassReq")
+	proto.RegisterType((*UpgradePassResp)(nil), "ncs.pass.user.UpgradePassResp")
 }
 
 func init() {
@@ -379,31 +379,32 @@ func init() {
 }
 
 var fileDescriptor_0a69a6a29070951a = []byte{
-	// 371 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x8c, 0x52, 0x4f, 0x4f, 0xea, 0x40,
-	0x10, 0x7f, 0x0b, 0x85, 0x07, 0x03, 0xef, 0x85, 0x2c, 0x2f, 0xbc, 0x5a, 0x4c, 0x43, 0xf6, 0x22,
-	0x7a, 0x68, 0x13, 0xd0, 0x8b, 0x89, 0x07, 0xbd, 0x19, 0x2f, 0x4a, 0xe4, 0xe2, 0xc5, 0xd4, 0x76,
-	0x21, 0x4d, 0x4c, 0x77, 0xe8, 0x16, 0x13, 0x62, 0xbc, 0xf8, 0x15, 0xbc, 0xf8, 0x91, 0x3c, 0x9a,
-	0xf8, 0x05, 0x0c, 0xfa, 0x35, 0x4c, 0xcc, 0x6e, 0x45, 0x2a, 0x42, 0xe2, 0xad, 0x33, 0xbf, 0x3f,
-	0xfd, 0xcd, 0xec, 0xc0, 0xa6, 0x87, 0xe8, 0x4a, 0x1e, 0x5f, 0x85, 0x3e, 0x77, 0xd1, 0x93, 0xd2,
-	0x1d, 0x4b, 0x1e, 0xbb, 0x1e, 0x86, 0xee, 0x30, 0x46, 0x5f, 0x57, 0x0e, 0xc6, 0x22, 0x11, 0xf4,
-	0x4f, 0xe4, 0x4b, 0x47, 0x51, 0x1c, 0xd5, 0xb4, 0xd6, 0x87, 0x42, 0x0c, 0x2f, 0xb9, 0xa6, 0x7a,
-	0x51, 0x24, 0x12, 0x2f, 0x09, 0x45, 0x24, 0x53, 0x32, 0x3b, 0x02, 0xe3, 0x30, 0x1a, 0x08, 0x5a,
-	0x83, 0xfc, 0x38, 0x0c, 0x4c, 0xd2, 0x22, 0xed, 0x7c, 0x4f, 0x7d, 0xd2, 0x26, 0x94, 0x95, 0xc9,
-	0x79, 0x32, 0x41, 0x6e, 0xe6, 0x5a, 0xa4, 0x5d, 0xe8, 0x95, 0x54, 0xe3, 0x74, 0x82, 0x9c, 0xfe,
-	0x83, 0x02, 0x8a, 0x30, 0x4a, 0xcc, 0xbc, 0x06, 0xd2, 0x82, 0x35, 0xe1, 0xb7, 0x32, 0xeb, 0xf1,
-	0xd1, 0x77, 0x3f, 0xd6, 0x85, 0x52, 0x0a, 0x4a, 0xa4, 0x1b, 0x60, 0x84, 0xd1, 0x40, 0x68, 0xb8,
-	0xd2, 0xa9, 0x3b, 0x5f, 0x12, 0x3b, 0x9a, 0xa6, 0x09, 0x6c, 0x1b, 0xca, 0x7d, 0x0c, 0xbc, 0x84,
-	0x2b, 0xcf, 0x1f, 0xab, 0xaa, 0x00, 0x33, 0x95, 0x44, 0xb6, 0x03, 0x95, 0xfd, 0x20, 0x38, 0x56,
-	0x09, 0x97, 0x26, 0x9b, 0x0f, 0x93, 0xcb, 0x0e, 0xf3, 0x17, 0xaa, 0x73, 0x99, 0xc4, 0xce, 0x1b,
-	0x01, 0xa3, 0x2f, 0x79, 0x4c, 0x4f, 0x3e, 0x56, 0xd6, 0x58, 0x16, 0x80, 0x8f, 0xac, 0xff, 0x4b,
-	0xfb, 0x12, 0x99, 0x79, 0xfb, 0xf4, 0x7a, 0x97, 0xa3, 0xb4, 0x96, 0x79, 0xc0, 0xeb, 0x71, 0x18,
-	0xdc, 0x50, 0x1f, 0x4a, 0xb3, 0x7f, 0x51, 0x6b, 0x41, 0x9e, 0xc9, 0x6e, 0x35, 0x57, 0x62, 0x12,
-	0x99, 0xad, 0xed, 0x4d, 0x56, 0xcf, 0xde, 0x47, 0x10, 0xe8, 0x69, 0x76, 0xc9, 0x16, 0xdd, 0x83,
-	0x62, 0xba, 0x15, 0x6a, 0x2e, 0xd8, 0x7c, 0xae, 0xd8, 0x5a, 0x5b, 0x81, 0x48, 0x3c, 0x68, 0x3c,
-	0x4c, 0x6d, 0xf2, 0x38, 0xb5, 0xc9, 0xf3, 0xd4, 0x26, 0xf7, 0x2f, 0xf6, 0xaf, 0x33, 0x43, 0x5d,
-	0xde, 0x45, 0x51, 0x1f, 0x52, 0xf7, 0x3d, 0x00, 0x00, 0xff, 0xff, 0x8a, 0x55, 0x27, 0xf1, 0xa2,
-	0x02, 0x00, 0x00,
+	// 389 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x92, 0xc1, 0x4e, 0xea, 0x40,
+	0x14, 0x86, 0xef, 0x94, 0x72, 0x2f, 0x77, 0xb8, 0x97, 0xcb, 0x1d, 0x0c, 0x36, 0x45, 0x1a, 0x32,
+	0x2e, 0x44, 0x16, 0x6d, 0x02, 0x71, 0xc3, 0x4e, 0x77, 0xc6, 0x0d, 0x12, 0xd9, 0xb8, 0x31, 0xb5,
+	0x1d, 0x9a, 0x26, 0xa6, 0x73, 0xe8, 0xb4, 0x26, 0xc4, 0xb8, 0xf1, 0x15, 0xdc, 0xf8, 0x1a, 0xbe,
+	0x85, 0x4b, 0x13, 0x5f, 0xc0, 0xa0, 0x0f, 0x62, 0x66, 0xaa, 0xa1, 0x60, 0x75, 0xd7, 0x39, 0xff,
+	0x3f, 0x5f, 0xff, 0x73, 0xe6, 0xe0, 0x5d, 0x17, 0xc0, 0x11, 0x2c, 0xbe, 0x0c, 0x3d, 0xe6, 0x80,
+	0x2b, 0x84, 0x93, 0x0a, 0x16, 0x3b, 0x2e, 0x84, 0x4e, 0x10, 0x83, 0xa7, 0x4e, 0x36, 0xc4, 0x3c,
+	0xe1, 0xe4, 0x6f, 0xe4, 0x09, 0x5b, 0x5a, 0x6c, 0x59, 0x34, 0xb7, 0x02, 0xce, 0x83, 0x0b, 0xa6,
+	0xac, 0x6e, 0x14, 0xf1, 0xc4, 0x4d, 0x42, 0x1e, 0x89, 0xcc, 0x4c, 0x8f, 0xb0, 0x7e, 0x18, 0x4d,
+	0x39, 0xa9, 0xe3, 0x52, 0x1a, 0xfa, 0x06, 0xea, 0xa0, 0x6e, 0x69, 0x2c, 0x3f, 0x49, 0x0b, 0xff,
+	0x96, 0x90, 0xb3, 0x64, 0x0e, 0xcc, 0xd0, 0x3a, 0xa8, 0x5b, 0x1e, 0x57, 0x64, 0xe1, 0x64, 0x0e,
+	0x8c, 0x6c, 0xe0, 0x32, 0xf0, 0x30, 0x4a, 0x8c, 0x92, 0x12, 0xb2, 0x03, 0x6d, 0xe1, 0x5f, 0x12,
+	0x36, 0x66, 0xb3, 0xcf, 0x3c, 0x3a, 0xc0, 0x95, 0x4c, 0x14, 0x40, 0x76, 0xb0, 0x1e, 0x46, 0x53,
+	0xae, 0xe4, 0x6a, 0xbf, 0x61, 0xaf, 0x24, 0xb6, 0x95, 0x4d, 0x19, 0xe8, 0x1e, 0xae, 0xee, 0xfb,
+	0xfe, 0x48, 0xd2, 0x0b, 0xa9, 0xcb, 0x20, 0x5a, 0x3e, 0x48, 0x0d, 0xff, 0x59, 0x5e, 0x13, 0x40,
+	0x29, 0xae, 0x4d, 0x20, 0x88, 0x5d, 0x9f, 0x8d, 0x5c, 0x21, 0x8a, 0xf3, 0xfd, 0xc7, 0xff, 0x56,
+	0x3c, 0x02, 0xfa, 0xf7, 0x1a, 0xd6, 0x27, 0x82, 0xc5, 0xe4, 0xf8, 0x7d, 0x4a, 0xcd, 0xa2, 0xa4,
+	0x6c, 0x66, 0x6e, 0x16, 0xd6, 0x05, 0x50, 0xe3, 0xe6, 0xe9, 0xf5, 0x56, 0x23, 0xa4, 0x9e, 0x7b,
+	0xb3, 0xab, 0x34, 0xf4, 0xaf, 0x89, 0x87, 0x2b, 0x1f, 0x11, 0x89, 0xb9, 0x76, 0x3d, 0xd7, 0xb2,
+	0xd9, 0xfa, 0x52, 0x13, 0x40, 0x2d, 0x85, 0x37, 0x68, 0x23, 0xbf, 0x12, 0xbe, 0xaf, 0x86, 0x30,
+	0x44, 0x3d, 0x32, 0xc3, 0xd5, 0x5c, 0x4f, 0xa4, 0xbd, 0xc6, 0x5a, 0x9d, 0x89, 0x69, 0x7d, 0x27,
+	0x0b, 0xa0, 0xdb, 0xea, 0x6f, 0x6d, 0x6a, 0xac, 0x37, 0xe3, 0xa4, 0x99, 0x73, 0x88, 0x7a, 0x07,
+	0xcd, 0x87, 0x85, 0x85, 0x1e, 0x17, 0x16, 0x7a, 0x5e, 0x58, 0xe8, 0xee, 0xc5, 0xfa, 0x71, 0xaa,
+	0xcb, 0x05, 0x3d, 0xff, 0xa9, 0xf6, 0x6d, 0xf0, 0x16, 0x00, 0x00, 0xff, 0xff, 0xeb, 0x50, 0x5c,
+	0x99, 0xc9, 0x02, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -420,7 +421,7 @@ const _ = grpc.SupportPackageIsVersion4
 type UserClient interface {
 	Info(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
 	AddPoint(ctx context.Context, in *AddPointReq, opts ...grpc.CallOption) (*AddPointResp, error)
-	Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateResp, error)
+	UpgradePass(ctx context.Context, in *UpgradePassReq, opts ...grpc.CallOption) (*UpgradePassResp, error)
 }
 
 type userClient struct {
@@ -449,9 +450,9 @@ func (c *userClient) AddPoint(ctx context.Context, in *AddPointReq, opts ...grpc
 	return out, nil
 }
 
-func (c *userClient) Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateResp, error) {
-	out := new(UpdateResp)
-	err := c.cc.Invoke(ctx, "/ncs.pass.user.User/Update", in, out, opts...)
+func (c *userClient) UpgradePass(ctx context.Context, in *UpgradePassReq, opts ...grpc.CallOption) (*UpgradePassResp, error) {
+	out := new(UpgradePassResp)
+	err := c.cc.Invoke(ctx, "/ncs.pass.user.User/UpgradePass", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -462,7 +463,7 @@ func (c *userClient) Update(ctx context.Context, in *UpdateReq, opts ...grpc.Cal
 type UserServer interface {
 	Info(context.Context, *InfoReq) (*InfoResp, error)
 	AddPoint(context.Context, *AddPointReq) (*AddPointResp, error)
-	Update(context.Context, *UpdateReq) (*UpdateResp, error)
+	UpgradePass(context.Context, *UpgradePassReq) (*UpgradePassResp, error)
 }
 
 // UnimplementedUserServer can be embedded to have forward compatible implementations.
@@ -475,8 +476,8 @@ func (*UnimplementedUserServer) Info(ctx context.Context, req *InfoReq) (*InfoRe
 func (*UnimplementedUserServer) AddPoint(ctx context.Context, req *AddPointReq) (*AddPointResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddPoint not implemented")
 }
-func (*UnimplementedUserServer) Update(ctx context.Context, req *UpdateReq) (*UpdateResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+func (*UnimplementedUserServer) UpgradePass(ctx context.Context, req *UpgradePassReq) (*UpgradePassResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpgradePass not implemented")
 }
 
 func RegisterUserServer(s *grpc.Server, srv UserServer) {
@@ -519,20 +520,20 @@ func _User_AddPoint_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateReq)
+func _User_UpgradePass_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpgradePassReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).Update(ctx, in)
+		return srv.(UserServer).UpgradePass(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ncs.pass.user.User/Update",
+		FullMethod: "/ncs.pass.user.User/UpgradePass",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).Update(ctx, req.(*UpdateReq))
+		return srv.(UserServer).UpgradePass(ctx, req.(*UpgradePassReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -550,8 +551,8 @@ var _User_serviceDesc = grpc.ServiceDesc{
 			Handler:    _User_AddPoint_Handler,
 		},
 		{
-			MethodName: "Update",
-			Handler:    _User_Update_Handler,
+			MethodName: "UpgradePass",
+			Handler:    _User_UpgradePass_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -671,72 +672,6 @@ func (m *InfoResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *UpdateReq) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *UpdateReq) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Info != nil {
-		{
-			size, err := m.Info.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintUser(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *UpdateResp) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *UpdateResp) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *UpdateResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return len(dAtA) - i, nil
-}
-
 func (m *AddPointReq) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -790,6 +725,65 @@ func (m *AddPointResp) MarshalTo(dAtA []byte) (int, error) {
 }
 
 func (m *AddPointResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpgradePassReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpgradePassReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpgradePassReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Uid != 0 {
+		i = encodeVarintUser(dAtA, i, uint64(m.Uid))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *UpgradePassResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *UpgradePassResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *UpgradePassResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -864,34 +858,6 @@ func (m *InfoResp) Size() (n int) {
 	return n
 }
 
-func (m *UpdateReq) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Info != nil {
-		l = m.Info.Size()
-		n += 1 + l + sovUser(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *UpdateResp) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
 func (m *AddPointReq) Size() (n int) {
 	if m == nil {
 		return 0
@@ -911,6 +877,33 @@ func (m *AddPointReq) Size() (n int) {
 }
 
 func (m *AddPointResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *UpgradePassReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Uid != 0 {
+		n += 1 + sovUser(uint64(m.Uid))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *UpgradePassResp) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1202,150 +1195,6 @@ func (m *InfoResp) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *UpdateReq) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowUser
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: UpdateReq: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdateReq: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Info", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowUser
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthUser
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthUser
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Info == nil {
-				m.Info = &Info{}
-			}
-			if err := m.Info.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipUser(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthUser
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthUser
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *UpdateResp) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowUser
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: UpdateResp: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: UpdateResp: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		default:
-			iNdEx = preIndex
-			skippy, err := skipUser(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthUser
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthUser
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
 func (m *AddPointReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1465,6 +1314,133 @@ func (m *AddPointResp) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: AddPointResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipUser(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthUser
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthUser
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpgradePassReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowUser
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpgradePassReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpgradePassReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Uid", wireType)
+			}
+			m.Uid = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowUser
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Uid |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipUser(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthUser
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthUser
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *UpgradePassResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowUser
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: UpgradePassResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: UpgradePassResp: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
