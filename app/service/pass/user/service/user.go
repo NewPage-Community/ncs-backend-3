@@ -83,10 +83,12 @@ func (s *Service) GiveRewards(ctx context.Context, uid int64, level int32, passT
 		}
 	}
 
-	_, err = s.backpackService.AddItems(ctx, &backpack.AddItemsReq{
-		Uid:   uid,
-		Items: items,
-	})
+	if len(items) > 0 {
+		_, err = s.backpackService.AddItems(ctx, &backpack.AddItemsReq{
+			Uid:   uid,
+			Items: items,
+		})
+	}
 	return
 }
 

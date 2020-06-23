@@ -1,6 +1,6 @@
 #!/bin/bash
 
-files=$(git diff HEAD^ HEAD --name-only --diff-filter=ACM | grep -E -i "*\.(?=go|bazel)$")
+files=$(git diff HEAD^ HEAD --name-only --diff-filter=ACM | grep -E -i "\.(go|bazel)$")
 
 pkgs=""
 for file in ${files}; do

@@ -75,10 +75,15 @@ func (items *Items) addItem(item Item) {
 
 func (items *Items) RemoveItem(item Item, all bool) {
 	index, found := items.search(item.ID)
+	length := len(*items)
 
 	if found {
 		if all || (*items)[index].Amount <= 1 {
-			*items = append((*items)[:index], (*items)[index+1:]...)
+			if index+1 == length {
+				*items = (*items)[:index]
+			} else {
+				*items = append((*items)[:index], (*items)[index+1:]...)
+			}
 		} else {
 			(*items)[index].Amount--
 		}
@@ -129,9 +134,14 @@ func (items *Items) JSON() ([]byte, error) {
 }
 
 func (items *Items) Check() {
+	length := len(*items)
 	for index := range *items {
 		if (*items)[index].IsExpired() {
-			*items = append((*items)[:index], (*items)[index+1:]...)
+			if index+1 == length {
+				*items = (*items)[:index]
+			} else {
+				*items = append((*items)[:index], (*items)[index+1:]...)
+			}
 		}
 	}
 }
