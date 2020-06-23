@@ -64,6 +64,9 @@ func (s *Service) GiveRewards(ctx context.Context, uid int64, level int32, passT
 		Level: level,
 		Front: false,
 	})
+	if err != nil {
+		return
+	}
 
 	var items []*backpack.Item
 	for _, v := range rewards.FreeRewards {
@@ -113,6 +116,9 @@ func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp
 		Level: info.Info.Point,
 		Front: true,
 	})
+	if err != nil {
+		return
+	}
 
 	var items []*backpack.Item
 	for _, v := range rewards.AdvRewards {

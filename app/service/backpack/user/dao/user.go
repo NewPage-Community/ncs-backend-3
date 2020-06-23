@@ -67,7 +67,7 @@ func (d *dao) AddItems(uid int64, items *model.Items) (err error) {
 	if err != nil {
 		return
 	}
-	err = d.db.Model(userModel).Updates(*userModel).Error
+	err = d.db.Model(userModel).Updates(&model.UserModel{Items: userModel.Items}).Error
 	return
 }
 
@@ -98,7 +98,7 @@ func (d *dao) RemoveItem(uid int64, item model.Item, all bool) (err error) {
 	if err != nil {
 		return
 	}
-	err = d.db.Model(userModel).Updates(*userModel).Error
+	err = d.db.Model(userModel).Updates(&model.UserModel{Items: userModel.Items}).Error
 	return
 }
 
