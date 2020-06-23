@@ -33,7 +33,7 @@ func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, upgrade bool
 
 	_level := res.Level()
 	res.Point += addPoint
-	if res.Level() == _level {
+	if res.Level() != _level {
 		upgrade = true
 	}
 
