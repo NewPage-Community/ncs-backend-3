@@ -1,0 +1,16 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "reward.go",
+        "service.go",
+    ],
+    importpath = "backend/app/service/pass/reward/service",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/service/pass/reward/api/grpc:go_default_library",
+        "//app/service/pass/reward/conf:go_default_library",
+        "//app/service/pass/reward/model:go_default_library",
+    ],
+)
