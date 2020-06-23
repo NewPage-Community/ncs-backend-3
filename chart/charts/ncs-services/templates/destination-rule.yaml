@@ -8,8 +8,8 @@ spec:
   host: {{ .app }}
   subsets:
   - name: {{ .version }}
-  labels:
-    version: {{ .version }}
+    labels:
+      version: {{ .version }}
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL

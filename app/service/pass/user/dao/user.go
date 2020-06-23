@@ -28,8 +28,8 @@ func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, upgrade bool
 	}()
 
 	// DB
-	err = d.db.Where(uid).First(res).
-		Clauses(clause.Locking{Strength: "UPDATE"}).Error
+	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
+		Where(uid).First(res).Error
 	if err == gorm.ErrRecordNotFound {
 		err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
 	}
