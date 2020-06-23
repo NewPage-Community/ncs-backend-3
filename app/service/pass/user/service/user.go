@@ -98,11 +98,16 @@ func (s *Service) GiveRewards(ctx context.Context, uid int64, level int32, passT
 func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp *pb.UpgradePassResp, err error) {
 	resp = &pb.UpgradePassResp{}
 
-	info, err := s.Info(ctx, &pb.InfoReq{Uid: req.Uid})
+	if req.Uid <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%d)", req.Uid)
+		return
+	}
+
+	info, err := s.dao.Info(req.Uid)
 	if err != nil {
 		return
 	}
-	if info.Info.PassType > 0 {
+	if info.PassType > 0 {
 		err = ecode.Errorf(codes.Unknown, "User already is AdvPass UID(%d)", req.Uid)
 		return
 	}
@@ -113,7 +118,7 @@ func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp
 
 	// give all adv reward before current level
 	rewards, err := s.rewardService.GetRewards(ctx, &reward.GetRewardsReq{
-		Level: info.Info.Point,
+		Level: info.Point,
 		Front: true,
 	})
 	if err != nil {
