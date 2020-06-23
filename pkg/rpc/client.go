@@ -20,7 +20,7 @@ type ClientConfig struct {
 
 var _defaultCliConf = &ClientConfig{
 	Dial:     time.Second * 10,
-	Timeout:  time.Millisecond * 250,
+	Timeout:  time.Second,
 	MaxRetry: 3,
 	RetryCode: []codes.Code{
 		codes.Canceled,
