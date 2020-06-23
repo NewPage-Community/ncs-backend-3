@@ -1,6 +1,8 @@
 package service
 
 import (
+	backpack "backend/app/service/backpack/user/api/grpc"
+	reward "backend/app/service/pass/reward/api/grpc"
 	pb "backend/app/service/pass/user/api/grpc"
 	"backend/app/service/pass/user/model"
 	"backend/pkg/ecode"
@@ -51,30 +53,72 @@ func (s *Service) AddPoint(ctx context.Context, req *pb.AddPointReq) (resp *pb.A
 
 	res, upgrade, err := s.dao.AddPoint(req.Uid, req.Point)
 	if upgrade && res != nil {
-		err = s.Upgrade(ctx, res.UID, res.Level(), res.PassType)
+		err = s.GiveRewards(ctx, res.UID, res.Level(), res.PassType)
 	}
 
 	return
 }
 
-func (s *Service) Upgrade(ctx context.Context, uid int64, level int32, passType int32) (err error) {
-	// TODO: give gift
+func (s *Service) GiveRewards(ctx context.Context, uid int64, level int32, passType int32) (err error) {
+	rewards, err := s.rewardService.GetRewards(ctx, &reward.GetRewardsReq{
+		Level: level,
+		Front: false,
+	})
+
+	var items []*backpack.Item
+	for _, v := range rewards.FreeRewards {
+		items = append(items, &backpack.Item{
+			Id:     v.Id,
+			Amount: v.Amount,
+			Length: v.Length,
+		})
+	}
+	if passType > 0 {
+		for _, v := range rewards.AdvRewards {
+			items = append(items, &backpack.Item{
+				Id:     v.Id,
+				Amount: v.Amount,
+				Length: v.Length,
+			})
+		}
+	}
+
+	_, err = s.backpackService.AddItems(ctx, &backpack.AddItemsReq{
+		Uid:   uid,
+		Items: items,
+	})
 	return
 }
 
 func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp *pb.UpgradePassResp, err error) {
 	resp = &pb.UpgradePassResp{}
 
-	if req.Uid <= 0 {
-		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%d)", req.Uid)
+	info, err := s.Info(ctx, &pb.InfoReq{Uid: req.Uid})
+	if err != nil {
 		return
 	}
-
 	err = s.dao.UpgradePass(req.Uid)
 	if err != nil {
 		return
 	}
 
-	// TODO: give all reward before current level
+	// give all adv reward before current level
+	rewards, err := s.rewardService.GetRewards(ctx, &reward.GetRewardsReq{
+		Level: info.Info.Point,
+		Front: true,
+	})
+
+	var items []*backpack.Item
+	for _, v := range rewards.AdvRewards {
+		items = append(items, &backpack.Item{
+			Id:     v.Id,
+			Amount: v.Amount,
+			Length: v.Length,
+		})
+	}
+	_, err = s.backpackService.AddItems(ctx, &backpack.AddItemsReq{
+		Uid:   req.Uid,
+		Items: items,
+	})
 	return
 }

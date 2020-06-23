@@ -49,6 +49,11 @@ ncs-services:
       image: harbor.new-page.xyz/newpage/ncs/service-pass-user
       tag: latest
       port: 2333
+    - app: ncs-service-pass-reward
+      version: v1
+      image: harbor.new-page.xyz/newpage/ncs/service-pass-reward
+      tag: latest
+      port: 2333
     - app: ncs-service-backpack-user
       version: v1
       image: harbor.new-page.xyz/newpage/ncs/service-backpack-user
