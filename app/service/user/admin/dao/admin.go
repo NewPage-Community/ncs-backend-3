@@ -13,7 +13,7 @@ func (d *dao) Info(uid int64) (res *model.Admin, err error) {
 	// DB
 	err = d.db.Where(uid).First(&res).Error
 	if err == gorm.ErrRecordNotFound {
-		ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
+		err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
 	}
 	return
 }

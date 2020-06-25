@@ -5,7 +5,10 @@ go_library(
     srcs = ["conf.go"],
     importpath = "backend/pkg/conf",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_spf13_viper//:go_default_library"],
+    deps = [
+        "//pkg/log:go_default_library",
+        "@com_github_spf13_viper//:go_default_library",
+    ],
 )
 
 go_test(

@@ -1,6 +1,7 @@
 package tracer
 
 import (
+	"backend/pkg/log"
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
 	"github.com/uber/jaeger-client-go/zipkin"
@@ -35,6 +36,8 @@ func Init(serviceName string) {
 
 func Close() {
 	if tracerCloser != nil {
-		tracerCloser.Close()
+		if err := tracerCloser.Close(); err != nil {
+			log.Error(err)
+		}
 	}
 }

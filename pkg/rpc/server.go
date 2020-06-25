@@ -1,6 +1,7 @@
 package rpc
 
 import (
+	"backend/pkg/log"
 	"context"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
@@ -151,6 +152,8 @@ func (s *Server) Stop() {
 	}
 	if s.healthCheck != nil {
 		ctx, _ := context.WithTimeout(context.Background(), time.Second*10)
-		s.healthCheck.Shutdown(ctx)
+		if err := s.healthCheck.Shutdown(ctx); err != nil {
+			log.Error(err)
+		}
 	}
 }

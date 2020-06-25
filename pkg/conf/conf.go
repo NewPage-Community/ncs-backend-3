@@ -1,6 +1,7 @@
 package conf
 
 import (
+	"backend/pkg/log"
 	"github.com/spf13/viper"
 )
 
@@ -12,7 +13,9 @@ func Load(v interface{}) {
 	viper.AddConfigPath("/Users/gunslinger/ncs-test/")
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			viper.SafeWriteConfig()
+			if err = viper.SafeWriteConfig(); err != nil {
+				log.Error(err)
+			}
 		} else {
 			panic(err)
 		}

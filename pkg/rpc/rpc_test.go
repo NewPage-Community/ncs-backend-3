@@ -14,5 +14,7 @@ func TestAll(t *testing.T) {
 	defer server.Stop()
 
 	client := Dial(context.Background(), "0.0.0.0:2333", &ClientConfig{})
-	defer client.Close()
+	if err := client.Close(); err != nil {
+		t.Error(err)
+	}
 }

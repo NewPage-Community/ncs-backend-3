@@ -27,8 +27,7 @@ func (s *Service) GetTitle(ctx context.Context, req *pb.GetTitleReq) (resp *pb.G
 			CustomTitle: "",
 			TitleType:   0,
 		}
-		s.dao.Create(res)
-		err = nil
+		err = s.dao.Create(res)
 	}
 	resp.Info = &pb.Info{
 		Uid:         res.UID,

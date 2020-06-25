@@ -22,7 +22,7 @@ func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp,
 
 	// Random rcon password
 	res.GenerateRcon()
-	s.dao.UpdateRcon(res)
+	err = s.dao.UpdateRcon(res)
 
 	resp = &pb.InfoResp{
 		Info: &pb.Info{

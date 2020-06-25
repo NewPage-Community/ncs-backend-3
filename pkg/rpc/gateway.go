@@ -1,6 +1,7 @@
 package rpc
 
 import (
+	"backend/pkg/log"
 	"context"
 	"github.com/golang/glog"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
@@ -56,7 +57,9 @@ func (gws *Gateways) AddGateway(handler regHandler, endpoint string) {
 func (gws *Gateways) Close() {
 	if gws.server != nil {
 		ctx, _ := context.WithTimeout(context.Background(), time.Second*10)
-		gws.server.Shutdown(ctx)
+		if err := gws.server.Shutdown(ctx); err != nil {
+			log.Error(err)
+		}
 	}
 	gws.cancel()
 }
