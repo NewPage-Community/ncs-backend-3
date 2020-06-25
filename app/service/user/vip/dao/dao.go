@@ -4,6 +4,7 @@ import (
 	"backend/app/service/user/vip/conf"
 	"backend/app/service/user/vip/model"
 	db "backend/pkg/database/mysql"
+	"backend/pkg/log"
 	"gorm.io/gorm"
 )
 
@@ -11,7 +12,7 @@ type Dao interface {
 	Register(info *model.VIP) error
 	Info(info *model.VIP) error
 	ExpireTime(info *model.VIP) error
-	Point(info *model.VIP) error
+	AddPoint(uid int64, addPoint int) (int, error)
 	Healthy() bool
 	Close()
 }
@@ -25,7 +26,9 @@ func New(config *conf.Config) (d *dao) {
 		db: db.Init(config.Mysql),
 	}
 	// Auto migrate db
-	d.db.AutoMigrate(&model.VIP{})
+	if err := d.db.AutoMigrate(&model.VIP{}); err != nil {
+		log.Error(err)
+	}
 	return
 }
 

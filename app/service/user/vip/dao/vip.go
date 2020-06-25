@@ -5,6 +5,7 @@ import (
 	"backend/pkg/ecode"
 	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 func (d *dao) Register(info *model.VIP) (err error) {
@@ -25,7 +26,24 @@ func (d *dao) ExpireTime(info *model.VIP) (err error) {
 	return
 }
 
-func (d *dao) Point(info *model.VIP) (err error) {
-	err = d.db.Model(info).Update("point", info.Point).Error
+func (d *dao) AddPoint(uid int64, addPoint int) (point int, err error) {
+	info := &model.VIP{}
+
+	// DB
+	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
+		Where(uid).Find(info).Error
+	if err == gorm.ErrRecordNotFound {
+		err = ecode.Errorf(codes.NotFound, "Can not found: UID(%v)", info.UID)
+	}
+	if err != nil {
+		return
+	}
+
+	info.Point += addPoint
+
+	err = d.db.Model(info).Updates(&model.VIP{Point: info.Point}).Error
+	if err == nil {
+		point = info.Point
+	}
 	return
 }

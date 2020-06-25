@@ -57,7 +57,6 @@ func (s *Service) Renewal(ctx context.Context, req *grpc.RenewalReq) (resp *grpc
 	return
 }
 
-// TODO: lock for update
 func (s *Service) AddPoint(ctx context.Context, req *grpc.AddPointReq) (resp *grpc.AddPointResp, err error) {
 	resp = &grpc.AddPointResp{}
 
@@ -66,13 +65,7 @@ func (s *Service) AddPoint(ctx context.Context, req *grpc.AddPointReq) (resp *gr
 		return
 	}
 
-	info, err := s._Info(req.Uid)
-	if err != nil {
-		return
-	}
-
-	info.Point += int(req.AddPoint)
-	resp.Point = int32(info.Point)
-	err = s.dao.Point(info)
+	point, err := s.dao.AddPoint(req.Uid, int(req.AddPoint))
+	resp.Point = int32(point)
 	return
 }

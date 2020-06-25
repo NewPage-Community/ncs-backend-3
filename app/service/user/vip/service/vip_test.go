@@ -17,13 +17,7 @@ func TestService_AddPoint(t *testing.T) {
 	defer ctl.Finish()
 
 	m := dao.NewMockDao(ctl)
-	m.EXPECT().Info(gomock.Eq(&model.VIP{
-		UID: 1,
-	})).Return(nil)
-	m.EXPECT().Point(gomock.Eq(&model.VIP{
-		UID:   1,
-		Point: 1,
-	})).Return(nil)
+	m.EXPECT().AddPoint(gomock.Eq(int64(1)), gomock.Eq(1)).Return(1, nil)
 
 	srv := &Service{dao: m}
 	Convey("Test service AddPoint", t, func() {

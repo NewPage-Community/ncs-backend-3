@@ -75,18 +75,19 @@ func (mr *MockDaoMockRecorder) ExpireTime(info interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExpireTime", reflect.TypeOf((*MockDao)(nil).ExpireTime), info)
 }
 
-// Point mocks base method
-func (m *MockDao) Point(info *model.VIP) error {
+// AddPoint mocks base method
+func (m *MockDao) AddPoint(uid int64, addPoint int) (int, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Point", info)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret := m.ctrl.Call(m, "AddPoint", uid, addPoint)
+	ret0, _ := ret[0].(int)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
-// Point indicates an expected call of Point
-func (mr *MockDaoMockRecorder) Point(info interface{}) *gomock.Call {
+// AddPoint indicates an expected call of AddPoint
+func (mr *MockDaoMockRecorder) AddPoint(uid, addPoint interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Point", reflect.TypeOf((*MockDao)(nil).Point), info)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddPoint", reflect.TypeOf((*MockDao)(nil).AddPoint), uid, addPoint)
 }
 
 // Healthy mocks base method

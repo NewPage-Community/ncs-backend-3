@@ -5,6 +5,10 @@ import (
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+	l "log"
+	"os"
+	"time"
 )
 
 type Config struct {
@@ -13,10 +17,20 @@ type Config struct {
 	Password string
 	DBName   string
 	Charset  string
+	Debug    bool
 }
 
 func Init(conf *Config) *gorm.DB {
+	level := 3
+	if conf.Debug {
+		level = 4
+	}
 	db, err := gorm.Open(mysql.Open(getDSN(conf)), &gorm.Config{
+		Logger: logger.New(l.New(os.Stdout, "\r\n", l.LstdFlags), logger.Config{
+			SlowThreshold: 100 * time.Millisecond,
+			LogLevel:      logger.LogLevel(level),
+			Colorful:      true,
+		}),
 		SkipDefaultTransaction: true,
 	})
 	if err != nil {
