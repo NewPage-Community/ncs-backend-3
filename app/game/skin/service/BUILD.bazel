@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "service.go",
+        "skin.go",
+    ],
+    importpath = "backend/app/game/skin/service",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/game/skin/api/grpc:go_default_library",
+        "//app/game/skin/conf:go_default_library",
+        "//app/game/skin/dao:go_default_library",
+        "//app/service/backpack/items/api/grpc:go_default_library",
+        "//app/service/backpack/user/api/grpc:go_default_library",
+        "//pkg/ecode:go_default_library",
+        "@org_golang_google_grpc//codes:go_default_library",
+    ],
+)

@@ -26,6 +26,40 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Items"
+        ]
+      }
+    },
+    "/backpack/items/type/{type}": {
+      "get": {
+        "operationId": "GetItems2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/itemsGetItemsResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
         "tags": [
           "Items"
         ]

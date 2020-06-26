@@ -64,3 +64,8 @@ ncs-services:
       image: harbor.new-page.xyz/newpage/ncs/service-backpack-items
       tag: latest
       port: 2333
+    - app: ncs-game-skin
+      version: v1
+      image: harbor.new-page.xyz/newpage/ncs/game-skin
+      tag: latest
+      port: 2333

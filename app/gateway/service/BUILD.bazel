@@ -13,6 +13,7 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//app/game/server/api/grpc:go_default_library",
+        "//app/game/skin/api/grpc:go_default_library",
         "//app/game/user/api/grpc:go_default_library",
         "//app/service/backpack/items/api/grpc:go_default_library",
         "//app/service/backpack/user/api/grpc:go_default_library",

@@ -1,0 +1,153 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/game/skin/api/grpc/skin.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/skin": {
+      "get": {
+        "operationId": "GetSkins",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skinGetSkinsResp"
+            }
+          }
+        },
+        "tags": [
+          "Skin"
+        ]
+      }
+    },
+    "/skin/{uid}": {
+      "get": {
+        "operationId": "GetInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skinGetInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Skin"
+        ]
+      }
+    },
+    "/skin/{uid}/used": {
+      "post": {
+        "operationId": "SetUsedSkin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/skinSetUsedSkinResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/skinSetUsedSkinReq"
+            }
+          }
+        ],
+        "tags": [
+          "Skin"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "skinGetInfoResp": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "used_skin": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "skinGetSkinsResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/skinSkinInfo"
+          }
+        }
+      }
+    },
+    "skinSetUsedSkinReq": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "used_skin": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "skinSetUsedSkinResp": {
+      "type": "object"
+    },
+    "skinSkinInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "skin_path": {
+          "type": "string"
+        },
+        "arm_path": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

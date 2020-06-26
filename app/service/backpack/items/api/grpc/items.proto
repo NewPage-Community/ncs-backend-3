@@ -14,6 +14,7 @@ message Item {
 }
 
 message GetItemsReq {
+    int32 type = 1;
 }
 
 message GetItemsResp {
@@ -24,6 +25,9 @@ service Items {
     rpc GetItems (GetItemsReq) returns (GetItemsResp) {
         option (google.api.http) = {
             get: "/backpack/items"
+            additional_bindings {
+				get: "/backpack/items/type/{type}"
+			}
         };
     }
 }

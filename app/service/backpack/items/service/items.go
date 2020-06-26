@@ -17,6 +17,9 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 	}
 
 	for _, v := range res {
+		if req.Type > 0 && v.Type != req.Type {
+			continue
+		}
 		var attr model.Attributes
 		if err = v.GetAttributes(&attr); err != nil {
 			log.Error(err)
