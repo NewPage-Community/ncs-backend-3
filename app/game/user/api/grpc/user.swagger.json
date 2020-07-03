@@ -96,9 +96,6 @@
         "steam_id": {
           "type": "string",
           "format": "int64"
-        },
-        "username": {
-          "type": "string"
         }
       }
     },

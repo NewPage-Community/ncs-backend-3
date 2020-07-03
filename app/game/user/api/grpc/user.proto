@@ -15,7 +15,6 @@ message PlayerConnectResp {
 
 message PlayerDisconnectReq {
     int64 steam_id = 1;
-    string username = 2;
 }
 
 message PlayerDisconnectResp {

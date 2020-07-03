@@ -48,17 +48,13 @@ func (s *Service) PlayerDisconnect(ctx context.Context, req *pb.PlayerDisconnect
 	resp = &pb.PlayerDisconnectResp{}
 
 	// Get UID
-	uid, err := s.account.UID(ctx, &account_pb.UIDReq{
-		SteamId: req.SteamId,
-	})
-	if err != nil {
-		return
-	}
+	//uid, err := s.account.UID(ctx, &account_pb.UIDReq{
+	//	SteamId: req.SteamId,
+	//})
+	//if err != nil {
+	//	return
+	//}
 
-	// Change name
-	_, err = s.account.ChangeName(ctx, &account_pb.ChangeNameReq{
-		Uid:      uid.Uid,
-		Username: req.Username,
-	})
+	// do some things??
 	return
 }
