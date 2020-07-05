@@ -24,6 +24,13 @@ message InfoReq {
     int64 uid = 1;
 }
 
+message Info2Req {
+    int64 uid = 1;
+    int64 server_id = 2;
+    int64 mod_id = 3;
+    int64 game_id = 4;
+}
+
 message InfoResp {
     Info info = 1;
 }
@@ -57,6 +64,12 @@ service Ban {
     rpc Remove (RemoveReq) returns (RemoveResp) {
         option (google.api.http) = {
             delete: "/user/ban/remove/{id}"
+        };
+    }
+    rpc BanCheck (Info2Req) returns (InfoResp) {
+        option (google.api.http) = {
+            post: "/user/ban/check/{uid}"
+            body: "*"
         };
     }
 }

@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "app/user/ban/api/grpc/ban.proto",
+    "title": "app/service/user/ban/api/grpc/ban.proto",
     "version": "version not set"
   },
   "schemes": [
@@ -33,6 +33,39 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/banAddReq"
+            }
+          }
+        ],
+        "tags": [
+          "Ban"
+        ]
+      }
+    },
+    "/user/ban/check/{uid}": {
+      "post": {
+        "operationId": "BanCheck",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/banInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/banInfo2Req"
             }
           }
         ],
@@ -141,6 +174,27 @@
         },
         "reason": {
           "type": "string"
+        }
+      }
+    },
+    "banInfo2Req": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "server_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "mod_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "game_id": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },

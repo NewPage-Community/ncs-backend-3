@@ -28,7 +28,7 @@ func (*Ban) TableName() string {
 
 // IsValid .
 func (i *Ban) IsValid() bool {
-	return i.ID > 0
+	return i.UID > 0
 }
 
 // IsExpired check ban record is expired?

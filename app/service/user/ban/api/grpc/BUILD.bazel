@@ -12,6 +12,7 @@ go_library(
     importpath = "backend/app/service/user/ban/api/grpc",
     visibility = ["//visibility:public"],
     deps = [
+        "//pkg/log:go_default_library",
         "//pkg/rpc:go_default_library",
         "@com_github_golang_mock//gomock:go_default_library",
         "@com_github_golang_protobuf//proto:go_default_library",

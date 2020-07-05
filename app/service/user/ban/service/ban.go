@@ -72,3 +72,32 @@ func (s *Service) Remove(ctx context.Context, req *pb.RemoveReq) (resp *pb.Remov
 	})
 	return
 }
+
+func (s *Service) BanCheck(ctx context.Context, req *pb.Info2Req) (resp *pb.InfoResp, err error) {
+	resp = &pb.InfoResp{}
+
+	if req.Uid <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID")
+		return
+	}
+
+	res, err := s.dao.Info(req.Uid)
+	if res != nil {
+		if res.IsBanned(req.ServerId, req.ModId, req.GameId) {
+			resp.Info = &pb.Info{
+				Id:         res.ID,
+				Uid:        res.UID,
+				CreateTime: res.CreateTime,
+				ExpireTime: res.ExpireTime,
+				Type:       int32(res.Type),
+				ServerId:   res.ServerID,
+				ModId:      res.ModID,
+				GameId:     res.GameID,
+				Reason:     res.Reason,
+			}
+			return
+		}
+	}
+	err = ecode.Errorf(codes.NotFound, "No ban recode")
+	return
+}
