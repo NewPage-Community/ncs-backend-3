@@ -3,7 +3,8 @@ package model
 import "time"
 
 const (
-	BanTypeAll = iota
+	BanTypeNone = iota
+	BanTypeAll
 	BanTypeMod
 	BanTypeGame
 	BanTypeServer

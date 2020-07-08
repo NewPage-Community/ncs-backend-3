@@ -46,6 +46,10 @@ func (s *Service) Add(ctx context.Context, req *pb.AddReq) (resp *pb.AddResp, er
 		err = ecode.Errorf(codes.InvalidArgument, "Invalid Info.UID")
 		return
 	}
+	if req.Info.Type == model.BanTypeNone {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid Info.Type")
+		return
+	}
 	if req.Info.ExpireTime <= now.Unix() {
 		err = ecode.Errorf(codes.InvalidArgument, "Expire time must be after %s", now.Format(time.UnixDate))
 		return
