@@ -6,66 +6,66 @@ ncs-services:
   services:
     - app: ncs-game-server
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/game-server
+      image: registry.new-page.xyz/newpage/ncs/game-server
       tag: latest
       port: 2333
     - app: ncs-service-user-account
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/service-user-account
+      image: registry.new-page.xyz/newpage/ncs/service-user-account
       tag: latest
       port: 2333
     - app: ncs-service-user-admin
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/service-user-admin
+      image: registry.new-page.xyz/newpage/ncs/service-user-admin
       tag: latest
       port: 2333
     - app: ncs-service-user-ban
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/service-user-ban
+      image: registry.new-page.xyz/newpage/ncs/service-user-ban
       tag: latest
       port: 2333
     - app: ncs-service-user-sign
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/service-user-sign
+      image: registry.new-page.xyz/newpage/ncs/service-user-sign
       tag: latest
       port: 2333
     - app: ncs-service-user-vip
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/service-user-vip
+      image: registry.new-page.xyz/newpage/ncs/service-user-vip
       tag: latest
       port: 2333
     - app: ncs-game-user
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/game-user
+      image: registry.new-page.xyz/newpage/ncs/game-user
       tag: latest
       port: 2333
     - app: ncs-service-user-title
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/service-user-title
+      image: registry.new-page.xyz/newpage/ncs/service-user-title
       tag: latest
       port: 2333
     - app: ncs-service-pass-user
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/service-pass-user
+      image: registry.new-page.xyz/newpage/ncs/service-pass-user
       tag: latest
       port: 2333
     - app: ncs-service-pass-reward
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/service-pass-reward
+      image: registry.new-page.xyz/newpage/ncs/service-pass-reward
       tag: latest
       port: 2333
     - app: ncs-service-backpack-user
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/service-backpack-user
+      image: registry.new-page.xyz/newpage/ncs/service-backpack-user
       tag: latest
       port: 2333
     - app: ncs-service-backpack-items
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/service-backpack-items
+      image: registry.new-page.xyz/newpage/ncs/service-backpack-items
       tag: latest
       port: 2333
     - app: ncs-game-skin
       version: v1
-      image: harbor.new-page.xyz/newpage/ncs/game-skin
+      image: registry.new-page.xyz/newpage/ncs/game-skin
       tag: latest
       port: 2333
