@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "app/server/api/grpc/server.proto",
+    "title": "app/game/server/api/grpc/server.proto",
     "version": "version not set"
   },
   "schemes": [
@@ -52,16 +52,16 @@
       "type": "object",
       "properties": {
         "server_id": {
-          "type": "string",
-          "format": "int64"
+          "type": "integer",
+          "format": "int32"
         },
         "mod_id": {
-          "type": "string",
-          "format": "int64"
+          "type": "integer",
+          "format": "int32"
         },
         "game_id": {
-          "type": "string",
-          "format": "int64"
+          "type": "integer",
+          "format": "int32"
         },
         "rcon": {
           "type": "string"
