@@ -23,11 +23,11 @@ func (s *Service) PlayerConnect(ctx context.Context, req *pb.PlayerConnectReq) (
 			return
 		}
 		// Not found -> Register -> Get UID
-		info, err1 := s.account.Register(ctx, &account_pb.RegisterReq{
+		var info *account_pb.RegisterResp
+		info, err = s.account.Register(ctx, &account_pb.RegisterReq{
 			SteamId: req.SteamId,
 		})
-		if err1 != nil {
-			err = err1
+		if err != nil {
 			return
 		}
 		resp.Uid = info.Uid
