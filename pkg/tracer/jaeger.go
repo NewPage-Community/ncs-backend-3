@@ -22,10 +22,6 @@ func Init(serviceName string) {
 			BufferFlushInterval: time.Second,
 			CollectorEndpoint:   "http://jaeger-collector.istio-system:14268/api/traces",
 		},
-		Sampler: &jaegercfg.SamplerConfig{
-			Type:  jaeger.SamplerTypeConst,
-			Param: 1,
-		},
 	}
 
 	// Example logger and metrics factory. Use github.com/uber/jaeger-client-go/log
@@ -45,6 +41,7 @@ func Init(serviceName string) {
 		jaegercfg.Injector(opentracing.HTTPHeaders, zipkinPropagator),
 		jaegercfg.Extractor(opentracing.HTTPHeaders, zipkinPropagator),
 		jaegercfg.ZipkinSharedRPCSpan(true),
+		jaegercfg.Sampler(jaeger.NewConstSampler(true)),
 	)
 
 	if err != nil {
