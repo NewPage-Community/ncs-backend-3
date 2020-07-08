@@ -3,6 +3,7 @@ package tracer
 import (
 	"backend/pkg/log"
 	"github.com/opentracing/opentracing-go"
+	"github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
 	jaegerlog "github.com/uber/jaeger-client-go/log"
 	"github.com/uber/jaeger-client-go/zipkin"
@@ -19,10 +20,10 @@ func Init(serviceName string) {
 		ServiceName: serviceName,
 		Reporter: &jaegercfg.ReporterConfig{
 			BufferFlushInterval: time.Second,
-			CollectorEndpoint:   "jaeger-agent.istio-system:5775",
+			CollectorEndpoint:   "http://jaeger-collector.istio-system:14268/api/traces",
 		},
 		Sampler: &jaegercfg.SamplerConfig{
-			Type:  "const",
+			Type:  jaeger.SamplerTypeConst,
 			Param: 1,
 		},
 	}
