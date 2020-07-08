@@ -1,0 +1,3 @@
+*.bazel gitlab-language=python
+*.bzl gitlab-language=python
+WORKSPACE gitlab-language=python
