@@ -5,7 +5,7 @@
 replicaCount: 3
 
 image:
-  repository: harbor.new-page.xyz/newpage/ncs/gateway
+  repository: registry.new-page.xyz/newpage/ncs/gateway
   pullPolicy: Always
   tag: latest
 
