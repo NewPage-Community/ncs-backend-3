@@ -10,7 +10,7 @@ image:
   tag: latest
 
 imagePullSecrets:
-  - name: harbor
+  - name: internal
 nameOverride: ""
 fullnameOverride: "ncs-gateway"
 
