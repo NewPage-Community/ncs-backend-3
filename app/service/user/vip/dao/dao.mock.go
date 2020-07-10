@@ -61,18 +61,19 @@ func (mr *MockDaoMockRecorder) Info(info interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockDao)(nil).Info), info)
 }
 
-// ExpireTime mocks base method
-func (m *MockDao) ExpireTime(info *model.VIP) error {
+// Renewal mocks base method
+func (m *MockDao) Renewal(uid, length int64) (int64, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ExpireTime", info)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret := m.ctrl.Call(m, "Renewal", uid, length)
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
-// ExpireTime indicates an expected call of ExpireTime
-func (mr *MockDaoMockRecorder) ExpireTime(info interface{}) *gomock.Call {
+// Renewal indicates an expected call of Renewal
+func (mr *MockDaoMockRecorder) Renewal(uid, length interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExpireTime", reflect.TypeOf((*MockDao)(nil).ExpireTime), info)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Renewal", reflect.TypeOf((*MockDao)(nil).Renewal), uid, length)
 }
 
 // AddPoint mocks base method

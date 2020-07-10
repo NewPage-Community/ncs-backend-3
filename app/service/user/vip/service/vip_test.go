@@ -39,13 +39,7 @@ func TestService_Renewal(t *testing.T) {
 	defer ctl.Finish()
 
 	m := dao.NewMockDao(ctl)
-	m.EXPECT().Info(gomock.Eq(&model.VIP{
-		UID: 1,
-	})).Return(nil)
-	m.EXPECT().ExpireTime(gomock.Eq(&model.VIP{
-		UID:        1,
-		ExpireDate: expireTime,
-	})).Return(nil)
+	m.EXPECT().Renewal(gomock.Eq(int64(1)), gomock.Eq(length)).Return(expireTime, nil)
 
 	srv := &Service{dao: m}
 	Convey("Test service Renewal", t, func() {

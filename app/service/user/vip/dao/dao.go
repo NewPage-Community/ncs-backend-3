@@ -11,8 +11,8 @@ import (
 type Dao interface {
 	Register(info *model.VIP) error
 	Info(info *model.VIP) error
-	ExpireTime(info *model.VIP) error
-	AddPoint(uid int64, addPoint int) (int, error)
+	Renewal(uid int64, length int64) (exprTime int64, err error)
+	AddPoint(uid int64, addPoint int) (point int, err error)
 	Healthy() bool
 	Close()
 }

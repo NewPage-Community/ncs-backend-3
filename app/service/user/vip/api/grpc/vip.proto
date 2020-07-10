@@ -7,9 +7,10 @@ import "google/api/annotations.proto";
 // Base
 
 message Info {
-    int32 point = 1;
-    int32 level = 2;
-    int64 expire_date = 3;
+    int64 uid = 1;
+    int32 point = 2;
+    int32 level = 3;
+    int64 expire_date = 4;
 }
 
 message InfoReq {

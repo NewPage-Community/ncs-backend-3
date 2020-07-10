@@ -10,6 +10,12 @@ import (
 
 func (s *Service) Info(ctx context.Context, req *grpc.InfoReq) (resp *grpc.InfoResp, err error) {
 	resp = &grpc.InfoResp{}
+
+	if req.Uid <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%v)", req.Uid)
+		return
+	}
+
 	info, err := s._Info(req.Uid)
 	if info != nil {
 		resp.Info = &grpc.Info{
@@ -41,25 +47,27 @@ func (s *Service) _Info(uid int64) (info *model.VIP, err error) {
 func (s *Service) Renewal(ctx context.Context, req *grpc.RenewalReq) (resp *grpc.RenewalResp, err error) {
 	resp = &grpc.RenewalResp{}
 
+	if req.Uid <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%v)", req.Uid)
+		return
+	}
 	if req.Length <= 0 {
 		err = ecode.Errorf(codes.InvalidArgument, "Length is invalid")
 		return
 	}
 
-	info, err := s._Info(req.Uid)
-	if err != nil {
-		return
-	}
-
-	info.Renewal(req.Length)
-	resp.ExpireDate = info.ExpireDate
-	err = s.dao.ExpireTime(info)
+	exprTime, err := s.dao.Renewal(req.Uid, req.Length)
+	resp.ExpireDate = exprTime
 	return
 }
 
 func (s *Service) AddPoint(ctx context.Context, req *grpc.AddPointReq) (resp *grpc.AddPointResp, err error) {
 	resp = &grpc.AddPointResp{}
 
+	if req.Uid <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%v)", req.Uid)
+		return
+	}
 	if req.AddPoint <= 0 {
 		err = ecode.Errorf(codes.InvalidArgument, "AddPoint is invalid")
 		return
