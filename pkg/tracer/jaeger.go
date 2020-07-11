@@ -19,6 +19,7 @@ func Init(serviceName string) {
 	cfg := jaegercfg.Configuration{
 		ServiceName: serviceName,
 		Reporter: &jaegercfg.ReporterConfig{
+			LogSpans:            false,
 			BufferFlushInterval: time.Second,
 			CollectorEndpoint:   "http://jaeger-collector.istio-system:14268/api/traces",
 		},
