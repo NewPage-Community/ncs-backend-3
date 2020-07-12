@@ -19,6 +19,7 @@ func (s *Service) Info(ctx context.Context, req *grpc.InfoReq) (resp *grpc.InfoR
 	info, err := s._Info(req.Uid)
 	if info != nil {
 		resp.Info = &grpc.Info{
+			Uid:        info.UID,
 			Point:      int32(info.Point),
 			Level:      int32(info.Level()),
 			ExpireDate: info.ExpireDate,

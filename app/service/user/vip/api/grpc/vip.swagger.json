@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "app/user/vip/api/grpc/vip.proto",
+    "title": "app/service/user/vip/api/grpc/vip.proto",
     "version": "version not set"
   },
   "schemes": [
@@ -126,6 +126,10 @@
     "vipInfo": {
       "type": "object",
       "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
         "point": {
           "type": "integer",
           "format": "int32"
