@@ -20,6 +20,9 @@ func (v *VIP) IsValid() bool {
 
 // Level .
 func (v *VIP) Level() int {
+	if v.Point == 0 {
+		return 0
+	}
 	return v.Point/200 + 1
 }
 
