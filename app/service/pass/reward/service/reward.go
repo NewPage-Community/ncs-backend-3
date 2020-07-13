@@ -3,19 +3,25 @@ package service
 import (
 	pb "backend/app/service/pass/reward/api/grpc"
 	"backend/app/service/pass/reward/model"
+	"backend/pkg/ecode"
 	"context"
+	"google.golang.org/grpc/codes"
 )
 
 func (s *Service) GetRewards(ctx context.Context, req *pb.GetRewardsReq) (resp *pb.GetRewardsResp, err error) {
+	if req.Level < req.Min {
+		err = ecode.Errorf(codes.InvalidArgument, "Min can not bigger than Level")
+		return
+	}
 	resp = &pb.GetRewardsResp{
 		Season:      s.config.Reward.Season,
-		FreeRewards: s.getRewards(0, req.Level, req.Front),
-		AdvRewards:  s.getRewards(1, req.Level, req.Front),
+		FreeRewards: s.getRewards(0, req.Level, req.Min),
+		AdvRewards:  s.getRewards(1, req.Level, req.Min),
 	}
 	return
 }
 
-func (s *Service) getRewards(passType int32, level int32, front bool) []*pb.Item {
+func (s *Service) getRewards(passType int32, level int32, min int32) []*pb.Item {
 	var items []*pb.Item
 	var list *[]model.Item
 
@@ -27,7 +33,7 @@ func (s *Service) getRewards(passType int32, level int32, front bool) []*pb.Item
 
 	for _, v := range *list {
 		if level > 0 {
-			if (level != v.Level && !front) || (front && level < v.Level) {
+			if (level != v.Level && min == 0) || (level < v.Level || v.Level < min) {
 				continue
 			}
 		}

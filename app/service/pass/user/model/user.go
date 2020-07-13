@@ -11,7 +11,6 @@ func (*User) TableName() string {
 	return "np_pass_users"
 }
 
-// TODO: LEVEL
 func (u *User) Level() int32 {
-	return u.Point / 1
+	return u.Point/3600 + 1
 }

@@ -11,7 +11,7 @@ import (
 type Dao interface {
 	Info(uid int64) (*model.User, error)
 	UpgradePass(uid int64) error
-	AddPoint(uid int64, addPoint int32) (res *model.User, upgrade bool, err error)
+	AddPoint(uid int64, addPoint int32) (res *model.User, lastLevel int32, err error)
 	Create(info *model.User) error
 	Healthy() bool
 	Close()

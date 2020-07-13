@@ -35,11 +35,11 @@
             "format": "int32"
           },
           {
-            "name": "front",
+            "name": "min",
             "in": "query",
             "required": false,
-            "type": "boolean",
-            "format": "boolean"
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "tags": [
@@ -67,11 +67,11 @@
             "format": "int32"
           },
           {
-            "name": "front",
+            "name": "min",
             "in": "query",
             "required": false,
-            "type": "boolean",
-            "format": "boolean"
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "tags": [
@@ -79,7 +79,7 @@
         ]
       }
     },
-    "/pass/reward/level/{level}/{front}": {
+    "/pass/reward/level/{level}/{min}": {
       "get": {
         "operationId": "GetRewards3",
         "responses": {
@@ -99,11 +99,11 @@
             "format": "int32"
           },
           {
-            "name": "front",
+            "name": "min",
             "in": "path",
             "required": true,
-            "type": "boolean",
-            "format": "boolean"
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "tags": [

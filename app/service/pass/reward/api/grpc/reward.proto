@@ -13,7 +13,7 @@ message Item {
 
 message GetRewardsReq {
     int32 level = 1;
-    bool front = 2;
+    int32 min = 2;
 }
 
 message GetRewardsResp {
@@ -30,7 +30,7 @@ service Reward {
 				get: "/pass/reward/level/{level}"
 			}
 			additional_bindings {
-				get: "/pass/reward/level/{level}/{front}"
+				get: "/pass/reward/level/{level}/{min}"
 			}
         };
     }

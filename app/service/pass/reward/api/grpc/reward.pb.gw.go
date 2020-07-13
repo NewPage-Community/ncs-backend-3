@@ -102,15 +102,15 @@ func request_Reward_GetRewards_2(ctx context.Context, marshaler runtime.Marshale
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "level", err)
 	}
 
-	val, ok = pathParams["front"]
+	val, ok = pathParams["min"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "front")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "min")
 	}
 
-	protoReq.Front, err = runtime.Bool(val)
+	protoReq.Min, err = runtime.Int32(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "front", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "min", err)
 	}
 
 	msg, err := client.GetRewards(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -224,7 +224,7 @@ var (
 
 	pattern_Reward_GetRewards_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 2}, []string{"pass", "reward", "level"}, ""))
 
-	pattern_Reward_GetRewards_2 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"pass", "reward", "level", "front"}, ""))
+	pattern_Reward_GetRewards_2 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"pass", "reward", "level", "min"}, ""))
 )
 
 var (

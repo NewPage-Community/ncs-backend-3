@@ -51,18 +51,21 @@ func (s *Service) AddPoint(ctx context.Context, req *pb.AddPointReq) (resp *pb.A
 		return
 	}
 
-	res, upgrade, err := s.dao.AddPoint(req.Uid, req.Point)
-	if upgrade && res != nil {
-		err = s.GiveRewards(ctx, res.UID, res.Level(), res.PassType)
+	res, lastLevel, err := s.dao.AddPoint(req.Uid, req.Point)
+	if err != nil && res != nil {
+		// Upgrade~
+		if lastLevel != res.Level() {
+			err = s.GiveRewards(ctx, res, lastLevel)
+		}
 	}
 
 	return
 }
 
-func (s *Service) GiveRewards(ctx context.Context, uid int64, level int32, passType int32) (err error) {
+func (s *Service) GiveRewards(ctx context.Context, info *model.User, lastLevel int32) (err error) {
 	rewards, err := s.rewardService.GetRewards(ctx, &reward.GetRewardsReq{
-		Level: level,
-		Front: false,
+		Level: info.Level(),
+		Min:   lastLevel + 1,
 	})
 	if err != nil {
 		return
@@ -76,7 +79,7 @@ func (s *Service) GiveRewards(ctx context.Context, uid int64, level int32, passT
 			Length: v.Length,
 		})
 	}
-	if passType > 0 {
+	if info.PassType > 0 {
 		for _, v := range rewards.AdvRewards {
 			items = append(items, &backpack.Item{
 				Id:     v.Id,
@@ -88,7 +91,7 @@ func (s *Service) GiveRewards(ctx context.Context, uid int64, level int32, passT
 
 	if len(items) > 0 {
 		_, err = s.backpackService.AddItems(ctx, &backpack.AddItemsReq{
-			Uid:   uid,
+			Uid:   info.UID,
 			Items: items,
 		})
 	}
@@ -118,8 +121,8 @@ func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp
 
 	// give all adv reward before current level
 	rewards, err := s.rewardService.GetRewards(ctx, &reward.GetRewardsReq{
-		Level: info.Point,
-		Front: true,
+		Level: info.Level(),
+		Min:   1,
 	})
 	if err != nil {
 		return

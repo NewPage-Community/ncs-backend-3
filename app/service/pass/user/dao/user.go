@@ -19,9 +19,8 @@ func (d *dao) Info(uid int64) (res *model.User, err error) {
 	return
 }
 
-func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, upgrade bool, err error) {
+func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, lastLevel int32, err error) {
 	res = &model.User{}
-	upgrade = false
 	defer func() {
 		// To release lock
 		d.db.Commit()
@@ -37,11 +36,8 @@ func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, upgrade bool
 		return
 	}
 
-	_level := res.Level()
+	lastLevel = res.Level()
 	res.Point += addPoint
-	if res.Level() != _level {
-		upgrade = true
-	}
 
 	err = d.db.Model(res).Updates(&model.User{Point: res.Point}).Error
 	return
