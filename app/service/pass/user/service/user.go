@@ -52,7 +52,7 @@ func (s *Service) AddPoint(ctx context.Context, req *pb.AddPointReq) (resp *pb.A
 	}
 
 	res, lastLevel, err := s.dao.AddPoint(req.Uid, req.Point)
-	if err != nil && res != nil {
+	if err == nil {
 		// Upgrade~
 		if lastLevel != res.Level() {
 			err = s.GiveRewards(ctx, res, lastLevel)
