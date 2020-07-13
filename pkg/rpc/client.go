@@ -31,7 +31,10 @@ var _defaultCliConf = &ClientConfig{
 
 func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientConn {
 	// Config
-	conf = setCliConf(conf)
+	if conf == nil {
+		conf = _defaultCliConf
+	}
+	conf.Init()
 
 	// Options
 	retry := []grpc_retry.CallOption{
@@ -68,10 +71,7 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 	return conn
 }
 
-func setCliConf(conf *ClientConfig) *ClientConfig {
-	if conf == nil {
-		conf = _defaultCliConf
-	}
+func (conf *ClientConfig) Init() {
 	if conf.Dial <= 0 {
 		conf.Dial = _defaultCliConf.Dial
 	}
@@ -84,5 +84,4 @@ func setCliConf(conf *ClientConfig) *ClientConfig {
 	if len(conf.RetryCode) <= 0 {
 		conf.RetryCode = _defaultCliConf.RetryCode
 	}
-	return conf
 }

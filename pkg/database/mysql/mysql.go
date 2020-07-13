@@ -20,19 +20,52 @@ type Config struct {
 	Debug    bool
 }
 
+func (conf *Config) GetDSN() string {
+	return fmt.Sprintf(
+		"%s:%s@(%s)/%s?charset=%s&parseTime=True&loc=Local",
+		conf.User,
+		conf.Password,
+		conf.Host,
+		conf.DBName,
+		conf.Charset,
+	)
+}
+
+func (conf *Config) Init() {
+	if conf.Host == "" {
+		conf.Host = "127.0.0.1"
+	}
+	if conf.User == "" {
+		conf.User = "root"
+	}
+	if conf.Password == "" {
+		conf.Password = "password"
+	}
+	if conf.DBName == "" {
+		conf.DBName = "mysql"
+	}
+	if conf.Charset == "" {
+		conf.Charset = "utf8mb4"
+	}
+}
+
+func (conf *Config) GetLogger() logger.Interface {
+	if !conf.Debug {
+		return nil
+	}
+	return logger.New(l.New(os.Stdout, "\r\n", l.LstdFlags), logger.Config{
+		SlowThreshold: 100 * time.Millisecond,
+		LogLevel:      logger.Info,
+		Colorful:      true,
+	})
+}
+
 func Init(conf *Config) (db *gorm.DB) {
 	var err error
-	level := 3
-	if conf.Debug {
-		level = 4
-	}
+	conf.Init()
 	conn := func() (*gorm.DB, error) {
-		return gorm.Open(mysql.Open(getDSN(conf)), &gorm.Config{
-			Logger: logger.New(l.New(os.Stdout, "\r\n", l.LstdFlags), logger.Config{
-				SlowThreshold: 100 * time.Millisecond,
-				LogLevel:      logger.LogLevel(level),
-				Colorful:      true,
-			}),
+		return gorm.Open(mysql.Open(conf.GetDSN()), &gorm.Config{
+			Logger:                 conf.GetLogger(),
 			SkipDefaultTransaction: true,
 		})
 	}
@@ -50,17 +83,6 @@ func Init(conf *Config) (db *gorm.DB) {
 		panic(err)
 	}
 	return
-}
-
-func getDSN(conf *Config) string {
-	return fmt.Sprintf(
-		"%s:%s@(%s)/%s?charset=%s&parseTime=True&loc=Local",
-		conf.User,
-		conf.Password,
-		conf.Host,
-		conf.DBName,
-		conf.Charset,
-	)
 }
 
 func Healthy(db *gorm.DB) bool {

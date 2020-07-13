@@ -47,14 +47,14 @@ var _defaultSerConf = &ServerConfig{
 
 func NewServer(conf *ServerConfig) *Server {
 	// Config
-	conf = setSerConf(conf)
-	return &Server{config: conf}
-}
-
-func setSerConf(conf *ServerConfig) *ServerConfig {
 	if conf == nil {
 		conf = _defaultSerConf
 	}
+	conf.Init()
+	return &Server{config: conf}
+}
+
+func (conf *ServerConfig) Init() {
 	if conf.Timeout <= 0 {
 		conf.Timeout = _defaultSerConf.Timeout
 	}
@@ -82,7 +82,6 @@ func setSerConf(conf *ServerConfig) *ServerConfig {
 	if conf.HealthPort == 0 {
 		conf.HealthPort = _defaultSerConf.HealthPort
 	}
-	return conf
 }
 
 func (s *Server) Grpc(reg func(s *grpc.Server)) {
