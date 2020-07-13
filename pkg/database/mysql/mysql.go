@@ -20,23 +20,36 @@ type Config struct {
 	Debug    bool
 }
 
-func Init(conf *Config) *gorm.DB {
+func Init(conf *Config) (db *gorm.DB) {
+	var err error
 	level := 3
 	if conf.Debug {
 		level = 4
 	}
-	db, err := gorm.Open(mysql.Open(getDSN(conf)), &gorm.Config{
-		Logger: logger.New(l.New(os.Stdout, "\r\n", l.LstdFlags), logger.Config{
-			SlowThreshold: 100 * time.Millisecond,
-			LogLevel:      logger.LogLevel(level),
-			Colorful:      true,
-		}),
-		SkipDefaultTransaction: true,
-	})
+	conn := func() (*gorm.DB, error) {
+		return gorm.Open(mysql.Open(getDSN(conf)), &gorm.Config{
+			Logger: logger.New(l.New(os.Stdout, "\r\n", l.LstdFlags), logger.Config{
+				SlowThreshold: 100 * time.Millisecond,
+				LogLevel:      logger.LogLevel(level),
+				Colorful:      true,
+			}),
+			SkipDefaultTransaction: true,
+		})
+	}
+
+	// Retry
+	for i := 0; i < 3; i++ {
+		db, err = conn()
+		if err == nil {
+			break
+		}
+		time.Sleep(5 * time.Second)
+	}
+
 	if err != nil {
 		panic(err)
 	}
-	return db
+	return
 }
 
 func getDSN(conf *Config) string {
