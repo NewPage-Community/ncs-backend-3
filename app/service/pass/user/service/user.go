@@ -119,7 +119,12 @@ func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp
 		return
 	}
 
-	// give all adv reward before current level
+	// Level 0 do not need to give reward
+	if info.Level() == 0 {
+		return
+	}
+
+	// give all adv rewards before current level
 	rewards, err := s.rewardService.GetRewards(ctx, &reward.GetRewardsReq{
 		Level: info.Level(),
 		Min:   1,
