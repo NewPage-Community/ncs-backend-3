@@ -22,6 +22,7 @@ go_library(
         "//app/service/user/account/api/grpc:go_default_library",
         "//app/service/user/admin/api/grpc:go_default_library",
         "//app/service/user/ban/api/grpc:go_default_library",
+        "//app/service/user/money/api/grpc:go_default_library",
         "//app/service/user/sign/api/grpc:go_default_library",
         "//app/service/user/title/api/grpc:go_default_library",
         "//app/service/user/vip/api/grpc:go_default_library",
