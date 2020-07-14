@@ -68,7 +68,10 @@ func NewGateway() *Gateways {
 	ctx, cancel := context.WithCancel(context.Background())
 	tracer := grpc_opentracing.WithTracer(ot.GlobalTracer())
 	return &Gateways{
-		mux: runtime.NewServeMux(),
+		mux: runtime.NewServeMux(runtime.WithMarshalerOption(
+			runtime.MIMEWildcard,
+			&runtime.JSONPb{OrigName: true, EmitDefaults: true}),
+		),
 		opts: []grpc.DialOption{
 			grpc.WithUnaryInterceptor(
 				grpc_middleware.ChainUnaryClient(
