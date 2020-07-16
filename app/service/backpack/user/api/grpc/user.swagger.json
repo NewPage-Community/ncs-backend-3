@@ -96,14 +96,6 @@
     "userGetItemsResp": {
       "type": "object",
       "properties": {
-        "info": {
-          "$ref": "#/definitions/userInfo"
-        }
-      }
-    },
-    "userInfo": {
-      "type": "object",
-      "properties": {
         "uid": {
           "type": "string",
           "format": "int64"

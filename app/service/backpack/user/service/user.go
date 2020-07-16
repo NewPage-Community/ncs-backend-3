@@ -17,8 +17,6 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 	}
 
 	var res *model.User
-	var items []*pb.Item
-
 	res, err = s.dao.Get(req.Uid)
 	if err != nil {
 		// not found -> create
@@ -31,18 +29,15 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 		}
 	}
 
-	for i := range *res.Items {
-		items = append(items, &pb.Item{
-			Id:       (*res.Items)[i].ID,
-			Amount:   (*res.Items)[i].Amount,
-			ExprTime: (*res.Items)[i].ExprTime,
+	for _, v := range *res.Items {
+		resp.Items = append(resp.Items, &pb.Item{
+			Id:       v.ID,
+			Amount:   v.Amount,
+			ExprTime: v.ExprTime,
 		})
 	}
 
-	resp.Info = &pb.Info{
-		Uid:   res.UID,
-		Items: items,
-	}
+	resp.Uid = res.UID
 	return
 }
 
