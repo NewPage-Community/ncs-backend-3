@@ -201,11 +201,11 @@ func RegisterSkinHandlerClient(ctx context.Context, mux *runtime.ServeMux, clien
 }
 
 var (
-	pattern_Skin_GetSkins_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"skin"}, ""))
+	pattern_Skin_GetSkins_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"game", "skin"}, ""))
 
-	pattern_Skin_GetInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"skin", "uid"}, ""))
+	pattern_Skin_GetInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"game", "skin", "uid"}, ""))
 
-	pattern_Skin_SetUsedSkin_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2}, []string{"skin", "uid", "used"}, ""))
+	pattern_Skin_SetUsedSkin_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"game", "skin", "uid", "used"}, ""))
 )
 
 var (

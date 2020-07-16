@@ -52,6 +52,7 @@ func (items *Items) AddItems(_items *Items) {
 	sort.Sort(items)
 }
 
+// TODO: 已有限时物品添加永久物品
 func (items *Items) addItem(item Item) {
 	index, found := items.search(item.ID)
 	now := time.Now().Unix()

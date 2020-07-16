@@ -15,7 +15,7 @@
     "application/json"
   ],
   "paths": {
-    "/skin": {
+    "/game/skin": {
       "get": {
         "operationId": "GetSkins",
         "responses": {
@@ -31,7 +31,7 @@
         ]
       }
     },
-    "/skin/{uid}": {
+    "/game/skin/{uid}": {
       "get": {
         "operationId": "GetInfo",
         "responses": {
@@ -56,7 +56,7 @@
         ]
       }
     },
-    "/skin/{uid}/used": {
+    "/game/skin/{uid}/used": {
       "post": {
         "operationId": "SetUsedSkin",
         "responses": {
@@ -146,6 +146,10 @@
         },
         "arm_path": {
           "type": "string"
+        },
+        "price": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     }

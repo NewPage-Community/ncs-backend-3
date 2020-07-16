@@ -28,6 +28,7 @@ func (s *Service) GetSkins(ctx context.Context, req *pb.GetSkinsReq) (resp *pb.G
 			Name:     v.Name,
 			SkinPath: v.Attributes["skin_path"],
 			ArmPath:  v.Attributes["arm_path"],
+			Price:    v.Price,
 		})
 	}
 	return

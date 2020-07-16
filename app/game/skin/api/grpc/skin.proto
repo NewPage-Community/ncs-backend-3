@@ -9,6 +9,7 @@ message SkinInfo {
     string name = 3;
     string skin_path = 4;
     string arm_path = 5;
+    int32 price = 6;
 }
 
 message GetInfoReq {
@@ -38,17 +39,17 @@ message SetUsedSkinResp {
 service Skin {
     rpc GetSkins (GetSkinsReq) returns (GetSkinsResp) {
         option (google.api.http) = {
-            get: "/skin"
+            get: "/game/skin"
         };
     }
     rpc GetInfo (GetInfoReq) returns (GetInfoResp) {
         option (google.api.http) = {
-            get: "/skin/{uid}"
+            get: "/game/skin/{uid}"
         };
     }
     rpc SetUsedSkin (SetUsedSkinReq) returns (SetUsedSkinResp) {
         option (google.api.http) = {
-            post: "/skin/{uid}/used"
+            post: "/game/skin/{uid}/used"
             body: "*"
         };
     }
