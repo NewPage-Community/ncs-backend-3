@@ -3,6 +3,7 @@ package service
 import (
 	pb "backend/app/game/skin/api/grpc"
 	itemsService "backend/app/service/backpack/items/api/grpc"
+	userService "backend/app/service/backpack/user/api/grpc"
 	"backend/pkg/ecode"
 	"context"
 	"google.golang.org/grpc/codes"
@@ -54,8 +55,19 @@ func (s *Service) GetInfo(ctx context.Context, req *pb.GetInfoReq) (resp *pb.Get
 		}
 	}
 
+	// for checking
+	items, err := s.user.GetItems(ctx, &userService.GetItemsReq{
+		Uid: req.Uid,
+	})
+
 	resp.Uid = info.UID
-	resp.UsedSkin = info.UsedSkin
+	// check user have this skin
+	for _, v := range items.Items {
+		if v.Id == info.UsedSkin {
+			resp.UsedSkin = info.UsedSkin
+			break
+		}
+	}
 	return
 }
 
