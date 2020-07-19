@@ -59,6 +59,9 @@ func (s *Service) GetInfo(ctx context.Context, req *pb.GetInfoReq) (resp *pb.Get
 	items, err := s.user.GetItems(ctx, &userService.GetItemsReq{
 		Uid: req.Uid,
 	})
+	if err != nil {
+		return
+	}
 
 	resp.Uid = info.UID
 	// check user have this skin

@@ -54,6 +54,46 @@ func (mr *MockServerClientMockRecorder) Info(ctx, in interface{}, opts ...interf
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockServerClient)(nil).Info), varargs...)
 }
 
+// AllInfo mocks base method
+func (m *MockServerClient) AllInfo(ctx context.Context, in *AllInfoReq, opts ...grpc.CallOption) (*AllInfoResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AllInfo", varargs...)
+	ret0, _ := ret[0].(*AllInfoResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AllInfo indicates an expected call of AllInfo
+func (mr *MockServerClientMockRecorder) AllInfo(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AllInfo", reflect.TypeOf((*MockServerClient)(nil).AllInfo), varargs...)
+}
+
+// Init mocks base method
+func (m *MockServerClient) Init(ctx context.Context, in *InitReq, opts ...grpc.CallOption) (*InitResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "Init", varargs...)
+	ret0, _ := ret[0].(*InitResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Init indicates an expected call of Init
+func (mr *MockServerClientMockRecorder) Init(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockServerClient)(nil).Init), varargs...)
+}
+
 // MockServerServer is a mock of ServerServer interface
 type MockServerServer struct {
 	ctrl     *gomock.Controller
@@ -90,4 +130,34 @@ func (m *MockServerServer) Info(arg0 context.Context, arg1 *InfoReq) (*InfoResp,
 func (mr *MockServerServerMockRecorder) Info(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockServerServer)(nil).Info), arg0, arg1)
+}
+
+// AllInfo mocks base method
+func (m *MockServerServer) AllInfo(arg0 context.Context, arg1 *AllInfoReq) (*AllInfoResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AllInfo", arg0, arg1)
+	ret0, _ := ret[0].(*AllInfoResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AllInfo indicates an expected call of AllInfo
+func (mr *MockServerServerMockRecorder) AllInfo(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AllInfo", reflect.TypeOf((*MockServerServer)(nil).AllInfo), arg0, arg1)
+}
+
+// Init mocks base method
+func (m *MockServerServer) Init(arg0 context.Context, arg1 *InitReq) (*InitResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Init", arg0, arg1)
+	ret0, _ := ret[0].(*InitResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Init indicates an expected call of Init
+func (mr *MockServerServerMockRecorder) Init(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockServerServer)(nil).Init), arg0, arg1)
 }

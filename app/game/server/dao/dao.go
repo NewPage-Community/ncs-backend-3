@@ -9,6 +9,8 @@ import (
 
 type Dao interface {
 	Info(address string) (*model.Info, error)
+	InfoWithID(id int32) (*model.Info, error)
+	AllInfo() ([]*model.Info, error)
 	UpdateRcon(server *model.Info) error
 	Healthy() bool
 	Close()

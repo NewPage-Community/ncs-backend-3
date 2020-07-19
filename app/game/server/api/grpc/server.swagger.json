@@ -15,7 +15,39 @@
     "application/json"
   ],
   "paths": {
-    "/server/{address}/{port}": {
+    "/server/all": {
+      "get": {
+        "operationId": "AllInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverAllInfoResp"
+            }
+          }
+        },
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/server/init": {
+      "post": {
+        "operationId": "Init",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverInitResp"
+            }
+          }
+        },
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/server/{server_id}": {
       "get": {
         "operationId": "Info",
         "responses": {
@@ -28,13 +60,7 @@
         },
         "parameters": [
           {
-            "name": "address",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "port",
+            "name": "server_id",
             "in": "path",
             "required": true,
             "type": "integer",
@@ -48,6 +74,17 @@
     }
   },
   "definitions": {
+    "serverAllInfoResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/serverInfo"
+          }
+        }
+      }
+    },
     "serverInfo": {
       "type": "object",
       "properties": {
@@ -75,6 +112,14 @@
       }
     },
     "serverInfoResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/serverInfo"
+        }
+      }
+    },
+    "serverInitResp": {
       "type": "object",
       "properties": {
         "info": {

@@ -17,19 +17,44 @@ message Info {
 
 // Message
 
-message InfoReq {
+message InitReq {
     string address = 1;
     int32 port = 2;
+}
+
+message InitResp {
+    Info info = 1;
+}
+
+message InfoReq {
+    int32 server_id = 1;
 }
 
 message InfoResp {
     Info info = 1;
 }
 
+message AllInfoReq {
+}
+
+message AllInfoResp {
+    repeated Info info = 1;
+}
+
 service Server {
     rpc Info (InfoReq) returns (InfoResp) {
         option (google.api.http) = {
-            get: "/server/{address}/{port}"
+            get: "/server/{server_id}"
+        };
+    }
+    rpc AllInfo (AllInfoReq) returns (AllInfoResp) {
+        option (google.api.http) = {
+            get: "/server/all"
+        };
+    }
+    rpc Init (InitReq) returns (InitResp) {
+        option (google.api.http) = {
+            post: "/server/init"
         };
     }
 }
