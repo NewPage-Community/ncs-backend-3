@@ -126,6 +126,14 @@
           "$ref": "#/definitions/serverInfo"
         }
       }
+    },
+    "serverRconResp": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "string"
+        }
+      }
     }
   }
 }

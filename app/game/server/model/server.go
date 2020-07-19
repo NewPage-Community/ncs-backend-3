@@ -1,5 +1,7 @@
 package model
 
+import "github.com/NewPage-Community/go-steam"
+
 type Info struct {
 	ServerID int32  `gorm:"primary_key;unique;not null" json:"server_id"`
 	ModID    int32  `gorm:"not null" json:"mod_id"`
@@ -21,4 +23,17 @@ func (i *Info) IsValid() bool {
 
 func (i *Info) GenerateRcon() {
 	i.Rcon = getRandomString(24)
+}
+
+func (i *Info) Send(cmd string) (resp string, err error) {
+	server, err := steam.Connect(i.Address, &steam.ConnectOptions{
+		RCONPassword: i.Rcon,
+	})
+	if err != nil {
+		return
+	}
+
+	resp, err = server.Send(cmd)
+	server.Close()
+	return
 }

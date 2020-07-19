@@ -41,6 +41,19 @@ message AllInfoResp {
     repeated Info info = 1;
 }
 
+message RconReq {
+    int32 server_id = 1;
+    string cmd = 2;
+}
+
+message RconResp {
+    string response = 1;
+}
+
+message RconAllReq {
+    string cmd = 1;
+}
+
 service Server {
     rpc Info (InfoReq) returns (InfoResp) {
         option (google.api.http) = {
@@ -57,4 +70,6 @@ service Server {
             post: "/server/init"
         };
     }
+    rpc Rcon (RconReq) returns (RconResp);
+    rpc RconAll (RconAllReq) returns (RconResp);
 }

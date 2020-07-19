@@ -3,9 +3,11 @@ package service
 import (
 	pb "backend/app/game/server/api/grpc"
 	"backend/pkg/ecode"
+	"backend/pkg/log"
 	"context"
 	"google.golang.org/grpc/codes"
 	"strconv"
+	"sync"
 )
 
 func (s *Service) Init(ctx context.Context, req *pb.InitReq) (resp *pb.InitResp, err error) {
@@ -79,5 +81,48 @@ func (s *Service) AllInfo(ctx context.Context, req *pb.AllInfoReq) (resp *pb.All
 			Address:  v.Address,
 		})
 	}
+	return
+}
+
+func (s *Service) Rcon(ctx context.Context, req *pb.RconReq) (resp *pb.RconResp, err error) {
+	resp = &pb.RconResp{}
+
+	if req.ServerId <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid ServerID(%d)", req.ServerId)
+		return
+	}
+
+	res, err := s.dao.InfoWithID(req.ServerId)
+	if err != nil {
+		return
+	}
+	resp.Response, err = res.Send(req.Cmd)
+	return
+}
+
+func (s *Service) RconAll(ctx context.Context, req *pb.RconAllReq) (resp *pb.RconResp, err error) {
+	resp = &pb.RconResp{}
+
+	res, err := s.dao.AllInfo()
+	if err != nil {
+		return
+	}
+
+	wg := &sync.WaitGroup{}
+
+	// multi thead rcon
+	for i := range res {
+		wg.Add(1)
+		server := res[i]
+		go func() {
+			defer wg.Done()
+			_, err := server.Send(req.Cmd)
+			if err != nil {
+				log.Error(server.Address, "rcon error:", err)
+			}
+		}()
+	}
+
+	wg.Wait()
 	return
 }

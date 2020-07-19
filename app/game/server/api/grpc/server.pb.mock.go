@@ -94,6 +94,46 @@ func (mr *MockServerClientMockRecorder) Init(ctx, in interface{}, opts ...interf
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockServerClient)(nil).Init), varargs...)
 }
 
+// Rcon mocks base method
+func (m *MockServerClient) Rcon(ctx context.Context, in *RconReq, opts ...grpc.CallOption) (*RconResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "Rcon", varargs...)
+	ret0, _ := ret[0].(*RconResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Rcon indicates an expected call of Rcon
+func (mr *MockServerClientMockRecorder) Rcon(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Rcon", reflect.TypeOf((*MockServerClient)(nil).Rcon), varargs...)
+}
+
+// RconAll mocks base method
+func (m *MockServerClient) RconAll(ctx context.Context, in *RconAllReq, opts ...grpc.CallOption) (*RconResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "RconAll", varargs...)
+	ret0, _ := ret[0].(*RconResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RconAll indicates an expected call of RconAll
+func (mr *MockServerClientMockRecorder) RconAll(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RconAll", reflect.TypeOf((*MockServerClient)(nil).RconAll), varargs...)
+}
+
 // MockServerServer is a mock of ServerServer interface
 type MockServerServer struct {
 	ctrl     *gomock.Controller
@@ -160,4 +200,34 @@ func (m *MockServerServer) Init(arg0 context.Context, arg1 *InitReq) (*InitResp,
 func (mr *MockServerServerMockRecorder) Init(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockServerServer)(nil).Init), arg0, arg1)
+}
+
+// Rcon mocks base method
+func (m *MockServerServer) Rcon(arg0 context.Context, arg1 *RconReq) (*RconResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Rcon", arg0, arg1)
+	ret0, _ := ret[0].(*RconResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Rcon indicates an expected call of Rcon
+func (mr *MockServerServerMockRecorder) Rcon(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Rcon", reflect.TypeOf((*MockServerServer)(nil).Rcon), arg0, arg1)
+}
+
+// RconAll mocks base method
+func (m *MockServerServer) RconAll(arg0 context.Context, arg1 *RconAllReq) (*RconResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RconAll", arg0, arg1)
+	ret0, _ := ret[0].(*RconResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RconAll indicates an expected call of RconAll
+func (mr *MockServerServerMockRecorder) RconAll(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RconAll", reflect.TypeOf((*MockServerServer)(nil).RconAll), arg0, arg1)
 }
