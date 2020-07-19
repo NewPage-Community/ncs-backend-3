@@ -9,6 +9,7 @@ go_library(
     importpath = "backend/app/service/user/ban/service",
     visibility = ["//visibility:public"],
     deps = [
+        "//app/game/server/api/grpc:go_default_library",
         "//app/service/user/ban/api/grpc:go_default_library",
         "//app/service/user/ban/conf:go_default_library",
         "//app/service/user/ban/dao:go_default_library",

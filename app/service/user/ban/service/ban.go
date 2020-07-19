@@ -1,12 +1,18 @@
 package service
 
 import (
+	serverService "backend/app/game/server/api/grpc"
 	pb "backend/app/service/user/ban/api/grpc"
 	"backend/app/service/user/ban/model"
 	"backend/pkg/ecode"
 	"context"
+	"fmt"
 	"google.golang.org/grpc/codes"
 	"time"
+)
+
+const (
+	BanNotifyCMD = "ncs_ban_notify %d %d \"%s\""
 )
 
 func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp, err error) {
@@ -64,6 +70,10 @@ func (s *Service) Add(ctx context.Context, req *pb.AddReq) (resp *pb.AddResp, er
 		ModID:      req.Info.ModId,
 		GameID:     req.Info.GameId,
 		Reason:     req.Info.Reason,
+	})
+
+	_, err = s.server.RconAll(ctx, &serverService.RconAllReq{
+		Cmd: fmt.Sprintf(BanNotifyCMD, req.Info.Uid, req.Info.Type, req.Info.Reason),
 	})
 	return
 }
