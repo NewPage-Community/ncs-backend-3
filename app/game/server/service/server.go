@@ -100,6 +100,7 @@ func (s *Service) Rcon(ctx context.Context, req *pb.RconReq) (resp *pb.RconResp,
 }
 
 func (s *Service) RconAll(ctx context.Context, req *pb.RconAllReq) (resp *pb.RconAllResp, err error) {
+	resp = &pb.RconAllResp{}
 
 	res, err := s.dao.AllInfo()
 	if err != nil {
