@@ -115,14 +115,14 @@ func (mr *MockServerClientMockRecorder) Rcon(ctx, in interface{}, opts ...interf
 }
 
 // RconAll mocks base method
-func (m *MockServerClient) RconAll(ctx context.Context, in *RconAllReq, opts ...grpc.CallOption) (*RconResp, error) {
+func (m *MockServerClient) RconAll(ctx context.Context, in *RconAllReq, opts ...grpc.CallOption) (*RconAllResp, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "RconAll", varargs...)
-	ret0, _ := ret[0].(*RconResp)
+	ret0, _ := ret[0].(*RconAllResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -218,10 +218,10 @@ func (mr *MockServerServerMockRecorder) Rcon(arg0, arg1 interface{}) *gomock.Cal
 }
 
 // RconAll mocks base method
-func (m *MockServerServer) RconAll(arg0 context.Context, arg1 *RconAllReq) (*RconResp, error) {
+func (m *MockServerServer) RconAll(arg0 context.Context, arg1 *RconAllReq) (*RconAllResp, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "RconAll", arg0, arg1)
-	ret0, _ := ret[0].(*RconResp)
+	ret0, _ := ret[0].(*RconAllResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

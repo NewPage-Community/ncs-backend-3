@@ -54,6 +54,10 @@ message RconAllReq {
     string cmd = 1;
 }
 
+message RconAllResp {
+    int32 success = 1;
+}
+
 service Server {
     rpc Info (InfoReq) returns (InfoResp) {
         option (google.api.http) = {
@@ -71,5 +75,5 @@ service Server {
         };
     }
     rpc Rcon (RconReq) returns (RconResp);
-    rpc RconAll (RconAllReq) returns (RconResp);
+    rpc RconAll (RconAllReq) returns (RconAllResp);
 }

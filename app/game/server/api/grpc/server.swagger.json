@@ -127,6 +127,15 @@
         }
       }
     },
+    "serverRconAllResp": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
     "serverRconResp": {
       "type": "object",
       "properties": {

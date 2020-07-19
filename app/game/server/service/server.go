@@ -3,7 +3,6 @@ package service
 import (
 	pb "backend/app/game/server/api/grpc"
 	"backend/pkg/ecode"
-	"backend/pkg/log"
 	"context"
 	"google.golang.org/grpc/codes"
 	"strconv"
@@ -100,29 +99,31 @@ func (s *Service) Rcon(ctx context.Context, req *pb.RconReq) (resp *pb.RconResp,
 	return
 }
 
-func (s *Service) RconAll(ctx context.Context, req *pb.RconAllReq) (resp *pb.RconResp, err error) {
-	resp = &pb.RconResp{}
+func (s *Service) RconAll(ctx context.Context, req *pb.RconAllReq) (resp *pb.RconAllResp, err error) {
 
 	res, err := s.dao.AllInfo()
 	if err != nil {
 		return
 	}
 
+	var success int32
 	wg := &sync.WaitGroup{}
 
 	// multi thead rcon
+	// error not need to handle because some server is closed!
 	for i := range res {
 		wg.Add(1)
 		server := res[i]
 		go func() {
 			defer wg.Done()
 			_, err := server.Send(req.Cmd)
-			if err != nil {
-				log.Error(server.Address, "rcon error:", err)
+			if err == nil {
+				success++
 			}
 		}()
 	}
 
 	wg.Wait()
+	resp.Success = success
 	return
 }
