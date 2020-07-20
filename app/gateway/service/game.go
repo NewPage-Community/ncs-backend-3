@@ -23,6 +23,6 @@ func regGameService(gws *rpc.Gateways) {
 	)
 	gws.AddGateway(
 		storeGW.RegisterStoreHandlerFromEndpoint,
-		skinGW.ServiceAddr,
+		storeGW.ServiceAddr,
 	)
 }
