@@ -95,15 +95,24 @@
           "type": "integer",
           "format": "int32"
         },
-        "price": {
-          "type": "integer",
-          "format": "int32"
-        },
         "attributes": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "price": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Store"
+        },
+        "discount": {
+          "type": "number",
+          "format": "float"
+        },
+        "available": {
+          "type": "boolean",
+          "format": "boolean"
         }
       }
     }

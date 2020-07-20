@@ -11,6 +11,8 @@ type Item struct {
 	Description string         `gorm:"not null" json:"description"`
 	Type        int32          `gorm:"not null" json:"type"`
 	Price       int32          `gorm:"not null" json:"price"`
+	Discount    float32        `gorm:"not null;default:1.0" json:"discount"`
+	Available   bool           `gorm:"not null;default:false" json:"available"`
 	Attributes  datatypes.JSON `json:"attributes"`
 }
 

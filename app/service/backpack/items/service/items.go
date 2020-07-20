@@ -32,6 +32,8 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 			Type:        v.Type,
 			Price:       v.Price,
 			Attributes:  attr,
+			Discount:    v.Discount,
+			Available:   v.Available,
 		})
 	}
 

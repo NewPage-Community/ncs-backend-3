@@ -9,8 +9,11 @@ message Item {
     string name = 2;
     string description = 3;
     int32 type = 4;
-    int32 price = 5;
-    map<string, string> attributes = 6;
+    map<string, string> attributes = 5;
+    // Store
+    int32 price = 6;
+    float discount = 7;
+    bool available = 8;
 }
 
 message GetItemsReq {

@@ -32,6 +32,18 @@ build:
     - bazel build --config=ci --noshow_progress -k //app/... //pkg/...
     - bazel test --config=ci --noshow_progress -k //app/... //pkg/...
 
+build-merged:
+  stage: build
+  script:
+    - git config --global user.email "runner@gitlab.com"
+    - git config --global user.name "Runner"
+    - git pull origin master
+    - bazel version
+    - bazel build --config=ci --noshow_progress -k //app/... //pkg/...
+    - bazel test --config=ci --noshow_progress -k //app/... //pkg/...
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
 push changed images:
   stage: push images
   script:
