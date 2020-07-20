@@ -1,0 +1,91 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/game/store/api/grpc/store.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/backpack/store/buy": {
+      "post": {
+        "operationId": "BuyItem",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/storeBuyItemResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/storeBuyItemReq"
+            }
+          }
+        ],
+        "tags": [
+          "Store"
+        ]
+      }
+    },
+    "/backpack/store/hotsale": {
+      "get": {
+        "operationId": "HotSaleList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/storeHotSaleListResp"
+            }
+          }
+        },
+        "tags": [
+          "Store"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "storeBuyItemReq": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "item_id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "storeBuyItemResp": {
+      "type": "object"
+    },
+    "storeHotSaleListResp": {
+      "type": "object",
+      "properties": {
+        "items_id": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    }
+  }
+}

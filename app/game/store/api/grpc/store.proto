@@ -1,0 +1,34 @@
+syntax = "proto3";
+package ncs.game.store;
+option go_package = "grpc";
+
+import "google/api/annotations.proto";
+
+message HotSaleListReq {
+}
+
+message HotSaleListResp {
+    repeated int32 items_id = 1;
+}
+
+message BuyItemReq {
+    int64 uid = 1;
+    int32 item_id = 2;
+}
+
+message BuyItemResp {
+}
+
+service Store {
+    rpc BuyItem (BuyItemReq) returns (BuyItemResp) {
+        option (google.api.http) = {
+            post: "/backpack/store/buy"
+            body: "*"
+        };
+    }
+    rpc HotSaleList (HotSaleListReq) returns (HotSaleListResp) {
+        option (google.api.http) = {
+            get: "/backpack/store/hotsale"
+        };
+    }
+}
