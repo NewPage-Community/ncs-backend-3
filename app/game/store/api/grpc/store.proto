@@ -22,13 +22,13 @@ message BuyItemResp {
 service Store {
     rpc BuyItem (BuyItemReq) returns (BuyItemResp) {
         option (google.api.http) = {
-            post: "/backpack/store/buy"
+            post: "/game/store/buy"
             body: "*"
         };
     }
     rpc HotSaleList (HotSaleListReq) returns (HotSaleListResp) {
         option (google.api.http) = {
-            get: "/backpack/store/hotsale"
+            get: "/game/store/hotsale"
         };
     }
 }

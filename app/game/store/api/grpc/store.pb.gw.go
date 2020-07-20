@@ -136,9 +136,9 @@ func RegisterStoreHandlerClient(ctx context.Context, mux *runtime.ServeMux, clie
 }
 
 var (
-	pattern_Store_BuyItem_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"backpack", "store", "buy"}, ""))
+	pattern_Store_BuyItem_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"game", "store", "buy"}, ""))
 
-	pattern_Store_HotSaleList_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"backpack", "store", "hotsale"}, ""))
+	pattern_Store_HotSaleList_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"game", "store", "hotsale"}, ""))
 )
 
 var (

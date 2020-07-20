@@ -15,7 +15,7 @@
     "application/json"
   ],
   "paths": {
-    "/backpack/store/buy": {
+    "/game/store/buy": {
       "post": {
         "operationId": "BuyItem",
         "responses": {
@@ -41,7 +41,7 @@
         ]
       }
     },
-    "/backpack/store/hotsale": {
+    "/game/store/hotsale": {
       "get": {
         "operationId": "HotSaleList",
         "responses": {
