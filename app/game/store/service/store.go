@@ -8,6 +8,7 @@ import (
 	"backend/pkg/ecode"
 	"context"
 	"google.golang.org/grpc/codes"
+	"math"
 )
 
 func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.BuyItemResp, err error) {
@@ -36,9 +37,10 @@ func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.Buy
 	}
 
 	// Buy
+	price := int32(math.Floor(float64(item.Price) * float64(item.Discount)))
 	_, err = s.money.Pay(ctx, &moneyService.PayReq{
 		Uid:    req.Uid,
-		Price:  item.Price,
+		Price:  price,
 		Reason: "购买商品 " + item.Name,
 	})
 	// Payment failed
@@ -58,7 +60,7 @@ func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.Buy
 		// Return money
 		_, err = s.money.Give(ctx, &moneyService.GiveReq{
 			Uid:    req.Uid,
-			Money:  item.Price,
+			Money:  price,
 			Reason: "商品退款 " + item.Name,
 		})
 	}
