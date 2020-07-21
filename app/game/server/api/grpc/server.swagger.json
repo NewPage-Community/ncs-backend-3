@@ -15,7 +15,7 @@
     "application/json"
   ],
   "paths": {
-    "/server/all": {
+    "/game/server/all": {
       "get": {
         "operationId": "AllInfo",
         "responses": {
@@ -31,7 +31,7 @@
         ]
       }
     },
-    "/server/init": {
+    "/game/server/init": {
       "post": {
         "operationId": "Init",
         "responses": {
@@ -42,12 +42,22 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverInitReq"
+            }
+          }
+        ],
         "tags": [
           "Server"
         ]
       }
     },
-    "/server/{server_id}": {
+    "/game/server/{server_id}": {
       "get": {
         "operationId": "Info",
         "responses": {
@@ -116,6 +126,18 @@
       "properties": {
         "info": {
           "$ref": "#/definitions/serverInfo"
+        }
+      }
+    },
+    "serverInitReq": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },
