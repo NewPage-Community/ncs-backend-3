@@ -73,17 +73,12 @@ func (s *Service) Add(ctx context.Context, req *pb.AddReq) (resp *pb.AddResp, er
 		Reason:     req.Info.Reason,
 	})
 
-	go func() {
-		res, err := s.server.RconAll(context.Background(), &serverService.RconAllReq{
-			Cmd: fmt.Sprintf(BanNotifyCMD, req.Info.Uid, req.Info.Type, req.Info.Reason),
-		})
-		if res.Success == 0 {
-			log.Warn("None server notify!")
-		}
-		if err != nil {
-			log.Error(err)
-		}
-	}()
+	rcon, err := s.server.RconAll(context.Background(), &serverService.RconAllReq{
+		Cmd: fmt.Sprintf(BanNotifyCMD, req.Info.Uid, req.Info.Type, req.Info.Reason),
+	})
+	if rcon.Success == 0 {
+		log.Warn("None server notify!")
+	}
 	return
 }
 
