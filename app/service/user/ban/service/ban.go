@@ -74,7 +74,7 @@ func (s *Service) Add(ctx context.Context, req *pb.AddReq) (resp *pb.AddResp, er
 	})
 
 	go func() {
-		res, err := s.server.RconAll(ctx, &serverService.RconAllReq{
+		res, err := s.server.RconAll(context.Background(), &serverService.RconAllReq{
 			Cmd: fmt.Sprintf(BanNotifyCMD, req.Info.Uid, req.Info.Type, req.Info.Reason),
 		})
 		if res.Success == 0 {
