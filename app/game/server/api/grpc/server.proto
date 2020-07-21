@@ -61,12 +61,12 @@ message RconAllResp {
 service Server {
     rpc Info (InfoReq) returns (InfoResp) {
         option (google.api.http) = {
-            get: "/game/server/{server_id}"
+            get: "/game/server/info/{server_id}"
         };
     }
     rpc AllInfo (AllInfoReq) returns (AllInfoResp) {
         option (google.api.http) = {
-            get: "/game/server/all"
+            get: "/game/server/allinfo"
         };
     }
     rpc Init (InitReq) returns (InitResp) {

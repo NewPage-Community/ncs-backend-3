@@ -116,11 +116,11 @@ func (s *Service) RconAll(ctx context.Context, req *pb.RconAllReq) (resp *pb.Rco
 		wg.Add(1)
 		server := res[i]
 		go func() {
-			defer wg.Done()
 			_, err := server.Send(req.Cmd)
 			if err == nil {
 				success++
 			}
+			wg.Done()
 		}()
 	}
 

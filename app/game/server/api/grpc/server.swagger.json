@@ -15,7 +15,7 @@
     "application/json"
   ],
   "paths": {
-    "/game/server/all": {
+    "/game/server/allinfo": {
       "get": {
         "operationId": "AllInfo",
         "responses": {
@@ -26,6 +26,31 @@
             }
           }
         },
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/game/server/info/{server_id}": {
+      "get": {
+        "operationId": "Info",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "server_id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
         "tags": [
           "Server"
         ]
@@ -50,31 +75,6 @@
             "schema": {
               "$ref": "#/definitions/serverInitReq"
             }
-          }
-        ],
-        "tags": [
-          "Server"
-        ]
-      }
-    },
-    "/game/server/{server_id}": {
-      "get": {
-        "operationId": "Info",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/serverInfoResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "server_id",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
           }
         ],
         "tags": [

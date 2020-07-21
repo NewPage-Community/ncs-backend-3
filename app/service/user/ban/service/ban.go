@@ -5,6 +5,7 @@ import (
 	pb "backend/app/service/user/ban/api/grpc"
 	"backend/app/service/user/ban/model"
 	"backend/pkg/ecode"
+	"backend/pkg/log"
 	"context"
 	"fmt"
 	"google.golang.org/grpc/codes"
@@ -72,9 +73,17 @@ func (s *Service) Add(ctx context.Context, req *pb.AddReq) (resp *pb.AddResp, er
 		Reason:     req.Info.Reason,
 	})
 
-	_, err = s.server.RconAll(ctx, &serverService.RconAllReq{
-		Cmd: fmt.Sprintf(BanNotifyCMD, req.Info.Uid, req.Info.Type, req.Info.Reason),
-	})
+	go func() {
+		res, err := s.server.RconAll(ctx, &serverService.RconAllReq{
+			Cmd: fmt.Sprintf(BanNotifyCMD, req.Info.Uid, req.Info.Type, req.Info.Reason),
+		})
+		if res.Success == 0 {
+			log.Warn("None server notify!")
+		}
+		if err != nil {
+			log.Error(err)
+		}
+	}()
 	return
 }
 
