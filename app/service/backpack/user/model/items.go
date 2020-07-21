@@ -52,16 +52,17 @@ func (items *Items) AddItems(_items *Items) {
 	sort.Sort(items)
 }
 
-// TODO: 已有限时物品添加永久物品
 func (items *Items) addItem(item Item) {
 	index, found := items.search(item.ID)
 	now := time.Now().Unix()
 
 	if found {
-		if (*items)[index].CalType() == ItemCalTypeAmount {
+		if item.CalType() == ItemCalTypeUnlimited {
+			(*items)[index].Amount = 0
+			(*items)[index].ExprTime = 0
+		} else if (*items)[index].CalType() == ItemCalTypeAmount {
 			(*items)[index].Amount += item.Amount
-		}
-		if (*items)[index].CalType() == ItemCalTypeTime {
+		} else if (*items)[index].CalType() == ItemCalTypeTime {
 			(*items)[index].ExprTime += item.ExprTime
 		}
 	} else {
