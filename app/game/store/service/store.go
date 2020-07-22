@@ -79,14 +79,17 @@ func (s *Service) HotSaleList(ctx context.Context, req *pb.HotSaleListReq) (resp
 func (s *Service) SaleList(ctx context.Context, req *pb.SaleListReq) (resp *pb.SaleListResp, err error) {
 	resp = &pb.SaleListResp{}
 
-	if req.Uid <= 0 {
-		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%d)", req.Uid)
-		return
-	}
-
-	userItems, err := s.user.GetItems(ctx, &userService.GetItemsReq{Uid: req.Uid})
-	if err != nil {
-		return
+	var userItems *userService.GetItemsResp
+	var userItemsMap map[int32]bool
+	if req.Uid > 0 {
+		userItems, err = s.user.GetItems(ctx, &userService.GetItemsReq{Uid: req.Uid})
+		if err != nil {
+			return
+		}
+		userItemsMap = make(map[int32]bool)
+		for _, v := range userItems.Items {
+			userItemsMap[v.Id] = true
+		}
 	}
 
 	items, err := s.items.GetItems(ctx, &itemsService.GetItemsReq{})
@@ -94,13 +97,11 @@ func (s *Service) SaleList(ctx context.Context, req *pb.SaleListReq) (resp *pb.S
 		return
 	}
 
-	userItemsMap := make(map[int32]bool)
-	for _, v := range userItems.Items {
-		userItemsMap[v.Id] = true
-	}
-
 	for _, v := range items.Items {
-		_, have := userItemsMap[v.Id]
+		have := false
+		if req.Uid > 0 {
+			_, have = userItemsMap[v.Id]
+		}
 		resp.Items = append(resp.Items, &pb.Item{
 			ItemId:      v.Id,
 			Name:        v.Name,
