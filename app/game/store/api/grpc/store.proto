@@ -4,6 +4,17 @@ option go_package = "grpc";
 
 import "google/api/annotations.proto";
 
+message Item {
+    int32 item_id = 1;
+    string name = 2;
+    string description = 3;
+    int32 type = 4;
+    int32 price = 6;
+    float discount = 7;
+    bool available = 8;
+    bool already_have = 9;
+}
+
 message HotSaleListReq {
 }
 
@@ -14,9 +25,18 @@ message HotSaleListResp {
 message BuyItemReq {
     int64 uid = 1;
     int32 item_id = 2;
+    int32 price = 3;
 }
 
 message BuyItemResp {
+}
+
+message SaleListReq {
+    int64 uid = 1;
+}
+
+message SaleListResp {
+    repeated Item items = 1;
 }
 
 service Store {
@@ -29,6 +49,14 @@ service Store {
     rpc HotSaleList (HotSaleListReq) returns (HotSaleListResp) {
         option (google.api.http) = {
             get: "/game/store/hotsale"
+        };
+    }
+    rpc SaleList (SaleListReq) returns (SaleListResp) {
+        option (google.api.http) = {
+            get: "/game/store/list"
+            additional_bindings {
+				get: "/game/store/list/{uid}"
+			}
         };
     }
 }

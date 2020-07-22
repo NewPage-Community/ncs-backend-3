@@ -74,6 +74,26 @@ func (mr *MockStoreClientMockRecorder) HotSaleList(ctx, in interface{}, opts ...
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HotSaleList", reflect.TypeOf((*MockStoreClient)(nil).HotSaleList), varargs...)
 }
 
+// SaleList mocks base method
+func (m *MockStoreClient) SaleList(ctx context.Context, in *SaleListReq, opts ...grpc.CallOption) (*SaleListResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SaleList", varargs...)
+	ret0, _ := ret[0].(*SaleListResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SaleList indicates an expected call of SaleList
+func (mr *MockStoreClientMockRecorder) SaleList(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaleList", reflect.TypeOf((*MockStoreClient)(nil).SaleList), varargs...)
+}
+
 // MockStoreServer is a mock of StoreServer interface
 type MockStoreServer struct {
 	ctrl     *gomock.Controller
@@ -125,4 +145,19 @@ func (m *MockStoreServer) HotSaleList(arg0 context.Context, arg1 *HotSaleListReq
 func (mr *MockStoreServerMockRecorder) HotSaleList(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HotSaleList", reflect.TypeOf((*MockStoreServer)(nil).HotSaleList), arg0, arg1)
+}
+
+// SaleList mocks base method
+func (m *MockStoreServer) SaleList(arg0 context.Context, arg1 *SaleListReq) (*SaleListResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SaleList", arg0, arg1)
+	ret0, _ := ret[0].(*SaleListResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SaleList indicates an expected call of SaleList
+func (mr *MockStoreServerMockRecorder) SaleList(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaleList", reflect.TypeOf((*MockStoreServer)(nil).SaleList), arg0, arg1)
 }

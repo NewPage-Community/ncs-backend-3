@@ -5,6 +5,7 @@ package grpc
 
 import (
 	context "context"
+	encoding_binary "encoding/binary"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
@@ -27,6 +28,109 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type Item struct {
+	ItemId               int32    `protobuf:"varint,1,opt,name=item_id,json=itemId,proto3" json:"item_id,omitempty"`
+	Name                 string   `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Description          string   `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Type                 int32    `protobuf:"varint,4,opt,name=type,proto3" json:"type,omitempty"`
+	Price                int32    `protobuf:"varint,6,opt,name=price,proto3" json:"price,omitempty"`
+	Discount             float32  `protobuf:"fixed32,7,opt,name=discount,proto3" json:"discount,omitempty"`
+	Available            bool     `protobuf:"varint,8,opt,name=available,proto3" json:"available,omitempty"`
+	AlreadyHave          bool     `protobuf:"varint,9,opt,name=already_have,json=alreadyHave,proto3" json:"already_have,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Item) Reset()         { *m = Item{} }
+func (m *Item) String() string { return proto.CompactTextString(m) }
+func (*Item) ProtoMessage()    {}
+func (*Item) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e7984dd24fb15707, []int{0}
+}
+func (m *Item) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *Item) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_Item.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *Item) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Item.Merge(m, src)
+}
+func (m *Item) XXX_Size() int {
+	return m.Size()
+}
+func (m *Item) XXX_DiscardUnknown() {
+	xxx_messageInfo_Item.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Item proto.InternalMessageInfo
+
+func (m *Item) GetItemId() int32 {
+	if m != nil {
+		return m.ItemId
+	}
+	return 0
+}
+
+func (m *Item) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+func (m *Item) GetDescription() string {
+	if m != nil {
+		return m.Description
+	}
+	return ""
+}
+
+func (m *Item) GetType() int32 {
+	if m != nil {
+		return m.Type
+	}
+	return 0
+}
+
+func (m *Item) GetPrice() int32 {
+	if m != nil {
+		return m.Price
+	}
+	return 0
+}
+
+func (m *Item) GetDiscount() float32 {
+	if m != nil {
+		return m.Discount
+	}
+	return 0
+}
+
+func (m *Item) GetAvailable() bool {
+	if m != nil {
+		return m.Available
+	}
+	return false
+}
+
+func (m *Item) GetAlreadyHave() bool {
+	if m != nil {
+		return m.AlreadyHave
+	}
+	return false
+}
+
 type HotSaleListReq struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -37,7 +141,7 @@ func (m *HotSaleListReq) Reset()         { *m = HotSaleListReq{} }
 func (m *HotSaleListReq) String() string { return proto.CompactTextString(m) }
 func (*HotSaleListReq) ProtoMessage()    {}
 func (*HotSaleListReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e7984dd24fb15707, []int{0}
+	return fileDescriptor_e7984dd24fb15707, []int{1}
 }
 func (m *HotSaleListReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -77,7 +181,7 @@ func (m *HotSaleListResp) Reset()         { *m = HotSaleListResp{} }
 func (m *HotSaleListResp) String() string { return proto.CompactTextString(m) }
 func (*HotSaleListResp) ProtoMessage()    {}
 func (*HotSaleListResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e7984dd24fb15707, []int{1}
+	return fileDescriptor_e7984dd24fb15707, []int{2}
 }
 func (m *HotSaleListResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -116,6 +220,7 @@ func (m *HotSaleListResp) GetItemsId() []int32 {
 type BuyItemReq struct {
 	Uid                  int64    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
 	ItemId               int32    `protobuf:"varint,2,opt,name=item_id,json=itemId,proto3" json:"item_id,omitempty"`
+	Price                int32    `protobuf:"varint,3,opt,name=price,proto3" json:"price,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -125,7 +230,7 @@ func (m *BuyItemReq) Reset()         { *m = BuyItemReq{} }
 func (m *BuyItemReq) String() string { return proto.CompactTextString(m) }
 func (*BuyItemReq) ProtoMessage()    {}
 func (*BuyItemReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e7984dd24fb15707, []int{2}
+	return fileDescriptor_e7984dd24fb15707, []int{3}
 }
 func (m *BuyItemReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -168,6 +273,13 @@ func (m *BuyItemReq) GetItemId() int32 {
 	return 0
 }
 
+func (m *BuyItemReq) GetPrice() int32 {
+	if m != nil {
+		return m.Price
+	}
+	return 0
+}
+
 type BuyItemResp struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -178,7 +290,7 @@ func (m *BuyItemResp) Reset()         { *m = BuyItemResp{} }
 func (m *BuyItemResp) String() string { return proto.CompactTextString(m) }
 func (*BuyItemResp) ProtoMessage()    {}
 func (*BuyItemResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e7984dd24fb15707, []int{3}
+	return fileDescriptor_e7984dd24fb15707, []int{4}
 }
 func (m *BuyItemResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -207,11 +319,108 @@ func (m *BuyItemResp) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_BuyItemResp proto.InternalMessageInfo
 
+type SaleListReq struct {
+	Uid                  int64    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SaleListReq) Reset()         { *m = SaleListReq{} }
+func (m *SaleListReq) String() string { return proto.CompactTextString(m) }
+func (*SaleListReq) ProtoMessage()    {}
+func (*SaleListReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e7984dd24fb15707, []int{5}
+}
+func (m *SaleListReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SaleListReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SaleListReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SaleListReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SaleListReq.Merge(m, src)
+}
+func (m *SaleListReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *SaleListReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_SaleListReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SaleListReq proto.InternalMessageInfo
+
+func (m *SaleListReq) GetUid() int64 {
+	if m != nil {
+		return m.Uid
+	}
+	return 0
+}
+
+type SaleListResp struct {
+	Items                []*Item  `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *SaleListResp) Reset()         { *m = SaleListResp{} }
+func (m *SaleListResp) String() string { return proto.CompactTextString(m) }
+func (*SaleListResp) ProtoMessage()    {}
+func (*SaleListResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e7984dd24fb15707, []int{6}
+}
+func (m *SaleListResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SaleListResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SaleListResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SaleListResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SaleListResp.Merge(m, src)
+}
+func (m *SaleListResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *SaleListResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_SaleListResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SaleListResp proto.InternalMessageInfo
+
+func (m *SaleListResp) GetItems() []*Item {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
 func init() {
+	proto.RegisterType((*Item)(nil), "ncs.game.store.Item")
 	proto.RegisterType((*HotSaleListReq)(nil), "ncs.game.store.HotSaleListReq")
 	proto.RegisterType((*HotSaleListResp)(nil), "ncs.game.store.HotSaleListResp")
 	proto.RegisterType((*BuyItemReq)(nil), "ncs.game.store.BuyItemReq")
 	proto.RegisterType((*BuyItemResp)(nil), "ncs.game.store.BuyItemResp")
+	proto.RegisterType((*SaleListReq)(nil), "ncs.game.store.SaleListReq")
+	proto.RegisterType((*SaleListResp)(nil), "ncs.game.store.SaleListResp")
 }
 
 func init() {
@@ -219,26 +428,38 @@ func init() {
 }
 
 var fileDescriptor_e7984dd24fb15707 = []byte{
-	// 304 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x52, 0x4e, 0x2c, 0x28, 0xd0,
-	0x4f, 0x4f, 0xcc, 0x4d, 0xd5, 0x2f, 0x2e, 0xc9, 0x2f, 0x4a, 0xd5, 0x4f, 0x2c, 0xc8, 0xd4, 0x4f,
-	0x2f, 0x2a, 0x48, 0x86, 0x70, 0xf5, 0x0a, 0x8a, 0xf2, 0x4b, 0xf2, 0x85, 0xf8, 0xf2, 0x92, 0x8b,
-	0xf5, 0x40, 0x8a, 0xf4, 0xc0, 0xa2, 0x52, 0x32, 0xe9, 0xf9, 0xf9, 0xe9, 0x39, 0x10, 0xc5, 0x89,
-	0x79, 0x79, 0xf9, 0x25, 0x89, 0x25, 0x99, 0xf9, 0x79, 0xc5, 0x10, 0xd5, 0x4a, 0x02, 0x5c, 0x7c,
-	0x1e, 0xf9, 0x25, 0xc1, 0x89, 0x39, 0xa9, 0x3e, 0x99, 0xc5, 0x25, 0x41, 0xa9, 0x85, 0x4a, 0x3a,
-	0x5c, 0xfc, 0x28, 0x22, 0xc5, 0x05, 0x42, 0x92, 0x5c, 0x1c, 0x99, 0x25, 0xa9, 0xb9, 0xc5, 0xf1,
-	0x99, 0x29, 0x12, 0x8c, 0x0a, 0xcc, 0x1a, 0xac, 0x41, 0xec, 0x60, 0xbe, 0x67, 0x8a, 0x92, 0x39,
-	0x17, 0x97, 0x53, 0x69, 0xa5, 0x67, 0x49, 0x6a, 0x6e, 0x50, 0x6a, 0xa1, 0x90, 0x00, 0x17, 0x73,
-	0x29, 0x58, 0x0d, 0xa3, 0x06, 0x73, 0x10, 0x88, 0x29, 0x24, 0xce, 0x05, 0x56, 0x0a, 0xd2, 0xc9,
-	0xa4, 0xc0, 0xa8, 0xc1, 0x1a, 0xc4, 0x06, 0xe2, 0x7a, 0xa6, 0x28, 0xf1, 0x72, 0x71, 0xc3, 0x35,
-	0x16, 0x17, 0x18, 0x5d, 0x61, 0xe4, 0x62, 0x0d, 0x06, 0xb9, 0x57, 0x28, 0x8e, 0x8b, 0x1d, 0x2a,
-	0x21, 0x24, 0xa5, 0x87, 0xea, 0x17, 0x3d, 0x84, 0x55, 0x52, 0xd2, 0x38, 0xe5, 0x8a, 0x0b, 0x94,
-	0xa4, 0x9a, 0x2e, 0x3f, 0x99, 0xcc, 0x24, 0xa2, 0xc4, 0x8f, 0x1c, 0x5a, 0x49, 0xa5, 0x95, 0x56,
-	0x8c, 0x5a, 0x42, 0xd9, 0x5c, 0xdc, 0x48, 0xfe, 0x13, 0x92, 0x43, 0x37, 0x07, 0x35, 0x38, 0xa4,
-	0xe4, 0xf1, 0xca, 0x17, 0x17, 0x28, 0x49, 0x83, 0xed, 0x12, 0x15, 0x12, 0x46, 0xb6, 0x2b, 0x23,
-	0xbf, 0xa4, 0x38, 0x31, 0x27, 0xd5, 0x49, 0xec, 0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18,
-	0x1f, 0x3c, 0x92, 0x63, 0x9c, 0xf1, 0x58, 0x8e, 0x21, 0x8a, 0x05, 0x14, 0x61, 0x49, 0x6c, 0xe0,
-	0xd0, 0x37, 0x06, 0x04, 0x00, 0x00, 0xff, 0xff, 0xf6, 0x08, 0x45, 0x64, 0xd2, 0x01, 0x00, 0x00,
+	// 495 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x53, 0xcf, 0x6f, 0xd3, 0x30,
+	0x14, 0xc6, 0xfd, 0xb1, 0xb6, 0x2f, 0x63, 0xab, 0x4c, 0x19, 0x21, 0xab, 0xba, 0x60, 0x2e, 0xd1,
+	0x34, 0x25, 0x52, 0xb9, 0xed, 0xb8, 0xd3, 0x2a, 0xc1, 0x25, 0xbb, 0xed, 0xc0, 0xe4, 0x26, 0x56,
+	0x67, 0x91, 0xc6, 0x5e, 0xec, 0x54, 0x8a, 0x10, 0x17, 0xfe, 0x05, 0x2e, 0xfc, 0x49, 0xdc, 0x40,
+	0xe2, 0xca, 0x01, 0x15, 0xfe, 0x10, 0x14, 0xa7, 0xea, 0x92, 0x4e, 0xe3, 0xf6, 0xde, 0xf7, 0x9e,
+	0xbf, 0xef, 0xbd, 0xcf, 0x36, 0xbc, 0xa6, 0x52, 0x06, 0x0b, 0xba, 0x64, 0x81, 0xd2, 0x22, 0x63,
+	0x01, 0x95, 0x3c, 0x58, 0x64, 0x32, 0xaa, 0x52, 0x5f, 0x66, 0x42, 0x0b, 0x7c, 0x90, 0x46, 0xca,
+	0x2f, 0x9b, 0x7c, 0x83, 0x3a, 0xe3, 0x85, 0x10, 0x8b, 0xa4, 0x6a, 0xa6, 0x69, 0x2a, 0x34, 0xd5,
+	0x5c, 0xa4, 0xaa, 0xea, 0x26, 0xbf, 0x10, 0x74, 0x66, 0x9a, 0x2d, 0xf1, 0x0b, 0xe8, 0x71, 0xcd,
+	0x96, 0x37, 0x3c, 0xb6, 0x91, 0x8b, 0xbc, 0x6e, 0xb8, 0x57, 0xa6, 0xb3, 0x18, 0x63, 0xe8, 0xa4,
+	0x74, 0xc9, 0xec, 0x96, 0x8b, 0xbc, 0x41, 0x68, 0x62, 0xec, 0x82, 0x15, 0x33, 0x15, 0x65, 0x5c,
+	0x96, 0x5c, 0x76, 0xdb, 0x94, 0xea, 0x50, 0x79, 0x4a, 0x17, 0x92, 0xd9, 0x1d, 0xc3, 0x65, 0x62,
+	0x3c, 0x82, 0xae, 0xcc, 0x78, 0xc4, 0xec, 0x3d, 0x03, 0x56, 0x09, 0x76, 0xa0, 0x1f, 0x73, 0x15,
+	0x89, 0x3c, 0xd5, 0x76, 0xcf, 0x45, 0x5e, 0x2b, 0xdc, 0xe6, 0x78, 0x0c, 0x03, 0xba, 0xa2, 0x3c,
+	0xa1, 0xf3, 0x84, 0xd9, 0x7d, 0x17, 0x79, 0xfd, 0xf0, 0x1e, 0xc0, 0xaf, 0x60, 0x9f, 0x26, 0x19,
+	0xa3, 0x71, 0x71, 0x73, 0x4b, 0x57, 0xcc, 0x1e, 0x98, 0x06, 0x6b, 0x83, 0x5d, 0xd2, 0x15, 0x23,
+	0x43, 0x38, 0xb8, 0x14, 0xfa, 0x8a, 0x26, 0xec, 0x2d, 0x57, 0x3a, 0x64, 0x77, 0xe4, 0x0c, 0x0e,
+	0x1b, 0x88, 0x92, 0xf8, 0x25, 0xf4, 0xcb, 0x5d, 0x55, 0xb5, 0x7b, 0xdb, 0xeb, 0x86, 0xc6, 0x0a,
+	0x35, 0x8b, 0xc9, 0x3b, 0x80, 0x8b, 0xbc, 0x28, 0x0d, 0x0a, 0xd9, 0x1d, 0x1e, 0x42, 0x3b, 0xdf,
+	0xf8, 0xd3, 0x0e, 0xcb, 0xb0, 0xee, 0x5a, 0xab, 0xe1, 0xda, 0x76, 0xd7, 0x76, 0x6d, 0x57, 0xf2,
+	0x14, 0xac, 0x2d, 0x9d, 0x92, 0xe4, 0x04, 0xac, 0xda, 0x68, 0x0f, 0xe9, 0xc9, 0x39, 0xec, 0x37,
+	0x26, 0x3d, 0x85, 0xae, 0x99, 0xcc, 0x8c, 0x69, 0x4d, 0x47, 0x7e, 0xf3, 0xae, 0x7d, 0xc3, 0x5c,
+	0xb5, 0x4c, 0xbf, 0xb7, 0xa0, 0x7b, 0x55, 0xa2, 0xf8, 0x3d, 0xf4, 0x36, 0xaa, 0xd8, 0xd9, 0x3d,
+	0x71, 0xbf, 0x9d, 0x73, 0xfc, 0x68, 0x4d, 0x49, 0xe2, 0x7c, 0xfe, 0xf9, 0xf7, 0x4b, 0x6b, 0x44,
+	0x0e, 0xeb, 0xef, 0x6f, 0x9e, 0x17, 0xe7, 0xe8, 0x14, 0x7f, 0x00, 0xab, 0x66, 0x29, 0x9e, 0xec,
+	0xf2, 0x34, 0x6f, 0xc0, 0x39, 0xf9, 0x6f, 0x5d, 0x49, 0x72, 0x6c, 0xb4, 0x9e, 0xe3, 0x67, 0x75,
+	0xad, 0x5b, 0xa1, 0x15, 0x4d, 0x18, 0x2e, 0xa0, 0xbf, 0x55, 0x7a, 0x30, 0x71, 0x5d, 0x66, 0xfc,
+	0x78, 0x51, 0x49, 0x32, 0x35, 0x1a, 0x67, 0x78, 0x58, 0xd7, 0x48, 0xb8, 0xd2, 0xd7, 0x36, 0x3e,
+	0xda, 0xc5, 0x82, 0x8f, 0x39, 0x8f, 0x3f, 0x5d, 0x1c, 0x7d, 0x5b, 0x4f, 0xd0, 0x8f, 0xf5, 0x04,
+	0xfd, 0x5e, 0x4f, 0xd0, 0xd7, 0x3f, 0x93, 0x27, 0xd7, 0x9d, 0xf2, 0xf7, 0xcd, 0xf7, 0xcc, 0x57,
+	0x7a, 0xf3, 0x2f, 0x00, 0x00, 0xff, 0xff, 0xdf, 0x77, 0xfc, 0xe3, 0x9f, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -255,6 +476,7 @@ const _ = grpc.SupportPackageIsVersion4
 type StoreClient interface {
 	BuyItem(ctx context.Context, in *BuyItemReq, opts ...grpc.CallOption) (*BuyItemResp, error)
 	HotSaleList(ctx context.Context, in *HotSaleListReq, opts ...grpc.CallOption) (*HotSaleListResp, error)
+	SaleList(ctx context.Context, in *SaleListReq, opts ...grpc.CallOption) (*SaleListResp, error)
 }
 
 type storeClient struct {
@@ -283,10 +505,20 @@ func (c *storeClient) HotSaleList(ctx context.Context, in *HotSaleListReq, opts 
 	return out, nil
 }
 
+func (c *storeClient) SaleList(ctx context.Context, in *SaleListReq, opts ...grpc.CallOption) (*SaleListResp, error) {
+	out := new(SaleListResp)
+	err := c.cc.Invoke(ctx, "/ncs.game.store.Store/SaleList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StoreServer is the server API for Store service.
 type StoreServer interface {
 	BuyItem(context.Context, *BuyItemReq) (*BuyItemResp, error)
 	HotSaleList(context.Context, *HotSaleListReq) (*HotSaleListResp, error)
+	SaleList(context.Context, *SaleListReq) (*SaleListResp, error)
 }
 
 // UnimplementedStoreServer can be embedded to have forward compatible implementations.
@@ -298,6 +530,9 @@ func (*UnimplementedStoreServer) BuyItem(ctx context.Context, req *BuyItemReq) (
 }
 func (*UnimplementedStoreServer) HotSaleList(ctx context.Context, req *HotSaleListReq) (*HotSaleListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HotSaleList not implemented")
+}
+func (*UnimplementedStoreServer) SaleList(ctx context.Context, req *SaleListReq) (*SaleListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SaleList not implemented")
 }
 
 func RegisterStoreServer(s *grpc.Server, srv StoreServer) {
@@ -340,6 +575,24 @@ func _Store_HotSaleList_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Store_SaleList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SaleListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StoreServer).SaleList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ncs.game.store.Store/SaleList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StoreServer).SaleList(ctx, req.(*SaleListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Store_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "ncs.game.store.Store",
 	HandlerType: (*StoreServer)(nil),
@@ -352,9 +605,95 @@ var _Store_serviceDesc = grpc.ServiceDesc{
 			MethodName: "HotSaleList",
 			Handler:    _Store_HotSaleList_Handler,
 		},
+		{
+			MethodName: "SaleList",
+			Handler:    _Store_SaleList_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "app/game/store/api/grpc/store.proto",
+}
+
+func (m *Item) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *Item) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Item) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.AlreadyHave {
+		i--
+		if m.AlreadyHave {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x48
+	}
+	if m.Available {
+		i--
+		if m.Available {
+			dAtA[i] = 1
+		} else {
+			dAtA[i] = 0
+		}
+		i--
+		dAtA[i] = 0x40
+	}
+	if m.Discount != 0 {
+		i -= 4
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.Discount))))
+		i--
+		dAtA[i] = 0x3d
+	}
+	if m.Price != 0 {
+		i = encodeVarintStore(dAtA, i, uint64(m.Price))
+		i--
+		dAtA[i] = 0x30
+	}
+	if m.Type != 0 {
+		i = encodeVarintStore(dAtA, i, uint64(m.Type))
+		i--
+		dAtA[i] = 0x20
+	}
+	if len(m.Description) > 0 {
+		i -= len(m.Description)
+		copy(dAtA[i:], m.Description)
+		i = encodeVarintStore(dAtA, i, uint64(len(m.Description)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Name) > 0 {
+		i -= len(m.Name)
+		copy(dAtA[i:], m.Name)
+		i = encodeVarintStore(dAtA, i, uint64(len(m.Name)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.ItemId != 0 {
+		i = encodeVarintStore(dAtA, i, uint64(m.ItemId))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *HotSaleListReq) Marshal() (dAtA []byte, err error) {
@@ -454,6 +793,11 @@ func (m *BuyItemReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if m.Price != 0 {
+		i = encodeVarintStore(dAtA, i, uint64(m.Price))
+		i--
+		dAtA[i] = 0x18
+	}
 	if m.ItemId != 0 {
 		i = encodeVarintStore(dAtA, i, uint64(m.ItemId))
 		i--
@@ -494,6 +838,79 @@ func (m *BuyItemResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *SaleListReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SaleListReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SaleListReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Uid != 0 {
+		i = encodeVarintStore(dAtA, i, uint64(m.Uid))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *SaleListResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SaleListResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SaleListResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Items) > 0 {
+		for iNdEx := len(m.Items) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Items[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintStore(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintStore(dAtA []byte, offset int, v uint64) int {
 	offset -= sovStore(v)
 	base := offset
@@ -505,6 +922,44 @@ func encodeVarintStore(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *Item) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.ItemId != 0 {
+		n += 1 + sovStore(uint64(m.ItemId))
+	}
+	l = len(m.Name)
+	if l > 0 {
+		n += 1 + l + sovStore(uint64(l))
+	}
+	l = len(m.Description)
+	if l > 0 {
+		n += 1 + l + sovStore(uint64(l))
+	}
+	if m.Type != 0 {
+		n += 1 + sovStore(uint64(m.Type))
+	}
+	if m.Price != 0 {
+		n += 1 + sovStore(uint64(m.Price))
+	}
+	if m.Discount != 0 {
+		n += 5
+	}
+	if m.Available {
+		n += 2
+	}
+	if m.AlreadyHave {
+		n += 2
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *HotSaleListReq) Size() (n int) {
 	if m == nil {
 		return 0
@@ -548,6 +1003,9 @@ func (m *BuyItemReq) Size() (n int) {
 	if m.ItemId != 0 {
 		n += 1 + sovStore(uint64(m.ItemId))
 	}
+	if m.Price != 0 {
+		n += 1 + sovStore(uint64(m.Price))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -566,11 +1024,270 @@ func (m *BuyItemResp) Size() (n int) {
 	return n
 }
 
+func (m *SaleListReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Uid != 0 {
+		n += 1 + sovStore(uint64(m.Uid))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SaleListResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Items) > 0 {
+		for _, e := range m.Items {
+			l = e.Size()
+			n += 1 + l + sovStore(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func sovStore(x uint64) (n int) {
 	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozStore(x uint64) (n int) {
 	return sovStore(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *Item) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowStore
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: Item: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: Item: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ItemId", wireType)
+			}
+			m.ItemId = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ItemId |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Name", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthStore
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthStore
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Name = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthStore
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthStore
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
+			}
+			m.Type = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Type |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 6:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
+			}
+			m.Price = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Price |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 7:
+			if wireType != 5 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Discount", wireType)
+			}
+			var v uint32
+			if (iNdEx + 4) > l {
+				return io.ErrUnexpectedEOF
+			}
+			v = uint32(encoding_binary.LittleEndian.Uint32(dAtA[iNdEx:]))
+			iNdEx += 4
+			m.Discount = float32(math.Float32frombits(v))
+		case 8:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Available", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Available = bool(v != 0)
+		case 9:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AlreadyHave", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.AlreadyHave = bool(v != 0)
+		default:
+			iNdEx = preIndex
+			skippy, err := skipStore(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthStore
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthStore
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *HotSaleListReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -823,6 +1540,25 @@ func (m *BuyItemReq) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Price", wireType)
+			}
+			m.Price = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Price |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipStore(dAtA[iNdEx:])
@@ -877,6 +1613,167 @@ func (m *BuyItemResp) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: BuyItemResp: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipStore(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthStore
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthStore
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SaleListReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowStore
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SaleListReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SaleListReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Uid", wireType)
+			}
+			m.Uid = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Uid |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipStore(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthStore
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthStore
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SaleListResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowStore
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SaleListResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SaleListResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowStore
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthStore
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthStore
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Items = append(m.Items, &Item{})
+			if err := m.Items[len(m.Items)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipStore(dAtA[iNdEx:])

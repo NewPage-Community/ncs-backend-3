@@ -56,6 +56,56 @@
           "Store"
         ]
       }
+    },
+    "/game/store/list": {
+      "get": {
+        "operationId": "SaleList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/storeSaleListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Store"
+        ]
+      }
+    },
+    "/game/store/list/{uid}": {
+      "get": {
+        "operationId": "SaleList2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/storeSaleListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Store"
+        ]
+      }
     }
   },
   "definitions": {
@@ -67,6 +117,10 @@
           "format": "int64"
         },
         "item_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "price": {
           "type": "integer",
           "format": "int32"
         }
@@ -83,6 +137,52 @@
           "items": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      }
+    },
+    "storeItem": {
+      "type": "object",
+      "properties": {
+        "item_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "price": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "discount": {
+          "type": "number",
+          "format": "float"
+        },
+        "available": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "already_have": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      }
+    },
+    "storeSaleListResp": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/storeItem"
           }
         }
       }
