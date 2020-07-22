@@ -37,6 +37,7 @@ message SaleListReq {
 
 message SaleListResp {
     repeated Item items = 1;
+    int32 money = 2;
 }
 
 service Store {

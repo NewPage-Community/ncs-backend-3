@@ -80,6 +80,7 @@ func (s *Service) SaleList(ctx context.Context, req *pb.SaleListReq) (resp *pb.S
 	resp = &pb.SaleListResp{}
 
 	var userItems *userService.GetItemsResp
+	var userMoney *moneyService.GetResp
 	var userItemsMap map[int32]bool
 	if req.Uid > 0 {
 		userItems, err = s.user.GetItems(ctx, &userService.GetItemsReq{Uid: req.Uid})
@@ -90,6 +91,11 @@ func (s *Service) SaleList(ctx context.Context, req *pb.SaleListReq) (resp *pb.S
 		for _, v := range userItems.Items {
 			userItemsMap[v.Id] = true
 		}
+		userMoney, err = s.money.Get(ctx, &moneyService.GetReq{Uid: req.Uid})
+		if err != nil {
+			return
+		}
+		resp.Money = userMoney.Money
 	}
 
 	items, err := s.items.GetItems(ctx, &itemsService.GetItemsReq{})

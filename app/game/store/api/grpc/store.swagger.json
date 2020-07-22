@@ -184,6 +184,10 @@
           "items": {
             "$ref": "#/definitions/storeItem"
           }
+        },
+        "money": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     }
