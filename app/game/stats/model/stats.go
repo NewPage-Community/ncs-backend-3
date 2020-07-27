@@ -2,6 +2,10 @@ package model
 
 import "strconv"
 
+const (
+	KeyPrefix = "ncs_"
+)
+
 type Stats struct {
 	UID       int64   `json:"uid"`
 	Range     string  `json:"range"`
@@ -12,7 +16,7 @@ type Stats struct {
 }
 
 func (s *Stats) Key() string {
-	return s.Range + "_" + s.StatsName + "_" + s.Version
+	return KeyPrefix + s.Range + "_" + s.StatsName + "_" + s.Version
 }
 
 func (s *Stats) IsValid() bool {
