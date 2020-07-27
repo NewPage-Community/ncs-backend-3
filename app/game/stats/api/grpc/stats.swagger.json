@@ -1,0 +1,309 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/game/stats/api/grpc/stats.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/game/stats/user/incr": {
+      "post": {
+        "operationId": "Incr",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/statsIncrResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/statsIncrReq"
+            }
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/user/set": {
+      "post": {
+        "operationId": "Set",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/statsSetResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/statsSetReq"
+            }
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/user/{uid}/{stats_name}/{version}": {
+      "get": {
+        "operationId": "Get",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/statsGetResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "stats_name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "range",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/user/{uid}/{stats_name}/{version}/{range}": {
+      "get": {
+        "operationId": "Get2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/statsGetResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "stats_name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "range",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/{stats_name}/{version}": {
+      "get": {
+        "operationId": "Gets",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/statsGetsResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "stats_name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "range",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/{stats_name}/{version}/{range}": {
+      "get": {
+        "operationId": "Gets2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/statsGetsResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "stats_name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "range",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "statsGetResp": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "score": {
+          "type": "number",
+          "format": "float"
+        },
+        "rank": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "statsGetsResp": {
+      "type": "object",
+      "properties": {
+        "stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/statsGetResp"
+          }
+        }
+      }
+    },
+    "statsIncrReq": {
+      "type": "object",
+      "properties": {
+        "range": {
+          "type": "string"
+        },
+        "stats_name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "increment": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "statsIncrResp": {
+      "type": "object"
+    },
+    "statsSetReq": {
+      "type": "object",
+      "properties": {
+        "range": {
+          "type": "string"
+        },
+        "stats_name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "score": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "statsSetResp": {
+      "type": "object"
+    }
+  }
+}

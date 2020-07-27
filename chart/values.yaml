@@ -79,3 +79,8 @@ ncs-services:
       image: registry.new-page.xyz/newpage/ncs/game-store
       tag: latest
       port: 2333
+    - app: ncs-game-stats
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/game-stats
+      tag: latest
+      port: 2333
