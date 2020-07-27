@@ -26,7 +26,7 @@ func (d *dao) Get(stats *model.Stats) (err error) {
 	return
 }
 
-func (d *dao) Gets(stats *model.Stats) (res []*model.Stats, err error) {
+func (d *dao) GetAll(stats *model.Stats) (res []*model.Stats, err error) {
 	z, err := d.redis.ZRevRangeWithScores(stats.Key(), 0, -1).Result()
 	if err != nil {
 		err = ecode.Errorf(codes.Unknown, "Redis err: %s", err)

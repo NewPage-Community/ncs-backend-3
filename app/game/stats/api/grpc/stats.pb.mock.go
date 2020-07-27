@@ -54,6 +54,26 @@ func (mr *MockStatsClientMockRecorder) Get(ctx, in interface{}, opts ...interfac
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockStatsClient)(nil).Get), varargs...)
 }
 
+// GetAll mocks base method
+func (m *MockStatsClient) GetAll(ctx context.Context, in *GetAllReq, opts ...grpc.CallOption) (*GetAllResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetAll", varargs...)
+	ret0, _ := ret[0].(*GetAllResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAll indicates an expected call of GetAll
+func (mr *MockStatsClientMockRecorder) GetAll(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*MockStatsClient)(nil).GetAll), varargs...)
+}
+
 // Gets mocks base method
 func (m *MockStatsClient) Gets(ctx context.Context, in *GetsReq, opts ...grpc.CallOption) (*GetsResp, error) {
 	m.ctrl.T.Helper()
@@ -94,6 +114,26 @@ func (mr *MockStatsClientMockRecorder) Set(ctx, in interface{}, opts ...interfac
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Set", reflect.TypeOf((*MockStatsClient)(nil).Set), varargs...)
 }
 
+// Sets mocks base method
+func (m *MockStatsClient) Sets(ctx context.Context, in *SetsReq, opts ...grpc.CallOption) (*SetResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "Sets", varargs...)
+	ret0, _ := ret[0].(*SetResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Sets indicates an expected call of Sets
+func (mr *MockStatsClientMockRecorder) Sets(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Sets", reflect.TypeOf((*MockStatsClient)(nil).Sets), varargs...)
+}
+
 // Incr mocks base method
 func (m *MockStatsClient) Incr(ctx context.Context, in *IncrReq, opts ...grpc.CallOption) (*IncrResp, error) {
 	m.ctrl.T.Helper()
@@ -112,6 +152,26 @@ func (mr *MockStatsClientMockRecorder) Incr(ctx, in interface{}, opts ...interfa
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Incr", reflect.TypeOf((*MockStatsClient)(nil).Incr), varargs...)
+}
+
+// Incrs mocks base method
+func (m *MockStatsClient) Incrs(ctx context.Context, in *IncrsReq, opts ...grpc.CallOption) (*IncrResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "Incrs", varargs...)
+	ret0, _ := ret[0].(*IncrResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Incrs indicates an expected call of Incrs
+func (mr *MockStatsClientMockRecorder) Incrs(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Incrs", reflect.TypeOf((*MockStatsClient)(nil).Incrs), varargs...)
 }
 
 // MockStatsServer is a mock of StatsServer interface
@@ -152,6 +212,21 @@ func (mr *MockStatsServerMockRecorder) Get(arg0, arg1 interface{}) *gomock.Call 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockStatsServer)(nil).Get), arg0, arg1)
 }
 
+// GetAll mocks base method
+func (m *MockStatsServer) GetAll(arg0 context.Context, arg1 *GetAllReq) (*GetAllResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAll", arg0, arg1)
+	ret0, _ := ret[0].(*GetAllResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAll indicates an expected call of GetAll
+func (mr *MockStatsServerMockRecorder) GetAll(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*MockStatsServer)(nil).GetAll), arg0, arg1)
+}
+
 // Gets mocks base method
 func (m *MockStatsServer) Gets(arg0 context.Context, arg1 *GetsReq) (*GetsResp, error) {
 	m.ctrl.T.Helper()
@@ -182,6 +257,21 @@ func (mr *MockStatsServerMockRecorder) Set(arg0, arg1 interface{}) *gomock.Call 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Set", reflect.TypeOf((*MockStatsServer)(nil).Set), arg0, arg1)
 }
 
+// Sets mocks base method
+func (m *MockStatsServer) Sets(arg0 context.Context, arg1 *SetsReq) (*SetResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Sets", arg0, arg1)
+	ret0, _ := ret[0].(*SetResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Sets indicates an expected call of Sets
+func (mr *MockStatsServerMockRecorder) Sets(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Sets", reflect.TypeOf((*MockStatsServer)(nil).Sets), arg0, arg1)
+}
+
 // Incr mocks base method
 func (m *MockStatsServer) Incr(arg0 context.Context, arg1 *IncrReq) (*IncrResp, error) {
 	m.ctrl.T.Helper()
@@ -195,4 +285,19 @@ func (m *MockStatsServer) Incr(arg0 context.Context, arg1 *IncrReq) (*IncrResp, 
 func (mr *MockStatsServerMockRecorder) Incr(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Incr", reflect.TypeOf((*MockStatsServer)(nil).Incr), arg0, arg1)
+}
+
+// Incrs mocks base method
+func (m *MockStatsServer) Incrs(arg0 context.Context, arg1 *IncrsReq) (*IncrResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Incrs", arg0, arg1)
+	ret0, _ := ret[0].(*IncrResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Incrs indicates an expected call of Incrs
+func (mr *MockStatsServerMockRecorder) Incrs(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Incrs", reflect.TypeOf((*MockStatsServer)(nil).Incrs), arg0, arg1)
 }

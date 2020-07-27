@@ -47,8 +47,8 @@ func (s *Service) Get(ctx context.Context, req *pb.GetReq) (resp *pb.GetResp, er
 	return
 }
 
-func (s *Service) Gets(ctx context.Context, req *pb.GetsReq) (resp *pb.GetsResp, err error) {
-	resp = &pb.GetsResp{}
+func (s *Service) GetAll(ctx context.Context, req *pb.GetAllReq) (resp *pb.GetAllResp, err error) {
+	resp = &pb.GetAllResp{}
 
 	if req.StatsName == "" {
 		err = ecode.Errorf(codes.InvalidArgument, "Empty stats name")
@@ -62,7 +62,7 @@ func (s *Service) Gets(ctx context.Context, req *pb.GetsReq) (resp *pb.GetsResp,
 		req.Range = StatsAllRange
 	}
 
-	res, err := s.dao.Gets(&model.Stats{
+	res, err := s.dao.GetAll(&model.Stats{
 		Range:     req.Range,
 		StatsName: req.StatsName,
 		Version:   req.Version,
@@ -75,6 +75,39 @@ func (s *Service) Gets(ctx context.Context, req *pb.GetsReq) (resp *pb.GetsResp,
 			Uid:   v.UID,
 			Score: float32(v.Score),
 			Rank:  v.Rank,
+		})
+	}
+	return
+}
+
+func (s *Service) Gets(ctx context.Context, req *pb.GetsReq) (resp *pb.GetsResp, err error) {
+	resp = &pb.GetsResp{}
+
+	for _, v := range req.Stats {
+		if v.StatsName == "" || v.Version == "" {
+			continue
+		}
+		if v.Range == "" {
+			v.Range = StatsAllRange
+		}
+
+		info := &model.Stats{
+			UID:       v.Uid,
+			Range:     v.Range,
+			StatsName: v.StatsName,
+			Version:   v.Version,
+		}
+		err = s.dao.Get(info)
+		if err != nil {
+			return
+		}
+		resp.Stats = append(resp.Stats, &pb.StatsInfo{
+			Range:     info.Range,
+			StatsName: info.StatsName,
+			Version:   info.Version,
+			Uid:       info.UID,
+			Score:     float32(info.Score),
+			Rank:      info.Rank,
 		})
 	}
 	return
@@ -109,6 +142,31 @@ func (s *Service) Set(ctx context.Context, req *pb.SetReq) (resp *pb.SetResp, er
 	return
 }
 
+func (s *Service) Sets(ctx context.Context, req *pb.SetsReq) (resp *pb.SetResp, err error) {
+	resp = &pb.SetResp{}
+
+	for _, v := range req.Stats {
+		if v.StatsName == "" || v.Version == "" {
+			continue
+		}
+		if v.Range == "" {
+			v.Range = StatsAllRange
+		}
+
+		err = s.dao.Set(&model.Stats{
+			UID:       v.Uid,
+			Range:     v.Range,
+			StatsName: v.StatsName,
+			Version:   v.Version,
+			Score:     float64(v.Score),
+		})
+		if err != nil {
+			return
+		}
+	}
+	return
+}
+
 func (s *Service) Incr(ctx context.Context, req *pb.IncrReq) (resp *pb.IncrResp, err error) {
 	resp = &pb.IncrResp{}
 
@@ -135,5 +193,30 @@ func (s *Service) Incr(ctx context.Context, req *pb.IncrReq) (resp *pb.IncrResp,
 		Version:   req.Version,
 		Score:     float64(req.Increment),
 	})
+	return
+}
+
+func (s *Service) Incrs(ctx context.Context, req *pb.IncrsReq) (resp *pb.IncrResp, err error) {
+	resp = &pb.IncrResp{}
+
+	for _, v := range req.Stats {
+		if v.StatsName == "" || v.Version == "" {
+			continue
+		}
+		if v.Range == "" {
+			v.Range = StatsAllRange
+		}
+
+		err = s.dao.Incr(&model.Stats{
+			UID:       v.Uid,
+			Range:     v.Range,
+			StatsName: v.StatsName,
+			Version:   v.Version,
+			Score:     float64(v.Increment),
+		})
+		if err != nil {
+			return
+		}
+	}
 	return
 }

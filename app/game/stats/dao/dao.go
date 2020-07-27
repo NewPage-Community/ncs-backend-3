@@ -10,7 +10,7 @@ import (
 
 type Dao interface {
 	Get(stats *model.Stats) error
-	Gets(stats *model.Stats) ([]*model.Stats, error)
+	GetAll(stats *model.Stats) ([]*model.Stats, error)
 	Set(stats *model.Stats) error
 	Incr(stats *model.Stats) error
 	Healthy() bool
