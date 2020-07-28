@@ -4,6 +4,7 @@ import (
 	"backend/app/service/user/ban/conf"
 	"backend/app/service/user/ban/model"
 	db "backend/pkg/database/mysql"
+	"backend/pkg/log"
 	"gorm.io/gorm"
 )
 
@@ -24,7 +25,9 @@ func New(config *conf.Config) (d *dao) {
 		db: db.Init(config.Mysql),
 	}
 	// Auto migrate db
-	d.db.AutoMigrate(&model.Ban{})
+	if err := d.db.AutoMigrate(&model.Ban{}); err != nil {
+		log.Error(err)
+	}
 	return
 }
 

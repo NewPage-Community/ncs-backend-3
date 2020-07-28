@@ -36,7 +36,7 @@ func TestService_AllInfo(t *testing.T) {
 	srv := &Service{dao: m}
 
 	Convey("Test AllInfo", t, func() {
-		res, err := srv.AllInfo(context.Background(), &pb.AllInfoReq{})
+		res, err := srv.AllInfo(context.TODO(), &pb.AllInfoReq{})
 		Convey("Check it work!", func() {
 			So(err, ShouldBeNil)
 			So(len(res.Info), ShouldEqual, 2)
@@ -61,7 +61,7 @@ func TestService_Info(t *testing.T) {
 	srv := &Service{dao: m}
 
 	Convey("Test Info", t, func() {
-		res, err := srv.Info(context.Background(), &pb.InfoReq{
+		res, err := srv.Info(context.TODO(), &pb.InfoReq{
 			ServerId: 1,
 		})
 		Convey("Check it work!", func() {

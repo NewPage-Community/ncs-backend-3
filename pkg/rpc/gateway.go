@@ -13,7 +13,6 @@ import (
 	"github.com/opentracing/opentracing-go/ext"
 	"google.golang.org/grpc"
 	"net/http"
-	"time"
 )
 
 var grpcGatewayTag = opentracing.Tag{Key: string(ext.Component), Value: "grpc-gateway"}
@@ -56,8 +55,7 @@ func (gws *Gateways) AddGateway(handler regHandler, endpoint string) {
 
 func (gws *Gateways) Close() {
 	if gws.server != nil {
-		ctx, _ := context.WithTimeout(context.Background(), time.Second*10)
-		if err := gws.server.Shutdown(ctx); err != nil {
+		if err := gws.server.Shutdown(context.Background()); err != nil {
 			log.Error(err)
 		}
 	}

@@ -3,7 +3,8 @@ package model
 var gFlagBits [26]int
 
 func init() {
-	gFlagBits['a'-'a'] = 1 << 0
+	// a - a
+	gFlagBits[0] = 1 << 0
 	gFlagBits['b'-'a'] = 1 << 1
 	gFlagBits['c'-'a'] = 1 << 2
 	gFlagBits['d'-'a'] = 1 << 3

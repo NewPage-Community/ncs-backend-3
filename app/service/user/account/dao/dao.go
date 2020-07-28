@@ -5,6 +5,7 @@ import (
 	"backend/app/service/user/account/model"
 	cache "backend/pkg/cache/redis"
 	db "backend/pkg/database/mysql"
+	"backend/pkg/log"
 	"github.com/go-redis/redis/v7"
 	"gorm.io/gorm"
 )
@@ -29,7 +30,9 @@ func New(config *conf.Config) (d *dao) {
 		cache: cache.Init(config.Redis),
 	}
 	// Auto migrate db
-	d.db.AutoMigrate(&model.Info{})
+	if err := d.db.AutoMigrate(&model.Info{}); err != nil {
+		log.Error(err)
+	}
 	return
 }
 

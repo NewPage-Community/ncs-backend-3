@@ -23,7 +23,7 @@ func TestInit(t *testing.T) {
 			Init(&tt.args)
 			defer func() {
 				Close()
-				recover()
+				Warn(recover())
 			}()
 
 			Info("This is a info message")

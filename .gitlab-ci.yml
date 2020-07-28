@@ -25,6 +25,20 @@ stages:
   - push images
   - deploy
 
+lint-golang:
+  stage: build
+  image: registry.new-page.xyz/golangci/golangci-lint:latest-alpine
+  script:
+    - golangci-lint run -v
+  allow_failure: true
+
+lint-helm:
+  stage: build
+  image: registry.new-page.xyz/alpine/helm:3.2.3
+  script:
+    - helm lint ./chart
+  allow_failure: true
+
 build:
   stage: build
   script:
@@ -50,7 +64,6 @@ push changed images:
     - build/push-images.sh changed
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
-      when: on_success
 
 push all images:
   stage: push images
@@ -68,6 +81,5 @@ deploy:
     - helm upgrade --install --namespace ncs ncs ./chart
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
-      when: on_success
   needs: ["push changed images"]
   cache: {}

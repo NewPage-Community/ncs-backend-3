@@ -150,8 +150,7 @@ func (s *Server) Stop() {
 		s.grpcServer.GracefulStop()
 	}
 	if s.healthCheck != nil {
-		ctx, _ := context.WithTimeout(context.Background(), time.Second*10)
-		if err := s.healthCheck.Shutdown(ctx); err != nil {
+		if err := s.healthCheck.Shutdown(context.Background()); err != nil {
 			log.Error(err)
 		}
 	}

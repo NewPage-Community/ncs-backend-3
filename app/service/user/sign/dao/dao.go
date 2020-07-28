@@ -4,6 +4,7 @@ import (
 	"backend/app/service/user/sign/conf"
 	"backend/app/service/user/sign/model"
 	db "backend/pkg/database/mysql"
+	"backend/pkg/log"
 	"gorm.io/gorm"
 )
 
@@ -22,7 +23,9 @@ func New(config *conf.Config) (d *dao) {
 	d = &dao{
 		db: db.Init(config.Mysql),
 	}
-	d.db.AutoMigrate(&model.Sign{})
+	if err := d.db.AutoMigrate(&model.Sign{}); err != nil {
+		log.Error(err)
+	}
 	return
 }
 

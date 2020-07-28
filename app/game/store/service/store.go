@@ -69,10 +69,7 @@ func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.Buy
 
 func (s *Service) HotSaleList(ctx context.Context, req *pb.HotSaleListReq) (resp *pb.HotSaleListResp, err error) {
 	resp = &pb.HotSaleListResp{}
-
-	for _, v := range s.hotSale.ItemIDs {
-		resp.ItemsId = append(resp.ItemsId, v)
-	}
+	resp.ItemsId = append(resp.ItemsId, s.hotSale.ItemIDs...)
 	return
 }
 

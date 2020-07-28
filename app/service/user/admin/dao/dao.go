@@ -4,6 +4,7 @@ import (
 	"backend/app/service/user/admin/conf"
 	"backend/app/service/user/admin/model"
 	db "backend/pkg/database/mysql"
+	"backend/pkg/log"
 	"gorm.io/gorm"
 )
 
@@ -22,7 +23,9 @@ func New(config *conf.Config) (d *dao) {
 		db: db.Init(config.Mysql),
 	}
 	// Auto migrate db
-	d.db.AutoMigrate(&model.Admin{})
+	if err := d.db.AutoMigrate(&model.Admin{}); err != nil {
+		log.Error(err)
+	}
 	return
 }
 

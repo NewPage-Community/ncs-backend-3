@@ -72,6 +72,9 @@ func (s *Service) Add(ctx context.Context, req *pb.AddReq) (resp *pb.AddResp, er
 		GameID:     req.Info.GameId,
 		Reason:     req.Info.Reason,
 	})
+	if err != nil {
+		return
+	}
 
 	rcon, err := s.server.RconAll(context.Background(), &serverService.RconAllReq{
 		Cmd: fmt.Sprintf(BanNotifyCMD, req.Info.Uid, req.Info.Type, req.Info.Reason),

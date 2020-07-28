@@ -6,6 +6,7 @@ import (
 	itemsService "backend/app/service/backpack/items/api/grpc"
 	userService "backend/app/service/backpack/user/api/grpc"
 	moneyService "backend/app/service/user/money/api/grpc"
+	ctx "context"
 	"errors"
 	"github.com/golang/mock/gomock"
 	. "github.com/smartystreets/goconvey/convey"
@@ -59,7 +60,7 @@ func TestService_BuyItem(t *testing.T) {
 
 	Convey("Test BuyItem", t, func() {
 		Convey("Check it work", func() {
-			_, err := srv.BuyItem(nil, &pb.BuyItemReq{
+			_, err := srv.BuyItem(ctx.TODO(), &pb.BuyItemReq{
 				Uid:    1,
 				ItemId: 1,
 				Price:  1,
@@ -67,7 +68,7 @@ func TestService_BuyItem(t *testing.T) {
 			So(err, ShouldBeNil)
 		})
 		Convey("Check return work", func() {
-			_, err := srv.BuyItem(nil, &pb.BuyItemReq{
+			_, err := srv.BuyItem(ctx.TODO(), &pb.BuyItemReq{
 				Uid:    1,
 				ItemId: 2,
 				Price:  1,
@@ -85,7 +86,7 @@ func TestService_HotSaleList(t *testing.T) {
 	}
 
 	Convey("Test HotSaleList", t, func() {
-		res, err := srv.HotSaleList(nil, &pb.HotSaleListReq{})
+		res, err := srv.HotSaleList(ctx.TODO(), &pb.HotSaleListReq{})
 		Convey("Check it work", func() {
 			So(err, ShouldBeNil)
 			So(len(res.ItemsId), ShouldEqual, 3)
@@ -140,7 +141,7 @@ func TestService_SaleList(t *testing.T) {
 	}
 
 	Convey("Test SaleList", t, func() {
-		res, err := srv.SaleList(nil, &pb.SaleListReq{
+		res, err := srv.SaleList(ctx.TODO(), &pb.SaleListReq{
 			Uid: 1,
 		})
 		Convey("Check it work", func() {

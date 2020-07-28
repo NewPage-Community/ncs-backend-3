@@ -12,6 +12,7 @@ go_library(
         "//app/service/user/title/conf:go_default_library",
         "//app/service/user/title/model:go_default_library",
         "//pkg/database/mysql:go_default_library",
+        "//pkg/log:go_default_library",
         "@io_gorm_gorm//:go_default_library",
     ],
 )

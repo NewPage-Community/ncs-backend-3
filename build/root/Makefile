@@ -1,5 +1,5 @@
 .PHONY: all
-all: dep build test
+all: dep build test lint
 
 .PHONY: dep
 dep:
@@ -34,3 +34,8 @@ clean:
 .PHONY: deploy
 deploy:
 	helm upgrade --install --namespace ncs ncs ./chart
+
+.PHONY: lint
+lint:
+	docker run --rm -v $(shell pwd):/app -w /app golangci/golangci-lint:latest-alpine golangci-lint run -v
+	helm lint ./chart
