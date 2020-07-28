@@ -5,9 +5,6 @@ variables:
   GIT_CLEAN_FLAGS: -ffdx -e .cache/
   GOPROXY: http://goproxy.golang:8080
   GO111MODULE: "on"
-  GO_REPOSITORY_USE_HOST_CACHE: 1
-  GOPATH: ${CI_PROJECT_DIR}/.cache/go-path
-  GOCACHE: ${CI_PROJECT_DIR}/.cache/go-cache
 
 before_script:
   - chmod -R +x build
@@ -29,8 +26,9 @@ lint-golang:
   stage: build
   image: registry.new-page.xyz/golangci/golangci-lint:latest-alpine
   script:
-    - golangci-lint run -v
+    - golangci-lint run -v --timeout 5m
   allow_failure: true
+  cache: {}
 
 lint-helm:
   stage: build
@@ -38,6 +36,7 @@ lint-helm:
   script:
     - helm lint ./chart
   allow_failure: true
+  cache: {}
 
 build:
   stage: build
