@@ -10,7 +10,6 @@ import (
 type Dao interface {
 	Title(uid int64) (*model.Title, error)
 	Update(title *model.Title) error
-	Create(title *model.Title) error
 	Healthy() bool
 	Close()
 }

@@ -23,12 +23,20 @@ func (d *dao) Info(info *model.VIP) (err error) {
 
 func (d *dao) AddPoint(uid int64, addPoint int) (point int, err error) {
 	info := &model.VIP{}
+	defer func() {
+		// To release lock
+		d.db.Commit()
+	}()
 
 	// DB
 	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
 		Where(uid).Find(info).Error
 	if err == gorm.ErrRecordNotFound {
-		err = ecode.Errorf(codes.NotFound, "Can not found: UID(%v)", info.UID)
+		// Create and add point
+		info.UID = uid
+		info.Point = addPoint
+		return info.Point,
+			d.db.Create(info).Error
 	}
 	if err != nil {
 		return
@@ -54,7 +62,11 @@ func (d *dao) Renewal(uid int64, length int64) (exprTime int64, err error) {
 	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
 		Where(uid).Find(info).Error
 	if err == gorm.ErrRecordNotFound {
-		err = ecode.Errorf(codes.NotFound, "Can not found: UID(%v)", info.UID)
+		// Create and renewal
+		info.UID = uid
+		info.Renewal(length)
+		return info.ExpireDate,
+			d.db.Create(info).Error
 	}
 	if err != nil {
 		return

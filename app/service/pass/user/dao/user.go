@@ -30,10 +30,12 @@ func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, lastLevel in
 	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
 		Where(uid).First(res).Error
 	if err == gorm.ErrRecordNotFound {
+		// Create and add point
 		err = d.db.Create(&model.User{
 			UID:   uid,
 			Point: addPoint,
 		}).Error
+		return
 	}
 	if err != nil {
 		return

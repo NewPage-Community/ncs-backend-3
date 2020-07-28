@@ -5,20 +5,9 @@ import (
 	"backend/pkg/ecode"
 	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
+	"time"
 )
-
-// Register register user and sign today
-func (d *dao) Register(uid int64) (err error) {
-	info := &model.Sign{
-		UID:      uid,
-		SignDays: 1,
-	}
-	info.SignTime = info.GetNowTime()
-
-	// DB
-	err = d.db.Create(info).Error
-	return
-}
 
 // Info get info
 func (d *dao) Info(uid int64) (res *model.Sign, err error) {
@@ -27,19 +16,39 @@ func (d *dao) Info(uid int64) (res *model.Sign, err error) {
 	// DB
 	err = d.db.Where(uid).First(res).Error
 	if err == gorm.ErrRecordNotFound {
-		err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
+		res.UID = uid
+		res.SignTime = time.Unix(0, 0)
+		err = d.db.Create(res).Error
 	}
 	return
 }
 
-func (d *dao) Update(info *model.Sign) (err error) {
+func (d *dao) Sign(uid int64) (err error) {
+	info := &model.Sign{}
+	defer func() {
+		// To release lock
+		d.db.Commit()
+	}()
+
 	// DB
-	if info.IsValid() {
-		DBres := d.db.Save(info)
-		err = DBres.Error
-		if DBres.RowsAffected == 0 {
-			err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", info.UID)
-		}
+	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
+		Where(uid).Find(info).Error
+	if err == gorm.ErrRecordNotFound {
+		// Create and sign
+		info.UID = uid
+		info.Sign()
+		return d.db.Create(info).Error
 	}
+	if err != nil {
+		return
+	}
+
+	if info.IsSigned() {
+		err = ecode.Errorf(codes.Unknown, "User already signed")
+		return
+	}
+	info.Sign()
+
+	err = d.db.Model(info).Updates(*info).Error
 	return
 }

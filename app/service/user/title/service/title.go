@@ -18,16 +18,7 @@ func (s *Service) GetTitle(ctx context.Context, req *pb.GetTitleReq) (resp *pb.G
 
 	res, err := s.dao.Title(req.Uid)
 	if err != nil {
-		if ecode.GetError(err).Code != codes.NotFound {
-			return
-		}
-		// not found -> return empty
-		res = &model.Title{
-			UID:         req.Uid,
-			CustomTitle: "",
-			TitleType:   0,
-		}
-		err = s.dao.Create(res)
+		return
 	}
 	resp.Info = &pb.Info{
 		Uid:         res.UID,

@@ -8,9 +8,8 @@ import (
 )
 
 type Dao interface {
-	Register(uid int64) error
 	Info(uid int64) (*model.Sign, error)
-	Update(info *model.Sign) error
+	Sign(uid int64) error
 	Healthy() bool
 	Close()
 }

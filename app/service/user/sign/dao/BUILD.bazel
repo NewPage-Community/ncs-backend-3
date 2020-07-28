@@ -14,6 +14,7 @@ go_library(
         "//pkg/database/mysql:go_default_library",
         "//pkg/ecode:go_default_library",
         "@io_gorm_gorm//:go_default_library",
+        "@io_gorm_gorm//clause:go_default_library",
         "@org_golang_google_grpc//codes:go_default_library",
     ],
 )

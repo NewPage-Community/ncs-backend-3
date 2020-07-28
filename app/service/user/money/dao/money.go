@@ -13,6 +13,10 @@ func (d *dao) Get(uid int64) (res *model.Money, err error) {
 
 	// DB
 	err = d.db.Find(res, uid).Error
+	if err == gorm.ErrRecordNotFound {
+		res.UID = uid
+		err = d.db.Create(res).Error
+	}
 	return
 }
 
