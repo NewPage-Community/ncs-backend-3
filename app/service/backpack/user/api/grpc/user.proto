@@ -45,7 +45,7 @@ service User {
     }
     rpc AddItems (AddItemsReq) returns (AddItemsResp) {
         option (google.api.http) = {
-            post: "/backpack/user/{uid}/item"
+            post: "/backpack/user/additem"
             body: "*"
         };
     }
