@@ -2,8 +2,6 @@ package dao
 
 import (
 	"backend/app/service/pass/user/model"
-	"backend/pkg/ecode"
-	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
@@ -14,7 +12,9 @@ func (d *dao) Info(uid int64) (res *model.User, err error) {
 	// DB
 	err = d.db.Where(uid).First(res).Error
 	if err == gorm.ErrRecordNotFound {
-		err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
+		err = d.db.Create(&model.User{
+			UID: uid,
+		}).Error
 	}
 	return
 }
@@ -30,7 +30,10 @@ func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, lastLevel in
 	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
 		Where(uid).First(res).Error
 	if err == gorm.ErrRecordNotFound {
-		err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
+		err = d.db.Create(&model.User{
+			UID:   uid,
+			Point: addPoint,
+		}).Error
 	}
 	if err != nil {
 		return
@@ -40,12 +43,6 @@ func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, lastLevel in
 	res.Point += addPoint
 
 	err = d.db.Model(res).Updates(&model.User{Point: res.Point}).Error
-	return
-}
-
-func (d *dao) Create(info *model.User) (err error) {
-	// DB
-	err = d.db.Create(info).Error
 	return
 }
 

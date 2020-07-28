@@ -20,16 +20,7 @@ func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp,
 
 	res, err := s.dao.Info(req.Uid)
 	if err != nil {
-		if ecode.GetError(err).Code != codes.NotFound {
-			return
-		}
-		// not found -> create
-		res = &model.User{
-			UID:      req.Uid,
-			PassType: 0,
-			Point:    0,
-		}
-		err = s.dao.Create(res)
+		return
 	}
 	resp.Info = &pb.Info{
 		Uid:      res.UID,

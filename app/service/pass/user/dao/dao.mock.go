@@ -78,20 +78,6 @@ func (mr *MockDaoMockRecorder) AddPoint(uid, addPoint interface{}) *gomock.Call 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddPoint", reflect.TypeOf((*MockDao)(nil).AddPoint), uid, addPoint)
 }
 
-// Create mocks base method
-func (m *MockDao) Create(info *model.User) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", info)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Create indicates an expected call of Create
-func (mr *MockDaoMockRecorder) Create(info interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockDao)(nil).Create), info)
-}
-
 // Healthy mocks base method
 func (m *MockDao) Healthy() bool {
 	m.ctrl.T.Helper()
