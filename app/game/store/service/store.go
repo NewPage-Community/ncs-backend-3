@@ -89,7 +89,10 @@ func (s *Service) SaleList(ctx context.Context, req *pb.SaleListReq) (resp *pb.S
 		}
 		userItemsMap = make(map[int32]bool)
 		for _, v := range userItems.Items {
-			userItemsMap[v.Id] = true
+			// Unlimited item can not buy twice
+			if v.ExprTime == 0 && v.Amount == 0 {
+				userItemsMap[v.Id] = true
+			}
 		}
 		userMoney, err = s.money.Get(ctx, &moneyService.GetReq{Uid: req.Uid})
 		if err != nil {
