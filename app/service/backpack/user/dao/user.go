@@ -2,8 +2,6 @@ package dao
 
 import (
 	"backend/app/service/backpack/user/model"
-	"backend/pkg/ecode"
-	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )
@@ -20,7 +18,8 @@ func (d *dao) Get(uid int64) (res *model.User, err error) {
 	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
 		Where(uid).First(userModel).Error
 	if err == gorm.ErrRecordNotFound {
-		err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
+		// not found and create
+		return d.Create(uid)
 	}
 	if err != nil {
 		return
@@ -51,7 +50,9 @@ func (d *dao) AddItems(uid int64, items *model.Items) (err error) {
 	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
 		Where(uid).First(userModel).Error
 	if err == gorm.ErrRecordNotFound {
-		err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
+		// not found and create
+		_, err = d.Create(uid)
+		userModel.UID = uid
 	}
 	if err != nil {
 		return
@@ -67,7 +68,7 @@ func (d *dao) AddItems(uid int64, items *model.Items) (err error) {
 	if err != nil {
 		return
 	}
-	err = d.db.Model(userModel).Updates(&model.UserModel{Items: userModel.Items}).Error
+	err = d.db.Model(userModel).Updates(*userModel).Error
 	return
 }
 
@@ -82,7 +83,9 @@ func (d *dao) RemoveItem(uid int64, item model.Item, all bool) (err error) {
 	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
 		Where(uid).First(userModel).Error
 	if err == gorm.ErrRecordNotFound {
-		err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
+		// not found and create
+		_, err = d.Create(uid)
+		userModel.UID = uid
 	}
 	if err != nil {
 		return
@@ -98,7 +101,7 @@ func (d *dao) RemoveItem(uid int64, item model.Item, all bool) (err error) {
 	if err != nil {
 		return
 	}
-	err = d.db.Model(userModel).Updates(&model.UserModel{Items: userModel.Items}).Error
+	err = d.db.Model(userModel).Updates(*userModel).Error
 	return
 }
 

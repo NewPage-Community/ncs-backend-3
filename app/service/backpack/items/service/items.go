@@ -20,8 +20,8 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 		if req.Type > 0 && v.Type != req.Type {
 			continue
 		}
-		var attr model.Attributes
-		if err = v.GetAttributes(&attr); err != nil {
+		var attr *model.Attributes
+		if attr, err = v.GetAttributes(); err != nil {
 			log.Error(err)
 			continue
 		}
@@ -31,7 +31,7 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 			Description: v.Description,
 			Type:        v.Type,
 			Price:       v.Price,
-			Attributes:  attr,
+			Attributes:  *attr,
 			Discount:    v.Discount,
 			Available:   v.Available,
 		})

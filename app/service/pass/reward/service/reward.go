@@ -14,7 +14,7 @@ func (s *Service) GetRewards(ctx context.Context, req *pb.GetRewardsReq) (resp *
 		return
 	}
 	resp = &pb.GetRewardsResp{
-		Season:      s.config.Reward.Season,
+		Season:      s.reward.Season,
 		FreeRewards: s.getRewards(0, req.Level, req.Min),
 		AdvRewards:  s.getRewards(1, req.Level, req.Min),
 	}
@@ -26,9 +26,9 @@ func (s *Service) getRewards(passType int32, level int32, min int32) []*pb.Item 
 	var list *[]model.Item
 
 	if passType > 0 {
-		list = &s.config.Reward.AdvRewards
+		list = &s.reward.AdvRewards
 	} else {
-		list = &s.config.Reward.FreeRewards
+		list = &s.reward.FreeRewards
 	}
 
 	for _, v := range *list {

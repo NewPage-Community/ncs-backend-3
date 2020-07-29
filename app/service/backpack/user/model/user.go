@@ -4,6 +4,10 @@ import (
 	"gorm.io/datatypes"
 )
 
+const (
+	EmptyItemsJSON = "[]"
+)
+
 type UserModel struct {
 	UID int64 `gorm:"primary_key" json:"uid"`
 	// []Item{}
@@ -21,6 +25,9 @@ func (i *UserModel) IsValid() bool {
 }
 
 func (i *UserModel) GetUser() (*User, error) {
+	if len(i.Items) == 0 {
+		i.Items = []byte(EmptyItemsJSON)
+	}
 	items, err := LoadItemsFromJSON(i.Items)
 	return &User{
 		UID:   i.UID,
@@ -39,6 +46,9 @@ func (i *User) IsValid() bool {
 }
 
 func (i *User) AddItems(items *Items) {
+	if i.Items == nil {
+		i.Items = &Items{}
+	}
 	i.Items.AddItems(items)
 }
 

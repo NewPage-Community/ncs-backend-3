@@ -1,8 +1,15 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "go_default_library",
     srcs = ["ban.go"],
     importpath = "backend/app/service/user/ban/model",
     visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["ban_test.go"],
+    embed = [":go_default_library"],
+    deps = ["@com_github_smartystreets_goconvey//convey:go_default_library"],
 )

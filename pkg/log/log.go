@@ -9,9 +9,17 @@ type Config struct {
 	Debug bool
 }
 
+var _defConfig = &Config{
+	Debug: false,
+}
+
 var logger *zap.Logger
 
 func Init(conf *Config) {
+	if conf == nil {
+		conf = _defConfig
+	}
+
 	var err error
 	if conf.Debug {
 		logger, err = zap.NewDevelopment(zap.AddCallerSkip(1))

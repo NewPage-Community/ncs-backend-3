@@ -5,6 +5,10 @@ import (
 	"gorm.io/datatypes"
 )
 
+const (
+	EmptyAttrJSON = "{}"
+)
+
 type Item struct {
 	ID          int32          `json:"id"`
 	Name        string         `gorm:"not null" json:"name"`
@@ -25,7 +29,11 @@ func (item *Item) SetAttributes(v *Attributes) (err error) {
 	return
 }
 
-func (item *Item) GetAttributes(v *Attributes) (err error) {
+func (item *Item) GetAttributes() (v *Attributes, err error) {
+	v = &Attributes{}
+	if len(item.Attributes) == 0 {
+		item.Attributes = []byte(EmptyAttrJSON)
+	}
 	err = json.Unmarshal(item.Attributes, v)
 	return
 }

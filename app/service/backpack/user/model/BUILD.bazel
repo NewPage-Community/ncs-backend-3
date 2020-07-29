@@ -16,7 +16,10 @@ go_library(
 
 go_test(
     name = "go_default_test",
-    srcs = ["items_test.go"],
+    srcs = [
+        "items_test.go",
+        "user_test.go",
+    ],
     embed = [":go_default_library"],
     deps = ["@com_github_smartystreets_goconvey//convey:go_default_library"],
 )

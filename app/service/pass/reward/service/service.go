@@ -1,14 +1,17 @@
 package service
 
-import "backend/app/service/pass/reward/conf"
+import (
+	"backend/app/service/pass/reward/conf"
+	"backend/app/service/pass/reward/model"
+)
 
 type Service struct {
-	config *conf.Config
+	reward *model.Reward
 }
 
 func Init(config *conf.Config) *Service {
 	return &Service{
-		config: config,
+		reward: config.Reward,
 	}
 }
 

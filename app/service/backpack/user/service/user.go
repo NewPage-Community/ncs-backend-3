@@ -19,14 +19,7 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 	var res *model.User
 	res, err = s.dao.Get(req.Uid)
 	if err != nil {
-		// not found -> create
-		if ecode.GetError(err).Code != codes.NotFound {
-			return
-		}
-		res, err = s.dao.Create(req.Uid)
-		if err != nil {
-			return
-		}
+		return
 	}
 
 	for _, v := range *res.Items {
