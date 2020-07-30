@@ -41,6 +41,32 @@
         ]
       }
     },
+    "/game/store/buy/pass": {
+      "post": {
+        "operationId": "BuyPass",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/storeBuyPassResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/storeBuyPassReq"
+            }
+          }
+        ],
+        "tags": [
+          "Store"
+        ]
+      }
+    },
     "/game/store/hotsale": {
       "get": {
         "operationId": "HotSaleList",
@@ -129,6 +155,22 @@
     "storeBuyItemResp": {
       "type": "object"
     },
+    "storeBuyPassReq": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "storeBuyPassResp": {
+      "type": "object"
+    },
     "storeHotSaleListResp": {
       "type": "object",
       "properties": {
@@ -186,6 +228,10 @@
           }
         },
         "money": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pass_type": {
           "type": "integer",
           "format": "int32"
         }

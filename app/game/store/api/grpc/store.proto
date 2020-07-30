@@ -38,6 +38,15 @@ message SaleListReq {
 message SaleListResp {
     repeated Item items = 1;
     int32 money = 2;
+    int32 pass_type = 3;
+}
+
+message BuyPassReq {
+    int64 uid = 1;
+    int32 type = 2;
+}
+
+message BuyPassResp {
 }
 
 service Store {
@@ -58,6 +67,12 @@ service Store {
             additional_bindings {
 				get: "/game/store/list/{uid}"
 			}
+        };
+    }
+    rpc BuyPass (BuyPassReq) returns (BuyPassResp) {
+        option (google.api.http) = {
+            post: "/game/store/buy/pass"
+            body: "*"
         };
     }
 }

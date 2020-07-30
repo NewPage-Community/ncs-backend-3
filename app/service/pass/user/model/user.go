@@ -15,5 +15,5 @@ func (u *User) Level() int32 {
 	if u.Point == 0 {
 		return 0
 	}
-	return u.Point/3600 + 1
+	return u.Point/7200 + 1
 }

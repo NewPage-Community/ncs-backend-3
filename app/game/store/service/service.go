@@ -5,6 +5,7 @@ import (
 	"backend/app/game/store/model"
 	itemsService "backend/app/service/backpack/items/api/grpc"
 	userService "backend/app/service/backpack/user/api/grpc"
+	passService "backend/app/service/pass/user/api/grpc"
 	moneyService "backend/app/service/user/money/api/grpc"
 )
 
@@ -12,6 +13,7 @@ type Service struct {
 	items   itemsService.ItemsClient
 	user    userService.UserClient
 	money   moneyService.MoneyClient
+	pass    passService.UserClient
 	hotSale model.HotSale
 }
 
@@ -20,6 +22,7 @@ func Init(config *conf.Config) *Service {
 		items:   itemsService.InitClient(itemsService.ServiceAddr),
 		user:    userService.InitClient(userService.ServiceAddr),
 		money:   moneyService.InitClient(moneyService.ServiceAddr),
+		pass:    passService.InitClient(passService.ServiceAddr),
 		hotSale: *config.HotSale,
 	}
 }
@@ -32,4 +35,5 @@ func (s *Service) Close() {
 	itemsService.Close()
 	userService.Close()
 	moneyService.Close()
+	passService.Close()
 }

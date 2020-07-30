@@ -15,14 +15,14 @@
     "application/json"
   ],
   "paths": {
-    "/pass/user/addpoint": {
+    "/pass/user/addpoints": {
       "post": {
-        "operationId": "AddPoint",
+        "operationId": "AddPoints",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/userAddPointResp"
+              "$ref": "#/definitions/userAddPointsResp"
             }
           }
         },
@@ -32,7 +32,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userAddPointReq"
+              "$ref": "#/definitions/userAddPointsReq"
             }
           }
         ],
@@ -101,7 +101,7 @@
     }
   },
   "definitions": {
-    "userAddPointReq": {
+    "userAddPoints": {
       "type": "object",
       "properties": {
         "uid": {
@@ -114,7 +114,18 @@
         }
       }
     },
-    "userAddPointResp": {
+    "userAddPointsReq": {
+      "type": "object",
+      "properties": {
+        "add": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/userAddPoints"
+          }
+        }
+      }
+    },
+    "userAddPointsResp": {
       "type": "object"
     },
     "userInfo": {
@@ -148,6 +159,10 @@
         "uid": {
           "type": "string",
           "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },

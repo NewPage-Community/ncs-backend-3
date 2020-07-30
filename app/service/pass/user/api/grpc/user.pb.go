@@ -184,7 +184,7 @@ func (m *InfoResp) GetInfo() *Info {
 	return nil
 }
 
-type AddPointReq struct {
+type AddPoints struct {
 	Uid                  int64    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
 	Point                int32    `protobuf:"varint,2,opt,name=point,proto3" json:"point,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -192,18 +192,18 @@ type AddPointReq struct {
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *AddPointReq) Reset()         { *m = AddPointReq{} }
-func (m *AddPointReq) String() string { return proto.CompactTextString(m) }
-func (*AddPointReq) ProtoMessage()    {}
-func (*AddPointReq) Descriptor() ([]byte, []int) {
+func (m *AddPoints) Reset()         { *m = AddPoints{} }
+func (m *AddPoints) String() string { return proto.CompactTextString(m) }
+func (*AddPoints) ProtoMessage()    {}
+func (*AddPoints) Descriptor() ([]byte, []int) {
 	return fileDescriptor_0a69a6a29070951a, []int{3}
 }
-func (m *AddPointReq) XXX_Unmarshal(b []byte) error {
+func (m *AddPoints) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *AddPointReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *AddPoints) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_AddPointReq.Marshal(b, m, deterministic)
+		return xxx_messageInfo_AddPoints.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -213,50 +213,51 @@ func (m *AddPointReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return b[:n], nil
 	}
 }
-func (m *AddPointReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddPointReq.Merge(m, src)
+func (m *AddPoints) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddPoints.Merge(m, src)
 }
-func (m *AddPointReq) XXX_Size() int {
+func (m *AddPoints) XXX_Size() int {
 	return m.Size()
 }
-func (m *AddPointReq) XXX_DiscardUnknown() {
-	xxx_messageInfo_AddPointReq.DiscardUnknown(m)
+func (m *AddPoints) XXX_DiscardUnknown() {
+	xxx_messageInfo_AddPoints.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_AddPointReq proto.InternalMessageInfo
+var xxx_messageInfo_AddPoints proto.InternalMessageInfo
 
-func (m *AddPointReq) GetUid() int64 {
+func (m *AddPoints) GetUid() int64 {
 	if m != nil {
 		return m.Uid
 	}
 	return 0
 }
 
-func (m *AddPointReq) GetPoint() int32 {
+func (m *AddPoints) GetPoint() int32 {
 	if m != nil {
 		return m.Point
 	}
 	return 0
 }
 
-type AddPointResp struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+type AddPointsReq struct {
+	Add                  []*AddPoints `protobuf:"bytes,1,rep,name=add,proto3" json:"add,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}     `json:"-"`
+	XXX_unrecognized     []byte       `json:"-"`
+	XXX_sizecache        int32        `json:"-"`
 }
 
-func (m *AddPointResp) Reset()         { *m = AddPointResp{} }
-func (m *AddPointResp) String() string { return proto.CompactTextString(m) }
-func (*AddPointResp) ProtoMessage()    {}
-func (*AddPointResp) Descriptor() ([]byte, []int) {
+func (m *AddPointsReq) Reset()         { *m = AddPointsReq{} }
+func (m *AddPointsReq) String() string { return proto.CompactTextString(m) }
+func (*AddPointsReq) ProtoMessage()    {}
+func (*AddPointsReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_0a69a6a29070951a, []int{4}
 }
-func (m *AddPointResp) XXX_Unmarshal(b []byte) error {
+func (m *AddPointsReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *AddPointResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *AddPointsReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_AddPointResp.Marshal(b, m, deterministic)
+		return xxx_messageInfo_AddPointsReq.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -266,20 +267,67 @@ func (m *AddPointResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return b[:n], nil
 	}
 }
-func (m *AddPointResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddPointResp.Merge(m, src)
+func (m *AddPointsReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddPointsReq.Merge(m, src)
 }
-func (m *AddPointResp) XXX_Size() int {
+func (m *AddPointsReq) XXX_Size() int {
 	return m.Size()
 }
-func (m *AddPointResp) XXX_DiscardUnknown() {
-	xxx_messageInfo_AddPointResp.DiscardUnknown(m)
+func (m *AddPointsReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_AddPointsReq.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_AddPointResp proto.InternalMessageInfo
+var xxx_messageInfo_AddPointsReq proto.InternalMessageInfo
+
+func (m *AddPointsReq) GetAdd() []*AddPoints {
+	if m != nil {
+		return m.Add
+	}
+	return nil
+}
+
+type AddPointsResp struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AddPointsResp) Reset()         { *m = AddPointsResp{} }
+func (m *AddPointsResp) String() string { return proto.CompactTextString(m) }
+func (*AddPointsResp) ProtoMessage()    {}
+func (*AddPointsResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0a69a6a29070951a, []int{5}
+}
+func (m *AddPointsResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *AddPointsResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_AddPointsResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *AddPointsResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AddPointsResp.Merge(m, src)
+}
+func (m *AddPointsResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *AddPointsResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_AddPointsResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AddPointsResp proto.InternalMessageInfo
 
 type UpgradePassReq struct {
 	Uid                  int64    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	Type                 int32    `protobuf:"varint,2,opt,name=type,proto3" json:"type,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -289,7 +337,7 @@ func (m *UpgradePassReq) Reset()         { *m = UpgradePassReq{} }
 func (m *UpgradePassReq) String() string { return proto.CompactTextString(m) }
 func (*UpgradePassReq) ProtoMessage()    {}
 func (*UpgradePassReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0a69a6a29070951a, []int{5}
+	return fileDescriptor_0a69a6a29070951a, []int{6}
 }
 func (m *UpgradePassReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -325,6 +373,13 @@ func (m *UpgradePassReq) GetUid() int64 {
 	return 0
 }
 
+func (m *UpgradePassReq) GetType() int32 {
+	if m != nil {
+		return m.Type
+	}
+	return 0
+}
+
 type UpgradePassResp struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -335,7 +390,7 @@ func (m *UpgradePassResp) Reset()         { *m = UpgradePassResp{} }
 func (m *UpgradePassResp) String() string { return proto.CompactTextString(m) }
 func (*UpgradePassResp) ProtoMessage()    {}
 func (*UpgradePassResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0a69a6a29070951a, []int{6}
+	return fileDescriptor_0a69a6a29070951a, []int{7}
 }
 func (m *UpgradePassResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -368,8 +423,9 @@ func init() {
 	proto.RegisterType((*Info)(nil), "ncs.pass.user.Info")
 	proto.RegisterType((*InfoReq)(nil), "ncs.pass.user.InfoReq")
 	proto.RegisterType((*InfoResp)(nil), "ncs.pass.user.InfoResp")
-	proto.RegisterType((*AddPointReq)(nil), "ncs.pass.user.AddPointReq")
-	proto.RegisterType((*AddPointResp)(nil), "ncs.pass.user.AddPointResp")
+	proto.RegisterType((*AddPoints)(nil), "ncs.pass.user.AddPoints")
+	proto.RegisterType((*AddPointsReq)(nil), "ncs.pass.user.AddPointsReq")
+	proto.RegisterType((*AddPointsResp)(nil), "ncs.pass.user.AddPointsResp")
 	proto.RegisterType((*UpgradePassReq)(nil), "ncs.pass.user.UpgradePassReq")
 	proto.RegisterType((*UpgradePassResp)(nil), "ncs.pass.user.UpgradePassResp")
 }
@@ -379,32 +435,34 @@ func init() {
 }
 
 var fileDescriptor_0a69a6a29070951a = []byte{
-	// 389 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x92, 0xc1, 0x4e, 0xea, 0x40,
-	0x14, 0x86, 0xef, 0x94, 0x72, 0x2f, 0x77, 0xb8, 0x97, 0xcb, 0x1d, 0x0c, 0x36, 0x45, 0x1a, 0x32,
-	0x2e, 0x44, 0x16, 0x6d, 0x02, 0x71, 0xc3, 0x4e, 0x77, 0xc6, 0x0d, 0x12, 0xd9, 0xb8, 0x31, 0xb5,
-	0x1d, 0x9a, 0x26, 0xa6, 0x73, 0xe8, 0xb4, 0x26, 0xc4, 0xb8, 0xf1, 0x15, 0xdc, 0xf8, 0x1a, 0xbe,
-	0x85, 0x4b, 0x13, 0x5f, 0xc0, 0xa0, 0x0f, 0x62, 0x66, 0xaa, 0xa1, 0x60, 0x75, 0xd7, 0x39, 0xff,
-	0x3f, 0x5f, 0xff, 0x73, 0xe6, 0xe0, 0x5d, 0x17, 0xc0, 0x11, 0x2c, 0xbe, 0x0c, 0x3d, 0xe6, 0x80,
-	0x2b, 0x84, 0x93, 0x0a, 0x16, 0x3b, 0x2e, 0x84, 0x4e, 0x10, 0x83, 0xa7, 0x4e, 0x36, 0xc4, 0x3c,
-	0xe1, 0xe4, 0x6f, 0xe4, 0x09, 0x5b, 0x5a, 0x6c, 0x59, 0x34, 0xb7, 0x02, 0xce, 0x83, 0x0b, 0xa6,
-	0xac, 0x6e, 0x14, 0xf1, 0xc4, 0x4d, 0x42, 0x1e, 0x89, 0xcc, 0x4c, 0x8f, 0xb0, 0x7e, 0x18, 0x4d,
-	0x39, 0xa9, 0xe3, 0x52, 0x1a, 0xfa, 0x06, 0xea, 0xa0, 0x6e, 0x69, 0x2c, 0x3f, 0x49, 0x0b, 0xff,
-	0x96, 0x90, 0xb3, 0x64, 0x0e, 0xcc, 0xd0, 0x3a, 0xa8, 0x5b, 0x1e, 0x57, 0x64, 0xe1, 0x64, 0x0e,
-	0x8c, 0x6c, 0xe0, 0x32, 0xf0, 0x30, 0x4a, 0x8c, 0x92, 0x12, 0xb2, 0x03, 0x6d, 0xe1, 0x5f, 0x12,
-	0x36, 0x66, 0xb3, 0xcf, 0x3c, 0x3a, 0xc0, 0x95, 0x4c, 0x14, 0x40, 0x76, 0xb0, 0x1e, 0x46, 0x53,
-	0xae, 0xe4, 0x6a, 0xbf, 0x61, 0xaf, 0x24, 0xb6, 0x95, 0x4d, 0x19, 0xe8, 0x1e, 0xae, 0xee, 0xfb,
-	0xfe, 0x48, 0xd2, 0x0b, 0xa9, 0xcb, 0x20, 0x5a, 0x3e, 0x48, 0x0d, 0xff, 0x59, 0x5e, 0x13, 0x40,
-	0x29, 0xae, 0x4d, 0x20, 0x88, 0x5d, 0x9f, 0x8d, 0x5c, 0x21, 0x8a, 0xf3, 0xfd, 0xc7, 0xff, 0x56,
-	0x3c, 0x02, 0xfa, 0xf7, 0x1a, 0xd6, 0x27, 0x82, 0xc5, 0xe4, 0xf8, 0x7d, 0x4a, 0xcd, 0xa2, 0xa4,
-	0x6c, 0x66, 0x6e, 0x16, 0xd6, 0x05, 0x50, 0xe3, 0xe6, 0xe9, 0xf5, 0x56, 0x23, 0xa4, 0x9e, 0x7b,
-	0xb3, 0xab, 0x34, 0xf4, 0xaf, 0x89, 0x87, 0x2b, 0x1f, 0x11, 0x89, 0xb9, 0x76, 0x3d, 0xd7, 0xb2,
-	0xd9, 0xfa, 0x52, 0x13, 0x40, 0x2d, 0x85, 0x37, 0x68, 0x23, 0xbf, 0x12, 0xbe, 0xaf, 0x86, 0x30,
-	0x44, 0x3d, 0x32, 0xc3, 0xd5, 0x5c, 0x4f, 0xa4, 0xbd, 0xc6, 0x5a, 0x9d, 0x89, 0x69, 0x7d, 0x27,
-	0x0b, 0xa0, 0xdb, 0xea, 0x6f, 0x6d, 0x6a, 0xac, 0x37, 0xe3, 0xa4, 0x99, 0x73, 0x88, 0x7a, 0x07,
-	0xcd, 0x87, 0x85, 0x85, 0x1e, 0x17, 0x16, 0x7a, 0x5e, 0x58, 0xe8, 0xee, 0xc5, 0xfa, 0x71, 0xaa,
-	0xcb, 0x05, 0x3d, 0xff, 0xa9, 0xf6, 0x6d, 0xf0, 0x16, 0x00, 0x00, 0xff, 0xff, 0xeb, 0x50, 0x5c,
-	0x99, 0xc9, 0x02, 0x00, 0x00,
+	// 418 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x52, 0xc1, 0x6e, 0xd3, 0x40,
+	0x10, 0x65, 0x6d, 0x17, 0xda, 0x09, 0xa5, 0x65, 0xa9, 0x8a, 0x71, 0x5a, 0x53, 0x2d, 0x07, 0x42,
+	0x0e, 0xb6, 0x94, 0x48, 0x1c, 0x72, 0x83, 0x1b, 0xe2, 0x52, 0x22, 0x7a, 0xe1, 0x82, 0x96, 0xec,
+	0xd6, 0xb2, 0x84, 0xbc, 0x63, 0x8f, 0x8d, 0x54, 0x21, 0x2e, 0xfc, 0x02, 0x17, 0x7e, 0x84, 0x7f,
+	0xe0, 0x88, 0xc4, 0x0f, 0xa0, 0xc0, 0x87, 0xa0, 0x5d, 0xa3, 0xe0, 0x04, 0x87, 0xdb, 0xee, 0xcc,
+	0x9b, 0x37, 0xef, 0x3d, 0x0d, 0x3c, 0x92, 0x88, 0x29, 0xe9, 0xea, 0x5d, 0xbe, 0xd0, 0x29, 0x4a,
+	0xa2, 0xb4, 0x21, 0x5d, 0xa5, 0x12, 0xf3, 0x34, 0xab, 0x70, 0xe1, 0x7e, 0x09, 0x56, 0xa6, 0x36,
+	0x7c, 0xbf, 0x58, 0x50, 0x62, 0x21, 0x89, 0x2d, 0x46, 0x27, 0x99, 0x31, 0xd9, 0x5b, 0xed, 0xa0,
+	0xb2, 0x28, 0x4c, 0x2d, 0xeb, 0xdc, 0x14, 0xd4, 0x82, 0xc5, 0x73, 0x08, 0x9e, 0x15, 0x97, 0x86,
+	0x1f, 0x82, 0xdf, 0xe4, 0x2a, 0x64, 0x67, 0x6c, 0xe4, 0xcf, 0xed, 0x93, 0x0f, 0x61, 0xcf, 0x92,
+	0xbc, 0xae, 0xaf, 0x50, 0x87, 0xde, 0x19, 0x1b, 0xed, 0xcc, 0x77, 0x6d, 0xe1, 0xe5, 0x15, 0x6a,
+	0x7e, 0x04, 0x3b, 0x68, 0xf2, 0xa2, 0x0e, 0x7d, 0xd7, 0x68, 0x3f, 0x62, 0x08, 0x37, 0x2c, 0xd9,
+	0x5c, 0x97, 0xff, 0xf2, 0x89, 0x29, 0xec, 0xb6, 0x4d, 0x42, 0xfe, 0x10, 0x82, 0xbc, 0xb8, 0x34,
+	0xae, 0x3d, 0x98, 0xdc, 0x49, 0xd6, 0x14, 0x27, 0x0e, 0xe6, 0x00, 0x62, 0x0a, 0x7b, 0x4f, 0x94,
+	0x3a, 0xb7, 0xec, 0xd4, 0xa3, 0x71, 0x25, 0xc3, 0xeb, 0xca, 0x98, 0xc1, 0xcd, 0xd5, 0x90, 0xd5,
+	0x32, 0x06, 0x5f, 0x2a, 0x3b, 0xe7, 0x8f, 0x06, 0x93, 0x70, 0x63, 0xd9, 0x5f, 0xa4, 0x05, 0x89,
+	0x03, 0xd8, 0xef, 0xcc, 0x12, 0x8a, 0xc7, 0x70, 0xeb, 0x02, 0xb3, 0x4a, 0x2a, 0x7d, 0x2e, 0x89,
+	0x7a, 0xad, 0x71, 0x0e, 0x41, 0x27, 0x25, 0xf7, 0x16, 0xb7, 0xe1, 0x60, 0x6d, 0x8e, 0x70, 0xf2,
+	0xc5, 0x83, 0xe0, 0x82, 0x74, 0xc5, 0x5f, 0xfc, 0x09, 0xfd, 0xb8, 0xcf, 0xb8, 0x2e, 0xa3, 0xbb,
+	0xbd, 0x75, 0x42, 0x11, 0x7e, 0xfc, 0xfe, 0xeb, 0x93, 0xc7, 0xf9, 0x61, 0xe7, 0x04, 0xde, 0x37,
+	0xb9, 0xfa, 0xc0, 0xb3, 0x6e, 0x50, 0xc3, 0xad, 0x1e, 0x75, 0x19, 0x9d, 0x6c, 0x6f, 0x12, 0x8a,
+	0xfb, 0x6e, 0xc3, 0x3d, 0x71, 0xd4, 0x3d, 0x32, 0xa5, 0x5c, 0xb0, 0x34, 0x63, 0x63, 0x5e, 0xc2,
+	0xa0, 0xe3, 0x8b, 0x9f, 0x6e, 0xb0, 0xad, 0x67, 0x15, 0xc5, 0xff, 0x6b, 0x13, 0x8a, 0x07, 0x6e,
+	0xdd, 0xa9, 0x08, 0x37, 0x0d, 0xa5, 0x4d, 0x8b, 0x9c, 0xb1, 0xf1, 0xd3, 0xe3, 0xaf, 0xcb, 0x98,
+	0x7d, 0x5b, 0xc6, 0xec, 0xc7, 0x32, 0x66, 0x9f, 0x7f, 0xc6, 0xd7, 0x5e, 0x05, 0xf6, 0xe6, 0xdf,
+	0x5c, 0x77, 0x27, 0x3c, 0xfd, 0x1d, 0x00, 0x00, 0xff, 0xff, 0x7a, 0x14, 0x91, 0x4e, 0x1c, 0x03,
+	0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -420,7 +478,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type UserClient interface {
 	Info(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
-	AddPoint(ctx context.Context, in *AddPointReq, opts ...grpc.CallOption) (*AddPointResp, error)
+	AddPoints(ctx context.Context, in *AddPointsReq, opts ...grpc.CallOption) (*AddPointsResp, error)
 	UpgradePass(ctx context.Context, in *UpgradePassReq, opts ...grpc.CallOption) (*UpgradePassResp, error)
 }
 
@@ -441,9 +499,9 @@ func (c *userClient) Info(ctx context.Context, in *InfoReq, opts ...grpc.CallOpt
 	return out, nil
 }
 
-func (c *userClient) AddPoint(ctx context.Context, in *AddPointReq, opts ...grpc.CallOption) (*AddPointResp, error) {
-	out := new(AddPointResp)
-	err := c.cc.Invoke(ctx, "/ncs.pass.user.User/AddPoint", in, out, opts...)
+func (c *userClient) AddPoints(ctx context.Context, in *AddPointsReq, opts ...grpc.CallOption) (*AddPointsResp, error) {
+	out := new(AddPointsResp)
+	err := c.cc.Invoke(ctx, "/ncs.pass.user.User/AddPoints", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -462,7 +520,7 @@ func (c *userClient) UpgradePass(ctx context.Context, in *UpgradePassReq, opts .
 // UserServer is the server API for User service.
 type UserServer interface {
 	Info(context.Context, *InfoReq) (*InfoResp, error)
-	AddPoint(context.Context, *AddPointReq) (*AddPointResp, error)
+	AddPoints(context.Context, *AddPointsReq) (*AddPointsResp, error)
 	UpgradePass(context.Context, *UpgradePassReq) (*UpgradePassResp, error)
 }
 
@@ -473,8 +531,8 @@ type UnimplementedUserServer struct {
 func (*UnimplementedUserServer) Info(ctx context.Context, req *InfoReq) (*InfoResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Info not implemented")
 }
-func (*UnimplementedUserServer) AddPoint(ctx context.Context, req *AddPointReq) (*AddPointResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AddPoint not implemented")
+func (*UnimplementedUserServer) AddPoints(ctx context.Context, req *AddPointsReq) (*AddPointsResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddPoints not implemented")
 }
 func (*UnimplementedUserServer) UpgradePass(ctx context.Context, req *UpgradePassReq) (*UpgradePassResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpgradePass not implemented")
@@ -502,20 +560,20 @@ func _User_Info_Handler(srv interface{}, ctx context.Context, dec func(interface
 	return interceptor(ctx, in, info, handler)
 }
 
-func _User_AddPoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddPointReq)
+func _User_AddPoints_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddPointsReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServer).AddPoint(ctx, in)
+		return srv.(UserServer).AddPoints(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ncs.pass.user.User/AddPoint",
+		FullMethod: "/ncs.pass.user.User/AddPoints",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).AddPoint(ctx, req.(*AddPointReq))
+		return srv.(UserServer).AddPoints(ctx, req.(*AddPointsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -547,8 +605,8 @@ var _User_serviceDesc = grpc.ServiceDesc{
 			Handler:    _User_Info_Handler,
 		},
 		{
-			MethodName: "AddPoint",
-			Handler:    _User_AddPoint_Handler,
+			MethodName: "AddPoints",
+			Handler:    _User_AddPoints_Handler,
 		},
 		{
 			MethodName: "UpgradePass",
@@ -672,7 +730,7 @@ func (m *InfoResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *AddPointReq) Marshal() (dAtA []byte, err error) {
+func (m *AddPoints) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -682,12 +740,12 @@ func (m *AddPointReq) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *AddPointReq) MarshalTo(dAtA []byte) (int, error) {
+func (m *AddPoints) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *AddPointReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *AddPoints) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -709,7 +767,7 @@ func (m *AddPointReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *AddPointResp) Marshal() (dAtA []byte, err error) {
+func (m *AddPointsReq) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -719,12 +777,53 @@ func (m *AddPointResp) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *AddPointResp) MarshalTo(dAtA []byte) (int, error) {
+func (m *AddPointsReq) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *AddPointResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *AddPointsReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Add) > 0 {
+		for iNdEx := len(m.Add) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Add[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintUser(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *AddPointsResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *AddPointsResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AddPointsResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -759,6 +858,11 @@ func (m *UpgradePassReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Type != 0 {
+		i = encodeVarintUser(dAtA, i, uint64(m.Type))
+		i--
+		dAtA[i] = 0x10
 	}
 	if m.Uid != 0 {
 		i = encodeVarintUser(dAtA, i, uint64(m.Uid))
@@ -858,7 +962,7 @@ func (m *InfoResp) Size() (n int) {
 	return n
 }
 
-func (m *AddPointReq) Size() (n int) {
+func (m *AddPoints) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -876,7 +980,25 @@ func (m *AddPointReq) Size() (n int) {
 	return n
 }
 
-func (m *AddPointResp) Size() (n int) {
+func (m *AddPointsReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Add) > 0 {
+		for _, e := range m.Add {
+			l = e.Size()
+			n += 1 + l + sovUser(uint64(l))
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *AddPointsResp) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -896,6 +1018,9 @@ func (m *UpgradePassReq) Size() (n int) {
 	_ = l
 	if m.Uid != 0 {
 		n += 1 + sovUser(uint64(m.Uid))
+	}
+	if m.Type != 0 {
+		n += 1 + sovUser(uint64(m.Type))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1195,7 +1320,7 @@ func (m *InfoResp) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *AddPointReq) Unmarshal(dAtA []byte) error {
+func (m *AddPoints) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1218,10 +1343,10 @@ func (m *AddPointReq) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: AddPointReq: wiretype end group for non-group")
+			return fmt.Errorf("proto: AddPoints: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AddPointReq: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: AddPoints: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1287,7 +1412,7 @@ func (m *AddPointReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *AddPointResp) Unmarshal(dAtA []byte) error {
+func (m *AddPointsReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1310,10 +1435,98 @@ func (m *AddPointResp) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: AddPointResp: wiretype end group for non-group")
+			return fmt.Errorf("proto: AddPointsReq: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: AddPointResp: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: AddPointsReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Add", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowUser
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthUser
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthUser
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Add = append(m.Add, &AddPoints{})
+			if err := m.Add[len(m.Add)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipUser(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthUser
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthUser
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *AddPointsResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowUser
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: AddPointsResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: AddPointsResp: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
@@ -1385,6 +1598,25 @@ func (m *UpgradePassReq) Unmarshal(dAtA []byte) error {
 				b := dAtA[iNdEx]
 				iNdEx++
 				m.Uid |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
+			}
+			m.Type = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowUser
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Type |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}

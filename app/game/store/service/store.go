@@ -4,10 +4,16 @@ import (
 	pb "backend/app/game/store/api/grpc"
 	itemsService "backend/app/service/backpack/items/api/grpc"
 	userService "backend/app/service/backpack/user/api/grpc"
+	passService "backend/app/service/pass/user/api/grpc"
 	moneyService "backend/app/service/user/money/api/grpc"
 	"backend/pkg/ecode"
 	"context"
 	"google.golang.org/grpc/codes"
+)
+
+const (
+	Pass1Price = int32(6888)
+	Pass2Price = int32(9888)
 )
 
 func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.BuyItemResp, err error) {
@@ -78,6 +84,7 @@ func (s *Service) SaleList(ctx context.Context, req *pb.SaleListReq) (resp *pb.S
 
 	var userItems *userService.GetItemsResp
 	var userMoney *moneyService.GetResp
+	var userPass *passService.InfoResp
 	var userItemsMap map[int32]bool
 	if req.Uid > 0 {
 		userItems, err = s.user.GetItems(ctx, &userService.GetItemsReq{Uid: req.Uid})
@@ -96,6 +103,11 @@ func (s *Service) SaleList(ctx context.Context, req *pb.SaleListReq) (resp *pb.S
 			return
 		}
 		resp.Money = userMoney.Money
+		userPass, err = s.pass.Info(ctx, &passService.InfoReq{Uid: req.Uid})
+		if err != nil {
+			return
+		}
+		resp.PassType = userPass.Info.PassType
 	}
 
 	items, err := s.items.GetItems(ctx, &itemsService.GetItemsReq{})
@@ -117,6 +129,49 @@ func (s *Service) SaleList(ctx context.Context, req *pb.SaleListReq) (resp *pb.S
 			Discount:    v.Discount,
 			Available:   v.Available,
 			AlreadyHave: have,
+		})
+	}
+	return
+}
+
+func (s *Service) BuyPass(ctx context.Context, req *pb.BuyPassReq) (resp *pb.BuyPassResp, err error) {
+	resp = &pb.BuyPassResp{}
+
+	if req.Uid <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%d)", req.Uid)
+		return
+	}
+
+	var price int32
+	if req.Type == 1 {
+		price = Pass1Price
+	} else if req.Type == 2 {
+		price = Pass2Price
+	} else {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid Type(%d)", req.Type)
+		return
+	}
+
+	// Buy
+	_, err = s.money.Pay(ctx, &moneyService.PayReq{
+		Uid:    req.Uid,
+		Price:  price,
+		Reason: "购买通行证高级版",
+	})
+	// Payment failed
+	if err != nil {
+		return
+	}
+	_, err = s.pass.UpgradePass(ctx, &passService.UpgradePassReq{
+		Uid:  req.Uid,
+		Type: req.Type,
+	})
+	if err != nil {
+		// Return money
+		_, err = s.money.Give(ctx, &moneyService.GiveReq{
+			Uid:    req.Uid,
+			Money:  price,
+			Reason: "通行证高级版退款",
 		})
 	}
 	return

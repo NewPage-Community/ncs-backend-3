@@ -10,6 +10,10 @@ import (
 	"google.golang.org/grpc/codes"
 )
 
+const (
+	Pass2AddPoint = 7200 * 20
+)
+
 func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp, err error) {
 	resp = &pb.InfoResp{}
 
@@ -30,23 +34,23 @@ func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp,
 	return
 }
 
-func (s *Service) AddPoint(ctx context.Context, req *pb.AddPointReq) (resp *pb.AddPointResp, err error) {
-	resp = &pb.AddPointResp{}
+func (s *Service) AddPoints(ctx context.Context, req *pb.AddPointsReq) (resp *pb.AddPointsResp, err error) {
+	resp = &pb.AddPointsResp{}
 
-	if req.Uid <= 0 {
-		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%d)", req.Uid)
-		return
-	}
-	if req.Point <= 0 {
-		err = ecode.Errorf(codes.InvalidArgument, "Invalid Point(%d)", req.Point)
+	if len(req.Add) == 0 {
 		return
 	}
 
-	res, lastLevel, err := s.dao.AddPoint(req.Uid, req.Point)
-	if err == nil {
-		// Upgrade~
-		if lastLevel != res.Level() {
-			err = s.GiveRewards(ctx, res, lastLevel)
+	for _, v := range req.Add {
+		res, lastLevel, err1 := s.dao.AddPoint(v.Uid, v.Point)
+		if err1 == nil {
+			// Upgrade~
+			if lastLevel != res.Level() {
+				err1 = s.GiveRewards(ctx, res, lastLevel)
+			}
+		}
+		if err1 != nil {
+			err = err1
 		}
 	}
 
@@ -96,6 +100,10 @@ func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp
 		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%d)", req.Uid)
 		return
 	}
+	if req.Type != 1 && req.Type != 2 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid Type(%d)", req.Type)
+		return
+	}
 
 	info, err := s.dao.Info(req.Uid)
 	if err != nil {
@@ -136,5 +144,18 @@ func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp
 		Uid:   req.Uid,
 		Items: items,
 	})
+	if err != nil {
+		return
+	}
+	if req.Type == 2 {
+		_, err = s.AddPoints(ctx, &pb.AddPointsReq{
+			Add: []*pb.AddPoints{
+				{
+					Uid:   req.Uid,
+					Point: Pass2AddPoint,
+				},
+			},
+		})
+	}
 	return
 }

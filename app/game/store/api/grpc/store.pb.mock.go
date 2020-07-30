@@ -94,6 +94,26 @@ func (mr *MockStoreClientMockRecorder) SaleList(ctx, in interface{}, opts ...int
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaleList", reflect.TypeOf((*MockStoreClient)(nil).SaleList), varargs...)
 }
 
+// BuyPass mocks base method
+func (m *MockStoreClient) BuyPass(ctx context.Context, in *BuyPassReq, opts ...grpc.CallOption) (*BuyPassResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "BuyPass", varargs...)
+	ret0, _ := ret[0].(*BuyPassResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// BuyPass indicates an expected call of BuyPass
+func (mr *MockStoreClientMockRecorder) BuyPass(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BuyPass", reflect.TypeOf((*MockStoreClient)(nil).BuyPass), varargs...)
+}
+
 // MockStoreServer is a mock of StoreServer interface
 type MockStoreServer struct {
 	ctrl     *gomock.Controller
@@ -160,4 +180,19 @@ func (m *MockStoreServer) SaleList(arg0 context.Context, arg1 *SaleListReq) (*Sa
 func (mr *MockStoreServerMockRecorder) SaleList(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaleList", reflect.TypeOf((*MockStoreServer)(nil).SaleList), arg0, arg1)
+}
+
+// BuyPass mocks base method
+func (m *MockStoreServer) BuyPass(arg0 context.Context, arg1 *BuyPassReq) (*BuyPassResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "BuyPass", arg0, arg1)
+	ret0, _ := ret[0].(*BuyPassResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// BuyPass indicates an expected call of BuyPass
+func (mr *MockStoreServerMockRecorder) BuyPass(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BuyPass", reflect.TypeOf((*MockStoreServer)(nil).BuyPass), arg0, arg1)
 }

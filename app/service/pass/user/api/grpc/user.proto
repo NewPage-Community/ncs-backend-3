@@ -18,16 +18,21 @@ message InfoResp {
     Info info = 1;
 }
 
-message AddPointReq {
+message AddPoints {
     int64 uid = 1;
     int32 point = 2;
 }
 
-message AddPointResp {
+message AddPointsReq {
+    repeated AddPoints add = 1;
+}
+
+message AddPointsResp {
 }
 
 message UpgradePassReq {
     int64 uid = 1;
+    int32 type = 2;
 }
 
 message UpgradePassResp {
@@ -39,9 +44,9 @@ service User {
             get: "/pass/user/{uid}"
         };
     }
-    rpc AddPoint (AddPointReq) returns (AddPointResp) {
+    rpc AddPoints (AddPointsReq) returns (AddPointsResp) {
         option (google.api.http) = {
-            post: "/pass/user/addpoint"
+            post: "/pass/user/addpoints"
             body: "*"
         };
     }

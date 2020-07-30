@@ -21,7 +21,7 @@ func TestService_AddPoint(t *testing.T) {
 	dao.EXPECT().AddPoint(int64(2), int32(1)).Return(&model.User{
 		UID:      2,
 		PassType: 0,
-		Point:    3600,
+		Point:    7200,
 	}, int32(1), nil)
 	// Not upgrade
 	dao.EXPECT().AddPoint(int64(1), int32(1)).Return(&model.User{
@@ -43,16 +43,24 @@ func TestService_AddPoint(t *testing.T) {
 
 	Convey("Test AddPoint", t, func() {
 		Convey("Check not upgrade", func() {
-			_, err := srv.AddPoint(context.TODO(), &pb.AddPointReq{
-				Uid:   1,
-				Point: 1,
+			_, err := srv.AddPoints(context.TODO(), &pb.AddPointsReq{
+				Add: []*pb.AddPoints{
+					{
+						Uid:   1,
+						Point: 1,
+					},
+				},
 			})
 			So(err, ShouldBeNil)
 		})
 		Convey("Check upgrade", func() {
-			_, err := srv.AddPoint(context.TODO(), &pb.AddPointReq{
-				Uid:   2,
-				Point: 1,
+			_, err := srv.AddPoints(context.TODO(), &pb.AddPointsReq{
+				Add: []*pb.AddPoints{
+					{
+						Uid:   2,
+						Point: 1,
+					},
+				},
 			})
 			So(err, ShouldBeNil)
 		})
@@ -162,13 +170,13 @@ func TestService_UpgradePass(t *testing.T) {
 	dao.EXPECT().Info(int64(1)).Return(&model.User{
 		UID:      1,
 		PassType: 0,
-		Point:    3600,
+		Point:    7200,
 	}, nil)
 	// Invalid
 	dao.EXPECT().Info(int64(2)).Return(&model.User{
 		UID:      2,
 		PassType: 1,
-		Point:    3600,
+		Point:    7200,
 	}, nil)
 	dao.EXPECT().UpgradePass(int64(1)).Return(nil)
 
@@ -220,13 +228,15 @@ func TestService_UpgradePass(t *testing.T) {
 	Convey("Test UpgradePass", t, func() {
 		Convey("Check it work", func() {
 			_, err := srv.UpgradePass(context.TODO(), &pb.UpgradePassReq{
-				Uid: 1,
+				Uid:  1,
+				Type: 1,
 			})
 			So(err, ShouldBeNil)
 		})
 		Convey("Check user already have adv pass", func() {
 			_, err := srv.UpgradePass(context.TODO(), &pb.UpgradePassReq{
-				Uid: 2,
+				Uid:  2,
+				Type: 1,
 			})
 			So(err, ShouldNotBeNil)
 			t.Log(err)

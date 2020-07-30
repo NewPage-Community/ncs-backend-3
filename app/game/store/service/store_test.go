@@ -5,6 +5,7 @@ import (
 	"backend/app/game/store/model"
 	itemsService "backend/app/service/backpack/items/api/grpc"
 	userService "backend/app/service/backpack/user/api/grpc"
+	passService "backend/app/service/pass/user/api/grpc"
 	moneyService "backend/app/service/user/money/api/grpc"
 	ctx "context"
 	"errors"
@@ -133,11 +134,22 @@ func TestService_SaleList(t *testing.T) {
 			{Id: 2},
 		},
 	}, nil)
+	pass := passService.NewMockUserClient(ctl)
+	pass.EXPECT().Info(gomock.Any(), &passService.InfoReq{
+		Uid: 1,
+	}).Return(&passService.InfoResp{
+		Info: &passService.Info{
+			Uid:      1,
+			PassType: 1,
+			Point:    1,
+		},
+	}, nil)
 
 	srv := &Service{
 		items: items,
 		user:  user,
 		money: money,
+		pass:  pass,
 	}
 
 	Convey("Test SaleList", t, func() {
@@ -150,6 +162,57 @@ func TestService_SaleList(t *testing.T) {
 			So(res.Items[0].AlreadyHave, ShouldEqual, true)
 			So(res.Items[1].AlreadyHave, ShouldEqual, false)
 			t.Log(res)
+		})
+	})
+}
+
+func TestService_BuyPass(t *testing.T) {
+	ctl := gomock.NewController(t)
+	defer ctl.Finish()
+
+	money := moneyService.NewMockMoneyClient(ctl)
+	money.EXPECT().Pay(gomock.Any(), &moneyService.PayReq{
+		Uid:    1,
+		Price:  Pass1Price,
+		Reason: "购买通行证高级版",
+	}).Return(nil, nil)
+	money.EXPECT().Pay(gomock.Any(), &moneyService.PayReq{
+		Uid:    1,
+		Price:  Pass2Price,
+		Reason: "购买通行证高级版",
+	}).Return(nil, nil)
+	money.EXPECT().Give(gomock.Any(), &moneyService.GiveReq{
+		Uid:    1,
+		Money:  Pass2Price,
+		Reason: "通行证高级版退款",
+	}).Return(nil, nil)
+
+	pass := passService.NewMockUserClient(ctl)
+	pass.EXPECT().UpgradePass(gomock.Any(), &passService.UpgradePassReq{
+		Uid:  1,
+		Type: 1,
+	}).Return(nil, nil)
+	pass.EXPECT().UpgradePass(gomock.Any(), &passService.UpgradePassReq{
+		Uid:  1,
+		Type: 2,
+	}).Return(nil, errors.New("test"))
+
+	srv := &Service{money: money, pass: pass}
+
+	Convey("Test BuyPass", t, func() {
+		Convey("Check it work", func() {
+			_, err := srv.BuyPass(ctx.TODO(), &pb.BuyPassReq{
+				Uid:  1,
+				Type: 1,
+			})
+			So(err, ShouldBeNil)
+		})
+		Convey("Check error", func() {
+			_, err := srv.BuyPass(ctx.TODO(), &pb.BuyPassReq{
+				Uid:  1,
+				Type: 2,
+			})
+			So(err, ShouldBeNil)
 		})
 	})
 }

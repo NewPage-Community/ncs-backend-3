@@ -54,24 +54,24 @@ func (mr *MockUserClientMockRecorder) Info(ctx, in interface{}, opts ...interfac
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockUserClient)(nil).Info), varargs...)
 }
 
-// AddPoint mocks base method
-func (m *MockUserClient) AddPoint(ctx context.Context, in *AddPointReq, opts ...grpc.CallOption) (*AddPointResp, error) {
+// AddPoints mocks base method
+func (m *MockUserClient) AddPoints(ctx context.Context, in *AddPointsReq, opts ...grpc.CallOption) (*AddPointsResp, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "AddPoint", varargs...)
-	ret0, _ := ret[0].(*AddPointResp)
+	ret := m.ctrl.Call(m, "AddPoints", varargs...)
+	ret0, _ := ret[0].(*AddPointsResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// AddPoint indicates an expected call of AddPoint
-func (mr *MockUserClientMockRecorder) AddPoint(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+// AddPoints indicates an expected call of AddPoints
+func (mr *MockUserClientMockRecorder) AddPoints(ctx, in interface{}, opts ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddPoint", reflect.TypeOf((*MockUserClient)(nil).AddPoint), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddPoints", reflect.TypeOf((*MockUserClient)(nil).AddPoints), varargs...)
 }
 
 // UpgradePass mocks base method
@@ -132,19 +132,19 @@ func (mr *MockUserServerMockRecorder) Info(arg0, arg1 interface{}) *gomock.Call 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockUserServer)(nil).Info), arg0, arg1)
 }
 
-// AddPoint mocks base method
-func (m *MockUserServer) AddPoint(arg0 context.Context, arg1 *AddPointReq) (*AddPointResp, error) {
+// AddPoints mocks base method
+func (m *MockUserServer) AddPoints(arg0 context.Context, arg1 *AddPointsReq) (*AddPointsResp, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddPoint", arg0, arg1)
-	ret0, _ := ret[0].(*AddPointResp)
+	ret := m.ctrl.Call(m, "AddPoints", arg0, arg1)
+	ret0, _ := ret[0].(*AddPointsResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// AddPoint indicates an expected call of AddPoint
-func (mr *MockUserServerMockRecorder) AddPoint(arg0, arg1 interface{}) *gomock.Call {
+// AddPoints indicates an expected call of AddPoints
+func (mr *MockUserServerMockRecorder) AddPoints(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddPoint", reflect.TypeOf((*MockUserServer)(nil).AddPoint), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddPoints", reflect.TypeOf((*MockUserServer)(nil).AddPoints), arg0, arg1)
 }
 
 // UpgradePass mocks base method
