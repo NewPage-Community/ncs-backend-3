@@ -20,10 +20,6 @@ func (d *dao) Title(uid int64) (res *model.Title, err error) {
 
 func (d *dao) Update(title *model.Title) (err error) {
 	// DB
-	DBRes := d.db.Model(title).Updates(*title)
-	err = DBRes.Error
-	if DBRes.RowsAffected == 0 && err == nil {
-		err = d.db.Create(title).Error
-	}
+	err = d.db.Model(title).Updates(*title).Error
 	return
 }
