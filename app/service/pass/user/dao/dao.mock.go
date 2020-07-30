@@ -49,17 +49,17 @@ func (mr *MockDaoMockRecorder) Info(uid interface{}) *gomock.Call {
 }
 
 // UpgradePass mocks base method
-func (m *MockDao) UpgradePass(uid int64) error {
+func (m *MockDao) UpgradePass(uid int64, passType int32) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpgradePass", uid)
+	ret := m.ctrl.Call(m, "UpgradePass", uid, passType)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // UpgradePass indicates an expected call of UpgradePass
-func (mr *MockDaoMockRecorder) UpgradePass(uid interface{}) *gomock.Call {
+func (mr *MockDaoMockRecorder) UpgradePass(uid, passType interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpgradePass", reflect.TypeOf((*MockDao)(nil).UpgradePass), uid)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpgradePass", reflect.TypeOf((*MockDao)(nil).UpgradePass), uid, passType)
 }
 
 // AddPoint mocks base method

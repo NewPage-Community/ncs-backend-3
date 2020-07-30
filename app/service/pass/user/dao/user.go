@@ -48,8 +48,8 @@ func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, lastLevel in
 	return
 }
 
-func (d *dao) UpgradePass(uid int64) (err error) {
+func (d *dao) UpgradePass(uid int64, passType int32) (err error) {
 	// DB
-	err = d.db.Model(&model.User{UID: uid}).Updates(&model.User{PassType: 1}).Error
+	err = d.db.Model(&model.User{UID: uid}).Updates(&model.User{PassType: passType}).Error
 	return
 }

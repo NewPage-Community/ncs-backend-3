@@ -113,40 +113,40 @@ func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp
 		err = ecode.Errorf(codes.Unknown, "User already is AdvPass UID(%d)", req.Uid)
 		return
 	}
-	err = s.dao.UpgradePass(req.Uid)
+	err = s.dao.UpgradePass(req.Uid, req.Type)
 	if err != nil {
 		return
 	}
 
 	// Level 0 do not need to give reward
-	if info.Level() == 0 {
-		return
-	}
-
-	// give all adv rewards before current level
-	rewards, err := s.rewardService.GetRewards(ctx, &reward.GetRewardsReq{
-		Level: info.Level(),
-		Min:   1,
-	})
-	if err != nil {
-		return
-	}
-
-	var items []*backpack.Item
-	for _, v := range rewards.AdvRewards {
-		items = append(items, &backpack.Item{
-			Id:     v.Id,
-			Amount: v.Amount,
-			Length: v.Length,
+	if info.Level() > 0 {
+		var rewards *reward.GetRewardsResp
+		// give all adv rewards before current level
+		rewards, err = s.rewardService.GetRewards(ctx, &reward.GetRewardsReq{
+			Level: info.Level(),
+			Min:   1,
 		})
+		if err != nil {
+			return
+		}
+
+		var items []*backpack.Item
+		for _, v := range rewards.AdvRewards {
+			items = append(items, &backpack.Item{
+				Id:     v.Id,
+				Amount: v.Amount,
+				Length: v.Length,
+			})
+		}
+		_, err = s.backpackService.AddItems(ctx, &backpack.AddItemsReq{
+			Uid:   req.Uid,
+			Items: items,
+		})
+		if err != nil {
+			return
+		}
 	}
-	_, err = s.backpackService.AddItems(ctx, &backpack.AddItemsReq{
-		Uid:   req.Uid,
-		Items: items,
-	})
-	if err != nil {
-		return
-	}
+
 	if req.Type == 2 {
 		_, err = s.AddPoints(ctx, &pb.AddPointsReq{
 			Add: []*pb.AddPoints{

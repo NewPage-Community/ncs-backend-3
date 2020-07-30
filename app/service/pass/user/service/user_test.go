@@ -171,14 +171,20 @@ func TestService_UpgradePass(t *testing.T) {
 		UID:      1,
 		PassType: 0,
 		Point:    7200,
-	}, nil)
+	}, nil).Times(2)
 	// Invalid
 	dao.EXPECT().Info(int64(2)).Return(&model.User{
 		UID:      2,
 		PassType: 1,
 		Point:    7200,
 	}, nil)
-	dao.EXPECT().UpgradePass(int64(1)).Return(nil)
+	dao.EXPECT().UpgradePass(int64(1), int32(1)).Return(nil)
+	dao.EXPECT().UpgradePass(int64(1), int32(2)).Return(nil)
+	dao.EXPECT().AddPoint(int64(1), int32(144000)).Return(&model.User{
+		UID:      1,
+		PassType: 1,
+		Point:    144000,
+	}, int32(21), nil)
 
 	reward := rewardService.NewMockRewardClient(ctl)
 	reward.EXPECT().GetRewards(gomock.Any(), &rewardService.GetRewardsReq{
@@ -200,7 +206,7 @@ func TestService_UpgradePass(t *testing.T) {
 				Length: 0,
 			},
 		},
-	}, nil)
+	}, nil).Times(2)
 
 	backpack := backpackService.NewMockUserClient(ctl)
 	backpack.EXPECT().AddItems(gomock.Any(), &backpackService.AddItemsReq{
@@ -217,7 +223,7 @@ func TestService_UpgradePass(t *testing.T) {
 				Length: 0,
 			},
 		},
-	}).Return(nil, nil)
+	}).Return(nil, nil).Times(2)
 
 	srv := &Service{
 		dao:             dao,
@@ -230,6 +236,11 @@ func TestService_UpgradePass(t *testing.T) {
 			_, err := srv.UpgradePass(context.TODO(), &pb.UpgradePassReq{
 				Uid:  1,
 				Type: 1,
+			})
+			So(err, ShouldBeNil)
+			_, err = srv.UpgradePass(context.TODO(), &pb.UpgradePassReq{
+				Uid:  1,
+				Type: 2,
 			})
 			So(err, ShouldBeNil)
 		})
