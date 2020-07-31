@@ -9,6 +9,7 @@ import (
 	"backend/pkg/log"
 	"context"
 	"google.golang.org/grpc/codes"
+	"sync"
 )
 
 const (
@@ -42,23 +43,29 @@ func (s *Service) AddPoints(ctx context.Context, req *pb.AddPointsReq) (resp *pb
 		return
 	}
 
+	wg := sync.WaitGroup{}
 	for _, v := range req.Add {
+		v := v
 		if v.Uid <= 0 || v.Point <= 0 {
 			log.Error("Invalid data", "UID:", v.Uid, "Point:", v.Point)
 			continue
 		}
-		res, lastLevel, err1 := s.dao.AddPoint(v.Uid, v.Point)
-		if err1 == nil {
-			// Upgrade~
-			if lastLevel != res.Level() {
-				err1 = s.GiveRewards(ctx, res, lastLevel)
+		wg.Add(1)
+		go func() {
+			res, lastLevel, err := s.dao.AddPoint(v.Uid, v.Point)
+			if err == nil {
+				// Upgrade~
+				if lastLevel != res.Level() {
+					err = s.GiveRewards(ctx, res, lastLevel)
+				}
 			}
-		}
-		if err1 != nil {
-			err = err1
-		}
+			if err != nil {
+				log.Error(err)
+			}
+			wg.Done()
+		}()
 	}
-
+	wg.Wait()
 	return
 }
 
