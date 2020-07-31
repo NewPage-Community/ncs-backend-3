@@ -16,6 +16,7 @@ go_library(
         "//app/service/pass/user/dao:go_default_library",
         "//app/service/pass/user/model:go_default_library",
         "//pkg/ecode:go_default_library",
+        "//pkg/log:go_default_library",
         "@org_golang_google_grpc//codes:go_default_library",
     ],
 )
