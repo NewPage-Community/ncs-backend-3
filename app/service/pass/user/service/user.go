@@ -6,6 +6,7 @@ import (
 	pb "backend/app/service/pass/user/api/grpc"
 	"backend/app/service/pass/user/model"
 	"backend/pkg/ecode"
+	"backend/pkg/log"
 	"context"
 	"google.golang.org/grpc/codes"
 )
@@ -42,6 +43,10 @@ func (s *Service) AddPoints(ctx context.Context, req *pb.AddPointsReq) (resp *pb
 	}
 
 	for _, v := range req.Add {
+		if v.Uid <= 0 || v.Point <= 0 {
+			log.Error("Invalid data", "UID:", v.Uid, "Point:", v.Point)
+			continue
+		}
 		res, lastLevel, err1 := s.dao.AddPoint(v.Uid, v.Point)
 		if err1 == nil {
 			// Upgrade~
