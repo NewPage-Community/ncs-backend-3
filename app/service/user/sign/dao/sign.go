@@ -32,7 +32,7 @@ func (d *dao) Sign(uid int64) (err error) {
 
 	// DB
 	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
-		Where(uid).Find(info).Error
+		Where(uid).First(info).Error
 	if err == gorm.ErrRecordNotFound {
 		// Create and sign
 		info.UID = uid

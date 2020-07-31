@@ -30,7 +30,7 @@ func (d *dao) AddPoint(uid int64, addPoint int) (point int, err error) {
 
 	// DB
 	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
-		Where(uid).Find(info).Error
+		Where(uid).First(info).Error
 	if err == gorm.ErrRecordNotFound {
 		// Create and add point
 		info.UID = uid
@@ -60,7 +60,7 @@ func (d *dao) Renewal(uid int64, length int64) (exprTime int64, err error) {
 
 	// DB
 	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
-		Where(uid).Find(info).Error
+		Where(uid).First(info).Error
 	if err == gorm.ErrRecordNotFound {
 		// Create and renewal
 		info.UID = uid
