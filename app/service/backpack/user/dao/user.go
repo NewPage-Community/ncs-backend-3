@@ -70,7 +70,7 @@ func (d *dao) AddItems(uid int64, items *model.Items) (err error) {
 		if err != nil {
 			return
 		}
-		err = d.db.Model(userModel).Updates(*userModel).Error
+		err = tx.Model(userModel).Updates(*userModel).Error
 		return
 	})
 	return
@@ -90,7 +90,7 @@ func (d *dao) RemoveItem(uid int64, item model.Item, all bool) (err error) {
 	}
 
 	err = d.db.Transaction(func(tx *gorm.DB) (err error) {
-		err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
+		err = tx.Clauses(clause.Locking{Strength: "UPDATE"}).
 			First(userModel, uid).Error
 		if err != nil {
 			return
@@ -106,7 +106,7 @@ func (d *dao) RemoveItem(uid int64, item model.Item, all bool) (err error) {
 		if err != nil {
 			return
 		}
-		err = d.db.Model(userModel).Updates(*userModel).Error
+		err = tx.Model(userModel).Updates(*userModel).Error
 		return
 	})
 	return
