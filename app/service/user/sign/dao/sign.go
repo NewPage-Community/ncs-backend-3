@@ -22,30 +22,33 @@ func (d *dao) Info(uid int64) (res *model.Sign, err error) {
 }
 
 func (d *dao) Sign(uid int64) (alreadySigned bool, err error) {
-	info := &model.Sign{}
-	defer func() {
-		// To release lock
-		d.db.Commit()
-	}()
+	info := &model.Sign{
+		UID: uid,
+	}
+	alreadySigned = true
 
 	// DB
-	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
-		Where(uid).First(info).Error
+	err = d.db.First(info).Error
 	if err == gorm.ErrRecordNotFound {
 		// Create and sign
-		info.UID = uid
 		info.Sign()
 		return false, d.db.Create(info).Error
 	}
-	if err != nil {
+
+	err = d.db.Transaction(func(tx *gorm.DB) (err error) {
+		err = tx.Clauses(clause.Locking{Strength: "UPDATE"}).
+			Where(uid).First(info).Error
+		if err != nil {
+			return
+		}
+
+		if alreadySigned = info.IsSigned(); alreadySigned {
+			return
+		}
+		info.Sign()
+
+		err = tx.Model(info).Updates(*info).Error
 		return
-	}
-
-	if info.IsSigned() {
-		return true, nil
-	}
-	info.Sign()
-
-	err = d.db.Model(info).Updates(*info).Error
+	})
 	return
 }

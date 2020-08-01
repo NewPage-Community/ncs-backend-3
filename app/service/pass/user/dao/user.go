@@ -20,31 +20,32 @@ func (d *dao) Info(uid int64) (res *model.User, err error) {
 }
 
 func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, lastLevel int32, err error) {
-	res = &model.User{}
-	defer func() {
-		// To release lock
-		d.db.Commit()
-	}()
+	res = &model.User{
+		UID:   uid,
+		Point: addPoint,
+	}
 
 	// DB
-	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
-		Where(uid).First(res).Error
+	err = d.db.First(res).Error
 	if err == gorm.ErrRecordNotFound {
-		// Create and add point
-		err = d.db.Create(&model.User{
-			UID:   uid,
-			Point: addPoint,
-		}).Error
-		return
-	}
-	if err != nil {
+		err = d.db.Create(res).Error
+		lastLevel = 0
 		return
 	}
 
-	lastLevel = res.Level()
-	res.Point += addPoint
+	err = d.db.Transaction(func(tx *gorm.DB) (err error) {
+		err = tx.Clauses(clause.Locking{Strength: "UPDATE"}).
+			First(res).Error
+		if err != nil {
+			return
+		}
 
-	err = d.db.Model(res).Updates(&model.User{Point: res.Point}).Error
+		lastLevel = res.Level()
+		res.Point += addPoint
+
+		err = tx.Model(res).Updates(&model.User{Point: res.Point}).Error
+		return
+	})
 	return
 }
 

@@ -1,16 +1,15 @@
 package json
 
 import (
-	"backend/pkg/ecode"
+	"fmt"
 	jsoniter "github.com/json-iterator/go"
-	"google.golang.org/grpc/codes"
 )
 
 // Unmarshal ...
 func Unmarshal(data []byte, v interface{}) (err error) {
 	err = jsoniter.Unmarshal(data, v)
 	if err != nil {
-		err = ecode.Errorf(codes.Unknown, "JSON Unmarshal error: %v", err)
+		err = fmt.Errorf("json unmarshal error: %s (%s)", err.Error(), string(data))
 	}
 	return
 }
@@ -19,7 +18,7 @@ func Unmarshal(data []byte, v interface{}) (err error) {
 func Marshal(v interface{}) (s []byte, err error) {
 	s, err = jsoniter.Marshal(v)
 	if err != nil {
-		err = ecode.Errorf(codes.Unknown, "JSON Marshal error: %v", err)
+		err = fmt.Errorf("json marshal error: %s (%v)", err.Error(), v)
 	}
 	return
 }

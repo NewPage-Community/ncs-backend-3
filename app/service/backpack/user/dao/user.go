@@ -9,99 +9,106 @@ import (
 func (d *dao) Get(uid int64) (res *model.User, err error) {
 	res = &model.User{}
 	userModel := &model.UserModel{}
-	defer func() {
-		// To release lock
-		d.db.Commit()
-	}()
 
 	// DB
-	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
-		Where(uid).First(userModel).Error
+	err = d.db.First(userModel, uid).Error
 	if err == gorm.ErrRecordNotFound {
 		// not found and create
 		return d.Create(uid)
 	}
-	if err != nil {
-		return
-	}
 
-	res, err = userModel.GetUser()
-	if err != nil {
-		return
-	}
-	res.CheckItem()
+	err = d.db.Transaction(func(tx *gorm.DB) (err error) {
+		err = tx.Clauses(clause.Locking{Strength: "UPDATE"}).
+			First(userModel, uid).Error
+		if err != nil {
+			return
+		}
 
-	userModel, err = res.GetModel()
-	if err != nil {
+		res, err = userModel.GetUser()
+		if err != nil {
+			return
+		}
+		res.CheckItem()
+
+		userModel, err = res.GetModel()
+		if err != nil {
+			return
+		}
+		err = tx.Model(userModel).Updates(*userModel).Error
 		return
-	}
-	err = d.db.Model(userModel).Updates(*userModel).Error
+	})
 	return
 }
 
 func (d *dao) AddItems(uid int64, items *model.Items) (err error) {
 	userModel := &model.UserModel{}
-	defer func() {
-		// To release lock
-		d.db.Commit()
-	}()
 
 	// DB
-	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
-		Where(uid).First(userModel).Error
+	err = d.db.First(userModel, uid).Error
 	if err == gorm.ErrRecordNotFound {
 		// not found and create
 		_, err = d.Create(uid)
-		userModel.UID = uid
 	}
 	if err != nil {
 		return
 	}
 
-	user, err := userModel.GetUser()
-	if err != nil {
-		return
-	}
-	user.AddItems(items)
+	err = d.db.Transaction(func(tx *gorm.DB) (err error) {
+		err = tx.Clauses(clause.Locking{Strength: "UPDATE"}).
+			First(userModel, uid).Error
+		if err != nil {
+			return
+		}
 
-	userModel, err = user.GetModel()
-	if err != nil {
+		user, err := userModel.GetUser()
+		if err != nil {
+			return
+		}
+		user.AddItems(items)
+
+		userModel, err = user.GetModel()
+		if err != nil {
+			return
+		}
+		err = d.db.Model(userModel).Updates(*userModel).Error
 		return
-	}
-	err = d.db.Model(userModel).Updates(*userModel).Error
+	})
 	return
 }
 
 func (d *dao) RemoveItem(uid int64, item model.Item, all bool) (err error) {
 	userModel := &model.UserModel{}
-	defer func() {
-		// To release lock
-		d.db.Commit()
-	}()
 
 	// DB
-	err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
-		Where(uid).First(userModel).Error
+	err = d.db.First(userModel, uid).Error
 	if err == gorm.ErrRecordNotFound {
 		// not found and create
 		_, err = d.Create(uid)
-		userModel.UID = uid
 	}
 	if err != nil {
 		return
 	}
 
-	user, err := userModel.GetUser()
-	if err != nil {
-		return
-	}
-	user.RemoveItem(item, all)
+	err = d.db.Transaction(func(tx *gorm.DB) (err error) {
+		err = d.db.Clauses(clause.Locking{Strength: "UPDATE"}).
+			First(userModel, uid).Error
+		if err != nil {
+			return
+		}
 
-	userModel, err = user.GetModel()
-	if err != nil {
+		user, err := userModel.GetUser()
+		if err != nil {
+			return
+		}
+		user.RemoveItem(item, all)
+
+		userModel, err = user.GetModel()
+		if err != nil {
+			return
+		}
+		err = d.db.Model(userModel).Updates(*userModel).Error
 		return
-	}
-	err = d.db.Model(userModel).Updates(*userModel).Error
+	})
 	return
 }
 

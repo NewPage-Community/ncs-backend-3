@@ -6,30 +6,41 @@ import (
 	"gorm.io/gorm/clause"
 )
 
+const (
+	EmptyRecordsJSON = "[]"
+)
+
 func (d *dao) AddRecord(uid int64, amount int32, reason string) (err error) {
 	info := &model.RecordsDB{
 		UID:     uid,
-		Records: []byte("[]"),
+		Records: []byte(EmptyRecordsJSON),
 	}
-	defer func() {
-		d.db.Commit()
-	}()
 
 	// DB
-	err = d.db.Clauses(clause.Locking{
-		Strength: "UPDATE",
-	}).First(info, uid).Error
-	if err1 := info.Add(amount, reason); err1 != nil {
-		return err1
+	err = d.db.First(info).Error
+	if err == gorm.ErrRecordNotFound {
+		err = d.db.Create(info).Error
 	}
 	if err != nil {
-		// not found and create
-		if err == gorm.ErrRecordNotFound {
-			err = d.db.Create(info).Error
-		}
 		return
 	}
-	err = d.db.Model(info).Updates(*info).Error
+
+	err = d.db.Transaction(func(tx *gorm.DB) (err error) {
+		err = tx.Clauses(clause.Locking{
+			Strength: "UPDATE",
+		}).First(info, uid).Error
+		if err != nil {
+			return
+		}
+
+		err = info.Add(amount, reason)
+		if err != nil {
+			return
+		}
+
+		err = tx.Model(info).Updates(*info).Error
+		return
+	})
 	return
 }
 
@@ -41,7 +52,7 @@ func (d *dao) GetRecords(uid int64) (*model.Records, error) {
 	res := d.db.Find(info, uid)
 	err = res.Error
 	if res.RowsAffected == 0 {
-		info.Records = []byte("[]")
+		info.Records = []byte(EmptyRecordsJSON)
 	}
 	if err != nil {
 		return nil, err

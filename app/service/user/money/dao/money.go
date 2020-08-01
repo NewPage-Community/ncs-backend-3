@@ -2,10 +2,12 @@ package dao
 
 import (
 	"backend/app/service/user/money/model"
-	"backend/pkg/ecode"
-	"google.golang.org/grpc/codes"
+	"errors"
 	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
+)
+
+var (
+	NoEnoughMoney = errors.New("no enough money")
 )
 
 func (d *dao) Get(uid int64) (res *model.Money, err error) {
@@ -24,14 +26,9 @@ func (d *dao) Pay(uid int64, price int32) (err error) {
 	info := &model.Money{
 		UID: uid,
 	}
-	defer func() {
-		d.db.Commit()
-	}()
 
 	// DB
-	err = d.db.Clauses(clause.Locking{
-		Strength: "UPDATE",
-	}).First(info, uid).Error
+	err = d.db.First(info, uid).Error
 	if err != nil {
 		// not found and create
 		if err == gorm.ErrRecordNotFound {
@@ -39,15 +36,17 @@ func (d *dao) Pay(uid int64, price int32) (err error) {
 			if err != nil {
 				return
 			}
-			err = ecode.Errorf(codes.Unknown, "No enough money!")
+			err = NoEnoughMoney
 		}
 		return
 	}
-	if info.RMB -= price; info.RMB < 0 {
-		err = ecode.Errorf(codes.Unknown, "No enough money!")
-		return
+
+	res := d.db.Model(info).Where(gorm.Expr("rmb >= ?", price)).
+		Update("rmb", gorm.Expr("rmb - ?", price))
+	err = res.Error
+	if res.RowsAffected == 0 {
+		err = NoEnoughMoney
 	}
-	err = d.db.Model(info).Select("rmb").Updates(model.Money{RMB: info.RMB}).Error
 	return
 }
 
