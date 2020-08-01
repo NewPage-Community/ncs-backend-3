@@ -79,6 +79,9 @@ func (s *Service) Add(ctx context.Context, req *pb.AddReq) (resp *pb.AddResp, er
 	rcon, err := s.server.RconAll(context.Background(), &serverService.RconAllReq{
 		Cmd: fmt.Sprintf(BanNotifyCMD, req.Info.Uid, req.Info.Type, req.Info.Reason),
 	})
+	if err != nil {
+		return
+	}
 	if rcon.Success == 0 {
 		log.Warn("None server notify!")
 	}

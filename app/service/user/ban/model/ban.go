@@ -11,7 +11,7 @@ const (
 )
 
 type Ban struct {
-	ID         int64  `gorm:"primary_key;not null" json:"id"`
+	ID         uint32 `gorm:"primary_key;not null" json:"id"`
 	UID        int64  `gorm:"not null" json:"uid"`
 	CreateTime int64  `gorm:"not null;INDEX" json:"create_time"`
 	ExpireTime int64  `gorm:"not null;INDEX" json:"expire_time"`

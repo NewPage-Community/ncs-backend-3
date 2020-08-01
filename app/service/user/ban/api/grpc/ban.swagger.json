@@ -90,7 +90,7 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
+            "type": "integer",
             "format": "int64"
           }
         ],
@@ -141,7 +141,7 @@
       "type": "object",
       "properties": {
         "id": {
-          "type": "string",
+          "type": "integer",
           "format": "int64"
         },
         "uid": {
