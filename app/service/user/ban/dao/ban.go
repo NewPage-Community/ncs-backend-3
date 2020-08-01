@@ -13,7 +13,20 @@ func (d *dao) Info(uid int64) (res *model.Ban, err error) {
 	// DB
 	err = d.db.Where(&model.Ban{UID: uid}).Order("expire_time desc").First(res).Error
 	if err == gorm.ErrRecordNotFound {
-		err = ecode.Errorf(codes.NotFound, "Can not found ban record UID(%d)", uid)
+		// Not found is not error
+		// We should return empty info with uid
+		err = nil
+		res = &model.Ban{
+			ID:         0,
+			UID:        uid,
+			CreateTime: 0,
+			ExpireTime: 0,
+			Type:       0,
+			ServerID:   0,
+			ModID:      0,
+			GameID:     0,
+			Reason:     "",
+		}
 	}
 	return
 }

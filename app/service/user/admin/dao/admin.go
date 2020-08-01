@@ -2,8 +2,6 @@ package dao
 
 import (
 	"backend/app/service/user/admin/model"
-	"backend/pkg/ecode"
-	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
 )
 
@@ -13,7 +11,14 @@ func (d *dao) Info(uid int64) (res *model.Admin, err error) {
 	// DB
 	err = d.db.Where(uid).First(&res).Error
 	if err == gorm.ErrRecordNotFound {
-		err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", uid)
+		// Not found is not error
+		// We should return empty flag and 0 imm
+		err = nil
+		res = &model.Admin{
+			UID:      uid,
+			Flag:     "",
+			Immunity: 0,
+		}
 	}
 	return
 }

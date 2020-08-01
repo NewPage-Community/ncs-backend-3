@@ -27,6 +27,7 @@ message SignReq {
 }
 
 message SignResp {
+    bool already_signed = 1;
 }
 
 service Sign {

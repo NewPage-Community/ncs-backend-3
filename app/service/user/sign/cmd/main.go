@@ -9,7 +9,7 @@ import (
 	"backend/pkg/tracer"
 )
 
-const serviceName = "Gateway"
+const serviceName = "user-sign"
 
 func main() {
 	// Init

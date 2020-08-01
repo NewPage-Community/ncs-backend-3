@@ -67,6 +67,9 @@ func TestService_BanCheck(t *testing.T) {
 		GameID:     1,
 		Reason:     "test",
 	}, nil)
+	dao.EXPECT().Info(int64(2)).Return(&model.Ban{
+		UID: 2,
+	}, nil)
 
 	srv := &Service{
 		dao: dao,
@@ -82,6 +85,17 @@ func TestService_BanCheck(t *testing.T) {
 			})
 			So(err, ShouldBeNil)
 			So(res.Info.Id, ShouldEqual, 1)
+			t.Log(res)
+		})
+		Convey("Check record not found", func() {
+			res, err := srv.BanCheck(context.TODO(), &pb.Info2Req{
+				Uid:      2,
+				ServerId: 1,
+				ModId:    1,
+				GameId:   1,
+			})
+			So(err, ShouldBeNil)
+			So(res.Info.Id, ShouldEqual, 0)
 			t.Log(res)
 		})
 	})

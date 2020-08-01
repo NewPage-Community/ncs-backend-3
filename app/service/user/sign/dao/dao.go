@@ -10,7 +10,7 @@ import (
 
 type Dao interface {
 	Info(uid int64) (*model.Sign, error)
-	Sign(uid int64) error
+	Sign(uid int64) (alreadySigned bool, err error)
 	Healthy() bool
 	Close()
 }

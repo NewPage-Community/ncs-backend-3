@@ -34,6 +34,6 @@ func (s *Service) Sign(ctx context.Context, req *pb.SignReq) (resp *pb.SignResp,
 		return
 	}
 
-	err = s.dao.Sign(req.Uid)
+	resp.AlreadySigned, err = s.dao.Sign(req.Uid)
 	return
 }

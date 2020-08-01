@@ -2,8 +2,6 @@ package dao
 
 import (
 	"backend/app/service/user/sign/model"
-	"backend/pkg/ecode"
-	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 	"time"
@@ -23,7 +21,7 @@ func (d *dao) Info(uid int64) (res *model.Sign, err error) {
 	return
 }
 
-func (d *dao) Sign(uid int64) (err error) {
+func (d *dao) Sign(uid int64) (alreadySigned bool, err error) {
 	info := &model.Sign{}
 	defer func() {
 		// To release lock
@@ -37,15 +35,14 @@ func (d *dao) Sign(uid int64) (err error) {
 		// Create and sign
 		info.UID = uid
 		info.Sign()
-		return d.db.Create(info).Error
+		return false, d.db.Create(info).Error
 	}
 	if err != nil {
 		return
 	}
 
 	if info.IsSigned() {
-		err = ecode.Errorf(codes.Unknown, "User already signed")
-		return
+		return true, nil
 	}
 	info.Sign()
 

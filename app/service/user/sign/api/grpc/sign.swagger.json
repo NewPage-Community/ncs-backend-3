@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "app/user/sign/api/grpc/sign.proto",
+    "title": "app/service/user/sign/api/grpc/sign.proto",
     "version": "version not set"
   },
   "schemes": [
@@ -103,7 +103,13 @@
       }
     },
     "signSignResp": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "already_signed": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      }
     }
   }
 }

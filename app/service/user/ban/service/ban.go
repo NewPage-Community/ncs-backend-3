@@ -103,22 +103,23 @@ func (s *Service) BanCheck(ctx context.Context, req *pb.Info2Req) (resp *pb.Info
 	}
 
 	res, err := s.dao.Info(req.Uid)
-	if res != nil {
-		if res.IsBanned(req.ServerId, req.ModId, req.GameId) {
-			resp.Info = &pb.Info{
-				Id:         res.ID,
-				Uid:        res.UID,
-				CreateTime: res.CreateTime,
-				ExpireTime: res.ExpireTime,
-				Type:       int32(res.Type),
-				ServerId:   res.ServerID,
-				ModId:      res.ModID,
-				GameId:     res.GameID,
-				Reason:     res.Reason,
-			}
-			return
-		}
+	if err != nil {
+		return
 	}
-	err = ecode.Errorf(codes.NotFound, "No ban recode")
+	if !res.IsBanned(req.ServerId, req.ModId, req.GameId) {
+		// Set id to zero to invalid ban info
+		res.ID = 0
+	}
+	resp.Info = &pb.Info{
+		Id:         res.ID,
+		Uid:        res.UID,
+		CreateTime: res.CreateTime,
+		ExpireTime: res.ExpireTime,
+		Type:       int32(res.Type),
+		ServerId:   res.ServerID,
+		ModId:      res.ModID,
+		GameId:     res.GameID,
+		Reason:     res.Reason,
+	}
 	return
 }
