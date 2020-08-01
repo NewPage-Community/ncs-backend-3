@@ -21,7 +21,8 @@ func (s *Sign) IsValid() bool {
 
 // GetNowTime .
 func (*Sign) GetNowTime() time.Time {
-	return time.Now().UTC()
+	cst := time.FixedZone("CST", 8*3600)
+	return time.Now().In(cst)
 }
 
 // Sign .
