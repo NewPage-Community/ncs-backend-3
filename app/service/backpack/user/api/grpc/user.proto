@@ -37,7 +37,15 @@ message RemoveItemReq {
 message RemoveItemResp {
 }
 
+message InitReq {
+    int64 uid = 1;
+}
+
+message InitResp {
+}
+
 service User {
+    rpc Init (InitReq) returns (InitResp);
     rpc GetItems (GetItemsReq) returns (GetItemsResp) {
         option (google.api.http) = {
             get: "/backpack/user/{uid}"

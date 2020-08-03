@@ -101,6 +101,9 @@
         }
       }
     },
+    "userInitResp": {
+      "type": "object"
+    },
     "userItem": {
       "type": "object",
       "properties": {

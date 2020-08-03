@@ -84,3 +84,15 @@ func (s *Service) RemoveItem(ctx context.Context, req *pb.RemoveItemReq) (resp *
 	}, req.All)
 	return
 }
+
+func (s *Service) Init(ctx context.Context, req *pb.InitReq) (resp *pb.InitResp, err error) {
+	resp = &pb.InitResp{}
+
+	if req.Uid <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID")
+		return
+	}
+
+	_, err = s.dao.Create(req.Uid)
+	return
+}

@@ -2,6 +2,7 @@ package service
 
 import (
 	pb "backend/app/game/user/api/grpc"
+	backpack "backend/app/service/backpack/user/api/grpc"
 	account_pb "backend/app/service/user/account/api/grpc"
 	"backend/pkg/ecode"
 	"context"
@@ -26,6 +27,12 @@ func (s *Service) PlayerConnect(ctx context.Context, req *pb.PlayerConnectReq) (
 		var info *account_pb.RegisterResp
 		info, err = s.account.Register(ctx, &account_pb.RegisterReq{
 			SteamId: req.SteamId,
+		})
+		if err != nil {
+			return
+		}
+		_, err = s.backpack.Init(ctx, &backpack.InitReq{
+			Uid: info.Uid,
 		})
 		if err != nil {
 			return

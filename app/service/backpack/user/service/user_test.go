@@ -87,3 +87,20 @@ func TestService_RemoveItem(t *testing.T) {
 		})
 	})
 }
+
+func TestService_Init(t *testing.T) {
+	ctl := gomock.NewController(t)
+	defer ctl.Finish()
+
+	dao := dao.NewMockDao(ctl)
+	dao.EXPECT().Create(int64(1)).Return(nil, nil)
+
+	srv := &Service{dao: dao}
+
+	Convey("Test Init", t, func() {
+		Convey("Check it work", func() {
+			_, err := srv.Init(context.TODO(), &pb.InitReq{Uid: 1})
+			So(err, ShouldBeNil)
+		})
+	})
+}

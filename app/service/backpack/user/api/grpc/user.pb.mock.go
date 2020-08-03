@@ -34,6 +34,26 @@ func (m *MockUserClient) EXPECT() *MockUserClientMockRecorder {
 	return m.recorder
 }
 
+// Init mocks base method
+func (m *MockUserClient) Init(ctx context.Context, in *InitReq, opts ...grpc.CallOption) (*InitResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "Init", varargs...)
+	ret0, _ := ret[0].(*InitResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Init indicates an expected call of Init
+func (mr *MockUserClientMockRecorder) Init(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockUserClient)(nil).Init), varargs...)
+}
+
 // GetItems mocks base method
 func (m *MockUserClient) GetItems(ctx context.Context, in *GetItemsReq, opts ...grpc.CallOption) (*GetItemsResp, error) {
 	m.ctrl.T.Helper()
@@ -115,6 +135,21 @@ func NewMockUserServer(ctrl *gomock.Controller) *MockUserServer {
 // EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockUserServer) EXPECT() *MockUserServerMockRecorder {
 	return m.recorder
+}
+
+// Init mocks base method
+func (m *MockUserServer) Init(arg0 context.Context, arg1 *InitReq) (*InitResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Init", arg0, arg1)
+	ret0, _ := ret[0].(*InitResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Init indicates an expected call of Init
+func (mr *MockUserServerMockRecorder) Init(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Init", reflect.TypeOf((*MockUserServer)(nil).Init), arg0, arg1)
 }
 
 // GetItems mocks base method
