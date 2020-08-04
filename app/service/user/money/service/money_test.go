@@ -15,13 +15,13 @@ func TestService_Get(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().Get(int64(1)).Return(&model.Money{
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Get(int64(1)).Return(&model.Money{
 		UID: 1,
 		RMB: 1,
 	}, nil)
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test Get", t, func() {
 		Convey("Check it work", func() {
@@ -38,11 +38,11 @@ func TestService_Give(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().Give(int64(1), int32(1)).Return(nil)
-	dao.EXPECT().AddRecord(int64(1), int32(1), "test").Return(nil)
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Give(int64(1), int32(1)).Return(nil)
+	d.EXPECT().AddRecord(int64(1), int32(1), "test").Return(nil)
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test Give", t, func() {
 		Convey("Check it work", func() {
@@ -60,11 +60,11 @@ func TestService_Pay(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().Pay(int64(1), int32(1)).Return(nil)
-	dao.EXPECT().AddRecord(int64(1), int32(-1), "test").Return(nil)
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Pay(int64(1), int32(1)).Return(nil)
+	d.EXPECT().AddRecord(int64(1), int32(-1), "test").Return(nil)
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test Pay", t, func() {
 		Convey("Check it work", func() {
@@ -82,8 +82,8 @@ func TestService_Records(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().GetRecords(int64(1)).Return(&model.Records{
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().GetRecords(int64(1)).Return(&model.Records{
 		{
 			Timestamp: time.Now().Add(time.Second).Unix(),
 			Amount:    1,
@@ -96,7 +96,7 @@ func TestService_Records(t *testing.T) {
 		},
 	}, nil)
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test Records", t, func() {
 		Convey("Check it work", func() {

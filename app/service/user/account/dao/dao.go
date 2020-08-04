@@ -37,7 +37,9 @@ func New(config *conf.Config) (d *dao) {
 }
 
 func (d *dao) Close() {
-	d.cache.Close()
+	if err := d.cache.Close(); err != nil {
+		log.Error(err)
+	}
 }
 
 func (d *dao) Healthy() bool {

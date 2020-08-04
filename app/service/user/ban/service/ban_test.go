@@ -24,11 +24,11 @@ func TestService_Add(t *testing.T) {
 	}).Return(&serverService.RconAllResp{
 		Success: 0,
 	}, nil)
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().Add(gomock.Any()).Return(nil)
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Add(gomock.Any()).Return(nil)
 
 	srv := &Service{
-		dao:    dao,
+		dao:    d,
 		server: server,
 	}
 
@@ -55,8 +55,8 @@ func TestService_BanCheck(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().Info(int64(1)).Return(&model.Ban{
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Info(int64(1)).Return(&model.Ban{
 		ID:         1,
 		UID:        1,
 		CreateTime: 1,
@@ -67,12 +67,12 @@ func TestService_BanCheck(t *testing.T) {
 		GameID:     1,
 		Reason:     "test",
 	}, nil)
-	dao.EXPECT().Info(int64(2)).Return(&model.Ban{
+	d.EXPECT().Info(int64(2)).Return(&model.Ban{
 		UID: 2,
 	}, nil)
 
 	srv := &Service{
-		dao: dao,
+		dao: d,
 	}
 
 	Convey("Test BanCheck", t, func() {
@@ -105,8 +105,8 @@ func TestService_Info(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().Info(int64(1)).Return(&model.Ban{
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Info(int64(1)).Return(&model.Ban{
 		ID:         1,
 		UID:        1,
 		CreateTime: 1,
@@ -118,7 +118,7 @@ func TestService_Info(t *testing.T) {
 		Reason:     "test",
 	}, nil)
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test Info", t, func() {
 		Convey("Check it work", func() {
@@ -136,10 +136,10 @@ func TestService_Remove(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().Remove(&model.Ban{ID: 1}).Return(nil)
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Remove(&model.Ban{ID: 1}).Return(nil)
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test Remove", t, func() {
 		Convey("Check it work", func() {

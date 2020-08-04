@@ -16,15 +16,15 @@ func TestService_AddPoint(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
+	d := dao.NewMockDao(ctl)
 	// Upgrade
-	dao.EXPECT().AddPoint(int64(2), int32(1)).Return(&model.User{
+	d.EXPECT().AddPoint(int64(2), int32(1)).Return(&model.User{
 		UID:      2,
 		PassType: 0,
 		Point:    7200,
 	}, int32(1), nil)
 	// Not upgrade
-	dao.EXPECT().AddPoint(int64(1), int32(1)).Return(&model.User{
+	d.EXPECT().AddPoint(int64(1), int32(1)).Return(&model.User{
 		UID:      1,
 		PassType: 0,
 		Point:    1,
@@ -39,7 +39,7 @@ func TestService_AddPoint(t *testing.T) {
 		AdvRewards:  []*rewardService.Item{},
 	}, nil)
 
-	srv := &Service{dao: dao, rewardService: reward}
+	srv := &Service{dao: d, rewardService: reward}
 
 	Convey("Test AddPoint", t, func() {
 		Convey("Check not upgrade", func() {
@@ -142,14 +142,14 @@ func TestService_Info(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().Info(int64(1)).Return(&model.User{
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Info(int64(1)).Return(&model.User{
 		UID:      1,
 		PassType: 1,
 		Point:    1,
 	}, nil)
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test Info", t, func() {
 		Convey("Check it work", func() {
@@ -166,21 +166,21 @@ func TestService_UpgradePass(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().Info(int64(1)).Return(&model.User{
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Info(int64(1)).Return(&model.User{
 		UID:      1,
 		PassType: 0,
 		Point:    7200,
 	}, nil).Times(2)
 	// Invalid
-	dao.EXPECT().Info(int64(2)).Return(&model.User{
+	d.EXPECT().Info(int64(2)).Return(&model.User{
 		UID:      2,
 		PassType: 1,
 		Point:    7200,
 	}, nil)
-	dao.EXPECT().UpgradePass(int64(1), int32(1)).Return(nil)
-	dao.EXPECT().UpgradePass(int64(1), int32(2)).Return(nil)
-	dao.EXPECT().AddPoint(int64(1), int32(144000)).Return(&model.User{
+	d.EXPECT().UpgradePass(int64(1), int32(1)).Return(nil)
+	d.EXPECT().UpgradePass(int64(1), int32(2)).Return(nil)
+	d.EXPECT().AddPoint(int64(1), int32(144000)).Return(&model.User{
 		UID:      1,
 		PassType: 1,
 		Point:    144000,
@@ -226,7 +226,7 @@ func TestService_UpgradePass(t *testing.T) {
 	}).Return(nil, nil).Times(2)
 
 	srv := &Service{
-		dao:             dao,
+		dao:             d,
 		rewardService:   reward,
 		backpackService: backpack,
 	}

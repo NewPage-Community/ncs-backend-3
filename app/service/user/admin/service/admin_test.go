@@ -14,19 +14,19 @@ func TestService_Info(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().Info(int64(1)).Return(&model.Admin{
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Info(int64(1)).Return(&model.Admin{
 		UID:      1,
 		Flag:     "abc",
 		Immunity: 99,
 	}, nil)
-	dao.EXPECT().Info(int64(2)).Return(&model.Admin{
+	d.EXPECT().Info(int64(2)).Return(&model.Admin{
 		UID:      2,
 		Flag:     "",
 		Immunity: 0,
 	}, nil)
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test Info", t, func() {
 		Convey("Check it work", func() {

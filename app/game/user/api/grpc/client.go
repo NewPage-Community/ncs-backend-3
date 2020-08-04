@@ -1,6 +1,7 @@
 package grpc
 
 import (
+	"backend/pkg/log"
 	"backend/pkg/rpc"
 	"context"
 	"google.golang.org/grpc"
@@ -20,6 +21,8 @@ func InitClient(target string, opts ...grpc.CallOption) GameClient {
 
 func Close() {
 	if conn != nil {
-		conn.Close()
+		if err := conn.Close(); err != nil {
+			log.Error(err)
+		}
 	}
 }

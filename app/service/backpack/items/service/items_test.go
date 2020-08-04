@@ -14,8 +14,8 @@ func TestService_GetItems(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().GetItems().Return([]*model.Item{
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().GetItems().Return([]*model.Item{
 		{
 			ID:   1,
 			Type: 1,
@@ -26,7 +26,7 @@ func TestService_GetItems(t *testing.T) {
 		},
 	}, nil).Times(2)
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test GetItems", t, func() {
 		Convey("Check no type", func() {

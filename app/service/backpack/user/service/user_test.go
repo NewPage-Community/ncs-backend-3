@@ -14,14 +14,14 @@ func TestService_AddItems(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().AddItems(int64(1), &model.Items{
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().AddItems(int64(1), &model.Items{
 		{
 			ID: 1,
 		},
 	})
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test AddItems", t, func() {
 		Convey("Check it work", func() {
@@ -42,8 +42,8 @@ func TestService_GetItems(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().Get(int64(1)).Return(&model.User{
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Get(int64(1)).Return(&model.User{
 		UID: 1,
 		Items: &model.Items{
 			{
@@ -52,7 +52,7 @@ func TestService_GetItems(t *testing.T) {
 		},
 	}, nil)
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test GetItems", t, func() {
 		Convey("Check it work", func() {
@@ -69,10 +69,10 @@ func TestService_RemoveItem(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().RemoveItem(int64(1), model.Item{ID: 1}, true).Return(nil)
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().RemoveItem(int64(1), model.Item{ID: 1}, true).Return(nil)
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test RemoveItem", t, func() {
 		Convey("Check it work", func() {
@@ -92,10 +92,10 @@ func TestService_Init(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
-	dao := dao.NewMockDao(ctl)
-	dao.EXPECT().Create(int64(1)).Return(nil, nil)
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Create(int64(1)).Return(nil, nil)
 
-	srv := &Service{dao: dao}
+	srv := &Service{dao: d}
 
 	Convey("Test Init", t, func() {
 		Convey("Check it work", func() {
