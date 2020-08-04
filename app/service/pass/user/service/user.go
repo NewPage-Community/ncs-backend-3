@@ -47,7 +47,7 @@ func (s *Service) AddPoints(ctx context.Context, req *pb.AddPointsReq) (resp *pb
 	for _, v := range req.Add {
 		v := v
 		if v.Uid <= 0 || v.Point <= 0 {
-			log.Error("Invalid data", "UID:", v.Uid, "Point:", v.Point)
+			log.Warn("Invalid data", "UID:", v.Uid, "Point:", v.Point)
 			continue
 		}
 		wg.Add(1)
