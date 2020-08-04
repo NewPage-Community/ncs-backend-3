@@ -98,3 +98,31 @@ func (s *Service) UsePointBox(ctx context.Context, req *pb.UsePointBoxReq) (resp
 	}})
 	return
 }
+
+func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp, err error) {
+	resp = &pb.InfoResp{}
+
+	info, err := s.userPass.Info(ctx, &userPassService.InfoReq{Uid: req.Uid})
+	if err != nil {
+		return
+	}
+
+	items, err := s.userItem.GetItems(ctx, &userItemService.GetItemsReq{Uid: req.Uid})
+	if err != nil {
+		return
+	}
+
+	boxNum := int32(0)
+	for _, v := range items.Items {
+		if v.Id == BoxId {
+			boxNum = v.Amount
+			break
+		}
+	}
+
+	resp.Uid = req.Uid
+	resp.Point = info.Info.Point
+	resp.Type = info.Info.PassType
+	resp.BoxAmount = boxNum
+	return
+}

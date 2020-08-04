@@ -15,6 +15,31 @@
     "application/json"
   ],
   "paths": {
+    "/game/pass/info/{uid}": {
+      "get": {
+        "operationId": "Info",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/passInfoResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Pass"
+        ]
+      }
+    },
     "/game/pass/pointbox": {
       "post": {
         "operationId": "UsePointBox",
@@ -77,6 +102,27 @@
           "items": {
             "$ref": "#/definitions/passItem"
           }
+        }
+      }
+    },
+    "passInfoResp": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "point": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "box_amount": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },

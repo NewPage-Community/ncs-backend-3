@@ -302,43 +302,169 @@ func (m *UsePointBoxResp) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_UsePointBoxResp proto.InternalMessageInfo
 
+type InfoReq struct {
+	Uid                  int64    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *InfoReq) Reset()         { *m = InfoReq{} }
+func (m *InfoReq) String() string { return proto.CompactTextString(m) }
+func (*InfoReq) ProtoMessage()    {}
+func (*InfoReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a6b947dbde360d8c, []int{5}
+}
+func (m *InfoReq) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *InfoReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_InfoReq.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *InfoReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InfoReq.Merge(m, src)
+}
+func (m *InfoReq) XXX_Size() int {
+	return m.Size()
+}
+func (m *InfoReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_InfoReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InfoReq proto.InternalMessageInfo
+
+func (m *InfoReq) GetUid() int64 {
+	if m != nil {
+		return m.Uid
+	}
+	return 0
+}
+
+type InfoResp struct {
+	Uid                  int64    `protobuf:"varint,1,opt,name=uid,proto3" json:"uid,omitempty"`
+	Type                 int32    `protobuf:"varint,2,opt,name=type,proto3" json:"type,omitempty"`
+	Point                int32    `protobuf:"varint,3,opt,name=point,proto3" json:"point,omitempty"`
+	BoxAmount            int32    `protobuf:"varint,4,opt,name=box_amount,json=boxAmount,proto3" json:"box_amount,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *InfoResp) Reset()         { *m = InfoResp{} }
+func (m *InfoResp) String() string { return proto.CompactTextString(m) }
+func (*InfoResp) ProtoMessage()    {}
+func (*InfoResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_a6b947dbde360d8c, []int{6}
+}
+func (m *InfoResp) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *InfoResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_InfoResp.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *InfoResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_InfoResp.Merge(m, src)
+}
+func (m *InfoResp) XXX_Size() int {
+	return m.Size()
+}
+func (m *InfoResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_InfoResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_InfoResp proto.InternalMessageInfo
+
+func (m *InfoResp) GetUid() int64 {
+	if m != nil {
+		return m.Uid
+	}
+	return 0
+}
+
+func (m *InfoResp) GetType() int32 {
+	if m != nil {
+		return m.Type
+	}
+	return 0
+}
+
+func (m *InfoResp) GetPoint() int32 {
+	if m != nil {
+		return m.Point
+	}
+	return 0
+}
+
+func (m *InfoResp) GetBoxAmount() int32 {
+	if m != nil {
+		return m.BoxAmount
+	}
+	return 0
+}
+
 func init() {
 	proto.RegisterType((*Item)(nil), "ncs.game.pass.Item")
 	proto.RegisterType((*GetRewardsReq)(nil), "ncs.game.pass.GetRewardsReq")
 	proto.RegisterType((*GetRewardsResp)(nil), "ncs.game.pass.GetRewardsResp")
 	proto.RegisterType((*UsePointBoxReq)(nil), "ncs.game.pass.UsePointBoxReq")
 	proto.RegisterType((*UsePointBoxResp)(nil), "ncs.game.pass.UsePointBoxResp")
+	proto.RegisterType((*InfoReq)(nil), "ncs.game.pass.InfoReq")
+	proto.RegisterType((*InfoResp)(nil), "ncs.game.pass.InfoResp")
 }
 
 func init() { proto.RegisterFile("app/game/pass/api/grpc/pass.proto", fileDescriptor_a6b947dbde360d8c) }
 
 var fileDescriptor_a6b947dbde360d8c = []byte{
-	// 400 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x52, 0xc1, 0x6a, 0xd5, 0x40,
-	0x14, 0x75, 0x92, 0xbc, 0xa2, 0x37, 0xf6, 0x55, 0xa7, 0xa5, 0x84, 0x50, 0x43, 0x9c, 0x55, 0x70,
-	0x91, 0x40, 0x2d, 0x2e, 0x5c, 0x76, 0x23, 0xee, 0xca, 0x80, 0x1b, 0x37, 0x32, 0x6d, 0xae, 0x31,
-	0x90, 0xcc, 0x4c, 0x33, 0xd3, 0x67, 0xd7, 0xfe, 0x82, 0x20, 0x7e, 0x92, 0x4b, 0xc1, 0xa5, 0x1b,
-	0x79, 0xfa, 0x21, 0x32, 0x79, 0x83, 0x26, 0x0f, 0xfa, 0x76, 0xf7, 0x9c, 0x39, 0x67, 0xee, 0x3d,
-	0x97, 0x0b, 0x4f, 0x85, 0xd6, 0x55, 0x23, 0x7a, 0xac, 0xb4, 0x30, 0xa6, 0x12, 0xba, 0xad, 0x9a,
-	0x41, 0x5f, 0x8d, 0xa8, 0xd4, 0x83, 0xb2, 0x8a, 0xee, 0xcb, 0x2b, 0x53, 0x3a, 0x49, 0xe9, 0xc8,
-	0xf4, 0xa4, 0x51, 0xaa, 0xe9, 0x70, 0x94, 0x0a, 0x29, 0x95, 0x15, 0xb6, 0x55, 0xd2, 0x8b, 0x99,
-	0x86, 0xe8, 0xb5, 0xc5, 0x9e, 0x2e, 0x21, 0x68, 0xeb, 0x84, 0xe4, 0xa4, 0x58, 0xf0, 0xa0, 0xad,
-	0xe9, 0x11, 0x2c, 0x3a, 0x5c, 0x61, 0x97, 0x04, 0x23, 0xb5, 0x01, 0x94, 0x42, 0x24, 0x45, 0x8f,
-	0x49, 0x98, 0x93, 0xe2, 0x01, 0x1f, 0x6b, 0x7a, 0x0c, 0x7b, 0xa2, 0x57, 0x37, 0xd2, 0x26, 0xd1,
-	0x28, 0xf5, 0xc8, 0xf1, 0x1d, 0xca, 0xc6, 0x7e, 0x48, 0x16, 0x39, 0x29, 0x42, 0xee, 0x11, 0x3b,
-	0x80, 0xfd, 0x57, 0x68, 0x39, 0x7e, 0x14, 0x43, 0x6d, 0x38, 0x5e, 0xb3, 0x2f, 0x04, 0x96, 0x53,
-	0xc6, 0x68, 0xe7, 0x35, 0x28, 0x8c, 0x92, 0x7e, 0x22, 0x8f, 0xe8, 0x0b, 0x78, 0xf8, 0x7e, 0x40,
-	0x7c, 0x37, 0x6c, 0xb4, 0x49, 0x90, 0x87, 0x45, 0x7c, 0x7a, 0x58, 0xce, 0x12, 0x97, 0x2e, 0x10,
-	0x8f, 0x9d, 0xd0, 0xff, 0x49, 0xcf, 0x20, 0x16, 0xf5, 0xea, 0x9f, 0x2d, 0xbc, 0xdb, 0x06, 0xa2,
-	0x5e, 0x79, 0x17, 0x3b, 0x83, 0xe5, 0x1b, 0x83, 0x17, 0xaa, 0x95, 0xf6, 0x5c, 0xdd, 0x72, 0xbc,
-	0xa6, 0x8f, 0x20, 0xbc, 0xf1, 0x6b, 0x0a, 0xb9, 0x2b, 0x1d, 0x23, 0xba, 0xcd, 0x96, 0xee, 0x73,
-	0x57, 0xb2, 0xc7, 0x70, 0x30, 0x73, 0x19, 0x7d, 0xfa, 0x93, 0x40, 0x74, 0x21, 0x8c, 0xa1, 0x08,
-	0xf0, 0x3f, 0x29, 0x3d, 0xd9, 0x1a, 0x60, 0xb6, 0x96, 0xf4, 0xc9, 0x8e, 0x57, 0xa3, 0x59, 0xfa,
-	0xe9, 0xc7, 0x9f, 0xcf, 0xc1, 0x11, 0xa5, 0x93, 0x6b, 0xf0, 0xf9, 0x68, 0x07, 0xf1, 0x64, 0x04,
-	0xba, 0xfd, 0xd3, 0x3c, 0x54, 0x9a, 0xed, 0x7a, 0x36, 0x9a, 0x65, 0x63, 0xa7, 0x84, 0x1d, 0x4e,
-	0x3a, 0x69, 0x27, 0xb8, 0x54, 0xb7, 0x2f, 0xc9, 0xb3, 0xf3, 0xe3, 0x6f, 0xeb, 0x8c, 0x7c, 0x5f,
-	0x67, 0xe4, 0xd7, 0x3a, 0x23, 0x5f, 0x7f, 0x67, 0xf7, 0xde, 0x46, 0xee, 0x24, 0x2f, 0xf7, 0xc6,
-	0x0b, 0x7b, 0xfe, 0x37, 0x00, 0x00, 0xff, 0xff, 0xd5, 0xbb, 0x50, 0x70, 0xb3, 0x02, 0x00, 0x00,
+	// 490 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x53, 0xcd, 0x6e, 0xd3, 0x4c,
+	0x14, 0xfd, 0xfc, 0x93, 0x7e, 0xed, 0x0d, 0x4d, 0xe1, 0xb6, 0xa4, 0x56, 0x68, 0xac, 0x30, 0xab,
+	0x88, 0x45, 0x2c, 0x95, 0x8a, 0x05, 0x3b, 0xba, 0x41, 0xdd, 0x55, 0x23, 0xc1, 0x82, 0x4d, 0x35,
+	0xa9, 0x27, 0xc6, 0x92, 0x33, 0x33, 0xf5, 0x38, 0x21, 0x08, 0xb1, 0xe1, 0x15, 0x90, 0x10, 0xef,
+	0xc1, 0x4b, 0xb0, 0x44, 0xe2, 0x05, 0x50, 0xe0, 0x41, 0xd0, 0x8c, 0x47, 0x60, 0x47, 0xa1, 0xbb,
+	0x7b, 0xce, 0x9c, 0x7b, 0xae, 0xe7, 0x1e, 0x0f, 0x3c, 0x64, 0x4a, 0x25, 0x19, 0x9b, 0xf3, 0x44,
+	0x31, 0xad, 0x13, 0xa6, 0xf2, 0x24, 0x2b, 0xd5, 0xb5, 0x45, 0x13, 0x55, 0xca, 0x4a, 0xe2, 0xbe,
+	0xb8, 0xd6, 0x13, 0x23, 0x99, 0x18, 0x72, 0x70, 0x92, 0x49, 0x99, 0x15, 0xdc, 0x4a, 0x99, 0x10,
+	0xb2, 0x62, 0x55, 0x2e, 0x85, 0x13, 0x13, 0x05, 0xe1, 0x45, 0xc5, 0xe7, 0xd8, 0x03, 0x3f, 0x4f,
+	0x23, 0x6f, 0xe4, 0x8d, 0x3b, 0xd4, 0xcf, 0x53, 0x3c, 0x82, 0x4e, 0xc1, 0x97, 0xbc, 0x88, 0x7c,
+	0x4b, 0xd5, 0x00, 0x11, 0x42, 0xc1, 0xe6, 0x3c, 0x0a, 0x46, 0xde, 0x78, 0x8f, 0xda, 0x1a, 0xfb,
+	0xb0, 0xc3, 0xe6, 0x72, 0x21, 0xaa, 0x28, 0xb4, 0x52, 0x87, 0x0c, 0x5f, 0x70, 0x91, 0x55, 0xaf,
+	0xa3, 0xce, 0xc8, 0x1b, 0x07, 0xd4, 0x21, 0x72, 0x00, 0xfb, 0xcf, 0x79, 0x45, 0xf9, 0x1b, 0x56,
+	0xa6, 0x9a, 0xf2, 0x1b, 0xf2, 0xc9, 0x83, 0x5e, 0x93, 0xd1, 0xca, 0xf4, 0x6a, 0xce, 0xb4, 0x14,
+	0xee, 0x8b, 0x1c, 0xc2, 0x27, 0x70, 0x67, 0x56, 0x72, 0x7e, 0x55, 0xd6, 0xda, 0xc8, 0x1f, 0x05,
+	0xe3, 0xee, 0xe9, 0xe1, 0xa4, 0x75, 0xe3, 0x89, 0xb9, 0x10, 0xed, 0x1a, 0xa1, 0xf3, 0xc4, 0x33,
+	0xe8, 0xb2, 0x74, 0xf9, 0xa7, 0x2d, 0xf8, 0x77, 0x1b, 0xb0, 0x74, 0xe9, 0xba, 0xc8, 0x19, 0xf4,
+	0x5e, 0x68, 0x7e, 0x29, 0x73, 0x51, 0x9d, 0xcb, 0x15, 0xe5, 0x37, 0x78, 0x17, 0x82, 0x85, 0x5b,
+	0x53, 0x40, 0x4d, 0x69, 0x18, 0x56, 0xd4, 0x5b, 0xda, 0xa5, 0xa6, 0x24, 0xf7, 0xe0, 0xa0, 0xd5,
+	0xa5, 0x15, 0x79, 0x00, 0xff, 0x5f, 0x88, 0x99, 0xdc, 0xea, 0x40, 0x38, 0xec, 0xd6, 0x87, 0x5a,
+	0x6d, 0xf1, 0x47, 0x08, 0xab, 0xb7, 0x8a, 0xbb, 0x18, 0x6c, 0x6d, 0xb2, 0x51, 0xc6, 0xde, 0xc6,
+	0xd0, 0xa1, 0x35, 0xc0, 0x21, 0xc0, 0x54, 0xae, 0xae, 0x5a, 0x59, 0xec, 0x4d, 0xe5, 0xea, 0x99,
+	0x25, 0x4e, 0xbf, 0xf8, 0x10, 0x5e, 0x32, 0xad, 0xf1, 0x25, 0x84, 0x66, 0x1e, 0xf6, 0x37, 0xaf,
+	0x5f, 0x7f, 0xe1, 0xe0, 0x78, 0x2b, 0xaf, 0x15, 0x19, 0x7e, 0xf8, 0xfe, 0xeb, 0xa3, 0x7f, 0x8c,
+	0xf7, 0x1b, 0xff, 0x5f, 0x2e, 0x66, 0x32, 0x79, 0xb7, 0xc8, 0xd3, 0xf7, 0xc8, 0x01, 0xfe, 0xa6,
+	0x88, 0x27, 0x1b, 0x2e, 0xad, 0xc8, 0x07, 0xc3, 0x5b, 0x4e, 0xb5, 0x22, 0x03, 0x3b, 0xe9, 0x08,
+	0xb1, 0x31, 0xc9, 0x65, 0x87, 0x05, 0x74, 0x1b, 0xeb, 0xc5, 0x4d, 0xa7, 0x76, 0x60, 0x83, 0xf8,
+	0xb6, 0x63, 0xad, 0x48, 0x6c, 0x27, 0x45, 0xe4, 0xb0, 0x31, 0xc9, 0xae, 0x73, 0x2a, 0x57, 0x4f,
+	0xbd, 0x47, 0xe7, 0xfd, 0xaf, 0xeb, 0xd8, 0xfb, 0xb6, 0x8e, 0xbd, 0x1f, 0xeb, 0xd8, 0xfb, 0xfc,
+	0x33, 0xfe, 0xef, 0x55, 0x68, 0x9e, 0xdb, 0x74, 0xc7, 0xbe, 0x9e, 0xc7, 0xbf, 0x03, 0x00, 0x00,
+	0xff, 0xff, 0x30, 0x66, 0xb1, 0xfe, 0x8f, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -353,6 +479,7 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type PassClient interface {
+	Info(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error)
 	GetRewards(ctx context.Context, in *GetRewardsReq, opts ...grpc.CallOption) (*GetRewardsResp, error)
 	UsePointBox(ctx context.Context, in *UsePointBoxReq, opts ...grpc.CallOption) (*UsePointBoxResp, error)
 }
@@ -363,6 +490,15 @@ type passClient struct {
 
 func NewPassClient(cc *grpc.ClientConn) PassClient {
 	return &passClient{cc}
+}
+
+func (c *passClient) Info(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error) {
+	out := new(InfoResp)
+	err := c.cc.Invoke(ctx, "/ncs.game.pass.Pass/Info", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *passClient) GetRewards(ctx context.Context, in *GetRewardsReq, opts ...grpc.CallOption) (*GetRewardsResp, error) {
@@ -385,6 +521,7 @@ func (c *passClient) UsePointBox(ctx context.Context, in *UsePointBoxReq, opts .
 
 // PassServer is the server API for Pass service.
 type PassServer interface {
+	Info(context.Context, *InfoReq) (*InfoResp, error)
 	GetRewards(context.Context, *GetRewardsReq) (*GetRewardsResp, error)
 	UsePointBox(context.Context, *UsePointBoxReq) (*UsePointBoxResp, error)
 }
@@ -393,6 +530,9 @@ type PassServer interface {
 type UnimplementedPassServer struct {
 }
 
+func (*UnimplementedPassServer) Info(ctx context.Context, req *InfoReq) (*InfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Info not implemented")
+}
 func (*UnimplementedPassServer) GetRewards(ctx context.Context, req *GetRewardsReq) (*GetRewardsResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRewards not implemented")
 }
@@ -402,6 +542,24 @@ func (*UnimplementedPassServer) UsePointBox(ctx context.Context, req *UsePointBo
 
 func RegisterPassServer(s *grpc.Server, srv PassServer) {
 	s.RegisterService(&_Pass_serviceDesc, srv)
+}
+
+func _Pass_Info_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InfoReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PassServer).Info(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ncs.game.pass.Pass/Info",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PassServer).Info(ctx, req.(*InfoReq))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Pass_GetRewards_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -444,6 +602,10 @@ var _Pass_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "ncs.game.pass.Pass",
 	HandlerType: (*PassServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Info",
+			Handler:    _Pass_Info_Handler,
+		},
 		{
 			MethodName: "GetRewards",
 			Handler:    _Pass_GetRewards_Handler,
@@ -667,6 +829,85 @@ func (m *UsePointBoxResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *InfoReq) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *InfoReq) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *InfoReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Uid != 0 {
+		i = encodeVarintPass(dAtA, i, uint64(m.Uid))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *InfoResp) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *InfoResp) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *InfoResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.BoxAmount != 0 {
+		i = encodeVarintPass(dAtA, i, uint64(m.BoxAmount))
+		i--
+		dAtA[i] = 0x20
+	}
+	if m.Point != 0 {
+		i = encodeVarintPass(dAtA, i, uint64(m.Point))
+		i--
+		dAtA[i] = 0x18
+	}
+	if m.Type != 0 {
+		i = encodeVarintPass(dAtA, i, uint64(m.Type))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Uid != 0 {
+		i = encodeVarintPass(dAtA, i, uint64(m.Uid))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintPass(dAtA []byte, offset int, v uint64) int {
 	offset -= sovPass(v)
 	base := offset
@@ -769,6 +1010,45 @@ func (m *UsePointBoxResp) Size() (n int) {
 	}
 	var l int
 	_ = l
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *InfoReq) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Uid != 0 {
+		n += 1 + sovPass(uint64(m.Uid))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *InfoResp) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Uid != 0 {
+		n += 1 + sovPass(uint64(m.Uid))
+	}
+	if m.Type != 0 {
+		n += 1 + sovPass(uint64(m.Type))
+	}
+	if m.Point != 0 {
+		n += 1 + sovPass(uint64(m.Point))
+	}
+	if m.BoxAmount != 0 {
+		n += 1 + sovPass(uint64(m.BoxAmount))
+	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
 	}
@@ -1260,6 +1540,209 @@ func (m *UsePointBoxResp) Unmarshal(dAtA []byte) error {
 			return fmt.Errorf("proto: UsePointBoxResp: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPass(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthPass
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthPass
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *InfoReq) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPass
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: InfoReq: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: InfoReq: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Uid", wireType)
+			}
+			m.Uid = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPass
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Uid |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipPass(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthPass
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthPass
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *InfoResp) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowPass
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: InfoResp: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: InfoResp: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Uid", wireType)
+			}
+			m.Uid = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPass
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Uid |= int64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
+			}
+			m.Type = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPass
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Type |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Point", wireType)
+			}
+			m.Point = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPass
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Point |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field BoxAmount", wireType)
+			}
+			m.BoxAmount = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowPass
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.BoxAmount |= int32(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
 		default:
 			iNdEx = preIndex
 			skippy, err := skipPass(dAtA[iNdEx:])

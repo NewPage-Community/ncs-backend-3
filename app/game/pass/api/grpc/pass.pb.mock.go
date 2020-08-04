@@ -34,6 +34,26 @@ func (m *MockPassClient) EXPECT() *MockPassClientMockRecorder {
 	return m.recorder
 }
 
+// Info mocks base method
+func (m *MockPassClient) Info(ctx context.Context, in *InfoReq, opts ...grpc.CallOption) (*InfoResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "Info", varargs...)
+	ret0, _ := ret[0].(*InfoResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Info indicates an expected call of Info
+func (mr *MockPassClientMockRecorder) Info(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockPassClient)(nil).Info), varargs...)
+}
+
 // GetRewards mocks base method
 func (m *MockPassClient) GetRewards(ctx context.Context, in *GetRewardsReq, opts ...grpc.CallOption) (*GetRewardsResp, error) {
 	m.ctrl.T.Helper()
@@ -95,6 +115,21 @@ func NewMockPassServer(ctrl *gomock.Controller) *MockPassServer {
 // EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockPassServer) EXPECT() *MockPassServerMockRecorder {
 	return m.recorder
+}
+
+// Info mocks base method
+func (m *MockPassServer) Info(arg0 context.Context, arg1 *InfoReq) (*InfoResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Info", arg0, arg1)
+	ret0, _ := ret[0].(*InfoResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Info indicates an expected call of Info
+func (mr *MockPassServerMockRecorder) Info(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockPassServer)(nil).Info), arg0, arg1)
 }
 
 // GetRewards mocks base method

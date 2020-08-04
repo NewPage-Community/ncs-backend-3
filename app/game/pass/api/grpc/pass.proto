@@ -29,7 +29,23 @@ message UsePointBoxReq {
 message UsePointBoxResp {
 }
 
+message InfoReq {
+    int64 uid = 1;
+}
+
+message InfoResp {
+    int64 uid = 1;
+    int32 type = 2;
+    int32 point = 3;
+    int32 box_amount = 4;
+}
+
 service Pass {
+    rpc Info (InfoReq) returns (InfoResp) {
+        option (google.api.http) = {
+            get: "/game/pass/info/{uid}"
+        };
+    }
     rpc GetRewards (GetRewardsReq) returns (GetRewardsResp) {
         option (google.api.http) = {
             get: "/game/pass/rewards"

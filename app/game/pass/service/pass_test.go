@@ -105,7 +105,7 @@ func TestService_UsePointBox(t *testing.T) {
 	}).Return(nil, nil)
 
 	srv := &Service{userPass: passUser, userItem: userItem}
-	Convey("Test GetRewards", t, func() {
+	Convey("Test UsePointBox", t, func() {
 		Convey("Check use 1 box", func() {
 			_, err := srv.UsePointBox(context.TODO(), &pb.UsePointBoxReq{
 				Uid: 1,
@@ -119,6 +119,49 @@ func TestService_UsePointBox(t *testing.T) {
 				All: true,
 			})
 			So(err, ShouldBeNil)
+		})
+	})
+}
+
+func TestService_Info(t *testing.T) {
+	ctl := gomock.NewController(t)
+	defer ctl.Finish()
+
+	passUser := passService.NewMockUserClient(ctl)
+	passUser.EXPECT().Info(gomock.Any(), &passService.InfoReq{
+		Uid: 1,
+	}).Return(&passService.InfoResp{
+		Info: &passService.Info{
+			Uid:      1,
+			PassType: 1,
+			Point:    1,
+		},
+	}, nil)
+
+	userItem := userItemService.NewMockUserClient(ctl)
+	userItem.EXPECT().GetItems(gomock.Any(), &userItemService.GetItemsReq{
+		Uid: 1,
+	}).Return(&userItemService.GetItemsResp{
+		Uid: 1,
+		Items: []*userItemService.Item{
+			{
+				Id:     BoxId,
+				Amount: 10,
+			},
+		},
+	}, nil)
+
+	srv := &Service{userItem: userItem, userPass: passUser}
+	Convey("Test Info", t, func() {
+		Convey("Check it work", func() {
+			info, err := srv.Info(context.TODO(), &pb.InfoReq{
+				Uid: 1,
+			})
+			So(err, ShouldBeNil)
+			So(info.Uid, ShouldEqual, 1)
+			So(info.BoxAmount, ShouldEqual, 10)
+			So(info.Type, ShouldEqual, 1)
+			So(info.Point, ShouldEqual, 1)
 		})
 	})
 }
