@@ -1,0 +1,36 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "pass.go",
+        "service.go",
+    ],
+    importpath = "backend/app/game/pass/service",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/game/pass/api/grpc:go_default_library",
+        "//app/game/pass/conf:go_default_library",
+        "//app/service/backpack/items/api/grpc:go_default_library",
+        "//app/service/backpack/user/api/grpc:go_default_library",
+        "//app/service/pass/reward/api/grpc:go_default_library",
+        "//app/service/pass/user/api/grpc:go_default_library",
+        "//pkg/ecode:go_default_library",
+        "@org_golang_google_grpc//codes:go_default_library",
+    ],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["pass_test.go"],
+    embed = [":go_default_library"],
+    deps = [
+        "//app/game/pass/api/grpc:go_default_library",
+        "//app/service/backpack/items/api/grpc:go_default_library",
+        "//app/service/backpack/user/api/grpc:go_default_library",
+        "//app/service/pass/reward/api/grpc:go_default_library",
+        "//app/service/pass/user/api/grpc:go_default_library",
+        "@com_github_golang_mock//gomock:go_default_library",
+        "@com_github_smartystreets_goconvey//convey:go_default_library",
+    ],
+)

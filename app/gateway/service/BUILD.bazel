@@ -12,6 +12,7 @@ go_library(
     importpath = "backend/app/gateway/service",
     visibility = ["//visibility:public"],
     deps = [
+        "//app/game/pass/api/grpc:go_default_library",
         "//app/game/server/api/grpc:go_default_library",
         "//app/game/skin/api/grpc:go_default_library",
         "//app/game/stats/api/grpc:go_default_library",

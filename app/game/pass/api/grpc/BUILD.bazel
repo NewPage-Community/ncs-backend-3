@@ -4,12 +4,12 @@ go_library(
     name = "go_default_library",
     srcs = [
         "client.go",
+        "pass.pb.go",
+        "pass.pb.gw.go",
+        "pass.pb.mock.go",
         "server.go",
-        "user.pb.go",
-        "user.pb.gw.go",
-        "user.pb.mock.go",
     ],
-    importpath = "backend/app/service/backpack/user/api/grpc",
+    importpath = "backend/app/game/pass/api/grpc",
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/log:go_default_library",

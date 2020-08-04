@@ -8,15 +8,15 @@ import (
 )
 
 const (
-	ServiceName = "ncs-service-backpack-user"
+	ServiceName = "ncs-game-pass"
 	ServiceAddr = ServiceName + ":2333"
 )
 
 var conn *grpc.ClientConn
 
-func InitClient(target string, opts ...grpc.CallOption) UserClient {
+func InitClient(target string, opts ...grpc.CallOption) PassClient {
 	conn = rpc.Dial(context.Background(), target, nil)
-	return NewUserClient(conn)
+	return NewPassClient(conn)
 }
 
 func Close() {

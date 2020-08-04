@@ -1,6 +1,7 @@
 package service
 
 import (
+	passGW "backend/app/game/pass/api/grpc"
 	serverGW "backend/app/game/server/api/grpc"
 	skinGW "backend/app/game/skin/api/grpc"
 	statsGW "backend/app/game/stats/api/grpc"
@@ -29,5 +30,9 @@ func regGameService(gws *rpc.Gateways) {
 	gws.AddGateway(
 		statsGW.RegisterStatsHandlerFromEndpoint,
 		statsGW.ServiceAddr,
+	)
+	gws.AddGateway(
+		passGW.RegisterPassHandlerFromEndpoint,
+		passGW.ServiceAddr,
 	)
 }
