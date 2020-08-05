@@ -5,9 +5,9 @@ import (
 )
 
 type Sign struct {
-	UID      int64     `gorm:"primary_key;not null" json:"uid"`
-	SignTime time.Time `gorm:"not null;INDEX" json:"sign_time"`
-	SignDays int       `gorm:"not null;INDEX" json:"sign_days"`
+	UID      int64 `gorm:"primary_key;not null" json:"uid"`
+	SignDate int   `gorm:"not null;INDEX" json:"sign_date"`
+	SignDays int   `gorm:"not null;INDEX" json:"sign_days"`
 }
 
 // TableName return table name
@@ -19,26 +19,33 @@ func (s *Sign) IsValid() bool {
 	return s.UID > 0
 }
 
-// GetNowTime .
-func (*Sign) GetNowTime() time.Time {
+// GetNowDate return now CST date
+func (*Sign) GetNowDate() int {
 	cst := time.FixedZone("CST", 8*3600)
-	return time.Now().In(cst)
+	now := time.Now().In(cst)
+	return GetDate(now)
 }
 
 // Sign .
 func (s *Sign) Sign() {
 	if !s.IsSigned() {
-		s.SignTime = s.GetNowTime()
-		s.SignDays += 1
+		now := s.GetNowDate()
+		// Continuous
+		if now-s.SignDate == 1 {
+			s.SignDays += 1
+		} else {
+			s.SignDays = 1
+		}
+		s.SignDate = now
 	}
 }
 
 // IsSigned check if user signed
 func (s *Sign) IsSigned() bool {
-	now := s.GetNowTime()
-	sign := s.SignTime
-	if now.Year() == sign.Year() && now.YearDay() == sign.YearDay() {
-		return true
-	}
-	return false
+	return s.GetNowDate() == s.SignDate
+}
+
+// GetDate return Date 19700101
+func GetDate(t time.Time) int {
+	return t.Year()*10000 + int(t.Month())*100 + t.Day()
 }

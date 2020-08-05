@@ -7,41 +7,58 @@ import (
 )
 
 func TestSign_Sign(t *testing.T) {
+	cst := time.FixedZone("CST", 8*3600)
+	now := time.Now().In(cst)
 	Convey("Test Sign", t, func() {
-		Convey("Check it work", func() {
+		Convey("Check continuous sign", func() {
 			s := Sign{
 				UID:      1,
+				SignDate: GetDate(now.Add(-24 * time.Hour)),
 				SignDays: 1,
 			}
 			s.Sign()
-			So(s.SignTime, ShouldNotBeNil)
+			So(s.IsSigned(), ShouldBeTrue)
 			So(s.SignDays, ShouldEqual, 2)
+			t.Log(s)
+		})
+		Convey("Check not continuous sign", func() {
+			s := Sign{
+				UID:      1,
+				SignDate: GetDate(now.Add(-48 * time.Hour)),
+				SignDays: 1,
+			}
+			s.Sign()
+			So(s.IsSigned(), ShouldBeTrue)
+			So(s.SignDays, ShouldEqual, 1)
 			t.Log(s)
 		})
 	})
 }
 
-func TestSign_GetNowTime(t *testing.T) {
-	Convey("Test GetNowTime", t, func() {
+func TestSign_GetNowDate(t *testing.T) {
+	Convey("Test GetNowDate", t, func() {
 		Convey("Check it work", func() {
 			s := Sign{}
-			So(s.GetNowTime(), ShouldNotBeNil)
-			t.Log(s.GetNowTime())
+			date := s.GetNowDate()
+			So(date, ShouldNotBeNil)
+			t.Log(date)
 		})
 	})
 }
 
 func TestSign_IsSigned(t *testing.T) {
+	cst := time.FixedZone("CST", 8*3600)
+	now := time.Now().In(cst)
 	Convey("Test IsSigned", t, func() {
 		Convey("Check is signed", func() {
 			s := Sign{
-				SignTime: time.Now(),
+				SignDate: GetDate(now),
 			}
 			So(s.IsSigned(), ShouldBeTrue)
 		})
 		Convey("Check is not signed", func() {
 			s := Sign{
-				SignTime: time.Now().Add(-24 * time.Hour),
+				SignDate: GetDate(now.Add(-24 * time.Hour)),
 			}
 			So(s.IsSigned(), ShouldBeFalse)
 		})
