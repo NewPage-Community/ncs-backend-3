@@ -19,7 +19,7 @@ func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp,
 	if res != nil {
 		resp.Info = &pb.Info{
 			Uid:      res.UID,
-			SignTime: res.SignTime.Unix(),
+			SignDate: int32(res.SignDate),
 			SignDays: int32(res.SignDays),
 		}
 	}

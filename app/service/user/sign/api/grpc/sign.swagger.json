@@ -75,9 +75,9 @@
           "type": "string",
           "format": "int64"
         },
-        "sign_time": {
-          "type": "string",
-          "format": "int64"
+        "sign_date": {
+          "type": "integer",
+          "format": "int32"
         },
         "sign_days": {
           "type": "integer",

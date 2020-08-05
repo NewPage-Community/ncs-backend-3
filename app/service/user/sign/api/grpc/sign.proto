@@ -8,7 +8,7 @@ import "google/api/annotations.proto";
 
 message Info {
     int64 uid = 1;
-    int64 sign_time = 2;
+    int32 sign_date = 2;
     int32 sign_days = 3;
 }
 
