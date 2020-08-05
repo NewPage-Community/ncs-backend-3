@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// HealthCheck http health check handler
 func HealthCheck(health func() bool) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/plain")
