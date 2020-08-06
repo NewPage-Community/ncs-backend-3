@@ -1,6 +1,7 @@
 package service
 
 import (
+	cookieGW "backend/app/game/cookie/api/grpc"
 	passGW "backend/app/game/pass/api/grpc"
 	serverGW "backend/app/game/server/api/grpc"
 	skinGW "backend/app/game/skin/api/grpc"
@@ -34,5 +35,9 @@ func regGameService(gws *rpc.Gateways) {
 	gws.AddGateway(
 		passGW.RegisterPassHandlerFromEndpoint,
 		passGW.ServiceAddr,
+	)
+	gws.AddGateway(
+		cookieGW.RegisterCookieHandlerFromEndpoint,
+		cookieGW.ServiceAddr,
 	)
 }
