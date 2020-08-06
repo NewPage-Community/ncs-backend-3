@@ -10,3 +10,4 @@
 | stats      | 统计接口服务|
 | store      | 商店接口服务|
 | user      | 用户接口服务|
+| cookie     | cookie接口服务|

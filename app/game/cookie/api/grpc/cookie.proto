@@ -1,5 +1,5 @@
 syntax = "proto3";
-package ncs.user.cookie;
+package ncs.game.cookie;
 option go_package = "grpc";
 
 import "google/api/annotations.proto";
@@ -14,6 +14,14 @@ message GetCookieResp {
     bool exist = 2;
 }
 
+message GetAllCookieReq {
+    int64 uid = 1;
+}
+
+message GetAllCookieResp {
+    map<string, string> cookie = 1;
+}
+
 message SetCookieReq {
     int64 uid = 1;
     string key = 2;
@@ -26,12 +34,17 @@ message SetCookieResp {
 service Cookie {
     rpc GetCookie (GetCookieReq) returns (GetCookieResp) {
         option (google.api.http) = {
-            get: "/user/cookie/{uid}/{key}"
+            get: "/user/cookie/get/{uid}/{key}"
+        };
+    }
+    rpc GetAllCookie (GetAllCookieReq) returns (GetAllCookieResp) {
+        option (google.api.http) = {
+            get: "/user/cookie/all/{uid}"
         };
     }
     rpc SetCookie (SetCookieReq) returns (SetCookieResp) {
         option (google.api.http) = {
-            put: "/user/cookie/{uid}/{key}"
+            post: "/user/cookie/set"
             body: "*"
         };
     }

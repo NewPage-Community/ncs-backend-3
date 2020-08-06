@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "cookie.go",
+        "dao.go",
+        "dao.mock.go",
+    ],
+    importpath = "backend/app/game/cookie/dao",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/game/cookie/conf:go_default_library",
+        "//app/game/cookie/model:go_default_library",
+        "//pkg/cache/redis:go_default_library",
+        "//pkg/log:go_default_library",
+        "@com_github_go_redis_redis_v7//:go_default_library",
+        "@com_github_golang_mock//gomock:go_default_library",
+    ],
+)

@@ -1,0 +1,13 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["config.go"],
+    importpath = "backend/app/game/cookie/conf",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//pkg/conf:go_default_library",
+        "//pkg/log:go_default_library",
+        "@com_github_go_redis_redis_v7//:go_default_library",
+    ],
+)
