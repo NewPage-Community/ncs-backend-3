@@ -2,22 +2,22 @@ package service
 
 import (
 	backpack "backend/app/service/backpack/user/api/grpc"
-	"backend/app/service/user/account/api/grpc"
+	account "backend/app/service/user/account/api/grpc"
 )
 
 type Service struct {
-	account  grpc.AccountClient
+	account  account.AccountClient
 	backpack backpack.UserClient
 }
 
 func Init() *Service {
 	return &Service{
-		account:  grpc.InitClient(grpc.ServiceAddr),
-		backpack: backpack.InitClient(grpc.ServiceAddr),
+		account:  account.InitClient(account.ServiceAddr),
+		backpack: backpack.InitClient(backpack.ServiceAddr),
 	}
 }
 
 func (s *Service) Close() {
-	grpc.Close()
+	account.Close()
 	backpack.Close()
 }
