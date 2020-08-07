@@ -64,5 +64,27 @@ func TestItems_addItem(t *testing.T) {
 			So((*items)[3].ExprTime, ShouldBeGreaterThanOrEqualTo, time.Now().Unix())
 			t.Log(time.Now().Unix(), (*items)[3])
 		})
+		Convey("Check add item already is unlimited 1", func() {
+			items.AddItems(&Items{
+				{
+					ID:       3,
+					Amount:   1,
+					ExprTime: 0,
+				},
+			})
+			So((*items)[2].Amount, ShouldEqual, 0)
+			So((*items)[2].ExprTime, ShouldEqual, 0)
+		})
+		Convey("Check add item already is unlimited 2", func() {
+			items.AddItems(&Items{
+				{
+					ID:       3,
+					Amount:   0,
+					ExprTime: 1,
+				},
+			})
+			So((*items)[2].Amount, ShouldEqual, 0)
+			So((*items)[2].ExprTime, ShouldEqual, 0)
+		})
 	})
 }

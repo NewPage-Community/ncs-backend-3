@@ -16,27 +16,11 @@ func (d *dao) Get(uid int64) (res *model.User, err error) {
 		// not found and create
 		return d.Create(uid)
 	}
-
-	err = d.db.Transaction(func(tx *gorm.DB) (err error) {
-		err = tx.Clauses(clause.Locking{Strength: "UPDATE"}).
-			First(userModel, uid).Error
-		if err != nil {
-			return
-		}
-
-		res, err = userModel.GetUser()
-		if err != nil {
-			return
-		}
-		res.CheckItem()
-
-		userModel, err = res.GetModel()
-		if err != nil {
-			return
-		}
-		err = tx.Model(userModel).Updates(*userModel).Error
+	if err != nil {
 		return
-	})
+	}
+
+	res, err = userModel.GetUser()
 	return
 }
 
@@ -64,6 +48,9 @@ func (d *dao) AddItems(uid int64, items *model.Items) (err error) {
 		if err != nil {
 			return
 		}
+
+		// Delete expired item first
+		user.CheckItem()
 		user.AddItems(items)
 
 		userModel, err = user.GetModel()
@@ -100,6 +87,9 @@ func (d *dao) RemoveItem(uid int64, item model.Item, all bool) (err error) {
 		if err != nil {
 			return
 		}
+
+		// Delete expired item first
+		user.CheckItem()
 		user.RemoveItem(item, all)
 
 		userModel, err = user.GetModel()

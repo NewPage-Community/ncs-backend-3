@@ -23,11 +23,13 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 	}
 
 	for _, v := range *res.Items {
-		resp.Items = append(resp.Items, &pb.Item{
-			Id:       v.ID,
-			Amount:   v.Amount,
-			ExprTime: v.ExprTime,
-		})
+		if !v.IsExpired() {
+			resp.Items = append(resp.Items, &pb.Item{
+				Id:       v.ID,
+				Amount:   v.Amount,
+				ExprTime: v.ExprTime,
+			})
+		}
 	}
 
 	resp.Uid = res.UID
