@@ -64,11 +64,6 @@ ncs-services:
       image: registry.new-page.xyz/newpage/ncs/service-backpack-items
       tag: latest
       port: 2333
-    - app: ncs-game-skin
-      version: v1
-      image: registry.new-page.xyz/newpage/ncs/game-skin
-      tag: latest
-      port: 2333
     - app: ncs-service-user-money
       version: v1
       image: registry.new-page.xyz/newpage/ncs/service-user-money
