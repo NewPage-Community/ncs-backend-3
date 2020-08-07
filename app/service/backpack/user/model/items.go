@@ -24,7 +24,11 @@ func (item *Item) IsValid() bool {
 }
 
 func (item *Item) IsExpired() bool {
-	return item.ExprTime != 0 && item.ExprTime < time.Now().Unix()
+	// Unlimited time
+	if item.ExprTime == 0 {
+		return false
+	}
+	return item.ExprTime < time.Now().Unix()
 }
 
 func (item *Item) CalType() int {
@@ -54,7 +58,6 @@ func (items *Items) AddItems(_items *Items) {
 
 func (items *Items) addItem(item Item) {
 	index, found := items.search(item.ID)
-	now := time.Now().Unix()
 
 	if found {
 		if item.CalType() == ItemCalTypeUnlimited {
@@ -69,7 +72,7 @@ func (items *Items) addItem(item Item) {
 		// not found
 		// fix expr time
 		if item.CalType() == ItemCalTypeTime {
-			item.ExprTime = now + item.ExprTime
+			item.ExprTime = time.Now().Unix() + item.ExprTime
 		}
 		*items = append(*items, &item)
 	}
