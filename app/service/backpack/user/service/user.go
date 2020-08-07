@@ -96,3 +96,30 @@ func (s *Service) Init(ctx context.Context, req *pb.InitReq) (resp *pb.InitResp,
 	_, err = s.dao.Create(req.Uid)
 	return
 }
+
+func (s *Service) HaveItem(ctx context.Context, req *pb.HaveItemReq) (resp *pb.HaveItemResp, err error) {
+	resp = &pb.HaveItemResp{
+		Have: false,
+	}
+
+	if req.Uid <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID")
+		return
+	}
+	if req.Id == 0 {
+		return
+	}
+
+	res, err := s.dao.Get(req.Uid)
+	if err != nil {
+		return
+	}
+
+	for _, v := range *res.Items {
+		if v.ID == req.Id {
+			resp.Have = true
+			break
+		}
+	}
+	return
+}

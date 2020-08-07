@@ -114,6 +114,26 @@ func (mr *MockUserClientMockRecorder) RemoveItem(ctx, in interface{}, opts ...in
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveItem", reflect.TypeOf((*MockUserClient)(nil).RemoveItem), varargs...)
 }
 
+// HaveItem mocks base method
+func (m *MockUserClient) HaveItem(ctx context.Context, in *HaveItemReq, opts ...grpc.CallOption) (*HaveItemResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "HaveItem", varargs...)
+	ret0, _ := ret[0].(*HaveItemResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// HaveItem indicates an expected call of HaveItem
+func (mr *MockUserClientMockRecorder) HaveItem(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HaveItem", reflect.TypeOf((*MockUserClient)(nil).HaveItem), varargs...)
+}
+
 // MockUserServer is a mock of UserServer interface
 type MockUserServer struct {
 	ctrl     *gomock.Controller
@@ -195,4 +215,19 @@ func (m *MockUserServer) RemoveItem(arg0 context.Context, arg1 *RemoveItemReq) (
 func (mr *MockUserServerMockRecorder) RemoveItem(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveItem", reflect.TypeOf((*MockUserServer)(nil).RemoveItem), arg0, arg1)
+}
+
+// HaveItem mocks base method
+func (m *MockUserServer) HaveItem(arg0 context.Context, arg1 *HaveItemReq) (*HaveItemResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "HaveItem", arg0, arg1)
+	ret0, _ := ret[0].(*HaveItemResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// HaveItem indicates an expected call of HaveItem
+func (mr *MockUserServerMockRecorder) HaveItem(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HaveItem", reflect.TypeOf((*MockUserServer)(nil).HaveItem), arg0, arg1)
 }

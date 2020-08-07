@@ -44,6 +44,15 @@ message InitReq {
 message InitResp {
 }
 
+message HaveItemReq {
+    int64 uid = 1;
+    int32 id = 2;
+}
+
+message HaveItemResp {
+    bool have = 1;
+}
+
 service User {
     rpc Init (InitReq) returns (InitResp);
     rpc GetItems (GetItemsReq) returns (GetItemsResp) {
@@ -58,5 +67,10 @@ service User {
         };
     }
     rpc RemoveItem (RemoveItemReq) returns (RemoveItemResp);
+    rpc HaveItem (HaveItemReq) returns (HaveItemResp) {
+        option (google.api.http) = {
+            get: "/backpack/user/have/{uid}/{id}"
+        };
+    }
 }
 

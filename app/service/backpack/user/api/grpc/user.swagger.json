@@ -41,6 +41,38 @@
         ]
       }
     },
+    "/backpack/user/have/{uid}/{id}": {
+      "get": {
+        "operationId": "HaveItem",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userHaveItemResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
     "/backpack/user/{uid}": {
       "get": {
         "operationId": "GetItems",
@@ -98,6 +130,15 @@
           "items": {
             "$ref": "#/definitions/userItem"
           }
+        }
+      }
+    },
+    "userHaveItemResp": {
+      "type": "object",
+      "properties": {
+        "have": {
+          "type": "boolean",
+          "format": "boolean"
         }
       }
     },

@@ -104,3 +104,39 @@ func TestService_Init(t *testing.T) {
 		})
 	})
 }
+
+func TestService_HaveItem(t *testing.T) {
+	ctl := gomock.NewController(t)
+	defer ctl.Finish()
+
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().Get(int64(1)).Return(&model.User{
+		UID: 1,
+		Items: &model.Items{
+			{
+				ID: 1,
+			},
+		},
+	}, nil)
+
+	srv := &Service{dao: d}
+
+	Convey("Test HaveItem", t, func() {
+		Convey("Check it work", func() {
+			res, err := srv.HaveItem(context.TODO(), &pb.HaveItemReq{
+				Uid: 1,
+				Id:  1,
+			})
+			So(err, ShouldBeNil)
+			So(res.Have, ShouldBeTrue)
+		})
+		Convey("Check invalid id", func() {
+			res, err := srv.HaveItem(context.TODO(), &pb.HaveItemReq{
+				Uid: 1,
+				Id:  0,
+			})
+			So(err, ShouldBeNil)
+			So(res.Have, ShouldBeFalse)
+		})
+	})
+}
