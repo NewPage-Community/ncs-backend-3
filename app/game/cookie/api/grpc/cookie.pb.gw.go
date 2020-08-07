@@ -212,11 +212,11 @@ func RegisterCookieHandlerClient(ctx context.Context, mux *runtime.ServeMux, cli
 }
 
 var (
-	pattern_Cookie_GetCookie_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4}, []string{"user", "cookie", "get", "uid", "key"}, ""))
+	pattern_Cookie_GetCookie_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4}, []string{"game", "cookie", "get", "uid", "key"}, ""))
 
-	pattern_Cookie_GetAllCookie_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"user", "cookie", "all", "uid"}, ""))
+	pattern_Cookie_GetAllCookie_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"game", "cookie", "all", "uid"}, ""))
 
-	pattern_Cookie_SetCookie_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"user", "cookie", "set"}, ""))
+	pattern_Cookie_SetCookie_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"game", "cookie", "set"}, ""))
 )
 
 var (

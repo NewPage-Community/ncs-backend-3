@@ -15,7 +15,7 @@
     "application/json"
   ],
   "paths": {
-    "/user/cookie/all/{uid}": {
+    "/game/cookie/all/{uid}": {
       "get": {
         "operationId": "GetAllCookie",
         "responses": {
@@ -40,7 +40,7 @@
         ]
       }
     },
-    "/user/cookie/get/{uid}/{key}": {
+    "/game/cookie/get/{uid}/{key}": {
       "get": {
         "operationId": "GetCookie",
         "responses": {
@@ -71,7 +71,7 @@
         ]
       }
     },
-    "/user/cookie/set": {
+    "/game/cookie/set": {
       "post": {
         "operationId": "SetCookie",
         "responses": {

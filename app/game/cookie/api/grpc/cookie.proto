@@ -34,17 +34,17 @@ message SetCookieResp {
 service Cookie {
     rpc GetCookie (GetCookieReq) returns (GetCookieResp) {
         option (google.api.http) = {
-            get: "/user/cookie/get/{uid}/{key}"
+            get: "/game/cookie/get/{uid}/{key}"
         };
     }
     rpc GetAllCookie (GetAllCookieReq) returns (GetAllCookieResp) {
         option (google.api.http) = {
-            get: "/user/cookie/all/{uid}"
+            get: "/game/cookie/all/{uid}"
         };
     }
     rpc SetCookie (SetCookieReq) returns (SetCookieResp) {
         option (google.api.http) = {
-            post: "/user/cookie/set"
+            post: "/game/cookie/set"
             body: "*"
         };
     }
