@@ -14,12 +14,13 @@ import (
 )
 
 const (
+	PassBoxID          = int32(1000)
 	Pass1Price         = int32(6888)
 	Pass2Price         = int32(9888)
-	VIPMonthPrice      = int32(10)
-	VIPSeasonPrice     = int32(27)
-	VIPSemiannualPrice = int32(52)
-	VIPAnnualPrice     = int32(100)
+	VIPMonthPrice      = int32(1000)
+	VIPSeasonPrice     = int32(2700)
+	VIPSemiannualPrice = int32(5280)
+	VIPAnnualPrice     = int32(10000)
 	Month              = int64(2592000)
 )
 
@@ -48,6 +49,11 @@ func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.Buy
 		return
 	}
 
+	amount := int32(0)
+	if item.Id == PassBoxID {
+		amount = 1
+	}
+
 	// Buy
 	if req.Price > 0 {
 		_, err = s.money.Pay(ctx, &moneyService.PayReq{
@@ -64,7 +70,7 @@ func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.Buy
 		Uid: req.Uid,
 		Items: []*userService.Item{{
 			Id:     item.Id,
-			Amount: 0,
+			Amount: amount,
 			Length: 0,
 		}},
 	})
