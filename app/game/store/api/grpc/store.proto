@@ -49,6 +49,14 @@ message BuyPassReq {
 message BuyPassResp {
 }
 
+message BuyVIPReq {
+    int64 uid = 1;
+    int32 month = 2;
+}
+
+message BuyVIPResp {
+}
+
 service Store {
     rpc BuyItem (BuyItemReq) returns (BuyItemResp) {
         option (google.api.http) = {
@@ -72,6 +80,12 @@ service Store {
     rpc BuyPass (BuyPassReq) returns (BuyPassResp) {
         option (google.api.http) = {
             post: "/game/store/buy/pass"
+            body: "*"
+        };
+    }
+    rpc BuyVIP (BuyVIPReq) returns (BuyVIPResp) {
+        option (google.api.http) = {
+            post: "/game/store/buy/vip"
             body: "*"
         };
     }

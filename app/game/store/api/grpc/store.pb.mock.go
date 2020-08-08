@@ -114,6 +114,26 @@ func (mr *MockStoreClientMockRecorder) BuyPass(ctx, in interface{}, opts ...inte
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BuyPass", reflect.TypeOf((*MockStoreClient)(nil).BuyPass), varargs...)
 }
 
+// BuyVIP mocks base method
+func (m *MockStoreClient) BuyVIP(ctx context.Context, in *BuyVIPReq, opts ...grpc.CallOption) (*BuyVIPResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "BuyVIP", varargs...)
+	ret0, _ := ret[0].(*BuyVIPResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// BuyVIP indicates an expected call of BuyVIP
+func (mr *MockStoreClientMockRecorder) BuyVIP(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BuyVIP", reflect.TypeOf((*MockStoreClient)(nil).BuyVIP), varargs...)
+}
+
 // MockStoreServer is a mock of StoreServer interface
 type MockStoreServer struct {
 	ctrl     *gomock.Controller
@@ -195,4 +215,19 @@ func (m *MockStoreServer) BuyPass(arg0 context.Context, arg1 *BuyPassReq) (*BuyP
 func (mr *MockStoreServerMockRecorder) BuyPass(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BuyPass", reflect.TypeOf((*MockStoreServer)(nil).BuyPass), arg0, arg1)
+}
+
+// BuyVIP mocks base method
+func (m *MockStoreServer) BuyVIP(arg0 context.Context, arg1 *BuyVIPReq) (*BuyVIPResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "BuyVIP", arg0, arg1)
+	ret0, _ := ret[0].(*BuyVIPResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// BuyVIP indicates an expected call of BuyVIP
+func (mr *MockStoreServerMockRecorder) BuyVIP(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BuyVIP", reflect.TypeOf((*MockStoreServer)(nil).BuyVIP), arg0, arg1)
 }

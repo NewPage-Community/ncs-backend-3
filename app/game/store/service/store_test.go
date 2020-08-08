@@ -7,6 +7,7 @@ import (
 	userService "backend/app/service/backpack/user/api/grpc"
 	passService "backend/app/service/pass/user/api/grpc"
 	moneyService "backend/app/service/user/money/api/grpc"
+	vipService "backend/app/service/user/vip/api/grpc"
 	ctx "context"
 	"errors"
 	"github.com/golang/mock/gomock"
@@ -32,12 +33,12 @@ func TestService_BuyItem(t *testing.T) {
 	money.EXPECT().Pay(gomock.Any(), &moneyService.PayReq{
 		Uid:    1,
 		Price:  1,
-		Reason: "购买商品 ",
+		Reason: "购买 ",
 	}).Return(nil, nil).Times(2)
 	money.EXPECT().Give(gomock.Any(), &moneyService.GiveReq{
 		Uid:    1,
 		Money:  1,
-		Reason: "商品退款 ",
+		Reason: "退款 ",
 	}).Return(nil, nil)
 
 	user := userService.NewMockUserClient(ctl)
@@ -211,6 +212,57 @@ func TestService_BuyPass(t *testing.T) {
 			_, err := srv.BuyPass(ctx.TODO(), &pb.BuyPassReq{
 				Uid:  1,
 				Type: 2,
+			})
+			So(err, ShouldBeNil)
+		})
+	})
+}
+
+func TestService_BuyVIP(t *testing.T) {
+	ctl := gomock.NewController(t)
+	defer ctl.Finish()
+
+	money := moneyService.NewMockMoneyClient(ctl)
+	money.EXPECT().Pay(gomock.Any(), &moneyService.PayReq{
+		Uid:    1,
+		Price:  VIPMonthPrice,
+		Reason: "续费 VIP 1个月",
+	}).Return(nil, nil)
+	money.EXPECT().Pay(gomock.Any(), &moneyService.PayReq{
+		Uid:    1,
+		Price:  VIPSemiannualPrice,
+		Reason: "续费 VIP 6个月",
+	}).Return(nil, nil)
+	money.EXPECT().Give(gomock.Any(), &moneyService.GiveReq{
+		Uid:    1,
+		Money:  VIPSemiannualPrice,
+		Reason: "VIP退款",
+	}).Return(nil, nil)
+
+	vip := vipService.NewMockVIPClient(ctl)
+	vip.EXPECT().Renewal(gomock.Any(), &vipService.RenewalReq{
+		Uid:    1,
+		Length: Month,
+	}).Return(nil, nil)
+	vip.EXPECT().Renewal(gomock.Any(), &vipService.RenewalReq{
+		Uid:    1,
+		Length: Month * 6,
+	}).Return(nil, errors.New("test"))
+
+	srv := &Service{money: money, vip: vip}
+
+	Convey("Test BuyVIP", t, func() {
+		Convey("Check it work", func() {
+			_, err := srv.BuyVIP(ctx.TODO(), &pb.BuyVIPReq{
+				Uid:   1,
+				Month: 1,
+			})
+			So(err, ShouldBeNil)
+		})
+		Convey("Check error", func() {
+			_, err := srv.BuyVIP(ctx.TODO(), &pb.BuyVIPReq{
+				Uid:   1,
+				Month: 6,
 			})
 			So(err, ShouldBeNil)
 		})

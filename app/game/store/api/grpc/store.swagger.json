@@ -67,6 +67,32 @@
         ]
       }
     },
+    "/game/store/buy/vip": {
+      "post": {
+        "operationId": "BuyVIP",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/storeBuyVIPResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/storeBuyVIPReq"
+            }
+          }
+        ],
+        "tags": [
+          "Store"
+        ]
+      }
+    },
     "/game/store/hotsale": {
       "get": {
         "operationId": "HotSaleList",
@@ -169,6 +195,22 @@
       }
     },
     "storeBuyPassResp": {
+      "type": "object"
+    },
+    "storeBuyVIPReq": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "storeBuyVIPResp": {
       "type": "object"
     },
     "storeHotSaleListResp": {

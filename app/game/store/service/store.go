@@ -6,14 +6,21 @@ import (
 	userService "backend/app/service/backpack/user/api/grpc"
 	passService "backend/app/service/pass/user/api/grpc"
 	moneyService "backend/app/service/user/money/api/grpc"
+	vipService "backend/app/service/user/vip/api/grpc"
 	"backend/pkg/ecode"
 	"context"
+	"fmt"
 	"google.golang.org/grpc/codes"
 )
 
 const (
-	Pass1Price = int32(6888)
-	Pass2Price = int32(9888)
+	Pass1Price         = int32(6888)
+	Pass2Price         = int32(9888)
+	VIPMonthPrice      = int32(10)
+	VIPSeasonPrice     = int32(30)
+	VIPSemiannualPrice = int32(60)
+	VIPAnnualPrice     = int32(120)
+	Month              = int64(2592000)
 )
 
 func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.BuyItemResp, err error) {
@@ -46,7 +53,7 @@ func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.Buy
 		_, err = s.money.Pay(ctx, &moneyService.PayReq{
 			Uid:    req.Uid,
 			Price:  req.Price,
-			Reason: "购买商品 " + item.Name,
+			Reason: "购买 " + item.Name,
 		})
 		// Payment failed
 		if err != nil {
@@ -67,7 +74,7 @@ func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.Buy
 		_, err = s.money.Give(ctx, &moneyService.GiveReq{
 			Uid:    req.Uid,
 			Money:  req.Price,
-			Reason: "商品退款 " + item.Name,
+			Reason: "退款 " + item.Name,
 		})
 	}
 	return
@@ -172,6 +179,61 @@ func (s *Service) BuyPass(ctx context.Context, req *pb.BuyPassReq) (resp *pb.Buy
 			Uid:    req.Uid,
 			Money:  price,
 			Reason: "通行证高级版退款",
+		})
+	}
+	return
+}
+
+func (s *Service) BuyVIP(ctx context.Context, req *pb.BuyVIPReq) (resp *pb.BuyVIPResp, err error) {
+	resp = &pb.BuyVIPResp{}
+
+	if req.Uid <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%d)", req.Uid)
+		return
+	}
+	if req.Month <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Month should be larger than 0")
+		return
+	}
+
+	var price int32
+	switch req.Month {
+	case 1:
+		price = VIPMonthPrice
+	case 3:
+		price = VIPSeasonPrice
+	case 6:
+		price = VIPSemiannualPrice
+	case 12:
+		price = VIPAnnualPrice
+	case 24:
+		price = VIPAnnualPrice * 2
+	case 36:
+		price = VIPAnnualPrice * 3
+	default:
+		price = VIPMonthPrice * req.Month
+	}
+
+	// Buy
+	_, err = s.money.Pay(ctx, &moneyService.PayReq{
+		Uid:    req.Uid,
+		Price:  price,
+		Reason: fmt.Sprintf("续费 VIP %d个月", req.Month),
+	})
+	// Payment failed
+	if err != nil {
+		return
+	}
+	_, err = s.vip.Renewal(ctx, &vipService.RenewalReq{
+		Uid:    req.Uid,
+		Length: Month * int64(req.Month),
+	})
+	if err != nil {
+		// Return money
+		_, err = s.money.Give(ctx, &moneyService.GiveReq{
+			Uid:    req.Uid,
+			Money:  price,
+			Reason: "VIP退款",
 		})
 	}
 	return

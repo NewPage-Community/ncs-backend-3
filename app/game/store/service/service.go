@@ -7,6 +7,7 @@ import (
 	userService "backend/app/service/backpack/user/api/grpc"
 	passService "backend/app/service/pass/user/api/grpc"
 	moneyService "backend/app/service/user/money/api/grpc"
+	vipService "backend/app/service/user/vip/api/grpc"
 )
 
 type Service struct {
@@ -14,6 +15,7 @@ type Service struct {
 	user    userService.UserClient
 	money   moneyService.MoneyClient
 	pass    passService.UserClient
+	vip     vipService.VIPClient
 	hotSale model.HotSale
 }
 
@@ -23,6 +25,7 @@ func Init(config *conf.Config) *Service {
 		user:    userService.InitClient(userService.ServiceAddr),
 		money:   moneyService.InitClient(moneyService.ServiceAddr),
 		pass:    passService.InitClient(passService.ServiceAddr),
+		vip:     vipService.InitClient(vipService.ServiceAddr),
 		hotSale: *config.HotSale,
 	}
 }
@@ -36,4 +39,5 @@ func (s *Service) Close() {
 	userService.Close()
 	moneyService.Close()
 	passService.Close()
+	vipService.Close()
 }
