@@ -17,9 +17,9 @@ const (
 	Pass1Price         = int32(6888)
 	Pass2Price         = int32(9888)
 	VIPMonthPrice      = int32(10)
-	VIPSeasonPrice     = int32(30)
-	VIPSemiannualPrice = int32(60)
-	VIPAnnualPrice     = int32(120)
+	VIPSeasonPrice     = int32(27)
+	VIPSemiannualPrice = int32(52)
+	VIPAnnualPrice     = int32(100)
 	Month              = int64(2592000)
 )
 
