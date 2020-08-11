@@ -3,7 +3,7 @@ package model
 import "strconv"
 
 const (
-	KeyPrefix = "ncs_"
+	KeyPrefix = "ncs:"
 )
 
 type Stats struct {
@@ -16,7 +16,7 @@ type Stats struct {
 }
 
 func (s *Stats) Key() string {
-	return KeyPrefix + s.Range + "_" + s.StatsName + "_" + s.Version
+	return KeyPrefix + s.Range + ":" + s.StatsName + ":" + s.Version
 }
 
 func (s *Stats) IsValid() bool {

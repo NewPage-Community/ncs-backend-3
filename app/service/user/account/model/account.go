@@ -1,5 +1,9 @@
 package model
 
+const (
+	KeyPrefix = "ncs:account:"
+)
+
 type Info struct {
 	UID       int64  `gorm:"primary_key;unique;not null" json:"uid"`
 	SteamID   int64  `gorm:"unique;not null;INDEX" json:"steam_id"`
@@ -15,4 +19,12 @@ func (*Info) TableName() string {
 // IsValid .
 func (i *Info) IsValid() bool {
 	return i.UID > 0
+}
+
+func (Info) UIDKey() string {
+	return KeyPrefix + "uid"
+}
+
+func (Info) InfoKey() string {
+	return KeyPrefix + "info"
 }

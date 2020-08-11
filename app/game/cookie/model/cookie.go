@@ -5,9 +5,17 @@ import (
 	"strconv"
 )
 
+const (
+	KeyPrefix = "ncs:game:"
+)
+
 type Cookie struct {
 	UID    int64             `json:"uid"`
 	Cookie map[string]string `json:"cookie"`
+}
+
+func (Cookie) Key() string {
+	return KeyPrefix + "cookie"
 }
 
 func (c *Cookie) GetUID() string {

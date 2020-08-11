@@ -12,17 +12,11 @@ import (
 	"google.golang.org/grpc/codes"
 )
 
-const (
-	CacheKeyPrefix = "ncs_account_"
-	InfoCache      = CacheKeyPrefix + "info"
-	UIDCache       = CacheKeyPrefix + "uid"
-)
-
 func (d *dao) UID(steamID int64) (res *model.Info, err error) {
 	res = &model.Info{}
 
 	// Cache
-	cacheRes, err := d.cache.HGet(UIDCache, strconv.FormatInt(steamID, 10)).Int64()
+	cacheRes, err := d.cache.HGet(res.UIDKey(), strconv.FormatInt(steamID, 10)).Int64()
 	if err == nil && cacheRes != 0 {
 		res.UID = cacheRes
 		return
@@ -40,7 +34,7 @@ func (d *dao) UID(steamID int64) (res *model.Info, err error) {
 	}
 
 	// Set cache
-	err = d.cache.HSet(UIDCache, strconv.FormatInt(steamID, 10), res.UID).Err()
+	err = d.cache.HSet(res.UIDKey(), strconv.FormatInt(steamID, 10), res.UID).Err()
 	return
 }
 
@@ -48,7 +42,7 @@ func (d *dao) Info(uid int64) (res *model.Info, err error) {
 	res = &model.Info{}
 
 	// Cache (json)
-	cacheRes, err := d.cache.HGet(InfoCache, strconv.FormatInt(uid, 10)).Result()
+	cacheRes, err := d.cache.HGet(res.InfoKey(), strconv.FormatInt(uid, 10)).Result()
 	if err == nil && cacheRes != "" {
 		err = json.Unmarshal([]byte(cacheRes), res)
 		if err == nil && res.IsValid() {
@@ -72,7 +66,7 @@ func (d *dao) Info(uid int64) (res *model.Info, err error) {
 	if err != nil {
 		return
 	}
-	err = d.cache.HSet(InfoCache, strconv.FormatInt(uid, 10), string(CacheData)).Err()
+	err = d.cache.HSet(res.InfoKey(), strconv.FormatInt(uid, 10), string(CacheData)).Err()
 	return
 }
 
@@ -91,7 +85,7 @@ func (d *dao) Register(steamID int64) (res *model.Info, err error) {
 	if err != nil {
 		return
 	}
-	err = d.cache.HSet(InfoCache, strconv.FormatInt(res.UID, 10), string(CacheData)).Err()
+	err = d.cache.HSet(res.InfoKey(), strconv.FormatInt(res.UID, 10), string(CacheData)).Err()
 	return
 }
 
@@ -103,6 +97,6 @@ func (d *dao) ChangeName(info *model.Info) (err error) {
 	}
 
 	// Remove cache
-	err = d.cache.HDel(InfoCache, strconv.FormatInt(info.UID, 10)).Err()
+	err = d.cache.HDel(info.InfoKey(), strconv.FormatInt(info.UID, 10)).Err()
 	return
 }
