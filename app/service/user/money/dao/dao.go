@@ -3,8 +3,10 @@ package dao
 import (
 	"backend/app/service/user/money/conf"
 	"backend/app/service/user/money/model"
+	cache "backend/pkg/cache/redis"
 	"backend/pkg/database/mysql"
 	"backend/pkg/log"
+	"github.com/go-redis/redis/v7"
 	"gorm.io/gorm"
 )
 
@@ -19,17 +21,16 @@ type Dao interface {
 }
 
 type dao struct {
-	db *gorm.DB
+	db    *gorm.DB
+	cache *redis.Client
 }
 
 func Init(config *conf.Config) (d *dao) {
 	d = &dao{
-		db: mysql.Init(config.Mysql),
+		db:    mysql.Init(config.Mysql),
+		cache: cache.Init(config.Redis),
 	}
 	if err := d.db.AutoMigrate(&model.Money{}); err != nil {
-		log.Error(err)
-	}
-	if err := d.db.AutoMigrate(&model.RecordsDB{}); err != nil {
 		log.Error(err)
 	}
 	return
@@ -40,4 +41,7 @@ func (d *dao) Healthy() bool {
 }
 
 func (d *dao) Close() {
+	if err := d.cache.Close(); err != nil {
+		log.Error(err)
+	}
 }

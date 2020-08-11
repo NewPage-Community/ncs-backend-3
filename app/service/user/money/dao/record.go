@@ -2,60 +2,60 @@ package dao
 
 import (
 	"backend/app/service/user/money/model"
-	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
+	"backend/pkg/json"
+	"github.com/go-redis/redis/v7"
+	"strconv"
+	"time"
 )
 
 const (
 	EmptyRecordsJSON = "[]"
+	KeyPrefix        = "ncs:user:money:"
+	TenDays          = 10 * 24 * time.Hour
 )
 
 func (d *dao) AddRecord(uid int64, amount int32, reason string) (err error) {
-	info := &model.RecordsDB{
-		UID:     uid,
-		Records: []byte(EmptyRecordsJSON),
+	info := &model.Record{
+		Timestamp: time.Now().Unix(),
+		Amount:    amount,
+		Reason:    reason,
 	}
 
 	// DB
-	err = d.db.First(info).Error
-	if err == gorm.ErrRecordNotFound {
-		err = d.db.Create(info).Error
-	}
+	data, err := info.JSON()
 	if err != nil {
 		return
 	}
-
-	err = d.db.Transaction(func(tx *gorm.DB) (err error) {
-		err = tx.Clauses(clause.Locking{
-			Strength: "UPDATE",
-		}).First(info, uid).Error
-		if err != nil {
-			return
-		}
-
-		err = info.Add(amount, reason)
-		if err != nil {
-			return
-		}
-
-		err = tx.Model(info).Updates(*info).Error
+	key := Key(uid)
+	err = d.cache.LPush(key, string(data)).Err()
+	if err != nil {
 		return
-	})
+	}
+	err = d.cache.Expire(key, TenDays).Err()
 	return
 }
 
-func (d *dao) GetRecords(uid int64) (*model.Records, error) {
-	var err error
-	info := &model.RecordsDB{}
+func (d *dao) GetRecords(uid int64) (res *model.Records, err error) {
+	res = &model.Records{}
 
 	// DB
-	res := d.db.Find(info, uid)
-	err = res.Error
-	if res.RowsAffected == 0 {
-		info.Records = []byte(EmptyRecordsJSON)
-	}
+	jsons, err := d.cache.LRange(Key(uid), 0, -1).Result()
 	if err != nil {
-		return nil, err
+		if err == redis.Nil {
+			err = nil
+		}
+		return
 	}
-	return info.Get()
+	for _, v := range jsons {
+		data := &model.Record{}
+		err = json.Unmarshal([]byte(v), data)
+		if err == nil {
+			*res = append(*res, data)
+		}
+	}
+	return
+}
+
+func Key(uid int64) string {
+	return KeyPrefix + strconv.FormatInt(uid, 10) + ":" + strconv.Itoa(time.Now().YearDay())
 }
