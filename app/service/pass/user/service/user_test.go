@@ -6,6 +6,7 @@ import (
 	pb "backend/app/service/pass/user/api/grpc"
 	"backend/app/service/pass/user/dao"
 	"backend/app/service/pass/user/model"
+	money "backend/app/service/user/money/api/grpc"
 	"context"
 	"github.com/golang/mock/gomock"
 	. "github.com/smartystreets/goconvey/convey"
@@ -251,6 +252,43 @@ func TestService_UpgradePass(t *testing.T) {
 			})
 			So(err, ShouldNotBeNil)
 			t.Log(err)
+		})
+	})
+}
+
+func TestService_GiveMoney(t *testing.T) {
+	ctl := gomock.NewController(t)
+	defer ctl.Finish()
+
+	m := money.NewMockMoneyClient(ctl)
+	m.EXPECT().Give(gomock.Any(), &money.GiveReq{
+		Uid:    1,
+		Money:  200,
+		Reason: "通行证奖励",
+	})
+
+	srv := &Service{moneyService: m}
+
+	Convey("Test GiveMoney", t, func() {
+		Convey("Check it work", func() {
+			err := srv.GiveMoney(context.TODO(), 1, []*rewardService.Item{
+				{
+					Level:  1,
+					Id:     0,
+					Amount: 100,
+				},
+				{
+					Level:  2,
+					Id:     0,
+					Amount: 100,
+				},
+				{
+					Level:  3,
+					Id:     1,
+					Amount: 100,
+				},
+			})
+			So(err, ShouldBeNil)
 		})
 	})
 }

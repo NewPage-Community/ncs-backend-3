@@ -5,12 +5,14 @@ import (
 	reward "backend/app/service/pass/reward/api/grpc"
 	"backend/app/service/pass/user/conf"
 	"backend/app/service/pass/user/dao"
+	money "backend/app/service/user/money/api/grpc"
 )
 
 type Service struct {
 	dao             dao.Dao
 	rewardService   reward.RewardClient
 	backpackService backpack.UserClient
+	moneyService    money.MoneyClient
 }
 
 func Init(config *conf.Config) *Service {
@@ -18,6 +20,7 @@ func Init(config *conf.Config) *Service {
 		dao:             dao.Init(config),
 		rewardService:   reward.InitClient(reward.ServiceAddr),
 		backpackService: backpack.InitClient(backpack.ServiceAddr),
+		moneyService:    money.InitClient(money.ServiceAddr),
 	}
 }
 
@@ -29,4 +32,5 @@ func (s *Service) Close() {
 	s.dao.Close()
 	reward.Close()
 	backpack.Close()
+	money.Close()
 }

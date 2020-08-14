@@ -5,6 +5,7 @@ import (
 	reward "backend/app/service/pass/reward/api/grpc"
 	pb "backend/app/service/pass/user/api/grpc"
 	"backend/app/service/pass/user/model"
+	money_pb "backend/app/service/user/money/api/grpc"
 	"backend/pkg/ecode"
 	"backend/pkg/log"
 	"context"
@@ -86,6 +87,10 @@ func (s *Service) GiveRewards(ctx context.Context, info *model.User, lastLevel i
 			Length: v.Length,
 		})
 	}
+	err = s.GiveMoney(ctx, info.UID, rewards.FreeRewards)
+	if err != nil {
+		log.Error(err)
+	}
 	if info.PassType > 0 {
 		for _, v := range rewards.AdvRewards {
 			items = append(items, &backpack.Item{
@@ -93,6 +98,10 @@ func (s *Service) GiveRewards(ctx context.Context, info *model.User, lastLevel i
 				Amount: v.Amount,
 				Length: v.Length,
 			})
+		}
+		err = s.GiveMoney(ctx, info.UID, rewards.AdvRewards)
+		if err != nil {
+			log.Error(err)
 		}
 	}
 
@@ -142,6 +151,7 @@ func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp
 			return
 		}
 
+		// Give rewards
 		var items []*backpack.Item
 		for _, v := range rewards.AdvRewards {
 			items = append(items, &backpack.Item{
@@ -150,12 +160,16 @@ func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp
 				Length: v.Length,
 			})
 		}
+		err = s.GiveMoney(ctx, req.Uid, rewards.AdvRewards)
+		if err != nil {
+			log.Error(err)
+		}
 		_, err = s.backpackService.AddItems(ctx, &backpack.AddItemsReq{
 			Uid:   req.Uid,
 			Items: items,
 		})
 		if err != nil {
-			return
+			log.Error(err)
 		}
 	}
 
@@ -167,6 +181,24 @@ func (s *Service) UpgradePass(ctx context.Context, req *pb.UpgradePassReq) (resp
 					Point: Pass2AddPoint,
 				},
 			},
+		})
+	}
+	return
+}
+
+func (s *Service) GiveMoney(ctx context.Context, uid int64, rewards []*reward.Item) (err error) {
+	money := int32(0)
+	for _, v := range rewards {
+		if v.Id == 0 {
+			money += v.Amount
+		}
+	}
+
+	if money > 0 {
+		_, err = s.moneyService.Give(ctx, &money_pb.GiveReq{
+			Uid:    uid,
+			Money:  money,
+			Reason: "通行证奖励",
 		})
 	}
 	return

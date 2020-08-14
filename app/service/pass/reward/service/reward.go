@@ -8,6 +8,10 @@ import (
 	"google.golang.org/grpc/codes"
 )
 
+const (
+	PassBoxID = 1000
+)
+
 func (s *Service) GetRewards(ctx context.Context, req *pb.GetRewardsReq) (resp *pb.GetRewardsResp, err error) {
 	if req.Level < req.Min {
 		err = ecode.Errorf(codes.InvalidArgument, "Min can not bigger than Level")
@@ -42,6 +46,16 @@ func (s *Service) getRewards(passType int32, level int32, min int32) []*pb.Item 
 			Id:     v.ID,
 			Amount: v.Amount,
 			Length: v.Length,
+		})
+	}
+
+	// Give pass box
+	if len(items) == 0 && passType > 0 {
+		items = append(items, &pb.Item{
+			Level:  level,
+			Id:     PassBoxID,
+			Amount: 1,
+			Length: 0,
 		})
 	}
 	return items
