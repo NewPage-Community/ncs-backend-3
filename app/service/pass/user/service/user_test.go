@@ -22,7 +22,7 @@ func TestService_AddPoint(t *testing.T) {
 	d.EXPECT().AddPoint(int64(2), int32(1)).Return(&model.User{
 		UID:      2,
 		PassType: 0,
-		Point:    7200,
+		Point:    model.PassLevelPoint,
 	}, int32(1), nil)
 	// Not upgrade
 	d.EXPECT().AddPoint(int64(1), int32(1)).Return(&model.User{
@@ -171,21 +171,21 @@ func TestService_UpgradePass(t *testing.T) {
 	d.EXPECT().Info(int64(1)).Return(&model.User{
 		UID:      1,
 		PassType: 0,
-		Point:    7200,
+		Point:    model.PassLevelPoint,
 	}, nil).Times(2)
 	// Invalid
 	d.EXPECT().Info(int64(2)).Return(&model.User{
 		UID:      2,
 		PassType: 1,
-		Point:    7200,
+		Point:    model.PassLevelPoint,
 	}, nil)
 	d.EXPECT().UpgradePass(int64(1), int32(1)).Return(nil)
 	d.EXPECT().UpgradePass(int64(1), int32(2)).Return(nil)
-	d.EXPECT().AddPoint(int64(1), int32(144000)).Return(&model.User{
+	d.EXPECT().AddPoint(int64(1), int32(Pass2AddPoint)).Return(&model.User{
 		UID:      1,
 		PassType: 1,
-		Point:    144000,
-	}, int32(21), nil)
+		Point:    Pass2AddPoint,
+	}, Pass2AddPoint/model.PassLevelPoint+1, nil)
 
 	reward := rewardService.NewMockRewardClient(ctl)
 	reward.EXPECT().GetRewards(gomock.Any(), &rewardService.GetRewardsReq{

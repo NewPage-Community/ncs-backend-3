@@ -36,7 +36,7 @@ func TestUser_Level(t *testing.T) {
 			fields{
 				UID:      1,
 				PassType: 0,
-				Point:    7200,
+				Point:    PassLevelPoint,
 			},
 			2,
 		},

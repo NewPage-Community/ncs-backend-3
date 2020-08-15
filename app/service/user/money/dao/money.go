@@ -6,6 +6,10 @@ import (
 	"gorm.io/gorm"
 )
 
+const (
+	GiveMoneySQL = "INSERT INTO np_money(uid,rmb) VALUES(?,?) ON DUPLICATE KEY UPDATE rmb=rmb+?"
+)
+
 var (
 	NoEnoughMoney = errors.New("no enough money")
 )
@@ -51,19 +55,7 @@ func (d *dao) Pay(uid int64, price int32) (err error) {
 }
 
 func (d *dao) Give(uid int64, money int32) (err error) {
-	info := &model.Money{
-		UID: uid,
-		RMB: money,
-	}
-
 	// DB
-	res := d.db.Model(info).Update("rmb", gorm.Expr("rmb + ?", money))
-	if err = res.Error; err != nil {
-		return
-	}
-	if res.RowsAffected == 0 {
-		// not found and create
-		err = d.db.Create(info).Error
-	}
+	err = d.db.Exec(GiveMoneySQL, uid, money, money).Error
 	return
 }

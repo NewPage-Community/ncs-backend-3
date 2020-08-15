@@ -1,5 +1,9 @@
 package model
 
+const (
+	PassLevelPoint = int32(14400)
+)
+
 type User struct {
 	UID      int64 `gorm:"primary_key" json:"uid"`
 	PassType int32 `gorm:"not null;INDEX" json:"pass_type"`
@@ -15,5 +19,5 @@ func (u *User) Level() int32 {
 	if u.Point == 0 {
 		return 0
 	}
-	return u.Point/7200 + 1
+	return u.Point/PassLevelPoint + 1
 }

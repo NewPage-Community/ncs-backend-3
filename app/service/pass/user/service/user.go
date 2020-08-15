@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	Pass2AddPoint = 7200 * 20
+	Pass2AddPoint = model.PassLevelPoint * 8
 )
 
 func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp, err error) {
