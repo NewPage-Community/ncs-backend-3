@@ -27,6 +27,8 @@ func (s *Service) GetRewards(ctx context.Context, req *pb.GetRewardsReq) (resp *
 	for _, v := range items.Items {
 		nameMap[v.Id] = v.Name
 	}
+	// 0 = rmb
+	nameMap[0] = "软妹币"
 
 	rewards, err := s.reward.GetRewards(ctx, &rewardService.GetRewardsReq{})
 	if err != nil {

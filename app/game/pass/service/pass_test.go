@@ -37,6 +37,10 @@ func TestService_GetRewards(t *testing.T) {
 				Id:    1,
 				Level: 1,
 			},
+			{
+				Id:    0,
+				Level: 2,
+			},
 		},
 		AdvRewards: []*rewardService.Item{
 			{
@@ -52,7 +56,7 @@ func TestService_GetRewards(t *testing.T) {
 			rewards, err := srv.GetRewards(context.TODO(), &pb.GetRewardsReq{})
 			So(err, ShouldBeNil)
 			So(rewards.Season, ShouldEqual, 1)
-			So(len(rewards.FreeRewards), ShouldEqual, 1)
+			So(len(rewards.FreeRewards), ShouldEqual, 2)
 			So(len(rewards.AdvRewards), ShouldEqual, 1)
 			t.Log(rewards)
 		})
