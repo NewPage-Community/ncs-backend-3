@@ -7,7 +7,7 @@ import (
 )
 
 func (d *dao) Get(uid int64) (res *model.User, err error) {
-	res = &model.User{}
+	res = &model.User{UID: uid}
 	userModel := &model.UserModel{}
 
 	// DB
@@ -111,6 +111,6 @@ func (d *dao) Create(uid int64) (res *model.User, err error) {
 	if err != nil {
 		return
 	}
-	err = d.db.Create(userModel).Error
+	err = d.db.Clauses(clause.Insert{Modifier: "IGNORE"}).Create(userModel).Error
 	return
 }

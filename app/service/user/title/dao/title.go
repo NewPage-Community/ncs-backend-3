@@ -3,6 +3,7 @@ package dao
 import (
 	"backend/app/service/user/title/model"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 func (d *dao) Title(uid int64) (res *model.Title, err error) {
@@ -13,7 +14,7 @@ func (d *dao) Title(uid int64) (res *model.Title, err error) {
 	err = DBRes.Error
 	if err == gorm.ErrRecordNotFound {
 		res.UID = uid
-		err = d.db.Create(res).Error
+		err = d.db.Clauses(clause.Insert{Modifier: "IGNORE"}).Create(res).Error
 	}
 	return
 }

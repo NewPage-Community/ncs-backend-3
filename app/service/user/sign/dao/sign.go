@@ -14,8 +14,7 @@ func (d *dao) Info(uid int64) (res *model.Sign, err error) {
 	err = d.db.Where(uid).First(res).Error
 	if err == gorm.ErrRecordNotFound {
 		res.UID = uid
-		res.SignDate = 0
-		err = d.db.Create(res).Error
+		err = d.create(uid)
 	}
 	return
 }
@@ -29,9 +28,10 @@ func (d *dao) Sign(uid int64) (alreadySigned bool, err error) {
 	// DB
 	err = d.db.First(info).Error
 	if err == gorm.ErrRecordNotFound {
-		// Create and sign
-		info.Sign()
-		return false, d.db.Create(info).Error
+		err = d.create(uid)
+	}
+	if err != nil {
+		return
 	}
 
 	err = d.db.Transaction(func(tx *gorm.DB) (err error) {
@@ -50,4 +50,11 @@ func (d *dao) Sign(uid int64) (alreadySigned bool, err error) {
 		return
 	})
 	return
+}
+
+func (d *dao) create(uid int64) (err error) {
+	info := &model.Sign{
+		UID: uid,
+	}
+	return d.db.Clauses(clause.Insert{Modifier: "IGNORE"}).Create(info).Error
 }

@@ -12,9 +12,7 @@ func (d *dao) Info(uid int64) (res *model.User, err error) {
 	// DB
 	err = d.db.Where(uid).First(res).Error
 	if err == gorm.ErrRecordNotFound {
-		err = d.db.Create(&model.User{
-			UID: uid,
-		}).Error
+		err = d.create(uid)
 	}
 	return
 }
@@ -28,7 +26,7 @@ func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, lastLevel in
 	// DB
 	err = d.db.First(res).Error
 	if err == gorm.ErrRecordNotFound {
-		err = d.db.Create(res).Error
+		err = d.create(uid)
 		lastLevel = 0
 		return
 	}
@@ -53,4 +51,10 @@ func (d *dao) UpgradePass(uid int64, passType int32) (err error) {
 	// DB
 	err = d.db.Model(&model.User{UID: uid}).Updates(&model.User{PassType: passType}).Error
 	return
+}
+
+func (d *dao) create(uid int64) (err error) {
+	return d.db.Clauses(clause.Insert{Modifier: "IGNORE"}).Create(&model.User{
+		UID: uid,
+	}).Error
 }

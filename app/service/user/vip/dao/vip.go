@@ -9,8 +9,7 @@ import (
 )
 
 func (d *dao) Register(info *model.VIP) (err error) {
-	err = d.db.Create(info).Error
-	return
+	return d.create(info.UID)
 }
 
 func (d *dao) Info(info *model.VIP) (err error) {
@@ -30,9 +29,10 @@ func (d *dao) AddPoint(uid int64, addPoint int) (point int, err error) {
 	// DB
 	err = d.db.First(info).Error
 	if err == gorm.ErrRecordNotFound {
-		// Create and add point
-		return info.Point,
-			d.db.Create(info).Error
+		err = d.create(uid)
+	}
+	if err != nil {
+		return
 	}
 
 	err = d.db.Transaction(func(tx *gorm.DB) (err error) {
@@ -62,9 +62,10 @@ func (d *dao) Renewal(uid int64, length int64) (exprTime int64, err error) {
 	// DB
 	err = d.db.First(info).Error
 	if err == gorm.ErrRecordNotFound {
-		info.Renewal(length)
-		return info.ExpireDate,
-			d.db.Create(info).Error
+		err = d.create(uid)
+	}
+	if err != nil {
+		return
 	}
 
 	err = d.db.Transaction(func(tx *gorm.DB) (err error) {
@@ -84,4 +85,11 @@ func (d *dao) Renewal(uid int64, length int64) (exprTime int64, err error) {
 		return
 	})
 	return
+}
+
+func (d *dao) create(uid int64) (err error) {
+	info := &model.VIP{
+		UID: uid,
+	}
+	return d.db.Clauses(clause.Insert{Modifier: "IGNORE"}).Create(info).Error
 }
