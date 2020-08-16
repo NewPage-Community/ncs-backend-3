@@ -43,44 +43,25 @@ func TestUser_AddItems(t *testing.T) {
 func TestUser_CheckItem(t *testing.T) {
 	user := &User{
 		UID: 1,
-		Items: &Items{
-			{
-				ID:       1,
-				Amount:   0,
-				ExprTime: 0,
-			},
-			{
-				ID:       2,
-				Amount:   0,
-				ExprTime: time.Now().Add(-time.Second).Unix(),
-			},
-		},
 	}
-	user2 := &User{
-		UID: 1,
-		Items: &Items{
-			{
-				ID:       1,
-				Amount:   0,
-				ExprTime: time.Now().Add(-time.Second).Unix(),
-			},
-			{
-				ID:       2,
-				Amount:   0,
-				ExprTime: 0,
-			},
+	user.AddItems(&Items{
+		{
+			ID:       1,
+			Amount:   0,
+			ExprTime: 0,
 		},
-	}
+		{
+			ID:       2,
+			Amount:   0,
+			ExprTime: 1,
+		},
+	})
+
 	Convey("Test User CheckItem", t, func() {
 		Convey("Check last item expired", func() {
+			time.Sleep(2 * time.Second)
 			user.CheckItem()
 			So(len(*user.Items), ShouldEqual, 1)
-			t.Logf("%v", user.Items)
-		})
-		Convey("Check first item expired", func() {
-			user2.CheckItem()
-			So(len(*user2.Items), ShouldEqual, 1)
-			t.Logf("%v", user.Items)
 		})
 	})
 }
@@ -88,20 +69,20 @@ func TestUser_CheckItem(t *testing.T) {
 func TestUser_GetModel(t *testing.T) {
 	user := &User{
 		UID: 1,
-		Items: &Items{
-			{
-				ID:       1,
-				Amount:   0,
-				ExprTime: 0,
-			},
-		},
 	}
+	user.AddItems(&Items{
+		{
+			ID:       1,
+			Amount:   0,
+			ExprTime: 0,
+		},
+	})
 	Convey("Test User GetModel", t, func() {
 		Convey("Check it work", func() {
 			res, err := user.GetModel()
 			So(err, ShouldBeNil)
 			So(res.UID, ShouldEqual, 1)
-			So(string(res.Items), ShouldEqual, `[{"id":1,"amount":0,"expr_time":0}]`)
+			So(string(res.Items), ShouldEqual, `{"1":{"id":1,"amount":0,"expr_time":0}}`)
 		})
 	})
 }
@@ -111,59 +92,30 @@ func TestUser_RemoveItem(t *testing.T) {
 		Convey("Check remove ones", func() {
 			user := &User{
 				UID: 1,
-				Items: &Items{
-					{
-						ID:       1,
-						Amount:   2,
-						ExprTime: 0,
-					},
-					{
-						ID:       2,
-						Amount:   0,
-						ExprTime: 0,
-					},
-				},
 			}
+			user.AddItems(&Items{
+				{
+					ID:       1,
+					Amount:   2,
+					ExprTime: 0,
+				},
+			})
 			user.RemoveItem(Item{ID: 1}, false)
-			So((*user.Items)[0].Amount, ShouldEqual, 1)
+			So((*user.Items)[1].Amount, ShouldEqual, 1)
 		})
 		Convey("Check remove all", func() {
 			user := &User{
 				UID: 1,
-				Items: &Items{
-					{
-						ID:       1,
-						Amount:   2,
-						ExprTime: 0,
-					},
-					{
-						ID:       2,
-						Amount:   0,
-						ExprTime: 0,
-					},
-				},
 			}
+			user.AddItems(&Items{
+				{
+					ID:       1,
+					Amount:   2,
+					ExprTime: 0,
+				},
+			})
 			user.RemoveItem(Item{ID: 1}, true)
-			So(len(*user.Items), ShouldEqual, 1)
-		})
-		Convey("Check remove last", func() {
-			user := &User{
-				UID: 1,
-				Items: &Items{
-					{
-						ID:       1,
-						Amount:   2,
-						ExprTime: 0,
-					},
-					{
-						ID:       2,
-						Amount:   0,
-						ExprTime: 0,
-					},
-				},
-			}
-			user.RemoveItem(Item{ID: 2}, true)
-			So(len(*user.Items), ShouldEqual, 1)
+			So(len(*user.Items), ShouldEqual, 0)
 		})
 	})
 }
@@ -171,19 +123,19 @@ func TestUser_RemoveItem(t *testing.T) {
 func TestUser_SearchItem(t *testing.T) {
 	user := &User{
 		UID: 1,
-		Items: &Items{
-			{
-				ID:       1,
-				Amount:   2,
-				ExprTime: 0,
-			},
-			{
-				ID:       2,
-				Amount:   0,
-				ExprTime: 0,
-			},
-		},
 	}
+	user.AddItems(&Items{
+		{
+			ID:       1,
+			Amount:   2,
+			ExprTime: 0,
+		},
+		{
+			ID:       2,
+			Amount:   0,
+			ExprTime: 0,
+		},
+	})
 	Convey("Test User SearchItem", t, func() {
 		Convey("Check it work", func() {
 			res, ok := user.SearchItem(2)

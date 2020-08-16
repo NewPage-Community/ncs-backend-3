@@ -105,7 +105,7 @@ func (d *dao) RemoveItem(uid int64, item model.Item, all bool) (err error) {
 func (d *dao) Create(uid int64) (res *model.User, err error) {
 	res = &model.User{
 		UID:   uid,
-		Items: &model.Items{},
+		Items: &model.ItemsMap{},
 	}
 	userModel, err := res.GetModel()
 	if err != nil {

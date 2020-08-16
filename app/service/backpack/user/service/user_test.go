@@ -45,8 +45,8 @@ func TestService_GetItems(t *testing.T) {
 	d := dao.NewMockDao(ctl)
 	d.EXPECT().Get(int64(1)).Return(&model.User{
 		UID: 1,
-		Items: &model.Items{
-			{
+		Items: &model.ItemsMap{
+			1: {
 				ID: 1,
 			},
 		},
@@ -112,8 +112,8 @@ func TestService_HaveItem(t *testing.T) {
 	d := dao.NewMockDao(ctl)
 	d.EXPECT().Get(int64(1)).Return(&model.User{
 		UID: 1,
-		Items: &model.Items{
-			{
+		Items: &model.ItemsMap{
+			1: {
 				ID: 1,
 			},
 		},

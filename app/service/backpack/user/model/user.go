@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	EmptyItemsJSON = "[]"
+	EmptyItemsJSON = "{}"
 )
 
 type UserModel struct {
@@ -36,8 +36,8 @@ func (i *UserModel) GetUser() (*User, error) {
 }
 
 type User struct {
-	UID   int64  `json:"uid"`
-	Items *Items `json:"items"`
+	UID   int64     `json:"uid"`
+	Items *ItemsMap `json:"items"`
 }
 
 // IsValid .
@@ -47,7 +47,7 @@ func (i *User) IsValid() bool {
 
 func (i *User) AddItems(items *Items) {
 	if i.Items == nil {
-		i.Items = &Items{}
+		i.Items = &ItemsMap{}
 	}
 	i.Items.AddItems(items)
 }

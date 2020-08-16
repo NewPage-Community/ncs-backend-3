@@ -6,6 +6,7 @@ import (
 	"backend/pkg/ecode"
 	"context"
 	"google.golang.org/grpc/codes"
+	"time"
 )
 
 func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.GetItemsResp, err error) {
@@ -22,8 +23,9 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 		return
 	}
 
+	now := time.Now().Unix()
 	for _, v := range *res.Items {
-		if !v.IsExpired() {
+		if !v.IsExpired(now) {
 			resp.Items = append(resp.Items, &pb.Item{
 				Id:       v.ID,
 				Amount:   v.Amount,
@@ -117,10 +119,9 @@ func (s *Service) HaveItem(ctx context.Context, req *pb.HaveItemReq) (resp *pb.H
 		return
 	}
 
-	for _, v := range *res.Items {
-		if v.ID == req.Id {
+	if v, ok := (*res.Items)[req.Id]; ok {
+		if !v.IsExpired(time.Now().Unix()) {
 			resp.Have = true
-			break
 		}
 	}
 	return
