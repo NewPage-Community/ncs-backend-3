@@ -7,6 +7,7 @@ import (
 	money "backend/app/service/user/money/model"
 	sign "backend/app/service/user/sign/model"
 	vip "backend/app/service/user/vip/model"
+	"backend/pkg/json"
 	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -59,10 +60,11 @@ func main() {
 	go Server()
 
 	fmt.Println("Start to merge!")
+	now := time.Now().Unix()
 	UserMerge()
 	SkinMerge()
 	wg.Wait()
-	fmt.Println("All merged!")
+	fmt.Printf("All merged! Used time: %ds\n", time.Now().Unix()-now)
 }
 
 func SkinMerge() {
@@ -75,6 +77,7 @@ func SkinMerge() {
 	}
 
 	skininfo := make(map[string]*Skin)
+	skinowners := make(map[int64][]int32)
 	count := int32(1)
 	for rows.Next() {
 		var skin Skin
@@ -84,11 +87,26 @@ func SkinMerge() {
 			fmt.Println(err)
 			continue
 		}
+
+		// skin data
 		skin.ID = count
 		skininfo[skin.UID] = &skin
 		attr["skin_path"] = skin.Model
 		attr["arm_path"] = skin.Arm
 		attr["uid"] = skin.UID
+
+		// Owners
+		if len(skin.Owners) > 0 {
+			owners := make([]int64, 0)
+			err = json.Unmarshal(skin.Owners, &owners)
+			if err != nil {
+				fmt.Println("Failed to merge Skin owners:", skin.UID, err)
+			}
+			for _, v := range owners {
+				skinowners[v] = append(skinowners[v], skin.ID)
+			}
+		}
+
 		pb := &backpackItems.Item{
 			ID:          skin.ID,
 			Name:        skin.Name,
@@ -135,18 +153,36 @@ func SkinMerge() {
 			continue
 		}
 
-		// merge
+		// merge own skin
 		var items backpackUser.Items
+		now := time.Now().Unix()
 		for _, v := range *skins {
 			skin, ok := skininfo[v.UID]
-			if !ok {
+			leftTime := v.Time - now
+			// invalid skin or expired skin
+			if !ok || (leftTime <= 0 && v.Time != 0) {
 				continue
 			}
 			items = append(items, &backpackUser.Item{
 				ID:       skin.ID,
 				Amount:   0,
-				ExprTime: v.Time,
+				ExprTime: leftTime,
 			})
+		}
+		// 独占
+		if _, ok := skinowners[int64(user.UID)]; ok {
+			for _, v := range skinowners[int64(user.UID)] {
+				items = append(items, &backpackUser.Item{
+					ID:       v,
+					Amount:   0,
+					ExprTime: 0,
+				})
+			}
+		}
+
+		// jump when user do not have items
+		if len(items) == 0 {
+			continue
 		}
 
 		bp := &backpackUser.User{
@@ -204,7 +240,7 @@ func UserMerge() {
 				SignDate: 0,
 			})
 		}
-		if user.Vippoint > 0 || user.Vipexpired > 0 {
+		if user.Vippoint > 0 || user.Vipexpired > time.Now().Unix() {
 			Create(&vip.VIP{
 				UID:        int64(user.UID),
 				Point:      int(user.Vippoint),

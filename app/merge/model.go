@@ -43,11 +43,12 @@ func (s *SkinStore) GetSkins() (res *Skins, err error) {
 }
 
 type Skin struct {
-	UID   string `gorm:"PRIMARY_KEY"`
-	Name  string
-	Model string
-	Arm   string
-	ID    int32
+	UID    string `gorm:"PRIMARY_KEY"`
+	Name   string
+	Model  string
+	Arm    string
+	ID     int32
+	Owners datatypes.JSON
 }
 
 func (Skin) TableName() string {
