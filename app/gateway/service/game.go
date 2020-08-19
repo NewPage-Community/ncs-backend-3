@@ -1,6 +1,7 @@
 package service
 
 import (
+	chatGW "backend/app/game/chat/api/grpc"
 	cookieGW "backend/app/game/cookie/api/grpc"
 	passGW "backend/app/game/pass/api/grpc"
 	serverGW "backend/app/game/server/api/grpc"
@@ -39,5 +40,9 @@ func regGameService(gws *rpc.Gateways) {
 	gws.AddGateway(
 		cookieGW.RegisterCookieHandlerFromEndpoint,
 		cookieGW.ServiceAddr,
+	)
+	gws.AddGateway(
+		chatGW.RegisterChatHandlerFromEndpoint,
+		chatGW.ServiceAddr,
 	)
 }

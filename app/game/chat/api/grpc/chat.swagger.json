@@ -1,0 +1,64 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/game/chat/api/grpc/chat.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/game/chat/allchat": {
+      "post": {
+        "operationId": "AllChat",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/chatAllChatResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/chatAllChatReq"
+            }
+          }
+        ],
+        "tags": [
+          "Chat"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "chatAllChatReq": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "chatAllChatResp": {
+      "type": "object"
+    },
+    "chatChatNotifyResp": {
+      "type": "object"
+    }
+  }
+}

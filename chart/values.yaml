@@ -89,3 +89,8 @@ ncs-services:
       image: registry.new-page.xyz/newpage/ncs/game-cookie
       tag: latest
       port: 2333
+    - app: ncs-game-chat
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/game-chat
+      tag: latest
+      port: 2333
