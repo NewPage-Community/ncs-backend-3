@@ -1,6 +1,7 @@
 package service
 
 import (
+	chat "backend/app/game/chat/api/grpc"
 	backpack "backend/app/service/backpack/user/api/grpc"
 	reward "backend/app/service/pass/reward/api/grpc"
 	"backend/app/service/pass/user/conf"
@@ -13,6 +14,7 @@ type Service struct {
 	rewardService   reward.RewardClient
 	backpackService backpack.UserClient
 	moneyService    money.MoneyClient
+	chatService     chat.ChatClient
 }
 
 func Init(config *conf.Config) *Service {
@@ -21,6 +23,7 @@ func Init(config *conf.Config) *Service {
 		rewardService:   reward.InitClient(reward.ServiceAddr),
 		backpackService: backpack.InitClient(backpack.ServiceAddr),
 		moneyService:    money.InitClient(money.ServiceAddr),
+		chatService:     chat.InitClient(chat.ServiceAddr),
 	}
 }
 
@@ -33,4 +36,5 @@ func (s *Service) Close() {
 	reward.Close()
 	backpack.Close()
 	money.Close()
+	chat.Close()
 }

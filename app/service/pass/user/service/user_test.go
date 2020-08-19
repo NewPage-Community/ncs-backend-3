@@ -1,6 +1,7 @@
 package service
 
 import (
+	chatService "backend/app/game/chat/api/grpc"
 	backpackService "backend/app/service/backpack/user/api/grpc"
 	rewardService "backend/app/service/pass/reward/api/grpc"
 	pb "backend/app/service/pass/user/api/grpc"
@@ -39,8 +40,10 @@ func TestService_AddPoint(t *testing.T) {
 		FreeRewards: []*rewardService.Item{},
 		AdvRewards:  []*rewardService.Item{},
 	}, nil)
+	chat := chatService.NewMockChatClient(ctl)
+	chat.EXPECT().ChatNotify(gomock.Any(), gomock.Any()).Return(nil, nil)
 
-	srv := &Service{dao: d, rewardService: reward}
+	srv := &Service{dao: d, rewardService: reward, chatService: chat}
 
 	Convey("Test AddPoint", t, func() {
 		Convey("Check not upgrade", func() {

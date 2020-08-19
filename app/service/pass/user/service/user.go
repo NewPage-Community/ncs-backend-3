@@ -1,6 +1,7 @@
 package service
 
 import (
+	chat "backend/app/game/chat/api/grpc"
 	backpack "backend/app/service/backpack/user/api/grpc"
 	reward "backend/app/service/pass/reward/api/grpc"
 	pb "backend/app/service/pass/user/api/grpc"
@@ -9,12 +10,14 @@ import (
 	"backend/pkg/ecode"
 	"backend/pkg/log"
 	"context"
+	"fmt"
 	"google.golang.org/grpc/codes"
 	"sync"
 )
 
 const (
-	Pass2AddPoint = model.PassLevelPoint * 8
+	Pass2AddPoint    = model.PassLevelPoint * 8
+	UpgradeNotifyMsg = "通行证成功升级到%d级，购买高级通行证可解锁更多大奖～"
 )
 
 func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp, err error) {
@@ -57,10 +60,14 @@ func (s *Service) AddPoints(ctx context.Context, req *pb.AddPointsReq) (resp *pb
 			if err == nil {
 				// Upgrade~
 				if lastLevel != res.Level() {
-					err = s.GiveRewards(ctx, res, lastLevel)
+					if err := s.GiveRewards(ctx, res, lastLevel); err != nil {
+						log.Error(err)
+					}
+					if err := s.UpgradeNotify(ctx, v.Uid, res.Level()); err != nil {
+						log.Error(err)
+					}
 				}
-			}
-			if err != nil {
+			} else {
 				log.Error(err)
 			}
 			wg.Done()
@@ -201,5 +208,14 @@ func (s *Service) GiveMoney(ctx context.Context, uid int64, rewards []*reward.It
 			Reason: "通行证奖励",
 		})
 	}
+	return
+}
+
+func (s *Service) UpgradeNotify(ctx context.Context, uid int64, level int32) (err error) {
+	_, err = s.chatService.ChatNotify(ctx, &chat.ChatNotifyReq{
+		Uid:     uid,
+		Prefix:  "",
+		Message: fmt.Sprintf(UpgradeNotifyMsg, level),
+	})
 	return
 }

@@ -11,6 +11,7 @@ import (
 const (
 	ChatNotifyCMD = "ncs_chat_notify %d \"%s\" \"%s\""
 	AllChatPrefix = "[全服聊天]"
+	DefaultPrefix = "[系统提示]"
 )
 
 func (s *Service) AllChat(ctx context.Context, req *pb.AllChatReq) (resp *pb.AllChatResp, err error) {
@@ -26,6 +27,10 @@ func (s *Service) AllChat(ctx context.Context, req *pb.AllChatReq) (resp *pb.All
 
 func (s *Service) ChatNotify(ctx context.Context, req *pb.ChatNotifyReq) (resp *pb.ChatNotifyResp, err error) {
 	resp = &pb.ChatNotifyResp{}
+
+	if len(req.Prefix) == 0 {
+		req.Prefix = DefaultPrefix
+	}
 
 	res, err := s.server.RconAll(ctx, &server.RconAllReq{
 		Cmd: fmt.Sprintf(ChatNotifyCMD, req.Uid, req.Prefix, req.Message),
