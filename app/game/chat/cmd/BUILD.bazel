@@ -24,6 +24,6 @@ go_binary(
 
 push_docker(
     name = "push",
-    app_name = "game-cookie",
+    app_name = "game-chat",
     embed = [":go_default_library"],
 )
