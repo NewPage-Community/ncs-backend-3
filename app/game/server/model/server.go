@@ -1,6 +1,10 @@
 package model
 
-import "github.com/NewPage-Community/go-steam"
+import (
+	"github.com/NewPage-Community/go-steam"
+	"net"
+	"time"
+)
 
 type Info struct {
 	ServerID int32  `gorm:"primary_key;unique;not null" json:"server_id"`
@@ -27,6 +31,9 @@ func (i *Info) GenerateRcon() {
 
 func (i *Info) Send(cmd string) (resp string, err error) {
 	server, err := steam.Connect(i.Address, &steam.ConnectOptions{
+		Dial: (&net.Dialer{
+			Timeout: 300 * time.Millisecond,
+		}).Dial,
 		RCONPassword: i.Rcon,
 	})
 	if err != nil {
