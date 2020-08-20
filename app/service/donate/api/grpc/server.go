@@ -5,11 +5,10 @@ import (
 	"google.golang.org/grpc"
 )
 
-func InitServer(srv AccountServer, health func() bool) (s *rpc.Server) {
+func InitServer(srv DonateServer, health func() bool) (s *rpc.Server) {
 	s = rpc.NewServer(nil)
 	s.Grpc(func(s *grpc.Server) {
-		RegisterAccountServer(s, srv)
-		RegisterWebServer(s, srv)
+		RegisterDonateServer(s, srv)
 	})
 	s.HealthCheck(health)
 	return

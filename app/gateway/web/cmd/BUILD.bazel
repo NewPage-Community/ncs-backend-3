@@ -4,10 +4,10 @@ load("//build:docker.bzl", "push_docker")
 go_library(
     name = "go_default_library",
     srcs = ["main.go"],
-    importpath = "backend/app/gateway/cmd",
+    importpath = "backend/app/gateway/web/cmd",
     visibility = ["//visibility:private"],
     deps = [
-        "//app/gateway/service:go_default_library",
+        "//app/gateway/game/service:go_default_library",
         "//pkg/cmd:go_default_library",
         "//pkg/log:go_default_library",
         "//pkg/rpc:go_default_library",
@@ -23,6 +23,6 @@ go_binary(
 
 push_docker(
     name = "push",
-    app_name = "gateway",
+    app_name = "gateway-web",
     embed = [":go_default_library"],
 )

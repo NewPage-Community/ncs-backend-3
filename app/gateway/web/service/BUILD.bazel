@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "donate.go",
+        "service.go",
+        "user.go",
+    ],
+    importpath = "backend/app/gateway/web/service",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/service/donate/api/grpc:go_default_library",
+        "//app/service/user/account/api/grpc:go_default_library",
+        "//pkg/rpc:go_default_library",
+    ],
+)

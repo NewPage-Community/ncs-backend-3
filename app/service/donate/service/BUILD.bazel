@@ -1,0 +1,23 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "alipay.go",
+        "donate.go",
+        "service.go",
+    ],
+    importpath = "backend/app/service/donate/service",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/service/donate/api/grpc:go_default_library",
+        "//app/service/donate/conf:go_default_library",
+        "//app/service/donate/dao:go_default_library",
+        "//app/service/user/account/api/grpc:go_default_library",
+        "//app/service/user/money/api/grpc:go_default_library",
+        "//pkg/log:go_default_library",
+        "@com_github_smartwalle_alipay_v3//:go_default_library",
+        "@org_golang_google_grpc//codes:go_default_library",
+        "@org_golang_google_grpc//status:go_default_library",
+    ],
+)

@@ -5,14 +5,14 @@
 replicaCount: 1
 
 image:
-  repository: registry.new-page.xyz/newpage/ncs/gateway
+  repository: registry.new-page.xyz/newpage/ncs/gateway-web
   pullPolicy: Always
   tag: latest
 
 imagePullSecrets:
   - name: internal
 nameOverride: ""
-fullnameOverride: "ncs-gateway"
+fullnameOverride: "ncs-gateway-web"
 
 podAnnotations: {}
 
@@ -48,7 +48,7 @@ ingress:
   hosts:
     - host: api.new-page.xyz
       paths:
-      - /ncs/v3(/|$)(.*)
+      - /ncs/v3/web/(/|$)(.*)
   tls:
   - hosts:
     - api.new-page.xyz

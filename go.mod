@@ -15,6 +15,7 @@ require (
 	github.com/json-iterator/go v1.1.9
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/sirupsen/logrus v1.6.0 // indirect
+	github.com/smartwalle/alipay/v3 v3.1.5
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/spf13/viper v1.7.0
 	github.com/uber/jaeger-client-go v2.23.1+incompatible

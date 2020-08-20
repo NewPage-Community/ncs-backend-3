@@ -1,14 +1,14 @@
 package main
 
 import (
-	"backend/app/gateway/service"
+	"backend/app/gateway/game/service"
 	"backend/pkg/cmd"
 	"backend/pkg/log"
 	"backend/pkg/rpc"
 	"backend/pkg/tracer"
 )
 
-const serviceName = "Gateway"
+const serviceName = "gateway-game"
 
 func main() {
 	// Init

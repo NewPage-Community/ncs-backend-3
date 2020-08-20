@@ -9,7 +9,7 @@ go_library(
         "service.go",
         "user.go",
     ],
-    importpath = "backend/app/gateway/service",
+    importpath = "backend/app/gateway/game/service",
     visibility = ["//visibility:public"],
     deps = [
         "//app/game/chat/api/grpc:go_default_library",

@@ -1802,3 +1802,17 @@ go_repository(
     sum = "h1:TdsyxuoHJxEkiKZDXz5zlm2UZgA6gymidzMmHNqNBnQ=",
     version = "v0.0.0-20190902233638-f1c4971ee6b7",
 )
+
+go_repository(
+    name = "com_github_smartwalle_alipay_v3",
+    importpath = "github.com/smartwalle/alipay/v3",
+    sum = "h1:oBJFxoaAhBL3XLtQ1HPw258drEL6ljHTFtCTQZoYq3M=",
+    version = "v3.1.5",
+)
+
+go_repository(
+    name = "com_github_smartwalle_crypto4go",
+    importpath = "github.com/smartwalle/crypto4go",
+    sum = "h1:9DUEOOsPhmp00438L4oBdcL8EZG1zumecft5bWj5phI=",
+    version = "v1.0.2",
+)

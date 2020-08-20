@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "app/service/user/account/api/grpc/account.proto",
+    "title": "app/service/donate/api/grpc/donate.proto",
     "version": "version not set"
   },
   "schemes": [
@@ -15,14 +15,14 @@
     "application/json"
   ],
   "paths": {
-    "/user/account/register": {
+    "/donate/create": {
       "post": {
-        "operationId": "Register",
+        "operationId": "CreateDonate",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/accountRegisterResp"
+              "$ref": "#/definitions/donateCreateDonateResp"
             }
           }
         },
@@ -32,159 +32,156 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/accountRegisterReq"
+              "$ref": "#/definitions/donateCreateDonateReq"
             }
           }
         ],
         "tags": [
-          "Account"
+          "Donate"
         ]
       }
     },
-    "/user/account/uid/{steam_id}": {
+    "/donate/list/{start_time}": {
       "get": {
-        "operationId": "UID",
+        "operationId": "GetDonateList2",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/accountUIDResp"
+              "$ref": "#/definitions/donateGetDonateListResp"
             }
           }
         },
         "parameters": [
           {
-            "name": "steam_id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "Web"
-        ]
-      }
-    },
-    "/user/account/{uid}": {
-      "get": {
-        "operationId": "Info",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/accountInfoResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "uid",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "format": "int64"
-          }
-        ],
-        "tags": [
-          "Web"
-        ]
-      },
-      "put": {
-        "operationId": "ChangeName",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/accountChangeNameResp"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "uid",
+            "name": "start_time",
             "in": "path",
             "required": true,
             "type": "string",
             "format": "int64"
           },
           {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/accountChangeNameReq"
-            }
+            "name": "end_time",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
-          "Account"
+          "Donate"
+        ]
+      }
+    },
+    "/donate/list/{start_time}/{end_time}": {
+      "get": {
+        "operationId": "GetDonateList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/donateGetDonateListResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "start_time",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "end_time",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Donate"
+        ]
+      }
+    },
+    "/donate/query/{out_trade_no}": {
+      "get": {
+        "operationId": "QueryDonate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/donateQueryDonateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "out_trade_no",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Donate"
         ]
       }
     }
   },
   "definitions": {
-    "accountChangeNameReq": {
-      "type": "object",
-      "properties": {
-        "uid": {
-          "type": "string",
-          "format": "int64"
-        },
-        "username": {
-          "type": "string"
-        }
-      }
-    },
-    "accountChangeNameResp": {
-      "type": "object"
-    },
-    "accountInfo": {
+    "donateCreateDonateReq": {
       "type": "object",
       "properties": {
         "steam_id": {
           "type": "string",
           "format": "int64"
         },
-        "username": {
+        "amount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "donateCreateDonateResp": {
+      "type": "object",
+      "properties": {
+        "out_trade_no": {
           "type": "string"
         },
-        "first_join": {
-          "type": "string",
-          "format": "int64"
+        "qr_code": {
+          "type": "string"
         }
       }
     },
-    "accountInfoResp": {
+    "donateGetDonateListResp": {
       "type": "object",
       "properties": {
-        "info": {
-          "$ref": "#/definitions/accountInfo"
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/donateQueryDonateResp"
+          }
         }
       }
     },
-    "accountRegisterReq": {
-      "type": "object",
-      "properties": {
-        "steam_id": {
-          "type": "string",
-          "format": "int64"
-        }
-      }
-    },
-    "accountRegisterResp": {
+    "donateQueryDonateResp": {
       "type": "object",
       "properties": {
         "uid": {
           "type": "string",
           "format": "int64"
-        }
-      }
-    },
-    "accountUIDResp": {
-      "type": "object",
-      "properties": {
-        "uid": {
+        },
+        "amount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "payed": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "create_at": {
           "type": "string",
           "format": "int64"
         }

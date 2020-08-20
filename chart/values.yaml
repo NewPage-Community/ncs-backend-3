@@ -94,3 +94,8 @@ ncs-services:
       image: registry.new-page.xyz/newpage/ncs/game-chat
       tag: latest
       port: 2333
+    - app: ncs-service-donate
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-donate
+      tag: latest
+      port: 2333

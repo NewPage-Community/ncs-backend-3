@@ -1,6 +1,6 @@
 apiVersion: v2
-name: ncs-gateway
-description: NCS gateway
+name: ncs-gateway-web
+description: NCS gateway web
 
 # A chart can be either an 'application' or a 'library' chart.
 #
