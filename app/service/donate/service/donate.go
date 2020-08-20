@@ -5,7 +5,6 @@ import (
 	accountService "backend/app/service/user/account/api/grpc"
 	moneyService "backend/app/service/user/money/api/grpc"
 	"context"
-	"errors"
 	"fmt"
 	"github.com/smartwalle/alipay/v3"
 	"google.golang.org/grpc/codes"
@@ -57,7 +56,7 @@ func (s *Service) CreateDonate(ctx context.Context, req *pb.CreateDonateReq) (re
 		return
 	}
 	if !res.IsSuccess() {
-		err = errors.New(res.Content.Msg)
+		err = fmt.Errorf("%s - %s", res.Content.Msg, res.Content.SubMsg)
 	}
 
 	// resp
@@ -84,7 +83,7 @@ func (s *Service) FinishDonate(outTradeNo string) (err error) {
 	// Give rmb
 	_, err = s.money.Give(ctx, &moneyService.GiveReq{
 		Uid:    db.UID,
-		Money:  int32(db.Amount * DonateRMBExchange),
+		Money:  db.Amount * DonateRMBExchange,
 		Reason: "捐助奖励",
 	})
 	if err != nil {
