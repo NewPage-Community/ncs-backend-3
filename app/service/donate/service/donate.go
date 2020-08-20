@@ -4,6 +4,7 @@ import (
 	pb "backend/app/service/donate/api/grpc"
 	accountService "backend/app/service/user/account/api/grpc"
 	moneyService "backend/app/service/user/money/api/grpc"
+	"backend/pkg/log"
 	"context"
 	"fmt"
 	"github.com/smartwalle/alipay/v3"
@@ -56,7 +57,8 @@ func (s *Service) CreateDonate(ctx context.Context, req *pb.CreateDonateReq) (re
 		return
 	}
 	if !res.IsSuccess() {
-		err = fmt.Errorf("%s - %s", res.Content.Msg, res.Content.SubMsg)
+		log.Error(res.Content.Msg, res.Content.SubMsg)
+		err = fmt.Errorf("%s - %s", res.Content.Code, res.Content.SubCode)
 	}
 
 	// resp

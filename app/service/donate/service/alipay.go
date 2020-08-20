@@ -49,6 +49,7 @@ func (s *Service) CheckTrade(outTradeNo string) {
 			res, err := s.alipay.TradeQuery(alipay.TradeQuery{
 				OutTradeNo: outTradeNo,
 			})
+			// Finish trade when it is success
 			if err == nil {
 				if res.IsSuccess() {
 					// Finish it
