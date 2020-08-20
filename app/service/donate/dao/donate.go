@@ -51,6 +51,6 @@ func (d *dao) FinishTrade(outTradeNo string) (err error) {
 func (d *dao) GetDonateList(startTime int64, endTime int64) (res []*model.Donate, err error) {
 	res = make([]*model.Donate, 0)
 	err = d.db.Where(gorm.Expr("payed = 1 AND created_at BETWEEN ? AND ?", startTime, endTime)).
-		Find(&res).Order("created_at desc").Error
+		Order("created_at desc").Find(&res).Error
 	return
 }
