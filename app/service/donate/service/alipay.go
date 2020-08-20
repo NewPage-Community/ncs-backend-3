@@ -40,7 +40,7 @@ func InitAlipay(config *conf.Alipay) *alipay.Client {
 func (s *Service) CheckTrade(outTradeNo string) {
 	timeout := time.Now().Add(5 * time.Minute)
 	go func() {
-		// Trade timeout
+		// Trade timeout check
 		for time.Now().Before(timeout) {
 			// Wait...
 			time.Sleep(time.Second * 5)
@@ -55,9 +55,17 @@ func (s *Service) CheckTrade(outTradeNo string) {
 					if err := s.FinishDonate(outTradeNo); err != nil {
 						log.Error(err)
 					}
-					break
+					return
 				}
 			}
+		}
+
+		// Timeout to cancel trade
+		_, err := s.alipay.TradeCancel(alipay.TradeCancel{
+			OutTradeNo: outTradeNo,
+		})
+		if err != nil {
+			log.Error(err)
 		}
 	}()
 }
