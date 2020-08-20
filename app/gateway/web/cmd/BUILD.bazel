@@ -7,7 +7,7 @@ go_library(
     importpath = "backend/app/gateway/web/cmd",
     visibility = ["//visibility:private"],
     deps = [
-        "//app/gateway/game/service:go_default_library",
+        "//app/gateway/web/service:go_default_library",
         "//pkg/cmd:go_default_library",
         "//pkg/log:go_default_library",
         "//pkg/rpc:go_default_library",

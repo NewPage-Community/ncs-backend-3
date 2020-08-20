@@ -34,12 +34,6 @@ service:
 ingress:
   enabled: true
   annotations:
-    # type of authentication
-    nginx.ingress.kubernetes.io/auth-type: basic
-    # name of the secret that contains the user/password definitions
-    nginx.ingress.kubernetes.io/auth-secret: basic-auth
-    # message to display with an appropriate context why the authentication is required
-    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required'
     # rewrite to root
     nginx.ingress.kubernetes.io/rewrite-target: /$2
     cert-manager.io/cluster-issuer: newpage
@@ -48,7 +42,7 @@ ingress:
   hosts:
     - host: api.new-page.xyz
       paths:
-      - /ncs/v3/web/(/|$)(.*)
+      - /ncs/v3/web(/|$)(.*)
   tls:
   - hosts:
     - api.new-page.xyz
