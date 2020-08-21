@@ -17,7 +17,7 @@ import (
 
 const (
 	Pass2AddPoint    = model.PassLevelPoint * 8
-	UpgradeNotifyMsg = "通行证成功升级到%d级，购买高级通行证可解锁更多大奖～"
+	UpgradeNotifyMsg = "{blue}通行证成功升级到 {green}%d{blue} 级，购买高级通行证可解锁更多大奖～"
 )
 
 func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp, err error) {
