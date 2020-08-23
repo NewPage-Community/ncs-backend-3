@@ -18,7 +18,7 @@ import (
 )
 
 const (
-	MaxProcess = 100
+	MaxProcess = 50
 )
 
 var db *gorm.DB

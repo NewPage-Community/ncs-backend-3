@@ -14,7 +14,6 @@ go_library(
         "//app/service/backpack/user/model:go_default_library",
         "//app/service/user/account/model:go_default_library",
         "//app/service/user/money/model:go_default_library",
-        "//app/service/user/sign/model:go_default_library",
         "//app/service/user/vip/model:go_default_library",
         "//pkg/json:go_default_library",
         "@io_gorm_datatypes//:go_default_library",
