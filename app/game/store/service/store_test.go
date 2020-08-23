@@ -24,8 +24,8 @@ func TestService_BuyItem(t *testing.T) {
 		Type: 0,
 	}).Return(&itemsService.GetItemsResp{
 		Items: []*itemsService.Item{
-			{Id: 1},
-			{Id: 2},
+			{Id: 1, Available: true},
+			{Id: 2, Available: true},
 		},
 	}, nil).Times(2)
 

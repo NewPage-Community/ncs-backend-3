@@ -5,7 +5,6 @@ import (
 	backpackUser "backend/app/service/backpack/user/model"
 	account "backend/app/service/user/account/model"
 	money "backend/app/service/user/money/model"
-	sign "backend/app/service/user/sign/model"
 	vip "backend/app/service/user/vip/model"
 	"backend/pkg/json"
 	"fmt"
@@ -231,13 +230,6 @@ func UserMerge() {
 			Create(&money.Money{
 				UID: int64(user.UID),
 				RMB: user.Money,
-			})
-		}
-		if user.Signtimes > 0 {
-			Create(&sign.Sign{
-				UID:      int64(user.UID),
-				SignDays: int(user.Signtimes),
-				SignDate: 0,
 			})
 		}
 		if user.Vippoint > 0 || user.Vipexpired > time.Now().Unix() {

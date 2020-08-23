@@ -48,6 +48,10 @@ func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.Buy
 		err = ecode.Errorf(codes.Unknown, "Can not found ItemID(%d)", req.ItemId)
 		return
 	}
+	if !item.Available {
+		err = ecode.Errorf(codes.Unknown, "item(%d) is not available", req.ItemId)
+		return
+	}
 
 	amount := int32(0)
 	if item.Id == PassBoxID {
