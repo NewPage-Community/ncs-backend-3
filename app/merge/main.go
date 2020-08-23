@@ -60,6 +60,7 @@ func main() {
 
 	fmt.Println("Start to merge!")
 	now := time.Now().Unix()
+	InitDB()
 	UserMerge()
 	SkinMerge()
 	wg.Wait()
@@ -259,5 +260,23 @@ func Server() {
 			<-sem
 			wg.Done()
 		}()
+	}
+}
+
+func InitDB() {
+	if err := db.AutoMigrate(&account.Info{}); err != nil {
+		fmt.Println(err)
+	}
+	if err := db.AutoMigrate(&money.Money{}); err != nil {
+		fmt.Println(err)
+	}
+	if err := db.AutoMigrate(&vip.VIP{}); err != nil {
+		fmt.Println(err)
+	}
+	if err := db.AutoMigrate(&backpackUser.UserModel{}); err != nil {
+		fmt.Println(err)
+	}
+	if err := db.AutoMigrate(&backpackItems.Item{}); err != nil {
+		fmt.Println(err)
 	}
 }
