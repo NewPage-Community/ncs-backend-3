@@ -51,7 +51,7 @@ func (s *Service) CheckTrade(outTradeNo string) {
 			})
 			// Finish trade when it is success
 			if err == nil {
-				if res.IsSuccess() {
+				if res.Content.TradeStatus == alipay.TradeStatusSuccess {
 					// Finish it
 					if err := s.FinishDonate(outTradeNo); err != nil {
 						log.Error(err)
