@@ -2,6 +2,7 @@ package service
 
 import (
 	pb "backend/app/service/donate/api/grpc"
+	"backend/app/service/donate/model"
 	accountService "backend/app/service/user/account/api/grpc"
 	moneyService "backend/app/service/user/money/api/grpc"
 	"backend/pkg/log"
@@ -78,7 +79,7 @@ func (s *Service) FinishDonate(outTradeNo string) (err error) {
 	}
 
 	// Do noting when donate already payed
-	if db.Payed {
+	if db.Status == model.DonatePayed {
 		return
 	}
 
@@ -111,7 +112,7 @@ func (s *Service) QueryDonate(ctx context.Context, req *pb.QueryDonateReq) (resp
 
 	resp.Uid = res.UID
 	resp.Amount = res.Amount
-	resp.Payed = res.Payed
+	resp.Status = int32(res.Status)
 	resp.CreateAt = res.CreatedAt
 	return
 }
@@ -136,7 +137,7 @@ func (s *Service) GetDonateList(ctx context.Context, req *pb.GetDonateListReq) (
 		resp.List = append(resp.List, &pb.QueryDonateResp{
 			Uid:      v.UID,
 			Amount:   v.Amount,
-			Payed:    v.Payed,
+			Status:   int32(v.Status),
 			CreateAt: v.CreatedAt,
 		})
 	}

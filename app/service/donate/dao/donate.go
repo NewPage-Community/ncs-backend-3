@@ -42,7 +42,16 @@ func (d *dao) GetTradeInfo(outTradeNo string) (res *model.Donate, err error) {
 func (d *dao) FinishTrade(outTradeNo string) (err error) {
 	info := &model.Donate{
 		OutTradeNo: outTradeNo,
-		Payed:      true,
+		Status:     model.DonatePayed,
+	}
+	err = d.db.Model(info).Updates(info).Error
+	return
+}
+
+func (d *dao) CancelTrade(outTradeNo string) (err error) {
+	info := &model.Donate{
+		OutTradeNo: outTradeNo,
+		Status:     model.DonateCancel,
 	}
 	err = d.db.Model(info).Updates(info).Error
 	return

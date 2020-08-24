@@ -68,5 +68,8 @@ func (s *Service) CheckTrade(outTradeNo string) {
 		if err != nil {
 			log.Error(err)
 		}
+		if err := s.dao.CancelTrade(outTradeNo); err != nil {
+			log.Error(err)
+		}
 	}()
 }

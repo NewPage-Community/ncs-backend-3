@@ -37,5 +37,5 @@ deploy:
 
 .PHONY: lint
 lint:
-	docker run --rm -v $(shell pwd):/app -w /app golangci/golangci-lint:latest-alpine golangci-lint run -v
+	docker run --rm --env GOPROXY=https://goproxy.cn,direct -v $(shell pwd):/app -w /app golangci/golangci-lint:latest-alpine golangci-lint run -v
 	helm lint ./chart

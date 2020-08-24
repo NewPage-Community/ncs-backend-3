@@ -177,9 +177,9 @@
           "type": "integer",
           "format": "int32"
         },
-        "payed": {
-          "type": "boolean",
-          "format": "boolean"
+        "status": {
+          "type": "integer",
+          "format": "int32"
         },
         "create_at": {
           "type": "string",
