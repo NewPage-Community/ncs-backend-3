@@ -23,7 +23,6 @@ var _defaultCliConf = &ClientConfig{
 	Timeout:  5 * time.Second,
 	MaxRetry: 1,
 	RetryCode: []codes.Code{
-		codes.Canceled,
 		codes.DataLoss,
 		codes.Unavailable,
 	},
