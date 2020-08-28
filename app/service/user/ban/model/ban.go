@@ -5,8 +5,8 @@ import "time"
 const (
 	BanTypeNone = iota
 	BanTypeAll
-	BanTypeMod
 	BanTypeGame
+	BanTypeMod
 	BanTypeServer
 )
 
