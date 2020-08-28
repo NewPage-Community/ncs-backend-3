@@ -21,6 +21,6 @@ func (d *dao) Title(uid int64) (res *model.Title, err error) {
 
 func (d *dao) Update(title *model.Title) (err error) {
 	// DB
-	err = d.db.Model(title).Updates(*title).Error
+	err = d.db.Model(title).Select("custom_title", "title_type").Updates(*title).Error
 	return
 }
