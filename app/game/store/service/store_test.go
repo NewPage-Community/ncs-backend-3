@@ -248,6 +248,10 @@ func TestService_BuyVIP(t *testing.T) {
 		Uid:    1,
 		Length: Month * 6,
 	}).Return(nil, errors.New("test"))
+	vip.EXPECT().AddPoint(gomock.Any(), &vipService.AddPointReq{
+		Uid:      1,
+		AddPoint: BuyVIPPoint,
+	}).Return(nil, nil)
 
 	srv := &Service{money: money, vip: vip}
 

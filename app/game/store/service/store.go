@@ -22,6 +22,7 @@ const (
 	VIPSemiannualPrice = int32(5280)
 	VIPAnnualPrice     = int32(10000)
 	Month              = int64(2592000)
+	BuyVIPPoint        = int32(50)
 )
 
 func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.BuyItemResp, err error) {
@@ -244,6 +245,11 @@ func (s *Service) BuyVIP(ctx context.Context, req *pb.BuyVIPReq) (resp *pb.BuyVI
 			Uid:    req.Uid,
 			Money:  price,
 			Reason: "VIP退款",
+		})
+	} else {
+		_, err = s.vip.AddPoint(ctx, &vipService.AddPointReq{
+			Uid:      req.Uid,
+			AddPoint: BuyVIPPoint * req.Month,
 		})
 	}
 	return
