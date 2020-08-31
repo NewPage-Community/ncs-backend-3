@@ -1,0 +1,29 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("//build:docker.bzl", "push_docker")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "backend/app/game/cvar/cmd",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//app/game/cvar/api/grpc:go_default_library",
+        "//app/game/cvar/conf:go_default_library",
+        "//app/game/cvar/service:go_default_library",
+        "//pkg/cmd:go_default_library",
+        "//pkg/log:go_default_library",
+        "//pkg/tracer:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "cmd",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
+
+push_docker(
+    name = "push",
+    app_name = "game-cvar",
+    embed = [":go_default_library"],
+)

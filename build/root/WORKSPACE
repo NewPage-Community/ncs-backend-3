@@ -1816,3 +1816,10 @@ go_repository(
     sum = "h1:9DUEOOsPhmp00438L4oBdcL8EZG1zumecft5bWj5phI=",
     version = "v1.0.2",
 )
+
+go_repository(
+    name = "com_github_robfig_cron_v3",
+    importpath = "github.com/robfig/cron/v3",
+    sum = "h1:kQ6Cb7aHOHTSzNVNEhmp8EcWKLb4CbiMW9h9VyIhO4E=",
+    version = "v3.0.0",
+)

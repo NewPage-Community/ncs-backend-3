@@ -1,0 +1,29 @@
+syntax = "proto3";
+package ncs.game.cvar;
+option go_package = "grpc";
+
+import "google/api/annotations.proto";
+
+message CVarInfo {
+    string key = 1;
+    string value = 2;
+}
+
+message UpdateCVarsReq {
+    int32 game_id = 1;
+    int32 mod_id = 2;
+    int32 server_id = 3;
+}
+
+message UpdateCVarsResp {
+    repeated CVarInfo cvars = 1;
+}
+
+service CVar {
+    rpc UpdateCVars (UpdateCVarsReq) returns (UpdateCVarsResp) {
+        option (google.api.http) = {
+            post: "/game/cvar/update"
+            body: "*"
+        };
+    }
+}

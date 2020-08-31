@@ -14,6 +14,7 @@ go_library(
     deps = [
         "//app/game/chat/api/grpc:go_default_library",
         "//app/game/cookie/api/grpc:go_default_library",
+        "//app/game/cvar/api/grpc:go_default_library",
         "//app/game/pass/api/grpc:go_default_library",
         "//app/game/server/api/grpc:go_default_library",
         "//app/game/skin/api/grpc:go_default_library",

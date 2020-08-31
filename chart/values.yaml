@@ -99,3 +99,8 @@ ncs-services:
       image: registry.new-page.xyz/newpage/ncs/service-donate
       tag: latest
       port: 2333
+    - app: ncs-game-cvar
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/game-cvar
+      tag: latest
+      port: 2333
