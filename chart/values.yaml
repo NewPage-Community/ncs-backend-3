@@ -1,5 +1,21 @@
 # NCS values.yaml
 
+redis:
+  cluster:
+    enabled: false
+  master:
+    persistence:
+      enabled: true
+      size: "2Gi"
+      storageClass: "longhorn"
+    service:
+      type: "ClusterIP"
+    metrics:
+      enabled: true
+    slave:
+      persistence:
+        enabled: false
+
 ncs-services:
   configMap:
     name: ncs
