@@ -3,6 +3,7 @@ package service
 import (
 	pb "backend/app/service/user/money/api/grpc"
 	"backend/pkg/ecode"
+	"backend/pkg/log"
 	"context"
 	"google.golang.org/grpc/codes"
 )
@@ -40,7 +41,11 @@ func (s *Service) Pay(ctx context.Context, req *pb.PayReq) (resp *pb.PayResp, er
 	if err != nil {
 		return
 	}
-	err = s.dao.AddRecord(req.Uid, -req.Price, req.Reason)
+
+	recordErr := s.dao.AddRecord(req.Uid, -req.Price, req.Reason)
+	if recordErr != nil {
+		log.Warn(recordErr)
+	}
 	return
 }
 
@@ -60,7 +65,11 @@ func (s *Service) Give(ctx context.Context, req *pb.GiveReq) (resp *pb.GiveResp,
 	if err != nil {
 		return
 	}
-	err = s.dao.AddRecord(req.Uid, req.Money, req.Reason)
+
+	recordErr := s.dao.AddRecord(req.Uid, req.Money, req.Reason)
+	if recordErr != nil {
+		log.Warn(recordErr)
+	}
 	return
 }
 

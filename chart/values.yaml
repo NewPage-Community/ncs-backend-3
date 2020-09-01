@@ -1,6 +1,8 @@
 # NCS values.yaml
 
 redis:
+  existingSecret: ncs-redis
+  existingSecretPasswordKey: redis-password
   cluster:
     enabled: false
   master:
