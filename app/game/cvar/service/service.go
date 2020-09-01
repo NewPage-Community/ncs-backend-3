@@ -20,6 +20,7 @@ func Init(config *conf.Config) (s *Service) {
 		server: serverService.InitClient(serverService.ServiceAddr),
 	}
 	s.regCron()
+	s.cron.Start()
 	return
 }
 
