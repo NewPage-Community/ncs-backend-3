@@ -27,5 +27,5 @@ require (
 	google.golang.org/grpc v1.29.1
 	gorm.io/datatypes v0.0.0-20200709131824-976937c55e2d
 	gorm.io/driver/mysql v0.3.0
-	gorm.io/gorm v0.2.22
+	gorm.io/gorm v1.20.0
 )

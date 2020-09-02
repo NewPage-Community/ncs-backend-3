@@ -1505,8 +1505,8 @@ go_repository(
 go_repository(
     name = "io_gorm_gorm",
     importpath = "gorm.io/gorm",
-    sum = "h1:kktbaUjQf4aA6L9o/qCghKRNuCvaWJycSToqvhQAB8c=",
-    version = "v0.2.22",
+    sum = "h1:qfIlyaZvrF7kMWY3jBdEBXkXJ2M5MFYMTppjILxS3fQ=",
+    version = "v1.20.0",
 )
 
 go_repository(
