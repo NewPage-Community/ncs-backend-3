@@ -184,7 +184,7 @@ func TestService_UpgradePass(t *testing.T) {
 	}, nil)
 	d.EXPECT().UpgradePass(int64(1), int32(1)).Return(nil)
 	d.EXPECT().UpgradePass(int64(1), int32(2)).Return(nil)
-	d.EXPECT().AddPoint(int64(1), int32(Pass2AddPoint)).Return(&model.User{
+	d.EXPECT().AddPoint(int64(1), Pass2AddPoint).Return(&model.User{
 		UID:      1,
 		PassType: 1,
 		Point:    Pass2AddPoint,
