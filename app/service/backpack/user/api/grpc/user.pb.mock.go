@@ -134,6 +134,26 @@ func (mr *MockUserClientMockRecorder) HaveItem(ctx, in interface{}, opts ...inte
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HaveItem", reflect.TypeOf((*MockUserClient)(nil).HaveItem), varargs...)
 }
 
+// AddAllItems mocks base method
+func (m *MockUserClient) AddAllItems(ctx context.Context, in *AddAllItemsReq, opts ...grpc.CallOption) (*AddAllItemsResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AddAllItems", varargs...)
+	ret0, _ := ret[0].(*AddAllItemsResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddAllItems indicates an expected call of AddAllItems
+func (mr *MockUserClientMockRecorder) AddAllItems(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddAllItems", reflect.TypeOf((*MockUserClient)(nil).AddAllItems), varargs...)
+}
+
 // MockUserServer is a mock of UserServer interface
 type MockUserServer struct {
 	ctrl     *gomock.Controller
@@ -230,4 +250,19 @@ func (m *MockUserServer) HaveItem(arg0 context.Context, arg1 *HaveItemReq) (*Hav
 func (mr *MockUserServerMockRecorder) HaveItem(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HaveItem", reflect.TypeOf((*MockUserServer)(nil).HaveItem), arg0, arg1)
+}
+
+// AddAllItems mocks base method
+func (m *MockUserServer) AddAllItems(arg0 context.Context, arg1 *AddAllItemsReq) (*AddAllItemsResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddAllItems", arg0, arg1)
+	ret0, _ := ret[0].(*AddAllItemsResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddAllItems indicates an expected call of AddAllItems
+func (mr *MockUserServerMockRecorder) AddAllItems(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddAllItems", reflect.TypeOf((*MockUserServer)(nil).AddAllItems), arg0, arg1)
 }

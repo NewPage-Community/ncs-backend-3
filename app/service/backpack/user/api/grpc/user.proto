@@ -53,6 +53,13 @@ message HaveItemResp {
     bool have = 1;
 }
 
+message AddAllItemsReq {
+    int64 uid = 1;
+}
+
+message AddAllItemsResp {
+}
+
 service User {
     rpc Init (InitReq) returns (InitResp);
     rpc GetItems (GetItemsReq) returns (GetItemsResp) {
@@ -70,6 +77,12 @@ service User {
     rpc HaveItem (HaveItemReq) returns (HaveItemResp) {
         option (google.api.http) = {
             get: "/backpack/user/have/{uid}/{id}"
+        };
+    }
+    rpc AddAllItems (AddAllItemsReq) returns (AddAllItemsResp) {
+        option (google.api.http) = {
+            post: "/backpack/user/allitems"
+            body: "*"
         };
     }
 }

@@ -1,6 +1,7 @@
 package service
 
 import (
+	itemsSrv "backend/app/service/backpack/items/api/grpc"
 	pb "backend/app/service/backpack/user/api/grpc"
 	"backend/app/service/backpack/user/model"
 	"backend/pkg/ecode"
@@ -124,5 +125,31 @@ func (s *Service) HaveItem(ctx context.Context, req *pb.HaveItemReq) (resp *pb.H
 			resp.Have = true
 		}
 	}
+	return
+}
+
+func (s *Service) AddAllItems(ctx context.Context, req *pb.AddAllItemsReq) (resp *pb.AddAllItemsResp, err error) {
+	resp = &pb.AddAllItemsResp{}
+
+	if req.Uid <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID")
+		return
+	}
+
+	res, err := s.items.GetItems(ctx, &itemsSrv.GetItemsReq{})
+	if err != nil {
+		return
+	}
+
+	var items model.Items
+	for _, v := range res.Items {
+		items = append(items, &model.Item{
+			ID:       v.Id,
+			Amount:   0,
+			ExprTime: 0,
+		})
+	}
+
+	err = s.dao.AddItems(req.Uid, &items)
 	return
 }

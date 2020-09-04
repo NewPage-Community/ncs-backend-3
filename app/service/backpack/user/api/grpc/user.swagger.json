@@ -41,6 +41,32 @@
         ]
       }
     },
+    "/backpack/user/allitems": {
+      "post": {
+        "operationId": "AddAllItems",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userAddAllItemsResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userAddAllItemsReq"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
     "/backpack/user/have/{uid}/{id}": {
       "get": {
         "operationId": "HaveItem",
@@ -100,6 +126,18 @@
     }
   },
   "definitions": {
+    "userAddAllItemsReq": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "userAddAllItemsResp": {
+      "type": "object"
+    },
     "userAddItemsReq": {
       "type": "object",
       "properties": {
