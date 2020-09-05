@@ -9,9 +9,10 @@ import (
 )
 
 type Dao interface {
-	Info(uid int64) (*model.Ban, error)
+	Info(uid uint64) (*model.Ban, error)
 	Add(info *model.Ban) error
 	Remove(info *model.Ban) error
+	IsBlockIP(ip string) (bool, error)
 	Healthy() bool
 	Close()
 }

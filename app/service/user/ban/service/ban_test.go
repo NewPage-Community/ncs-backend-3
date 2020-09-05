@@ -2,13 +2,17 @@ package service
 
 import (
 	serverService "backend/app/game/server/api/grpc"
+	accountService "backend/app/service/user/account/api/grpc"
 	pb "backend/app/service/user/ban/api/grpc"
 	"backend/app/service/user/ban/dao"
 	"backend/app/service/user/ban/model"
 	"backend/pkg/log"
+	"backend/pkg/steam"
 	"context"
 	"github.com/golang/mock/gomock"
 	. "github.com/smartystreets/goconvey/convey"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 	"testing"
 	"time"
 )
@@ -18,32 +22,103 @@ func TestService_Add(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
+	now := time.Now()
+
 	server := serverService.NewMockServerClient(ctl)
 	server.EXPECT().RconAll(gomock.Any(), &serverService.RconAllReq{
 		Cmd: "ncs_ban_notify 1 1 \"test\"",
 	}).Return(&serverService.RconAllResp{
 		Success: 0,
-	}, nil)
+	}, nil).Times(3)
+
 	d := dao.NewMockDao(ctl)
-	d.EXPECT().Add(gomock.Any()).Return(nil)
+	d.EXPECT().Add(&model.Ban{
+		UID:        1,
+		IP:         "127.0.0.1",
+		CreateTime: now.Unix(),
+		ExpireTime: now.Add(time.Minute).Unix(),
+		Type:       1,
+		Reason:     "test",
+	}).Return(nil).Times(3)
+	d.EXPECT().Add(&model.Ban{
+		UID:        2,
+		CreateTime: now.Unix(),
+		ExpireTime: now.Add(time.Minute).Unix(),
+		Type:       1,
+		Reason:     "test" + LibOwnerBanReason,
+	}).Return(nil)
+	d.EXPECT().Add(&model.Ban{
+		UID:        3,
+		CreateTime: now.Unix(),
+		ExpireTime: now.Add(time.Minute).Unix(),
+		Type:       1,
+		Reason:     "test" + LibOwnerBanReason,
+	}).Return(nil)
+
+	acc := accountService.NewMockAccountClient(ctl)
+	acc.EXPECT().Info(gomock.Any(), &accountService.InfoReq{Uid: 1}).
+		Return(&accountService.InfoResp{Info: &accountService.Info{
+			SteamId: 1,
+		}}, nil).Times(2)
+	acc.EXPECT().UID(gomock.Any(), &accountService.UIDReq{SteamId: 2}).
+		Return(&accountService.UIDResp{Uid: 2}, nil)
+	acc.EXPECT().UID(gomock.Any(), &accountService.UIDReq{SteamId: 3}).
+		Return(
+			&accountService.UIDResp{},
+			status.Error(codes.NotFound, ""),
+		)
+	acc.EXPECT().Register(gomock.Any(), &accountService.RegisterReq{
+		SteamId: 3,
+	}).Return(&accountService.RegisterResp{Uid: 3}, nil)
+
+	steam2 := steam.NewMockAPIClient(ctl)
+	steam2.EXPECT().IsPlayingSharedGame(uint64(1), 1).
+		Return(steam.PlayingSharedGame{LenderSteamID: 2}, nil)
+	steam2.EXPECT().IsPlayingSharedGame(uint64(1), 2).
+		Return(steam.PlayingSharedGame{LenderSteamID: 3}, nil)
 
 	srv := &Service{
-		dao:    d,
-		server: server,
+		dao:     d,
+		server:  server,
+		account: acc,
+		steam:   steam2,
 	}
 
 	Convey("Test Add", t, func() {
 		Convey("Check it work", func() {
 			_, err := srv.Add(context.TODO(), &pb.AddReq{
 				Info: &pb.Info{
-					Id:         1,
 					Uid:        1,
-					ExpireTime: time.Now().Add(time.Minute).Unix(),
+					Ip:         "127.0.0.1",
+					ExpireTime: now.Add(time.Minute).Unix(),
 					Type:       1,
-					ServerId:   1,
-					ModId:      1,
-					GameId:     1,
 					Reason:     "test",
+				},
+			})
+			So(err, ShouldBeNil)
+		})
+		Convey("add ban with lib owner", func() {
+			_, err := srv.Add(context.TODO(), &pb.AddReq{
+				Info: &pb.Info{
+					Uid:        1,
+					Ip:         "127.0.0.1",
+					ExpireTime: now.Add(time.Minute).Unix(),
+					Type:       1,
+					Reason:     "test",
+					AppId:      1,
+				},
+			})
+			So(err, ShouldBeNil)
+		})
+		Convey("add ban with lib owner but owner do not have account", func() {
+			_, err := srv.Add(context.TODO(), &pb.AddReq{
+				Info: &pb.Info{
+					Uid:        1,
+					Ip:         "127.0.0.1",
+					ExpireTime: now.Add(time.Minute).Unix(),
+					Type:       1,
+					Reason:     "test",
+					AppId:      2,
 				},
 			})
 			So(err, ShouldBeNil)
@@ -56,23 +131,51 @@ func TestService_BanCheck(t *testing.T) {
 	defer ctl.Finish()
 
 	d := dao.NewMockDao(ctl)
-	d.EXPECT().Info(int64(1)).Return(&model.Ban{
+	d.EXPECT().Info(uint64(1)).Return(&model.Ban{
 		ID:         1,
 		UID:        1,
-		CreateTime: 1,
 		ExpireTime: time.Now().Add(time.Minute).Unix(),
 		Type:       1,
-		ServerID:   1,
-		ModID:      1,
-		GameID:     1,
 		Reason:     "test",
 	}, nil)
-	d.EXPECT().Info(int64(2)).Return(&model.Ban{
+	d.EXPECT().Info(uint64(2)).Return(&model.Ban{
 		UID: 2,
+	}, nil).Times(4)
+	d.EXPECT().IsBlockIP("127.0.0.1").Return(true, nil)
+	d.EXPECT().Info(uint64(3)).Return(&model.Ban{
+		ID:         1,
+		UID:        3,
+		ExpireTime: time.Now().Add(time.Minute).Unix(),
+		Type:       1,
+		Reason:     "test",
 	}, nil)
+	d.EXPECT().Info(uint64(4)).Return(&model.Ban{}, nil)
+	d.EXPECT().Add(gomock.Any()).Return(nil)
+
+	acc := accountService.NewMockAccountClient(ctl)
+	acc.EXPECT().Info(gomock.Any(), &accountService.InfoReq{Uid: 2}).
+		Return(&accountService.InfoResp{
+			Info: &accountService.Info{
+				SteamId: 2,
+			},
+		}, nil).Times(4)
+	acc.EXPECT().UID(gomock.Any(), &accountService.UIDReq{SteamId: 3}).
+		Return(&accountService.UIDResp{Uid: 3}, nil)
+	acc.EXPECT().UID(gomock.Any(), &accountService.UIDReq{SteamId: 4}).
+		Return(&accountService.UIDResp{Uid: 4}, nil)
+
+	steam2 := steam.NewMockAPIClient(ctl)
+	steam2.EXPECT().IsPlayingSharedGame(uint64(2), 1).
+		Return(steam.PlayingSharedGame{LenderSteamID: 3}, nil)
+	steam2.EXPECT().IsPlayingSharedGame(uint64(2), 2).
+		Return(steam.PlayingSharedGame{LenderSteamID: 0}, nil).Times(2)
+	steam2.EXPECT().IsPlayingSharedGame(uint64(2), 3).
+		Return(steam.PlayingSharedGame{LenderSteamID: 4}, nil)
 
 	srv := &Service{
-		dao: d,
+		dao:     d,
+		account: acc,
+		steam:   steam2,
 	}
 
 	Convey("Test BanCheck", t, func() {
@@ -93,9 +196,48 @@ func TestService_BanCheck(t *testing.T) {
 				ServerId: 1,
 				ModId:    1,
 				GameId:   1,
+				AppId:    2,
 			})
 			So(err, ShouldBeNil)
 			So(res.Info.Id, ShouldEqual, 0)
+			t.Log(res)
+		})
+		Convey("Check record not found but block ip", func() {
+			res, err := srv.BanCheck(context.TODO(), &pb.Info2Req{
+				Uid:      2,
+				Ip:       "127.0.0.1",
+				ServerId: 1,
+				ModId:    1,
+				GameId:   1,
+				AppId:    2,
+			})
+			So(err, ShouldBeNil)
+			So(res.Info.Id, ShouldEqual, 0)
+			So(res.Info.BlockIp, ShouldBeTrue)
+			t.Log(res)
+		})
+		Convey("Check shared lib", func() {
+			res, err := srv.BanCheck(context.TODO(), &pb.Info2Req{
+				Uid:      2,
+				ServerId: 1,
+				ModId:    1,
+				GameId:   1,
+				AppId:    3,
+			})
+			So(err, ShouldBeNil)
+			So(res.Info.ExpireTime, ShouldEqual, 0)
+			t.Log(res)
+		})
+		Convey("Check shared lib but owner got ban", func() {
+			res, err := srv.BanCheck(context.TODO(), &pb.Info2Req{
+				Uid:      2,
+				ServerId: 1,
+				ModId:    1,
+				GameId:   1,
+				AppId:    1,
+			})
+			So(err, ShouldBeNil)
+			So(res.Info.ExpireTime, ShouldBeGreaterThan, 0)
 			t.Log(res)
 		})
 	})
@@ -106,9 +248,10 @@ func TestService_Info(t *testing.T) {
 	defer ctl.Finish()
 
 	d := dao.NewMockDao(ctl)
-	d.EXPECT().Info(int64(1)).Return(&model.Ban{
+	d.EXPECT().Info(uint64(1)).Return(&model.Ban{
 		ID:         1,
 		UID:        1,
+		IP:         "127.0.0.1",
 		CreateTime: 1,
 		ExpireTime: time.Now().Add(time.Minute).Unix(),
 		Type:       1,

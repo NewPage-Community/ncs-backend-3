@@ -44,7 +44,7 @@ func request_Ban_Info_0(ctx context.Context, marshaler runtime.Marshaler, client
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uid")
 	}
 
-	protoReq.Uid, err = runtime.Int64(val)
+	protoReq.Uid, err = runtime.Uint64(val)
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uid", err)
@@ -123,7 +123,7 @@ func request_Ban_BanCheck_0(ctx context.Context, marshaler runtime.Marshaler, cl
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "uid")
 	}
 
-	protoReq.Uid, err = runtime.Int64(val)
+	protoReq.Uid, err = runtime.Uint64(val)
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "uid", err)

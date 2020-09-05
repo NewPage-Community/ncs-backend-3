@@ -34,7 +34,7 @@ func (m *MockDao) EXPECT() *MockDaoMockRecorder {
 }
 
 // Info mocks base method
-func (m *MockDao) Info(uid int64) (*model.Ban, error) {
+func (m *MockDao) Info(uid uint64) (*model.Ban, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Info", uid)
 	ret0, _ := ret[0].(*model.Ban)
@@ -74,6 +74,21 @@ func (m *MockDao) Remove(info *model.Ban) error {
 func (mr *MockDaoMockRecorder) Remove(info interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Remove", reflect.TypeOf((*MockDao)(nil).Remove), info)
+}
+
+// IsBlockIP mocks base method
+func (m *MockDao) IsBlockIP(ip string) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "IsBlockIP", ip)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// IsBlockIP indicates an expected call of IsBlockIP
+func (mr *MockDaoMockRecorder) IsBlockIP(ip interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsBlockIP", reflect.TypeOf((*MockDao)(nil).IsBlockIP), ip)
 }
 
 // Healthy mocks base method

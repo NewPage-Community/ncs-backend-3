@@ -3,6 +3,7 @@ package json
 import (
 	"fmt"
 	jsoniter "github.com/json-iterator/go"
+	"io"
 )
 
 // Unmarshal ...
@@ -21,4 +22,8 @@ func Marshal(v interface{}) (s []byte, err error) {
 		err = fmt.Errorf("json marshal error: %s (%v)", err.Error(), v)
 	}
 	return
+}
+
+func NewDecoder(reader io.Reader) *jsoniter.Decoder {
+	return jsoniter.NewDecoder(reader)
 }

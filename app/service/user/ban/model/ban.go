@@ -12,10 +12,11 @@ const (
 
 type Ban struct {
 	ID         uint32 `gorm:"primary_key;not null" json:"id"`
-	UID        int64  `gorm:"not null" json:"uid"`
+	UID        uint64 `gorm:"not null" json:"uid"`
+	IP         string `json:"ip"`
 	CreateTime int64  `gorm:"not null;INDEX" json:"create_time"`
 	ExpireTime int64  `gorm:"not null;INDEX" json:"expire_time"`
-	Type       int    `gorm:"not null" json:"type"`
+	Type       int32  `gorm:"not null" json:"type"`
 	ServerID   int64  `gorm:"not null" json:"server_id"`
 	ModID      int64  `gorm:"not null" json:"mod_id"`
 	GameID     int64  `gorm:"not null" json:"game_id"`

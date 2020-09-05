@@ -58,7 +58,7 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "format": "int64"
+            "format": "uint64"
           },
           {
             "name": "body",
@@ -116,7 +116,7 @@
             "in": "path",
             "required": true,
             "type": "string",
-            "format": "int64"
+            "format": "uint64"
           }
         ],
         "tags": [
@@ -146,7 +146,10 @@
         },
         "uid": {
           "type": "string",
-          "format": "int64"
+          "format": "uint64"
+        },
+        "ip": {
+          "type": "string"
         },
         "create_time": {
           "type": "string",
@@ -174,6 +177,14 @@
         },
         "reason": {
           "type": "string"
+        },
+        "block_ip": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "app_id": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
@@ -182,7 +193,10 @@
       "properties": {
         "uid": {
           "type": "string",
-          "format": "int64"
+          "format": "uint64"
+        },
+        "ip": {
+          "type": "string"
         },
         "server_id": {
           "type": "string",
@@ -194,6 +208,10 @@
         },
         "game_id": {
           "type": "string",
+          "format": "int64"
+        },
+        "app_id": {
+          "type": "integer",
           "format": "int64"
         }
       }

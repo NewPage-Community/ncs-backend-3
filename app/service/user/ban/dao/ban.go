@@ -5,9 +5,14 @@ import (
 	"backend/pkg/ecode"
 	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
+	"time"
 )
 
-func (d *dao) Info(uid int64) (res *model.Ban, err error) {
+const (
+	DayTime = 24 * time.Hour
+)
+
+func (d *dao) Info(uid uint64) (res *model.Ban, err error) {
 	res = &model.Ban{}
 
 	// DB
@@ -53,4 +58,23 @@ func (d *dao) Remove(info *model.Ban) (err error) {
 		err = ecode.Errorf(codes.NotFound, "Can not found recode ID(%d)", info.ID)
 	}
 	return
+}
+
+func (d *dao) IsBlockIP(ip string) (bool, error) {
+	info := &model.Ban{}
+
+	err := d.db.Where(
+		"ip = ? AND create_time > ?",
+		ip,
+		time.Now().Add(-DayTime).Unix(),
+	).First(info).Error
+
+	switch err {
+	case gorm.ErrRecordNotFound:
+		return false, nil
+	case nil:
+		return true, nil
+	default:
+		return false, err
+	}
 }

@@ -8,27 +8,32 @@ import "google/api/annotations.proto";
 
 message Info {
     uint32 id = 1;
-    int64 uid = 2;
-    int64 create_time = 3;
-    int64 expire_time = 4;
-    int32 type = 5;
-    int64 server_id = 6;
-    int64 mod_id = 7;
-    int64 game_id = 8;
-    string reason = 9;
+    uint64 uid = 2;
+    string ip = 3;
+    int64 create_time = 4;
+    int64 expire_time = 5;
+    int32 type = 6;
+    int64 server_id = 7;
+    int64 mod_id = 8;
+    int64 game_id = 9;
+    string reason = 10;
+    bool block_ip = 11;
+    uint32 app_id = 12;
 }
 
 // Message
 
 message InfoReq {
-    int64 uid = 1;
+    uint64 uid = 1;
 }
 
 message Info2Req {
-    int64 uid = 1;
-    int64 server_id = 2;
-    int64 mod_id = 3;
-    int64 game_id = 4;
+    uint64 uid = 1;
+    string ip = 2;
+    int64 server_id = 3;
+    int64 mod_id = 4;
+    int64 game_id = 5;
+    uint32 app_id = 6;
 }
 
 message InfoResp {
