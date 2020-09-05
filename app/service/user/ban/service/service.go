@@ -19,7 +19,7 @@ func Init(c *conf.Config) *Service {
 	return &Service{
 		dao:     dao.New(c),
 		server:  serverService.InitClient(serverService.ServiceAddr),
-		steam:   steam.NewAPIClient(c.Steam.APIUrl, c.Steam.APIKey),
+		steam:   steam.NewAPIClient(c.Steam.APIUrl, c.Steam.APIKey, c.Steam.Timeout),
 		account: accountService.InitClient(accountService.ServiceAddr),
 	}
 }

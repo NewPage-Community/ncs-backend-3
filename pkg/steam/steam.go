@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 const (
-	APIUrlDefault = "https://api.steampowered.com"
+	APIUrlDefault  = "https://api.steampowered.com"
+	TimeoutDefault = 1
 )
 
 type APIClient interface {
@@ -18,6 +20,8 @@ type APIClient interface {
 type API struct {
 	APIUrl string
 	APIKey string
+	// API request timeout (sec)
+	Timeout int
 }
 
 type APIRequest struct {
@@ -26,14 +30,18 @@ type APIRequest struct {
 	Version int
 }
 
-func NewAPIClient(url, key string) *API {
+func NewAPIClient(url, key string, timeout int) *API {
 	if len(url) == 0 {
 		url = APIUrlDefault
 	}
+	if timeout == 0 {
+		timeout = TimeoutDefault
+	}
 
 	return &API{
-		APIUrl: url,
-		APIKey: key,
+		APIUrl:  url,
+		APIKey:  key,
+		Timeout: timeout,
 	}
 }
 
@@ -45,7 +53,8 @@ func (a *API) request(req APIRequest, values url.Values, v interface{}) error {
 	values.Add("key", a.APIKey)
 
 	url := fmt.Sprintf("%s/%s/%s/v%d/?%s", a.APIUrl, req.Service, req.Method, req.Version, values.Encode())
-	resp, err := http.Get(url)
+	client := http.Client{Timeout: time.Second}
+	resp, err := client.Get(url)
 	if err != nil {
 		return err
 	}
