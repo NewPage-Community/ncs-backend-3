@@ -144,9 +144,9 @@ func (s *Service) BanCheck(ctx context.Context, req *pb.Info2Req) (resp *pb.Info
 
 	// Check shared game lib owner
 	if req.AppId > 0 {
-		res, err = s.CheckSharedLibOwnerBan(ctx, req)
-		if err != nil {
-			log.Warn(err)
+		res, err1 := s.CheckSharedLibOwnerBan(ctx, req)
+		if err1 != nil {
+			log.Warn(err1)
 		} else {
 			// if owner not banned or can not found
 			// just give 0 or empty string to them ;)

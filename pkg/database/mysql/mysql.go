@@ -50,12 +50,13 @@ func (conf *Config) Init() {
 }
 
 func (conf *Config) GetLogger() logger.Interface {
-	if !conf.Debug {
-		return nil
+	logLevel := logger.Silent
+	if conf.Debug {
+		logLevel = logger.Info
 	}
 	return logger.New(l.New(os.Stdout, "\r\n", l.LstdFlags), logger.Config{
 		SlowThreshold: 100 * time.Millisecond,
-		LogLevel:      logger.Info,
+		LogLevel:      logLevel,
 		Colorful:      true,
 	})
 }
