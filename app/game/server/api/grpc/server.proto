@@ -75,6 +75,16 @@ service Server {
             body: "*"
         };
     }
-    rpc Rcon (RconReq) returns (RconResp);
-    rpc RconAll (RconAllReq) returns (RconAllResp);
+    rpc Rcon (RconReq) returns (RconResp) {
+        option (google.api.http) = {
+            post: "/game/server/rcon"
+            body: "*"
+        };
+    }
+    rpc RconAll (RconAllReq) returns (RconAllResp) {
+        option (google.api.http) = {
+            post: "/game/server/rcon/all"
+            body: "*"
+        };
+    }
 }

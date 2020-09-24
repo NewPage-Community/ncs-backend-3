@@ -81,6 +81,58 @@
           "Server"
         ]
       }
+    },
+    "/game/server/rcon": {
+      "post": {
+        "operationId": "Rcon",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverRconResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverRconReq"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/game/server/rcon/all": {
+      "post": {
+        "operationId": "RconAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverRconAllResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverRconAllReq"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
     }
   },
   "definitions": {
@@ -149,12 +201,32 @@
         }
       }
     },
+    "serverRconAllReq": {
+      "type": "object",
+      "properties": {
+        "cmd": {
+          "type": "string"
+        }
+      }
+    },
     "serverRconAllResp": {
       "type": "object",
       "properties": {
         "success": {
           "type": "integer",
           "format": "int32"
+        }
+      }
+    },
+    "serverRconReq": {
+      "type": "object",
+      "properties": {
+        "server_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cmd": {
+          "type": "string"
         }
       }
     },
