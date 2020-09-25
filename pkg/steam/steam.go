@@ -57,7 +57,7 @@ func (a *API) request(req APIRequest, values url.Values, v interface{}) error {
 	apiURL := fmt.Sprintf("%s/%s/%s/v%d/?%s", a.APIUrl, req.Service, req.Method, req.Version, values.Encode())
 	client := http.Client{Timeout: time.Second}
 	if len(a.HttpProxy) > 0 {
-		proxy, err := url.Parse("https://" + a.HttpProxy)
+		proxy, err := url.Parse("http://" + a.HttpProxy)
 		if err != nil {
 			return err
 		}
