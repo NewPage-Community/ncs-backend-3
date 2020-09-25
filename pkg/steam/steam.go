@@ -71,8 +71,8 @@ func (a *API) request(req APIRequest, values url.Values, v interface{}) error {
 	}
 	defer resp.Body.Close()
 
-	if err := APICodeError(resp.StatusCode); err != nil {
-		return fmt.Errorf("%s > %v", apiURL, err)
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("%s > %v", apiURL, resp.StatusCode)
 	}
 
 	d := json.NewDecoder(resp.Body)
