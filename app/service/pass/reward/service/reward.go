@@ -19,6 +19,7 @@ func (s *Service) GetRewards(ctx context.Context, req *pb.GetRewardsReq) (resp *
 	}
 	resp = &pb.GetRewardsResp{
 		Season:      s.reward.Season,
+		MaxLevel:    s.reward.MaxLevel,
 		FreeRewards: s.getRewards(0, req.Level, req.Min),
 		AdvRewards:  s.getRewards(1, req.Level, req.Min),
 	}
@@ -49,14 +50,29 @@ func (s *Service) getRewards(passType int32, level int32, min int32) []*pb.Item 
 		})
 	}
 
-	// Give pass box
-	if len(items) == 0 && passType > 0 {
-		items = append(items, &pb.Item{
-			Level:  level,
-			Id:     PassBoxID,
-			Amount: 1,
-			Length: 0,
-		})
+	// Give pass box to adv pass
+	if passType > 0 {
+		// Upgrade one level
+		if min == 0 {
+			if level > s.reward.MaxLevel {
+				items = append(items, &pb.Item{
+					Level:  level,
+					Id:     PassBoxID,
+					Amount: 1,
+					Length: 0,
+				})
+			}
+		} else {
+			// Upgrade multi level
+			for i := s.reward.MaxLevel + 1; i <= level; i++ {
+				items = append(items, &pb.Item{
+					Level:  i,
+					Id:     PassBoxID,
+					Amount: 1,
+					Length: 0,
+				})
+			}
+		}
 	}
 	return items
 }

@@ -20,6 +20,7 @@ message GetRewardsResp {
     int32 season = 1;
     repeated Item free_rewards = 2;
     repeated Item adv_rewards = 3;
+    int32 max_level = 4;
 }
 
 service Reward {

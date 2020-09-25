@@ -22,6 +22,8 @@ type API struct {
 	APIKey string
 	// API request timeout (sec)
 	Timeout int
+	// Proxy
+	HttpProxy string
 }
 
 type APIRequest struct {
@@ -52,9 +54,16 @@ func (a *API) request(req APIRequest, values url.Values, v interface{}) error {
 	values.Add("format", "json")
 	values.Add("key", a.APIKey)
 
-	url := fmt.Sprintf("%s/%s/%s/v%d/?%s", a.APIUrl, req.Service, req.Method, req.Version, values.Encode())
+	apiURL := fmt.Sprintf("%s/%s/%s/v%d/?%s", a.APIUrl, req.Service, req.Method, req.Version, values.Encode())
 	client := http.Client{Timeout: time.Second}
-	resp, err := client.Get(url)
+	if len(a.HttpProxy) > 0 {
+		client.Transport = &http.Transport{
+			Proxy: func(_ *http.Request) (*url.URL, error) {
+				return url.Parse("http://" + a.HttpProxy)
+			},
+		}
+	}
+	resp, err := client.Get(apiURL)
 	if err != nil {
 		return err
 	}

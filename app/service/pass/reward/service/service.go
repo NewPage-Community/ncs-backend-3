@@ -14,7 +14,8 @@ type Service struct {
 func Init(config *conf.Config) (s *Service) {
 	s = &Service{
 		reward: &model.Reward{
-			Season: config.RewardConf.Season,
+			Season:   config.RewardConf.Season,
+			MaxLevel: config.RewardConf.MaxLevel,
 		},
 	}
 	//json

@@ -13,9 +13,10 @@ type Config struct {
 }
 
 type RewardConf struct {
-	Season int32
-	Free   string
-	Adv    string
+	Season   int32
+	MaxLevel int32
+	Free     string
+	Adv      string
 }
 
 func Init() (c *Config) {

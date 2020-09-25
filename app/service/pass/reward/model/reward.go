@@ -9,6 +9,7 @@ type Item struct {
 
 type Reward struct {
 	Season      int32 `json:"season"`
+	MaxLevel    int32 `json:"max_level"`
 	FreeRewards []Item
 	AdvRewards  []Item
 }

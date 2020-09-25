@@ -24,6 +24,7 @@ func TestService_getRewards(t *testing.T) {
 	srv := &Service{
 		reward: &model.Reward{
 			Season:      1,
+			MaxLevel:    2,
 			FreeRewards: items,
 			AdvRewards:  items,
 		}}
