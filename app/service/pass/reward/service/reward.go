@@ -36,6 +36,13 @@ func (s *Service) getRewards(passType int32, level int32, min int32) []*pb.Item 
 		list = &s.reward.FreeRewards
 	}
 
+	// min = 0 ->
+	// upgrade one level
+	// get this level reward
+	if level == min {
+		min = 0
+	}
+
 	for _, v := range *list {
 		if level > 0 {
 			if (level != v.Level && min == 0) || (level < v.Level || v.Level < min) {
@@ -64,13 +71,16 @@ func (s *Service) getRewards(passType int32, level int32, min int32) []*pb.Item 
 			}
 		} else {
 			// Upgrade multi level
-			for i := s.reward.MaxLevel + 1; i <= level; i++ {
-				items = append(items, &pb.Item{
-					Level:  i,
-					Id:     PassBoxID,
-					Amount: 1,
-					Length: 0,
-				})
+			// Only happens when level is bigger than max level
+			if min > s.reward.MaxLevel {
+				for i := min; i <= level; i++ {
+					items = append(items, &pb.Item{
+						Level:  i,
+						Id:     PassBoxID,
+						Amount: 1,
+						Length: 0,
+					})
+				}
 			}
 		}
 	}

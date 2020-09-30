@@ -45,6 +45,9 @@ func TestService_getRewards(t *testing.T) {
 			res = srv.getRewards(1, 3, 0)
 			So(len(res), ShouldEqual, 1)
 			t.Log(res)
+			res = srv.getRewards(1, 625, 625)
+			So(len(res), ShouldEqual, 1)
+			t.Log(res)
 		})
 		Convey("Check FreeRewards", func() {
 			res := srv.getRewards(0, 1, 0)

@@ -15,6 +15,7 @@ go_library(
         "//app/service/backpack/items/api/grpc:go_default_library",
         "//app/service/backpack/user/api/grpc:go_default_library",
         "//app/service/pass/user/api/grpc:go_default_library",
+        "//app/service/pass/user/model:go_default_library",
         "//app/service/user/money/api/grpc:go_default_library",
         "//app/service/user/vip/api/grpc:go_default_library",
         "//pkg/ecode:go_default_library",

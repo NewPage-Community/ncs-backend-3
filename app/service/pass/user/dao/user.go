@@ -19,8 +19,7 @@ func (d *dao) Info(uid int64) (res *model.User, err error) {
 
 func (d *dao) AddPoint(uid int64, addPoint int32) (res *model.User, lastLevel int32, err error) {
 	res = &model.User{
-		UID:   uid,
-		Point: addPoint,
+		UID: uid,
 	}
 
 	// DB

@@ -5,6 +5,7 @@ import (
 	itemsService "backend/app/service/backpack/items/api/grpc"
 	userService "backend/app/service/backpack/user/api/grpc"
 	passService "backend/app/service/pass/user/api/grpc"
+	passModel "backend/app/service/pass/user/model"
 	moneyService "backend/app/service/user/money/api/grpc"
 	vipService "backend/app/service/user/vip/api/grpc"
 	"backend/pkg/ecode"
@@ -14,7 +15,7 @@ import (
 )
 
 const (
-	PassBoxID          = int32(1000)
+	PassBoxID          = passModel.PassPointBoxID
 	Pass1Price         = int32(6888)
 	Pass2Price         = int32(9888)
 	VIPMonthPrice      = int32(1000)

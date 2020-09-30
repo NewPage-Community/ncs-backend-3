@@ -6,14 +6,15 @@ import (
 	userItemService "backend/app/service/backpack/user/api/grpc"
 	rewardService "backend/app/service/pass/reward/api/grpc"
 	userPassService "backend/app/service/pass/user/api/grpc"
+	passModel "backend/app/service/pass/user/model"
 	"backend/pkg/ecode"
 	"context"
 	"google.golang.org/grpc/codes"
 )
 
 const (
-	BoxId    = 1000
-	BoxPoint = 7200
+	BoxId    = passModel.PassPointBoxID
+	BoxPoint = passModel.PassLevelPoint
 )
 
 func (s *Service) GetRewards(ctx context.Context, req *pb.GetRewardsReq) (resp *pb.GetRewardsResp, err error) {

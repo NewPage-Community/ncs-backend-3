@@ -2,6 +2,7 @@ package model
 
 const (
 	PassLevelPoint = int32(14400)
+	PassPointBoxID = int32(1000)
 )
 
 type User struct {

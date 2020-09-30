@@ -40,6 +40,15 @@ func TestUser_Level(t *testing.T) {
 			},
 			2,
 		},
+		{
+			"level 101",
+			fields{
+				UID:      1,
+				PassType: 0,
+				Point:    PassLevelPoint*100 + 7201,
+			},
+			101,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
