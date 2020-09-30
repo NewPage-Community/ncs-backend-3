@@ -82,7 +82,10 @@ func (items *ItemsMap) RemoveItem(item Item, all bool) {
 	id := item.ID
 	_, found := (*items)[id]
 	if found {
-		if all {
+		// delete item when amount = 1 and need to remove one item
+		// Do not happens amount = 0 , because item type is wrong
+		// amount = 0 && time = 0 -> ItemCalTypeUnlimited
+		if all || (*items)[id].Amount == 1 {
 			delete(*items, id)
 		} else {
 			(*items)[id].Amount--
