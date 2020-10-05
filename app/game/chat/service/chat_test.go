@@ -18,12 +18,15 @@ func TestService_AllChat(t *testing.T) {
 
 	tName := "TEST"
 	tMessage := "This is a test message"
+	tShortName := "测试服"
+	tPrefix := fmt.Sprintf(AllChatPrefix, " · "+tShortName)
 	s := server.NewMockServerClient(ctl)
+	s.EXPECT().Info(gomock.Any(), gomock.Any()).Return(&server.InfoResp{Info: &server.Info{
+		ShortName: "测试服",
+	}}, nil)
 	s.EXPECT().RconAll(gomock.Any(), &server.RconAllReq{
-		Cmd: fmt.Sprintf("ncs_chat_notify 0 \"%s\" \"%s : %s\"", AllChatPrefix, tName, tMessage),
-	}).Return(&server.RconAllResp{
-		Success: 0,
-	}, nil)
+		Cmd: fmt.Sprintf("ncs_chat_notify 0 \"%s\" \"%s : %s\"", tPrefix, tName, tMessage),
+	}).Return(&server.RconAllResp{}, nil)
 
 	srv := &Service{server: s}
 	Convey("Test AllChat", t, func() {

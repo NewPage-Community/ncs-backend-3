@@ -7,6 +7,7 @@ import "google/api/annotations.proto";
 message AllChatReq {
     string name = 1;
     string message = 2;
+    int32 server_id = 3;
 }
 
 message AllChatResp {

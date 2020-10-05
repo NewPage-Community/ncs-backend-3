@@ -13,6 +13,7 @@ message Info {
     string rcon = 4;
     string hostname = 5;
     string address = 6;
+    string short_name = 7;
 }
 
 // Message

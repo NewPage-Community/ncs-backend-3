@@ -28,12 +28,13 @@ func (s *Service) Init(ctx context.Context, req *pb.InitReq) (resp *pb.InitResp,
 	err = s.dao.UpdateRcon(res)
 
 	resp.Info = &pb.Info{
-		ServerId: res.ServerID,
-		ModId:    res.ModID,
-		GameId:   res.GameID,
-		Rcon:     res.Rcon,
-		Hostname: res.Hostname,
-		Address:  res.Address,
+		ServerId:  res.ServerID,
+		ModId:     res.ModID,
+		GameId:    res.GameID,
+		Rcon:      res.Rcon,
+		Hostname:  res.Hostname,
+		Address:   res.Address,
+		ShortName: res.ShortName,
 	}
 	return
 }
@@ -52,12 +53,13 @@ func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp,
 	}
 
 	resp.Info = &pb.Info{
-		ServerId: res.ServerID,
-		ModId:    res.ModID,
-		GameId:   res.GameID,
-		Rcon:     res.Rcon,
-		Hostname: res.Hostname,
-		Address:  res.Address,
+		ServerId:  res.ServerID,
+		ModId:     res.ModID,
+		GameId:    res.GameID,
+		Rcon:      res.Rcon,
+		Hostname:  res.Hostname,
+		Address:   res.Address,
+		ShortName: res.ShortName,
 	}
 	return
 }
@@ -72,12 +74,13 @@ func (s *Service) AllInfo(ctx context.Context, req *pb.AllInfoReq) (resp *pb.All
 
 	for _, v := range res {
 		resp.Info = append(resp.Info, &pb.Info{
-			ServerId: v.ServerID,
-			ModId:    v.ModID,
-			GameId:   v.GameID,
-			Rcon:     v.Rcon,
-			Hostname: v.Hostname,
-			Address:  v.Address,
+			ServerId:  v.ServerID,
+			ModId:     v.ModID,
+			GameId:    v.GameID,
+			Rcon:      v.Rcon,
+			Hostname:  v.Hostname,
+			Address:   v.Address,
+			ShortName: v.ShortName,
 		})
 	}
 	return
