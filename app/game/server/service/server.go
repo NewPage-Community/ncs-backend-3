@@ -115,7 +115,7 @@ func (s *Service) RconAll(ctx context.Context, req *pb.RconAllReq) (resp *pb.Rco
 		server := res[i]
 		go func() {
 			_, err := server.Send(req.Cmd)
-			if err == nil {
+			if err != nil {
 				log.Warn(err)
 			}
 		}()
