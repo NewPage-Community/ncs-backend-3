@@ -36,6 +36,7 @@ ingress:
   annotations:
     # rewrite to root
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/enable-cors: "true"
     cert-manager.io/cluster-issuer: newpage
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
