@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "app/user/admin/api/grpc/admin.proto",
+    "title": "app/service/user/admin/api/grpc/admin.proto",
     "version": "version not set"
   },
   "schemes": [
