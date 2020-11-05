@@ -1,9 +1,11 @@
 package rpc
 
 import (
+	"backend/pkg/log"
+	"context"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
-	ot "github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/keepalive"
@@ -15,14 +17,16 @@ import (
 )
 
 type Server struct {
-	HealthCheck HealthFunc
 	config      *ServerConfig
 	grpcServer  *grpc.Server
+	healthCheck *http.Server
+	healthFunc  func() bool
 }
 
 type ServerConfig struct {
 	Network           string
-	Port              int
+	GrpcPort          int
+	HealthPort        int
 	Timeout           time.Duration
 	IdleTimeout       time.Duration
 	MaxLifeTime       time.Duration
@@ -33,7 +37,8 @@ type ServerConfig struct {
 
 var _defaultSerConf = &ServerConfig{
 	Network:           "tcp",
-	Port:              2333,
+	GrpcPort:          2333,
+	HealthPort:        23333,
 	Timeout:           time.Second,
 	IdleTimeout:       time.Second * 60,
 	MaxLifeTime:       time.Hour * 2,
@@ -42,15 +47,13 @@ var _defaultSerConf = &ServerConfig{
 	KeepAliveTimeout:  time.Second * 20,
 }
 
-func NewServer(conf *ServerConfig) (s *Server) {
+func NewServer(conf *ServerConfig) *Server {
 	// Config
 	if conf == nil {
 		conf = _defaultSerConf
 	}
 	conf.Init()
-	s = &Server{config: conf}
-	s.initGrpc()
-	return
+	return &Server{config: conf}
 }
 
 func (conf *ServerConfig) Init() {
@@ -72,15 +75,18 @@ func (conf *ServerConfig) Init() {
 	if conf.KeepAliveTimeout <= 0 {
 		conf.KeepAliveTimeout = _defaultSerConf.KeepAliveTimeout
 	}
-	if conf.Port == 0 {
-		conf.Port = _defaultSerConf.Port
+	if conf.GrpcPort == 0 {
+		conf.GrpcPort = _defaultSerConf.GrpcPort
 	}
 	if conf.Network == "" {
 		conf.Network = _defaultSerConf.Network
 	}
+	if conf.HealthPort == 0 {
+		conf.HealthPort = _defaultSerConf.HealthPort
+	}
 }
 
-func (s *Server) initGrpc() {
+func (s *Server) Grpc(reg func(s *grpc.Server)) {
 	// Options
 	keepParam := grpc.KeepaliveParams(keepalive.ServerParameters{
 		MaxConnectionIdle:     s.config.IdleTimeout,
@@ -89,7 +95,7 @@ func (s *Server) initGrpc() {
 		Timeout:               s.config.KeepAliveTimeout,
 		MaxConnectionAge:      s.config.MaxLifeTime,
 	})
-	tracer := grpc_opentracing.WithTracer(ot.GlobalTracer())
+	tracer := grpc_opentracing.WithTracer(opentracing.GlobalTracer())
 	opts := []grpc.ServerOption{
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			grpc_opentracing.UnaryServerInterceptor(tracer),
@@ -100,34 +106,45 @@ func (s *Server) initGrpc() {
 		keepParam,
 	}
 
-	// Initialize
-	s.grpcServer = grpc.NewServer(opts...)
-
-	// Health
-	if s.HealthCheck == nil {
-		s.HealthCheck = func() bool {
-			return true
-		}
-	}
-	grpc_health_v1.RegisterHealthServer(s.grpcServer, s)
-}
-
-func (s *Server) GrpcServer() *grpc.Server {
-	return s.grpcServer
-}
-
-func (s *Server) Serve() {
-	// Register reflection service on gRPC server.
-	reflection.Register(s.grpcServer)
-
-	lis, err := net.Listen(s.config.Network, "0.0.0.0:"+strconv.Itoa(s.config.Port))
+	// Network
+	lis, err := net.Listen(s.config.Network, "0.0.0.0:"+strconv.Itoa(s.config.GrpcPort))
 	if err != nil {
 		panic(err)
 	}
 
-	// Serve
+	// Initialize
+	s.grpcServer = grpc.NewServer(opts...)
+
+	// Register
+	if reg != nil {
+		reg(s.grpcServer)
+	}
+
+	// Health
+	grpc_health_v1.RegisterHealthServer(s.grpcServer, s)
+
+	// Register reflection service on gRPC server.
+	reflection.Register(s.grpcServer)
+
+	// grpc server
 	go func() {
-		err := s.grpcServer.Serve(lis)
+		if err := s.grpcServer.Serve(lis); err != nil {
+			panic(err)
+		}
+	}()
+}
+
+func (s *Server) HealthCheck(health func() bool) {
+	s.healthFunc = health
+	mux := http.NewServeMux()
+	mux.HandleFunc("/healthz", HttpHealthHandler(s.healthFunc))
+	s.healthCheck = &http.Server{
+		Addr:    "0.0.0.0:" + strconv.Itoa(s.config.HealthPort),
+		Handler: mux,
+	}
+	// health check
+	go func() {
+		err := s.healthCheck.ListenAndServe()
 		if err != nil && err != http.ErrServerClosed {
 			panic(err)
 		}
@@ -135,10 +152,15 @@ func (s *Server) Serve() {
 }
 
 func (s *Server) Stop() {
-	s.HealthCheck = func() bool {
+	s.healthFunc = func() bool {
 		return false
 	}
 	if s.grpcServer != nil {
 		s.grpcServer.GracefulStop()
+	}
+	if s.healthCheck != nil {
+		if err := s.healthCheck.Shutdown(context.Background()); err != nil {
+			log.Error(err)
+		}
 	}
 }

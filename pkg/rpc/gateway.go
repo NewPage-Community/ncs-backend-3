@@ -7,11 +7,10 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"google.golang.org/grpc"
-	"google.golang.org/protobuf/encoding/protojson"
 	"net/http"
 )
 
@@ -68,11 +67,7 @@ func NewGateway() *Gateways {
 	return &Gateways{
 		mux: runtime.NewServeMux(runtime.WithMarshalerOption(
 			runtime.MIMEWildcard,
-			&runtime.JSONPb{
-				MarshalOptions: protojson.MarshalOptions{
-					UseProtoNames: true,
-				},
-			}),
+			&runtime.JSONPb{OrigName: true, EmitDefaults: true}),
 		),
 		opts: []grpc.DialOption{
 			grpc.WithUnaryInterceptor(
@@ -94,9 +89,7 @@ func NewGateway() *Gateways {
 
 func (gws *Gateways) Gateway(health func() bool) {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/healthz", HttpHealthHandler(func() bool {
-		return true
-	}))
+	mux.HandleFunc("/healthz", HttpHealthHandler(health))
 	mux.HandleFunc("/", tracingWrapper(gws.mux))
 	gws.server = &http.Server{
 		Addr:    ":23333",

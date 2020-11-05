@@ -8,6 +8,7 @@ import (
 	"backend/pkg/log"
 	"backend/pkg/rpc"
 	"backend/pkg/tracer"
+	"google.golang.org/grpc"
 )
 
 // 这里修改服务名字
@@ -22,9 +23,10 @@ func main() {
 
 	// rpc 服务注册
 	server := rpc.NewServer(nil)
-	server.HealthCheck = srv.Healthy
-	pb.RegisterHelloServer(server.GrpcServer(), srv)
-	server.Serve()
+	server.Grpc(func(s *grpc.Server) {
+		pb.RegisterHelloServer(s, srv)
+	})
+	server.HealthCheck(srv.Healthy)
 
 	log.Info(serviceName, "service started!")
 

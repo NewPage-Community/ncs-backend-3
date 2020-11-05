@@ -10,14 +10,14 @@ import (
 	"net/http"
 )
 
-type HealthFunc func() bool
-
 func (s *Server) Check(ctx context.Context, in *health.HealthCheckRequest) (*health.HealthCheckResponse, error) {
-	var status health.HealthCheckResponse_ServingStatus
-	if s.HealthCheck() {
-		status = health.HealthCheckResponse_SERVING
-	} else {
-		status = health.HealthCheckResponse_NOT_SERVING
+	status := health.HealthCheckResponse_UNKNOWN
+	if s.healthFunc != nil {
+		if s.healthFunc() {
+			status = health.HealthCheckResponse_SERVING
+		} else {
+			status = health.HealthCheckResponse_NOT_SERVING
+		}
 	}
 	return &health.HealthCheckResponse{Status: status}, nil
 }
