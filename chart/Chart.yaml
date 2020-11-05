@@ -21,3 +21,11 @@ version: 1.0.1
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 appVersion: 1.16.0
+
+dependencies:
+- name: ncs-gateway-game
+  repository: file://charts/ncs-gateway-game
+- name: ncs-gateway-web
+  repository: file://charts/ncs-gateway-web
+- name: ncs-services
+  repository: file://charts/services

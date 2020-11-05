@@ -1,11 +1,12 @@
 package main
 
 import (
-	api "backend/app/hello/api/grpc/v1"
+	pb "backend/app/hello/api/grpc/v1"
 	"backend/app/hello/conf"
 	"backend/app/hello/service"
 	"backend/pkg/cmd"
 	"backend/pkg/log"
+	"backend/pkg/rpc"
 	"backend/pkg/tracer"
 )
 
@@ -20,9 +21,10 @@ func main() {
 	srv := service.Init(config)
 
 	// rpc 服务注册
-	server := api.InitServer(srv, func() bool {
-		return srv.Healthy()
-	})
+	server := rpc.NewServer(nil)
+	server.HealthCheck = srv.Healthy
+	pb.RegisterHelloServer(server.GrpcServer(), srv)
+	server.Serve()
 
 	log.Info(serviceName, "service started!")
 

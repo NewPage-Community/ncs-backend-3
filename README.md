@@ -18,21 +18,11 @@
 
 ## 编译
 
-本仓库采用Bazel来进行构建，请自行安装环境。
+本仓库采用Bazel来进行构建，已使用Docker提前部署所有环境，开箱即用。
 
 ```shell script
-# grpc
-make app/hello/api/grpc/hello.pb
-
-# gen mock
-mockgen -source=xxx.go -destination=xxx.mock.go -package xxx
-
-# build
-go mod tidy
-bazel run //:gazelle -- update-repos -from_file=go.mod
-bazel run //:gazelle
-bazel build //...
-bazel test //...
+# all in one
+make all
 ```
 
 ## 提交
