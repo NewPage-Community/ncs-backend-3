@@ -2,9 +2,9 @@
 
 使用简易自封装的微服务框架，能快速开发相关业务🎯
 
-可搭配Istio进行微服务治理，可用k8s的etc作为服务发现
+使用k8s进行服务发现，搭配⛵️Istio进行治理
 
-使用CI/CD进行自动化构建和部署，拯救懒人🤤
+使用CI/CD全自动化构建和部署，拯救懒人🤤
 
 ## 目录
 
@@ -13,14 +13,14 @@
 | app   | 服务 |
 | pkg   | 框架 |
 | build | 构建文件  |
-| chart | Helm chart |
+| chart | Helm chart仓库 |
 | google | 谷歌GRPC文件 |
 
 ## 编译
 
 本仓库采用Bazel来进行构建，已使用Docker提前部署所有环境，开箱即用。
 
-```shell script
+```bash
 # all in one
 make all
 ```
