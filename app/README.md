@@ -7,3 +7,4 @@
 | game      | 游戏接口服务    |
 | gateway   | API网管 |
 | service   | 业务服务        |
+| hello   | 范例服务(用于新建)        |

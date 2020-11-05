@@ -15,6 +15,10 @@ spec:
       targetPort: grpc
       protocol: TCP
       name: grpc
+    - port: 23333
+      targetPort: health
+      protocol: TCP
+      name: health
   selector:
     app: {{ .app }}
 ---

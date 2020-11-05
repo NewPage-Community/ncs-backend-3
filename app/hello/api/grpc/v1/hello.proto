@@ -1,0 +1,25 @@
+syntax = "proto3";
+package ncs.hello.v1;
+option go_package = "app/hello/api/grpc/v1";
+
+// 规范
+// 1. 包名必须遵守服务文件路径名
+// 2. 请求回复信息必须遵守格式
+
+// HTTP协议(grpc gateway)
+import "google/api/annotations.proto";
+
+message HelloReq {
+}
+
+message HelloResp {
+	string message = 1;
+}
+
+service Hello {
+	rpc Hello (HelloReq) returns (HelloResp) {
+		option (google.api.http) = {
+			get: "/hello"
+		};
+	}
+}

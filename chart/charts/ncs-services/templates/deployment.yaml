@@ -51,6 +51,9 @@ spec:
             - name: grpc
               containerPort: 2333
               protocol: TCP
+            - name: health
+              containerPort: 23333
+              protocol: TCP
           resources:
             {{- toYaml $this.Values.resources | nindent 12 }}
           volumeMounts:

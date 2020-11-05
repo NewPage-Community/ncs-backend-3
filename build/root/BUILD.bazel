@@ -2,4 +2,5 @@ load("@bazel_gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix backend
 # gazelle:proto disable_global
+# gazelle:exclude app/hello
 gazelle(name = "gazelle")
