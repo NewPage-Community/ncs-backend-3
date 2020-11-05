@@ -60,7 +60,9 @@ clean:
 
 .PHONY: proto
 proto:
-	build/build-proto.sh app
+	$(GO_CMD) \
+		go mod download && \
+		build/build-proto.sh app
 
 .PHONY: deploy
 deploy:

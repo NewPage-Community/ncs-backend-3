@@ -5,6 +5,6 @@ find ${1} -name '*.proto' -print0 |
         path=${file%/*}
         package=${path##*/}
         filename=${file%.*}
-        protoc -I. --go_out=. --go-grpc_out=require_unimplemented_servers=false:. --grpc-gateway_out=logtostderr=true:. --swagger_out=logtostderr=true:. $file
-        mockgen -source=${filename}_grpc.pb.go -destination=${filename}_grpc.pb.mock.go -package $package
+        protoc -I. --gofast_out=plugins=grpc:. --grpc-gateway_out=logtostderr=true:. --swagger_out=logtostderr=true:. $file
+        mockgen -source=${filename}.pb.go -destination=${filename}.pb.mock.go -package $package
     done
