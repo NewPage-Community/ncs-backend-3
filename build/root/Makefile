@@ -22,59 +22,59 @@ all: img proto dep build test lint
 
 .PHONY: dep
 dep:
-    $(GO_CMD) go mod tidy
-    $(BAZEL_CMD) \
-        bazel version && \
-        bazel run //:gazelle -- update-repos -from_file=go.mod && \
-        bazel run //:gazelle -- update -exclude .cache
+	$(GO_CMD) go mod tidy
+	$(BAZEL_CMD) \
+		bazel version && \
+		bazel run //:gazelle -- update-repos -from_file=go.mod && \
+		bazel run //:gazelle -- update -exclude .cache
 
 .PHONY: push_docker
 push_docker:
-    $(BAZEL_CMD) \
-        bazel version && \
-        ./build/push-images.sh
+	$(BAZEL_CMD) \
+		bazel version && \
+		./build/push-images.sh
 
 .PHONY: push_docker_changed
 push_docker_changed:
-    $(BAZEL_CMD) \
-        bazel version && \
-        ./build/push-images.sh changed
+	$(BAZEL_CMD) \
+		bazel version && \
+		./build/push-images.sh changed
 
 .PHONY: build
 build:
-    $(BAZEL_CMD) \
-        bazel version && \
-        bazel build -k --noshow_progress //app/... //pkg/...
+	$(BAZEL_CMD) \
+		bazel version && \
+		bazel build -k --noshow_progress //app/... //pkg/...
 
 .PHONY: test
 test:
-    $(BAZEL_CMD) \
-        bazel version && \
-        bazel test -k --noshow_progress //app/... //pkg/...
+	$(BAZEL_CMD) \
+		bazel version && \
+		bazel test -k --noshow_progress //app/... //pkg/...
 
 .PHONY: clean
 clean:
-    $(BAZEL_CMD) \
-        bazel version && \
-        bazel clean
+	$(BAZEL_CMD) \
+		bazel version && \
+		bazel clean
 
 .PHONY: proto
 proto:
-    $(GO_CMD) \
-        go mod download && \
-        build/build-proto.sh app
+	$(GO_CMD) \
+		go mod download && \
+		build/build-proto.sh app
 
 .PHONY: deploy
 deploy:
-    $(HELM_CMD) helm upgrade --install --namespace ncs ncs ./chart
+	$(HELM_CMD) helm upgrade --install --namespace ncs ncs ./chart
 
 .PHONY: lint
 lint:
-    $(GOLANGCI_CMD) golangci-lint run -v --timeout 2m
-    $(HELM_CMD) helm lint ./chart
+	$(GOLANGCI_CMD) golangci-lint run -v --timeout 2m
+	$(HELM_CMD) helm lint ./chart
 
 .PHONY: img
 img:
-    docker pull $(HELM_IMG)
-    docker pull $(BAZEL_IMG)
-    docker pull $(GO_IMG)
+	docker pull $(HELM_IMG)
+	docker pull $(BAZEL_IMG)
+	docker pull $(GO_IMG)
