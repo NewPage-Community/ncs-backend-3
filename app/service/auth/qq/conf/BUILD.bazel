@@ -1,0 +1,15 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["conf.go"],
+    importpath = "backend/app/service/auth/qq/conf",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/service/auth/jwt:go_default_library",
+        "//pkg/conf:go_default_library",
+        "//pkg/database/mysql:go_default_library",
+        "//pkg/log:go_default_library",
+        "@org_golang_x_oauth2//:go_default_library",
+    ],
+)

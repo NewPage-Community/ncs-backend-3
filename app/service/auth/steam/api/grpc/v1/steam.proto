@@ -1,0 +1,52 @@
+syntax = "proto3";
+package ncs.service.auth.steam.v1;
+option go_package = "app/service/auth/steam/api/grpc/v1";
+
+// 规范
+// 1. 包名必须遵守服务文件路径名
+// 2. 请求回复信息必须遵守格式
+
+// HTTP协议(grpc gateway)
+import "google/api/annotations.proto";
+
+message SignInWithSteamReq {
+}
+
+message SignInWithSteamResp {
+	string auth_url = 1;
+}
+
+message GetSteamTokenReq {
+	string authorization_code = 1;
+	string jwt_string = 2;
+}
+
+message GetSteamTokenResp {
+	string jwt_string = 1;
+}
+
+message GetUIDReq {
+	string jwt_string = 1;
+}
+
+message GetUIDResp {
+	string jwt_string = 1;
+}
+
+service Steam {
+	rpc SignInWithSteam (SignInWithSteamReq) returns (SignInWithSteamResp) {
+		option (google.api.http) = {
+			get: "/auth/steam/sign"
+		};
+	}
+	rpc GetSteamToken (GetSteamTokenReq) returns (GetSteamTokenResp) {
+		option (google.api.http) = {
+			post: "/auth/steam/token"
+		};
+	}
+	rpc GetUID (GetUIDReq) returns (GetUIDResp) {
+		option (google.api.http) = {
+			post: "/auth/steam/uid"
+		};
+	}
+}

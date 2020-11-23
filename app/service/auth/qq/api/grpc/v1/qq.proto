@@ -1,0 +1,78 @@
+syntax = "proto3";
+package ncs.service.auth.qq.v1;
+option go_package = "app/service/auth/qq/api/grpc/v1";
+
+// 规范
+// 1. 包名必须遵守服务文件路径名
+// 2. 请求回复信息必须遵守格式
+
+// HTTP协议(grpc gateway)
+import "google/api/annotations.proto";
+
+message SignInWithQQReq {
+}
+
+message SignInWithQQResp {
+    string auth_url = 1;
+}
+
+message GetUIDWithCodeReq {
+    string authorization_code = 1;
+    string jwt_string = 2;
+}
+
+message GetUIDWithCodeResp {
+    string jwt_string = 1;
+}
+
+message BindQQReq {
+    string authorization_code = 1;
+    string jwt_string = 2;
+}
+
+message BindQQResp {
+}
+
+message UnbindQQReq {
+    string jwt_string = 1;
+}
+
+message UnbindQQResp {
+}
+
+message GetQQConnectStatusReq {
+    string jwt_string = 1;
+}
+
+message GetQQConnectStatusResp {
+    int64 uid = 1;
+    string openid = 2;
+}
+
+service QQ {
+    rpc SignInWithQQ (SignInWithQQReq) returns (SignInWithQQResp) {
+        option (google.api.http) = {
+			get: "/auth/qq/sign"
+		};
+    }
+    rpc GetQQConnectStatus (GetQQConnectStatusReq) returns (GetQQConnectStatusResp) {
+        option (google.api.http) = {
+			post: "/auth/qq/status"
+		};
+    }
+    rpc GetUIDWithCode (GetUIDWithCodeReq) returns (GetUIDWithCodeResp) {
+        option (google.api.http) = {
+			post: "/auth/qq/uid"
+		};
+    }
+    rpc BindQQ (BindQQReq) returns (BindQQResp) {
+        option (google.api.http) = {
+			post: "/auth/qq/reg"
+		};
+    }
+    rpc UnbindQQ (UnbindQQReq) returns (UnbindQQResp) {
+        option (google.api.http) = {
+			post: "/auth/qq/reg"
+		};
+    }
+}

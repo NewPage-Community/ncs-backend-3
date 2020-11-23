@@ -1,0 +1,119 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/service/auth/qq/api/grpc/v1/qq.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth/qq/reg": {
+      "post": {
+        "operationId": "UnbindQQ",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UnbindQQResp"
+            }
+          }
+        },
+        "tags": [
+          "QQ"
+        ]
+      }
+    },
+    "/auth/qq/sign": {
+      "get": {
+        "operationId": "SignInWithQQ",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SignInWithQQResp"
+            }
+          }
+        },
+        "tags": [
+          "QQ"
+        ]
+      }
+    },
+    "/auth/qq/status": {
+      "post": {
+        "operationId": "GetQQConnectStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetQQConnectStatusResp"
+            }
+          }
+        },
+        "tags": [
+          "QQ"
+        ]
+      }
+    },
+    "/auth/qq/uid": {
+      "post": {
+        "operationId": "GetUIDWithCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetUIDWithCodeResp"
+            }
+          }
+        },
+        "tags": [
+          "QQ"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "v1BindQQResp": {
+      "type": "object"
+    },
+    "v1GetQQConnectStatusResp": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "openid": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetUIDWithCodeResp": {
+      "type": "object",
+      "properties": {
+        "jwt_string": {
+          "type": "string"
+        }
+      }
+    },
+    "v1SignInWithQQResp": {
+      "type": "object",
+      "properties": {
+        "auth_url": {
+          "type": "string"
+        }
+      }
+    },
+    "v1UnbindQQResp": {
+      "type": "object"
+    }
+  }
+}

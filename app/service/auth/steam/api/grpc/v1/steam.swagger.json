@@ -1,0 +1,93 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/service/auth/steam/api/grpc/v1/steam.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth/steam/sign": {
+      "get": {
+        "operationId": "SignInWithSteam",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SignInWithSteamResp"
+            }
+          }
+        },
+        "tags": [
+          "Steam"
+        ]
+      }
+    },
+    "/auth/steam/token": {
+      "post": {
+        "operationId": "GetSteamToken",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetSteamTokenResp"
+            }
+          }
+        },
+        "tags": [
+          "Steam"
+        ]
+      }
+    },
+    "/auth/steam/uid": {
+      "post": {
+        "operationId": "GetUID",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetUIDResp"
+            }
+          }
+        },
+        "tags": [
+          "Steam"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "v1GetSteamTokenResp": {
+      "type": "object",
+      "properties": {
+        "jwt_string": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetUIDResp": {
+      "type": "object",
+      "properties": {
+        "jwt_string": {
+          "type": "string"
+        }
+      }
+    },
+    "v1SignInWithSteamResp": {
+      "type": "object",
+      "properties": {
+        "auth_url": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

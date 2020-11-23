@@ -1,0 +1,9 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["jwt.go"],
+    importpath = "backend/app/service/auth/jwt",
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_dgrijalva_jwt_go//:go_default_library"],
+)
