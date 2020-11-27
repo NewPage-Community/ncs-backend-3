@@ -11,8 +11,10 @@ import (
 	"google.golang.org/grpc"
 )
 
-// 这里修改服务名字
-const serviceName = "auth-qq"
+// 服务名
+const (
+	serviceName = pb.ServiceName
+)
 
 func main() {
 	// Init 初始化模块
@@ -24,7 +26,8 @@ func main() {
 	// rpc 服务注册
 	server := rpc.NewServer(nil)
 	server.Grpc(func(s *grpc.Server) {
-		pb.RegisterQQServer(s, srv)
+		pb.RegisterWebServer(s, srv)
+		pb.RegisterGameServer(s, srv)
 	})
 	server.HealthCheck(srv.Healthy)
 

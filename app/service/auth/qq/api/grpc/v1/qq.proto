@@ -10,7 +10,7 @@ option go_package = "app/service/auth/qq/api/grpc/v1";
 import "google/api/annotations.proto";
 
 message GetUIDReq {
-    string access_token = 1;
+    string jwt_string = 1;
 }
 
 message GetUIDResp {
@@ -18,15 +18,15 @@ message GetUIDResp {
 }
 
 message BindQQReq {
-    string access_token = 1;
-    string jwt_string = 2;
+    string authorization_code = 1;
+    int64 uid = 2;
 }
 
 message BindQQResp {
 }
 
 message UnbindQQReq {
-    string jwt_string = 1;
+    int64 uid = 1;
 }
 
 message UnbindQQResp {
@@ -41,7 +41,7 @@ message GetQQConnectStatusResp {
     string openid = 2;
 }
 
-service QQ {
+service Web {
     rpc GetQQConnectStatus (GetQQConnectStatusReq) returns (GetQQConnectStatusResp) {
         option (google.api.http) = {
 			post: "/auth/qq/status"
@@ -52,6 +52,9 @@ service QQ {
 			post: "/auth/qq/uid"
 		};
     }
+}
+
+service Game {
     rpc BindQQ (BindQQReq) returns (BindQQResp) {
         option (google.api.http) = {
 			post: "/auth/qq/bind"

@@ -7,19 +7,18 @@ import (
 	"backend/pkg/ecode"
 	"backend/pkg/json"
 	"context"
+	"fmt"
 	"google.golang.org/grpc/codes"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 func (s *Service) GetUID(ctx context.Context, req *pb.GetUIDReq) (resp *pb.GetUIDResp, err error) {
 	resp = &pb.GetUIDResp{}
 
-	// Get OpenID
-	openID, err := GetOpenID(req.AccessToken)
-	if err != nil {
-		return
-	}
+	// TODO: Get OpenID
+	var openID string
 
 	// Get UID
 	qqConnect, err := s.dao.GetUID(openID)
@@ -28,8 +27,9 @@ func (s *Service) GetUID(ctx context.Context, req *pb.GetUIDReq) (resp *pb.GetUI
 	}
 
 	// Add to connect token
-	token := &jwt.Token{UID: qqConnect.UID}
-	tokenString, err := token.NewTokenString(*s.config.JWT)
+	payload := &jwt.Payload{}
+	payload.SetUID(qqConnect.UID)
+	tokenString, err := s.config.JWT.NewTokenString(*payload)
 	if err != nil {
 		return
 	}
@@ -40,24 +40,12 @@ func (s *Service) GetUID(ctx context.Context, req *pb.GetUIDReq) (resp *pb.GetUI
 
 func (s *Service) BindQQ(ctx context.Context, req *pb.BindQQReq) (resp *pb.BindQQResp, err error) {
 	resp = &pb.BindQQResp{}
-	// Get uid from context token
-	ctxToken, err := jwt.GetToken(req.JwtString, *s.config.JWT)
-	if err != nil {
-		return
-	}
-	if ctxToken.UID == 0 {
-		err = ecode.Errorf(codes.Unauthenticated, "invalid token")
-		return
-	}
 
-	// Get OpenID
-	openID, err := GetOpenID(req.AccessToken)
-	if err != nil {
-		return
-	}
+	// TODO: Get OpenID
+	var openID string
 
 	err = s.dao.BindQQ(model.QQConnect{
-		UID:    ctxToken.UID,
+		UID:    req.Uid,
 		OpenID: openID,
 	})
 	return
@@ -65,33 +53,31 @@ func (s *Service) BindQQ(ctx context.Context, req *pb.BindQQReq) (resp *pb.BindQ
 
 func (s *Service) UnbindQQ(ctx context.Context, req *pb.UnbindQQReq) (resp *pb.UnbindQQResp, err error) {
 	resp = &pb.UnbindQQResp{}
-	// Get uid from context token
-	ctxToken, err := jwt.GetToken(req.JwtString, *s.config.JWT)
-	if err != nil {
-		return
-	}
-	if ctxToken.UID == 0 {
-		err = ecode.Errorf(codes.Unauthenticated, "invalid token")
-		return
-	}
 
-	err = s.dao.UnbindQQ(model.QQConnect{UID: ctxToken.UID})
+	err = s.dao.UnbindQQ(model.QQConnect{UID: req.Uid})
 	return
 }
 
 func (s *Service) GetQQConnectStatus(ctx context.Context, req *pb.GetQQConnectStatusReq) (resp *pb.GetQQConnectStatusResp, err error) {
 	resp = &pb.GetQQConnectStatusResp{}
-	// Get uid from context token
-	ctxToken, err := jwt.GetToken(req.JwtString, *s.config.JWT)
+	// Get context token
+	payload, err := s.config.JWT.GetTokenPayload(req.JwtString)
 	if err != nil {
 		return
 	}
-	if ctxToken.UID == 0 {
-		err = ecode.Errorf(codes.Unauthenticated, "invalid token")
+
+	// Get UID
+	uid, err := payload.GetUID()
+	if err != nil {
+		return
+	}
+	if uid == 0 {
+		err = ecode.Errorf(codes.Unauthenticated, "invalid uid")
 		return
 	}
 
-	qqConnect, err := s.dao.GetStatus(ctxToken.UID)
+	// Get status
+	qqConnect, err := s.dao.GetStatus(uid)
 	if err != nil {
 		return
 	}
@@ -112,15 +98,27 @@ func GetOpenID(token string) (openID string, err error) {
 		return
 	}
 
-	var info map[string]string
-	err = json.Unmarshal(data, &info)
+	if !strings.Contains(string(data), "callback") {
+		err = ecode.Errorf(codes.Unknown, "invalid response")
+		return
+	}
+	data = data[10 : len(data)-4]
+	fmt.Println(string(data))
+
+	var callback struct {
+		Error            int    `json:"error"`
+		ErrorDescription string `json:"error_description"`
+		OpenID           string `json:"openid"`
+		ClientID         int    `json:"client_id"`
+	}
+	err = json.Unmarshal(data, &callback)
 	if err != nil {
 		return
 	}
-	openID, ok := info["openid"]
-	if !ok {
-		err = ecode.Errorf(codes.Unknown, "missing openid")
+	if callback.Error > 0 && len(callback.ErrorDescription) > 0 {
+		err = ecode.Errorf(codes.Unknown, "%d - %s", callback.Error, callback.ErrorDescription)
 		return
 	}
+	openID = callback.OpenID
 	return
 }

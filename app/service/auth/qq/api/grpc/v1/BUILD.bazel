@@ -3,6 +3,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "go_default_library",
     srcs = [
+        "qq.go",
         "qq.pb.go",
         "qq.pb.gw.go",
         "qq.pb.mock.go",

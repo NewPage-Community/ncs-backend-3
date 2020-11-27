@@ -32,17 +32,17 @@ var _ = utilities.NewDoubleArray
 var _ = descriptor.ForMessage
 
 var (
-	filter_QQ_GetQQConnectStatus_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_Web_GetQQConnectStatus_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_QQ_GetQQConnectStatus_0(ctx context.Context, marshaler runtime.Marshaler, client QQClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Web_GetQQConnectStatus_0(ctx context.Context, marshaler runtime.Marshaler, client WebClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetQQConnectStatusReq
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_QQ_GetQQConnectStatus_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Web_GetQQConnectStatus_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -51,14 +51,14 @@ func request_QQ_GetQQConnectStatus_0(ctx context.Context, marshaler runtime.Mars
 
 }
 
-func local_request_QQ_GetQQConnectStatus_0(ctx context.Context, marshaler runtime.Marshaler, server QQServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Web_GetQQConnectStatus_0(ctx context.Context, marshaler runtime.Marshaler, server WebServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetQQConnectStatusReq
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_QQ_GetQQConnectStatus_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Web_GetQQConnectStatus_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -68,17 +68,17 @@ func local_request_QQ_GetQQConnectStatus_0(ctx context.Context, marshaler runtim
 }
 
 var (
-	filter_QQ_GetUID_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_Web_GetUID_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_QQ_GetUID_0(ctx context.Context, marshaler runtime.Marshaler, client QQClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Web_GetUID_0(ctx context.Context, marshaler runtime.Marshaler, client WebClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetUIDReq
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_QQ_GetUID_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Web_GetUID_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -87,14 +87,14 @@ func request_QQ_GetUID_0(ctx context.Context, marshaler runtime.Marshaler, clien
 
 }
 
-func local_request_QQ_GetUID_0(ctx context.Context, marshaler runtime.Marshaler, server QQServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Web_GetUID_0(ctx context.Context, marshaler runtime.Marshaler, server WebServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetUIDReq
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_QQ_GetUID_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Web_GetUID_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -104,17 +104,17 @@ func local_request_QQ_GetUID_0(ctx context.Context, marshaler runtime.Marshaler,
 }
 
 var (
-	filter_QQ_BindQQ_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_Game_BindQQ_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_QQ_BindQQ_0(ctx context.Context, marshaler runtime.Marshaler, client QQClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Game_BindQQ_0(ctx context.Context, marshaler runtime.Marshaler, client GameClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq BindQQReq
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_QQ_BindQQ_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Game_BindQQ_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -123,14 +123,14 @@ func request_QQ_BindQQ_0(ctx context.Context, marshaler runtime.Marshaler, clien
 
 }
 
-func local_request_QQ_BindQQ_0(ctx context.Context, marshaler runtime.Marshaler, server QQServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Game_BindQQ_0(ctx context.Context, marshaler runtime.Marshaler, server GameServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq BindQQReq
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_QQ_BindQQ_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Game_BindQQ_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -140,17 +140,17 @@ func local_request_QQ_BindQQ_0(ctx context.Context, marshaler runtime.Marshaler,
 }
 
 var (
-	filter_QQ_UnbindQQ_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_Game_UnbindQQ_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_QQ_UnbindQQ_0(ctx context.Context, marshaler runtime.Marshaler, client QQClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Game_UnbindQQ_0(ctx context.Context, marshaler runtime.Marshaler, client GameClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UnbindQQReq
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_QQ_UnbindQQ_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Game_UnbindQQ_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -159,14 +159,14 @@ func request_QQ_UnbindQQ_0(ctx context.Context, marshaler runtime.Marshaler, cli
 
 }
 
-func local_request_QQ_UnbindQQ_0(ctx context.Context, marshaler runtime.Marshaler, server QQServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Game_UnbindQQ_0(ctx context.Context, marshaler runtime.Marshaler, server GameServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UnbindQQReq
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_QQ_UnbindQQ_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Game_UnbindQQ_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -175,12 +175,12 @@ func local_request_QQ_UnbindQQ_0(ctx context.Context, marshaler runtime.Marshale
 
 }
 
-// RegisterQQHandlerServer registers the http handlers for service QQ to "mux".
-// UnaryRPC     :call QQServer directly.
+// RegisterWebHandlerServer registers the http handlers for service Web to "mux".
+// UnaryRPC     :call WebServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-func RegisterQQHandlerServer(ctx context.Context, mux *runtime.ServeMux, server QQServer) error {
+func RegisterWebHandlerServer(ctx context.Context, mux *runtime.ServeMux, server WebServer) error {
 
-	mux.Handle("POST", pattern_QQ_GetQQConnectStatus_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Web_GetQQConnectStatus_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -189,18 +189,18 @@ func RegisterQQHandlerServer(ctx context.Context, mux *runtime.ServeMux, server 
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_QQ_GetQQConnectStatus_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Web_GetQQConnectStatus_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_QQ_GetQQConnectStatus_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Web_GetQQConnectStatus_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_QQ_GetUID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Web_GetUID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -209,63 +209,71 @@ func RegisterQQHandlerServer(ctx context.Context, mux *runtime.ServeMux, server 
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_QQ_GetUID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Web_GetUID_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_QQ_GetUID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("POST", pattern_QQ_BindQQ_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_QQ_BindQQ_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_QQ_BindQQ_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("POST", pattern_QQ_UnbindQQ_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_QQ_UnbindQQ_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_QQ_UnbindQQ_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Web_GetUID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterQQHandlerFromEndpoint is same as RegisterQQHandler but
+// RegisterGameHandlerServer registers the http handlers for service Game to "mux".
+// UnaryRPC     :call GameServer directly.
+// StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
+func RegisterGameHandlerServer(ctx context.Context, mux *runtime.ServeMux, server GameServer) error {
+
+	mux.Handle("POST", pattern_Game_BindQQ_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_Game_BindQQ_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_Game_BindQQ_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_Game_UnbindQQ_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_Game_UnbindQQ_0(rctx, inboundMarshaler, server, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_Game_UnbindQQ_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	return nil
+}
+
+// RegisterWebHandlerFromEndpoint is same as RegisterWebHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterQQHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterWebHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -285,23 +293,23 @@ func RegisterQQHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, e
 		}()
 	}()
 
-	return RegisterQQHandler(ctx, mux, conn)
+	return RegisterWebHandler(ctx, mux, conn)
 }
 
-// RegisterQQHandler registers the http handlers for service QQ to "mux".
+// RegisterWebHandler registers the http handlers for service Web to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterQQHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterQQHandlerClient(ctx, mux, NewQQClient(conn))
+func RegisterWebHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterWebHandlerClient(ctx, mux, NewWebClient(conn))
 }
 
-// RegisterQQHandlerClient registers the http handlers for service QQ
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "QQClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "QQClient"
+// RegisterWebHandlerClient registers the http handlers for service Web
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "WebClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "WebClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "QQClient" to call the correct interceptors.
-func RegisterQQHandlerClient(ctx context.Context, mux *runtime.ServeMux, client QQClient) error {
+// "WebClient" to call the correct interceptors.
+func RegisterWebHandlerClient(ctx context.Context, mux *runtime.ServeMux, client WebClient) error {
 
-	mux.Handle("POST", pattern_QQ_GetQQConnectStatus_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Web_GetQQConnectStatus_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -310,18 +318,18 @@ func RegisterQQHandlerClient(ctx context.Context, mux *runtime.ServeMux, client 
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_QQ_GetQQConnectStatus_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Web_GetQQConnectStatus_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_QQ_GetQQConnectStatus_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Web_GetQQConnectStatus_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_QQ_GetUID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Web_GetUID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -330,54 +338,14 @@ func RegisterQQHandlerClient(ctx context.Context, mux *runtime.ServeMux, client 
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_QQ_GetUID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Web_GetUID_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_QQ_GetUID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("POST", pattern_QQ_BindQQ_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_QQ_BindQQ_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_QQ_BindQQ_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	mux.Handle("POST", pattern_QQ_UnbindQQ_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_QQ_UnbindQQ_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_QQ_UnbindQQ_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Web_GetUID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -385,21 +353,106 @@ func RegisterQQHandlerClient(ctx context.Context, mux *runtime.ServeMux, client 
 }
 
 var (
-	pattern_QQ_GetQQConnectStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "status"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Web_GetQQConnectStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "status"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_QQ_GetUID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "uid"}, "", runtime.AssumeColonVerbOpt(true)))
-
-	pattern_QQ_BindQQ_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "bind"}, "", runtime.AssumeColonVerbOpt(true)))
-
-	pattern_QQ_UnbindQQ_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "unbind"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Web_GetUID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "uid"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
-	forward_QQ_GetQQConnectStatus_0 = runtime.ForwardResponseMessage
+	forward_Web_GetQQConnectStatus_0 = runtime.ForwardResponseMessage
 
-	forward_QQ_GetUID_0 = runtime.ForwardResponseMessage
+	forward_Web_GetUID_0 = runtime.ForwardResponseMessage
+)
 
-	forward_QQ_BindQQ_0 = runtime.ForwardResponseMessage
+// RegisterGameHandlerFromEndpoint is same as RegisterGameHandler but
+// automatically dials to "endpoint" and closes the connection when "ctx" gets done.
+func RegisterGameHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+	conn, err := grpc.Dial(endpoint, opts...)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			if cerr := conn.Close(); cerr != nil {
+				grpclog.Infof("Failed to close conn to %s: %v", endpoint, cerr)
+			}
+			return
+		}
+		go func() {
+			<-ctx.Done()
+			if cerr := conn.Close(); cerr != nil {
+				grpclog.Infof("Failed to close conn to %s: %v", endpoint, cerr)
+			}
+		}()
+	}()
 
-	forward_QQ_UnbindQQ_0 = runtime.ForwardResponseMessage
+	return RegisterGameHandler(ctx, mux, conn)
+}
+
+// RegisterGameHandler registers the http handlers for service Game to "mux".
+// The handlers forward requests to the grpc endpoint over "conn".
+func RegisterGameHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterGameHandlerClient(ctx, mux, NewGameClient(conn))
+}
+
+// RegisterGameHandlerClient registers the http handlers for service Game
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "GameClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "GameClient"
+// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
+// "GameClient" to call the correct interceptors.
+func RegisterGameHandlerClient(ctx context.Context, mux *runtime.ServeMux, client GameClient) error {
+
+	mux.Handle("POST", pattern_Game_BindQQ_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_Game_BindQQ_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_Game_BindQQ_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_Game_UnbindQQ_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_Game_UnbindQQ_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_Game_UnbindQQ_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	return nil
+}
+
+var (
+	pattern_Game_BindQQ_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "bind"}, "", runtime.AssumeColonVerbOpt(true)))
+
+	pattern_Game_UnbindQQ_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "unbind"}, "", runtime.AssumeColonVerbOpt(true)))
+)
+
+var (
+	forward_Game_BindQQ_0 = runtime.ForwardResponseMessage
+
+	forward_Game_UnbindQQ_0 = runtime.ForwardResponseMessage
 )
