@@ -34,26 +34,6 @@ func (m *MockQQClient) EXPECT() *MockQQClientMockRecorder {
 	return m.recorder
 }
 
-// SignInWithQQ mocks base method
-func (m *MockQQClient) SignInWithQQ(ctx context.Context, in *SignInWithQQReq, opts ...grpc.CallOption) (*SignInWithQQResp, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "SignInWithQQ", varargs...)
-	ret0, _ := ret[0].(*SignInWithQQResp)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// SignInWithQQ indicates an expected call of SignInWithQQ
-func (mr *MockQQClientMockRecorder) SignInWithQQ(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SignInWithQQ", reflect.TypeOf((*MockQQClient)(nil).SignInWithQQ), varargs...)
-}
-
 // GetQQConnectStatus mocks base method
 func (m *MockQQClient) GetQQConnectStatus(ctx context.Context, in *GetQQConnectStatusReq, opts ...grpc.CallOption) (*GetQQConnectStatusResp, error) {
 	m.ctrl.T.Helper()
@@ -155,21 +135,6 @@ func NewMockQQServer(ctrl *gomock.Controller) *MockQQServer {
 // EXPECT returns an object that allows the caller to indicate expected use
 func (m *MockQQServer) EXPECT() *MockQQServerMockRecorder {
 	return m.recorder
-}
-
-// SignInWithQQ mocks base method
-func (m *MockQQServer) SignInWithQQ(arg0 context.Context, arg1 *SignInWithQQReq) (*SignInWithQQResp, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SignInWithQQ", arg0, arg1)
-	ret0, _ := ret[0].(*SignInWithQQResp)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// SignInWithQQ indicates an expected call of SignInWithQQ
-func (mr *MockQQServerMockRecorder) SignInWithQQ(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SignInWithQQ", reflect.TypeOf((*MockQQServer)(nil).SignInWithQQ), arg0, arg1)
 }
 
 // GetQQConnectStatus mocks base method

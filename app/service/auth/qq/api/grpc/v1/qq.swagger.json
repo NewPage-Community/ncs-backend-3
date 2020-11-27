@@ -31,22 +31,6 @@
         ]
       }
     },
-    "/auth/qq/sign": {
-      "get": {
-        "operationId": "SignInWithQQ",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1SignInWithQQResp"
-            }
-          }
-        },
-        "tags": [
-          "QQ"
-        ]
-      }
-    },
     "/auth/qq/status": {
       "post": {
         "operationId": "GetQQConnectStatus",
@@ -116,14 +100,6 @@
       "type": "object",
       "properties": {
         "jwt_string": {
-          "type": "string"
-        }
-      }
-    },
-    "v1SignInWithQQResp": {
-      "type": "object",
-      "properties": {
-        "auth_url": {
           "type": "string"
         }
       }

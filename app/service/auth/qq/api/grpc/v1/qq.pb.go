@@ -27,92 +27,6 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
-type SignInWithQQReq struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *SignInWithQQReq) Reset()         { *m = SignInWithQQReq{} }
-func (m *SignInWithQQReq) String() string { return proto.CompactTextString(m) }
-func (*SignInWithQQReq) ProtoMessage()    {}
-func (*SignInWithQQReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ab5f95b3254c4306, []int{0}
-}
-func (m *SignInWithQQReq) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *SignInWithQQReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_SignInWithQQReq.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *SignInWithQQReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SignInWithQQReq.Merge(m, src)
-}
-func (m *SignInWithQQReq) XXX_Size() int {
-	return m.Size()
-}
-func (m *SignInWithQQReq) XXX_DiscardUnknown() {
-	xxx_messageInfo_SignInWithQQReq.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_SignInWithQQReq proto.InternalMessageInfo
-
-type SignInWithQQResp struct {
-	AuthUrl              string   `protobuf:"bytes,1,opt,name=auth_url,json=authUrl,proto3" json:"auth_url,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *SignInWithQQResp) Reset()         { *m = SignInWithQQResp{} }
-func (m *SignInWithQQResp) String() string { return proto.CompactTextString(m) }
-func (*SignInWithQQResp) ProtoMessage()    {}
-func (*SignInWithQQResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ab5f95b3254c4306, []int{1}
-}
-func (m *SignInWithQQResp) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *SignInWithQQResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_SignInWithQQResp.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *SignInWithQQResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_SignInWithQQResp.Merge(m, src)
-}
-func (m *SignInWithQQResp) XXX_Size() int {
-	return m.Size()
-}
-func (m *SignInWithQQResp) XXX_DiscardUnknown() {
-	xxx_messageInfo_SignInWithQQResp.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_SignInWithQQResp proto.InternalMessageInfo
-
-func (m *SignInWithQQResp) GetAuthUrl() string {
-	if m != nil {
-		return m.AuthUrl
-	}
-	return ""
-}
-
 type GetUIDReq struct {
 	AccessToken          string   `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -124,7 +38,7 @@ func (m *GetUIDReq) Reset()         { *m = GetUIDReq{} }
 func (m *GetUIDReq) String() string { return proto.CompactTextString(m) }
 func (*GetUIDReq) ProtoMessage()    {}
 func (*GetUIDReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ab5f95b3254c4306, []int{2}
+	return fileDescriptor_ab5f95b3254c4306, []int{0}
 }
 func (m *GetUIDReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -171,7 +85,7 @@ func (m *GetUIDResp) Reset()         { *m = GetUIDResp{} }
 func (m *GetUIDResp) String() string { return proto.CompactTextString(m) }
 func (*GetUIDResp) ProtoMessage()    {}
 func (*GetUIDResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ab5f95b3254c4306, []int{3}
+	return fileDescriptor_ab5f95b3254c4306, []int{1}
 }
 func (m *GetUIDResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -219,7 +133,7 @@ func (m *BindQQReq) Reset()         { *m = BindQQReq{} }
 func (m *BindQQReq) String() string { return proto.CompactTextString(m) }
 func (*BindQQReq) ProtoMessage()    {}
 func (*BindQQReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ab5f95b3254c4306, []int{4}
+	return fileDescriptor_ab5f95b3254c4306, []int{2}
 }
 func (m *BindQQReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -272,7 +186,7 @@ func (m *BindQQResp) Reset()         { *m = BindQQResp{} }
 func (m *BindQQResp) String() string { return proto.CompactTextString(m) }
 func (*BindQQResp) ProtoMessage()    {}
 func (*BindQQResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ab5f95b3254c4306, []int{5}
+	return fileDescriptor_ab5f95b3254c4306, []int{3}
 }
 func (m *BindQQResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -312,7 +226,7 @@ func (m *UnbindQQReq) Reset()         { *m = UnbindQQReq{} }
 func (m *UnbindQQReq) String() string { return proto.CompactTextString(m) }
 func (*UnbindQQReq) ProtoMessage()    {}
 func (*UnbindQQReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ab5f95b3254c4306, []int{6}
+	return fileDescriptor_ab5f95b3254c4306, []int{4}
 }
 func (m *UnbindQQReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -358,7 +272,7 @@ func (m *UnbindQQResp) Reset()         { *m = UnbindQQResp{} }
 func (m *UnbindQQResp) String() string { return proto.CompactTextString(m) }
 func (*UnbindQQResp) ProtoMessage()    {}
 func (*UnbindQQResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ab5f95b3254c4306, []int{7}
+	return fileDescriptor_ab5f95b3254c4306, []int{5}
 }
 func (m *UnbindQQResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -398,7 +312,7 @@ func (m *GetQQConnectStatusReq) Reset()         { *m = GetQQConnectStatusReq{} }
 func (m *GetQQConnectStatusReq) String() string { return proto.CompactTextString(m) }
 func (*GetQQConnectStatusReq) ProtoMessage()    {}
 func (*GetQQConnectStatusReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ab5f95b3254c4306, []int{8}
+	return fileDescriptor_ab5f95b3254c4306, []int{6}
 }
 func (m *GetQQConnectStatusReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -446,7 +360,7 @@ func (m *GetQQConnectStatusResp) Reset()         { *m = GetQQConnectStatusResp{}
 func (m *GetQQConnectStatusResp) String() string { return proto.CompactTextString(m) }
 func (*GetQQConnectStatusResp) ProtoMessage()    {}
 func (*GetQQConnectStatusResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_ab5f95b3254c4306, []int{9}
+	return fileDescriptor_ab5f95b3254c4306, []int{7}
 }
 func (m *GetQQConnectStatusResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -490,8 +404,6 @@ func (m *GetQQConnectStatusResp) GetOpenid() string {
 }
 
 func init() {
-	proto.RegisterType((*SignInWithQQReq)(nil), "ncs.service.auth.qq.v1.SignInWithQQReq")
-	proto.RegisterType((*SignInWithQQResp)(nil), "ncs.service.auth.qq.v1.SignInWithQQResp")
 	proto.RegisterType((*GetUIDReq)(nil), "ncs.service.auth.qq.v1.GetUIDReq")
 	proto.RegisterType((*GetUIDResp)(nil), "ncs.service.auth.qq.v1.GetUIDResp")
 	proto.RegisterType((*BindQQReq)(nil), "ncs.service.auth.qq.v1.BindQQReq")
@@ -507,38 +419,34 @@ func init() {
 }
 
 var fileDescriptor_ab5f95b3254c4306 = []byte{
-	// 491 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x94, 0xcd, 0x6e, 0xd3, 0x40,
-	0x10, 0xc7, 0x71, 0x8a, 0x42, 0x33, 0x35, 0x4d, 0xbb, 0xa2, 0x01, 0x2c, 0x08, 0x74, 0x41, 0x22,
-	0x12, 0x74, 0xad, 0x80, 0xc4, 0x03, 0x04, 0xa4, 0xaa, 0x07, 0x0e, 0x4e, 0x88, 0x90, 0xb8, 0x44,
-	0xae, 0xb3, 0xb8, 0x5b, 0xa2, 0xdd, 0xb5, 0x67, 0x9d, 0x72, 0xe6, 0xcc, 0x8d, 0x0b, 0x8f, 0xc4,
-	0x81, 0x03, 0x12, 0x2f, 0x80, 0x02, 0x0f, 0x82, 0xfc, 0x91, 0x0f, 0x42, 0x82, 0xd3, 0x9b, 0x77,
-	0xfc, 0x9f, 0xff, 0xcc, 0xce, 0xfc, 0xb4, 0xd0, 0xf2, 0xb5, 0x76, 0x91, 0xc7, 0x63, 0x11, 0x70,
-	0xd7, 0x4f, 0xcc, 0x99, 0x1b, 0x45, 0xae, 0xaf, 0x85, 0x1b, 0xc6, 0x3a, 0x70, 0xc7, 0x6d, 0x37,
-	0x8a, 0x98, 0x8e, 0x95, 0x51, 0xa4, 0x21, 0x03, 0x64, 0x85, 0x92, 0xa5, 0x4a, 0x16, 0x45, 0x6c,
-	0xdc, 0x76, 0xee, 0x84, 0x4a, 0x85, 0x23, 0x9e, 0x25, 0xf9, 0x52, 0x2a, 0xe3, 0x1b, 0xa1, 0x24,
-	0xe6, 0x59, 0x74, 0x1f, 0xea, 0x3d, 0x11, 0xca, 0x13, 0xf9, 0x46, 0x98, 0x33, 0xcf, 0xeb, 0xf2,
-	0x88, 0x1e, 0xc1, 0xde, 0xdf, 0x21, 0xd4, 0xe4, 0x36, 0x6c, 0xa7, 0x96, 0x83, 0x24, 0x1e, 0xdd,
-	0xb2, 0xee, 0x5b, 0xad, 0x5a, 0xf7, 0x5a, 0x7a, 0xee, 0xc7, 0x23, 0xca, 0xa0, 0x76, 0xcc, 0x4d,
-	0xff, 0xe4, 0x65, 0x97, 0x47, 0xe4, 0x10, 0x6c, 0x3f, 0x08, 0x38, 0xe2, 0xc0, 0xa8, 0xf7, 0x5c,
-	0x16, 0xda, 0x9d, 0x3c, 0xf6, 0x3a, 0x0d, 0xd1, 0xc7, 0x00, 0x53, 0x3d, 0x6a, 0x72, 0x17, 0xe0,
-	0xfc, 0xc2, 0x0c, 0xd0, 0xc4, 0x42, 0x86, 0x85, 0xbc, 0x76, 0x7e, 0x61, 0x7a, 0x59, 0x80, 0xbe,
-	0x82, 0x5a, 0x47, 0xc8, 0x61, 0xd6, 0xd8, 0x06, 0xe6, 0x4b, 0x76, 0x95, 0x65, 0x3b, 0x1b, 0x60,
-	0x6a, 0x87, 0x9a, 0x3e, 0x81, 0x9d, 0xbe, 0x3c, 0x9d, 0xd9, 0x97, 0xb4, 0xb2, 0x0b, 0xf6, 0x5c,
-	0x8d, 0x9a, 0x3e, 0x87, 0x83, 0x63, 0x6e, 0x3c, 0xef, 0x85, 0x92, 0x92, 0x07, 0xa6, 0x67, 0x7c,
-	0x93, 0xe0, 0x06, 0x3e, 0x1d, 0x68, 0xac, 0xca, 0x43, 0x4d, 0xf6, 0x60, 0x2b, 0x11, 0xc3, 0x2c,
-	0x63, 0xab, 0x9b, 0x7e, 0x92, 0x06, 0x54, 0x95, 0xe6, 0x52, 0x0c, 0x8b, 0xab, 0x14, 0xa7, 0xa7,
-	0xdf, 0xae, 0x42, 0xc5, 0xf3, 0xc8, 0x07, 0xb0, 0x17, 0x37, 0x45, 0x1e, 0xb1, 0xd5, 0x0c, 0xb0,
-	0xa5, 0x15, 0x3b, 0xad, 0xcd, 0x84, 0xa8, 0xe9, 0xc1, 0xc7, 0x1f, 0xbf, 0x3f, 0x57, 0xea, 0xe4,
-	0xfa, 0x0c, 0x3e, 0x14, 0xa1, 0x24, 0x9f, 0x2c, 0x20, 0xff, 0xde, 0x82, 0x1c, 0xad, 0xf3, 0x5d,
-	0x39, 0x29, 0x87, 0x5d, 0x46, 0x8e, 0x9a, 0xde, 0xcc, 0x9a, 0xd9, 0xa7, 0xf5, 0x79, 0x33, 0x79,
-	0x5d, 0x0e, 0xd5, 0x9c, 0x29, 0x72, 0xf8, 0x1f, 0xcb, 0x9c, 0x51, 0x87, 0x96, 0x49, 0x50, 0xd3,
-	0x1b, 0x59, 0xa5, 0x5d, 0x6a, 0xcf, 0x2a, 0xa5, 0xeb, 0x78, 0x07, 0xd5, 0x1c, 0x9f, 0xf5, 0x65,
-	0x66, 0xb4, 0xae, 0x2f, 0xb3, 0x40, 0x60, 0x31, 0x5d, 0x3a, 0x9f, 0x6e, 0x0a, 0x18, 0x91, 0xb0,
-	0x3d, 0x45, 0x8d, 0x3c, 0x58, 0x67, 0xb3, 0x80, 0xae, 0xf3, 0xb0, 0x5c, 0xb4, 0x72, 0x7c, 0x49,
-	0xf6, 0xbb, 0xd3, 0xfe, 0x3a, 0x69, 0x5a, 0xdf, 0x27, 0x4d, 0xeb, 0xe7, 0xa4, 0x69, 0x7d, 0xf9,
-	0xd5, 0xbc, 0xf2, 0xf6, 0x5e, 0xc9, 0xb3, 0x73, 0x5a, 0xcd, 0x9e, 0x8f, 0x67, 0x7f, 0x02, 0x00,
-	0x00, 0xff, 0xff, 0xa2, 0xac, 0x8f, 0x47, 0xa0, 0x04, 0x00, 0x00,
+	// 423 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x93, 0xcf, 0xae, 0xd2, 0x40,
+	0x18, 0xc5, 0x2d, 0x24, 0x8d, 0xfd, 0xa8, 0xa0, 0x13, 0x41, 0xd3, 0x68, 0x95, 0xd1, 0x05, 0x89,
+	0x3a, 0x0d, 0x9a, 0xf8, 0x00, 0x68, 0x42, 0x5c, 0xb8, 0x28, 0xc8, 0xc6, 0x0d, 0x29, 0x65, 0xac,
+	0x45, 0x33, 0x33, 0xed, 0x4c, 0x61, 0xef, 0xda, 0x9d, 0x1b, 0x1f, 0xc9, 0xa5, 0xd1, 0x17, 0x30,
+	0x78, 0x1f, 0xe4, 0xa6, 0x7f, 0xe8, 0x25, 0xdc, 0x72, 0xcb, 0xdd, 0xb5, 0xd3, 0xf3, 0xfd, 0xce,
+	0x74, 0xce, 0x19, 0x18, 0x78, 0x42, 0x38, 0x92, 0xc6, 0xeb, 0xd0, 0xa7, 0x8e, 0x97, 0xa8, 0xcf,
+	0x4e, 0x14, 0x39, 0x9e, 0x08, 0x9d, 0x20, 0x16, 0xbe, 0xb3, 0x1e, 0x3a, 0x51, 0x44, 0x44, 0xcc,
+	0x15, 0x47, 0x3d, 0xe6, 0x4b, 0x52, 0x28, 0x49, 0xaa, 0x24, 0x51, 0x44, 0xd6, 0x43, 0xeb, 0x41,
+	0xc0, 0x79, 0xf0, 0x95, 0x66, 0x43, 0x1e, 0x63, 0x5c, 0x79, 0x2a, 0xe4, 0x4c, 0xe6, 0x53, 0x98,
+	0x80, 0x31, 0xa6, 0x6a, 0xf6, 0xee, 0xed, 0x84, 0x46, 0xa8, 0x0f, 0xa6, 0xe7, 0xfb, 0x54, 0xca,
+	0xb9, 0xe2, 0x5f, 0x28, 0xbb, 0xaf, 0x3d, 0xd6, 0x06, 0xc6, 0xa4, 0x95, 0xaf, 0x7d, 0x48, 0x97,
+	0xf0, 0x33, 0x80, 0x9d, 0x5e, 0x0a, 0xf4, 0x10, 0x60, 0xb5, 0x51, 0x73, 0xa9, 0xe2, 0x90, 0x05,
+	0x85, 0xdc, 0x58, 0x6d, 0xd4, 0x34, 0x5b, 0xc0, 0xef, 0xc1, 0x18, 0x85, 0x6c, 0xe9, 0xba, 0xa7,
+	0xc1, 0x0f, 0x70, 0x8d, 0x43, 0x9c, 0x09, 0xb0, 0xc3, 0x49, 0x81, 0x9f, 0x43, 0x6b, 0xc6, 0x16,
+	0x25, 0xbe, 0x66, 0x2b, 0x6d, 0x30, 0x2f, 0xd4, 0x52, 0xe0, 0xd7, 0xd0, 0x1d, 0x53, 0xe5, 0xba,
+	0x6f, 0x38, 0x63, 0xd4, 0x57, 0x53, 0xe5, 0xa9, 0x44, 0x9e, 0xc0, 0x19, 0x41, 0xaf, 0x6a, 0x4e,
+	0x0a, 0x74, 0x1b, 0x9a, 0x49, 0xb8, 0xcc, 0x26, 0x9a, 0x93, 0xf4, 0x11, 0xf5, 0x40, 0xe7, 0x82,
+	0xb2, 0x70, 0x59, 0xfc, 0x4a, 0xf1, 0xf6, 0xf2, 0x4f, 0x13, 0x1a, 0xae, 0x8b, 0xbe, 0x6b, 0x80,
+	0x2e, 0xb3, 0xd0, 0x0b, 0x52, 0x1d, 0x24, 0xa9, 0xdc, 0xaf, 0x45, 0xae, 0x23, 0x97, 0x02, 0xdf,
+	0xfb, 0xf6, 0xf7, 0xec, 0x47, 0xe3, 0x0e, 0xee, 0x94, 0x6d, 0x92, 0xb9, 0x2f, 0x05, 0x3d, 0x4f,
+	0x16, 0xf5, 0xaf, 0x40, 0xe6, 0x4d, 0xb1, 0x70, 0x9d, 0x44, 0x0a, 0x7c, 0x37, 0x73, 0x6a, 0x63,
+	0xb3, 0x74, 0x4a, 0x0f, 0xe5, 0x13, 0xe8, 0x79, 0x88, 0xc7, 0x6d, 0xca, 0xce, 0x1c, 0xb7, 0xd9,
+	0xeb, 0x41, 0x37, 0xb3, 0xe9, 0xe0, 0x5b, 0xa5, 0x4d, 0x1a, 0x33, 0x62, 0x70, 0x73, 0x17, 0x38,
+	0x7a, 0x72, 0x0c, 0xb3, 0x57, 0x20, 0xeb, 0x69, 0xbd, 0xa8, 0xf2, 0xf8, 0x92, 0xec, 0xf3, 0x68,
+	0xf8, 0x6b, 0x6b, 0x6b, 0xbf, 0xb7, 0xb6, 0xf6, 0x6f, 0x6b, 0x6b, 0x3f, 0xff, 0xdb, 0x37, 0x3e,
+	0x3e, 0xaa, 0xb9, 0xba, 0x0b, 0x3d, 0xbb, 0x82, 0xaf, 0xce, 0x03, 0x00, 0x00, 0xff, 0xff, 0xe2,
+	0xae, 0xce, 0x65, 0xe4, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -553,7 +461,6 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type QQClient interface {
-	SignInWithQQ(ctx context.Context, in *SignInWithQQReq, opts ...grpc.CallOption) (*SignInWithQQResp, error)
 	GetQQConnectStatus(ctx context.Context, in *GetQQConnectStatusReq, opts ...grpc.CallOption) (*GetQQConnectStatusResp, error)
 	GetUID(ctx context.Context, in *GetUIDReq, opts ...grpc.CallOption) (*GetUIDResp, error)
 	BindQQ(ctx context.Context, in *BindQQReq, opts ...grpc.CallOption) (*BindQQResp, error)
@@ -566,15 +473,6 @@ type qQClient struct {
 
 func NewQQClient(cc *grpc.ClientConn) QQClient {
 	return &qQClient{cc}
-}
-
-func (c *qQClient) SignInWithQQ(ctx context.Context, in *SignInWithQQReq, opts ...grpc.CallOption) (*SignInWithQQResp, error) {
-	out := new(SignInWithQQResp)
-	err := c.cc.Invoke(ctx, "/ncs.service.auth.qq.v1.QQ/SignInWithQQ", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *qQClient) GetQQConnectStatus(ctx context.Context, in *GetQQConnectStatusReq, opts ...grpc.CallOption) (*GetQQConnectStatusResp, error) {
@@ -615,7 +513,6 @@ func (c *qQClient) UnbindQQ(ctx context.Context, in *UnbindQQReq, opts ...grpc.C
 
 // QQServer is the server API for QQ service.
 type QQServer interface {
-	SignInWithQQ(context.Context, *SignInWithQQReq) (*SignInWithQQResp, error)
 	GetQQConnectStatus(context.Context, *GetQQConnectStatusReq) (*GetQQConnectStatusResp, error)
 	GetUID(context.Context, *GetUIDReq) (*GetUIDResp, error)
 	BindQQ(context.Context, *BindQQReq) (*BindQQResp, error)
@@ -626,9 +523,6 @@ type QQServer interface {
 type UnimplementedQQServer struct {
 }
 
-func (*UnimplementedQQServer) SignInWithQQ(ctx context.Context, req *SignInWithQQReq) (*SignInWithQQResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SignInWithQQ not implemented")
-}
 func (*UnimplementedQQServer) GetQQConnectStatus(ctx context.Context, req *GetQQConnectStatusReq) (*GetQQConnectStatusResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQQConnectStatus not implemented")
 }
@@ -644,24 +538,6 @@ func (*UnimplementedQQServer) UnbindQQ(ctx context.Context, req *UnbindQQReq) (*
 
 func RegisterQQServer(s *grpc.Server, srv QQServer) {
 	s.RegisterService(&_QQ_serviceDesc, srv)
-}
-
-func _QQ_SignInWithQQ_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SignInWithQQReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QQServer).SignInWithQQ(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/ncs.service.auth.qq.v1.QQ/SignInWithQQ",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QQServer).SignInWithQQ(ctx, req.(*SignInWithQQReq))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _QQ_GetQQConnectStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -741,10 +617,6 @@ var _QQ_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*QQServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SignInWithQQ",
-			Handler:    _QQ_SignInWithQQ_Handler,
-		},
-		{
 			MethodName: "GetQQConnectStatus",
 			Handler:    _QQ_GetQQConnectStatus_Handler,
 		},
@@ -763,67 +635,6 @@ var _QQ_serviceDesc = grpc.ServiceDesc{
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "app/service/auth/qq/api/grpc/v1/qq.proto",
-}
-
-func (m *SignInWithQQReq) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *SignInWithQQReq) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *SignInWithQQReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return len(dAtA) - i, nil
-}
-
-func (m *SignInWithQQResp) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *SignInWithQQResp) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *SignInWithQQResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.AuthUrl) > 0 {
-		i -= len(m.AuthUrl)
-		copy(dAtA[i:], m.AuthUrl)
-		i = encodeVarintQq(dAtA, i, uint64(len(m.AuthUrl)))
-		i--
-		dAtA[i] = 0xa
-	}
-	return len(dAtA) - i, nil
 }
 
 func (m *GetUIDReq) Marshal() (dAtA []byte, err error) {
@@ -1107,34 +918,6 @@ func encodeVarintQq(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
-func (m *SignInWithQQReq) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
-func (m *SignInWithQQResp) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	l = len(m.AuthUrl)
-	if l > 0 {
-		n += 1 + l + sovQq(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
 func (m *GetUIDReq) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1267,146 +1050,6 @@ func sovQq(x uint64) (n int) {
 }
 func sozQq(x uint64) (n int) {
 	return sovQq(uint64((x << 1) ^ uint64((int64(x) >> 63))))
-}
-func (m *SignInWithQQReq) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQq
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: SignInWithQQReq: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: SignInWithQQReq: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQq(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthQq
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthQq
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *SignInWithQQResp) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowQq
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: SignInWithQQResp: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: SignInWithQQResp: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AuthUrl", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQq
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthQq
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthQq
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.AuthUrl = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		default:
-			iNdEx = preIndex
-			skippy, err := skipQq(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthQq
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthQq
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
 }
 func (m *GetUIDReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)

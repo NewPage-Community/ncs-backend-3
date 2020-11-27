@@ -7,18 +7,10 @@ import (
 	"backend/pkg/ecode"
 	"backend/pkg/json"
 	"context"
-	"golang.org/x/oauth2"
 	"google.golang.org/grpc/codes"
 	"io/ioutil"
 	"net/http"
 )
-
-func (s *Service) SignInWithQQ(ctx context.Context, req *pb.SignInWithQQReq) (resp *pb.SignInWithQQResp, err error) {
-	resp = &pb.SignInWithQQResp{
-		AuthUrl: s.config.QQConnect.AuthCodeURL("state", oauth2.SetAuthURLParam("response_type", "token")),
-	}
-	return
-}
 
 func (s *Service) GetUID(ctx context.Context, req *pb.GetUIDReq) (resp *pb.GetUIDResp, err error) {
 	resp = &pb.GetUIDResp{}
