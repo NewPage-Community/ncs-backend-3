@@ -113,26 +113,25 @@ func (m *SignInWithQQResp) GetAuthUrl() string {
 	return ""
 }
 
-type GetUIDWithCodeReq struct {
-	AuthorizationCode    string   `protobuf:"bytes,1,opt,name=authorization_code,json=authorizationCode,proto3" json:"authorization_code,omitempty"`
-	JwtString            string   `protobuf:"bytes,2,opt,name=jwt_string,json=jwtString,proto3" json:"jwt_string,omitempty"`
+type GetUIDReq struct {
+	AccessToken          string   `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetUIDWithCodeReq) Reset()         { *m = GetUIDWithCodeReq{} }
-func (m *GetUIDWithCodeReq) String() string { return proto.CompactTextString(m) }
-func (*GetUIDWithCodeReq) ProtoMessage()    {}
-func (*GetUIDWithCodeReq) Descriptor() ([]byte, []int) {
+func (m *GetUIDReq) Reset()         { *m = GetUIDReq{} }
+func (m *GetUIDReq) String() string { return proto.CompactTextString(m) }
+func (*GetUIDReq) ProtoMessage()    {}
+func (*GetUIDReq) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ab5f95b3254c4306, []int{2}
 }
-func (m *GetUIDWithCodeReq) XXX_Unmarshal(b []byte) error {
+func (m *GetUIDReq) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetUIDWithCodeReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetUIDReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetUIDWithCodeReq.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetUIDReq.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -142,51 +141,44 @@ func (m *GetUIDWithCodeReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return b[:n], nil
 	}
 }
-func (m *GetUIDWithCodeReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetUIDWithCodeReq.Merge(m, src)
+func (m *GetUIDReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetUIDReq.Merge(m, src)
 }
-func (m *GetUIDWithCodeReq) XXX_Size() int {
+func (m *GetUIDReq) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetUIDWithCodeReq) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetUIDWithCodeReq.DiscardUnknown(m)
+func (m *GetUIDReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetUIDReq.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetUIDWithCodeReq proto.InternalMessageInfo
+var xxx_messageInfo_GetUIDReq proto.InternalMessageInfo
 
-func (m *GetUIDWithCodeReq) GetAuthorizationCode() string {
+func (m *GetUIDReq) GetAccessToken() string {
 	if m != nil {
-		return m.AuthorizationCode
+		return m.AccessToken
 	}
 	return ""
 }
 
-func (m *GetUIDWithCodeReq) GetJwtString() string {
-	if m != nil {
-		return m.JwtString
-	}
-	return ""
-}
-
-type GetUIDWithCodeResp struct {
+type GetUIDResp struct {
 	JwtString            string   `protobuf:"bytes,1,opt,name=jwt_string,json=jwtString,proto3" json:"jwt_string,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetUIDWithCodeResp) Reset()         { *m = GetUIDWithCodeResp{} }
-func (m *GetUIDWithCodeResp) String() string { return proto.CompactTextString(m) }
-func (*GetUIDWithCodeResp) ProtoMessage()    {}
-func (*GetUIDWithCodeResp) Descriptor() ([]byte, []int) {
+func (m *GetUIDResp) Reset()         { *m = GetUIDResp{} }
+func (m *GetUIDResp) String() string { return proto.CompactTextString(m) }
+func (*GetUIDResp) ProtoMessage()    {}
+func (*GetUIDResp) Descriptor() ([]byte, []int) {
 	return fileDescriptor_ab5f95b3254c4306, []int{3}
 }
-func (m *GetUIDWithCodeResp) XXX_Unmarshal(b []byte) error {
+func (m *GetUIDResp) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
 }
-func (m *GetUIDWithCodeResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+func (m *GetUIDResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	if deterministic {
-		return xxx_messageInfo_GetUIDWithCodeResp.Marshal(b, m, deterministic)
+		return xxx_messageInfo_GetUIDResp.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
 		n, err := m.MarshalToSizedBuffer(b)
@@ -196,19 +188,19 @@ func (m *GetUIDWithCodeResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return b[:n], nil
 	}
 }
-func (m *GetUIDWithCodeResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetUIDWithCodeResp.Merge(m, src)
+func (m *GetUIDResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetUIDResp.Merge(m, src)
 }
-func (m *GetUIDWithCodeResp) XXX_Size() int {
+func (m *GetUIDResp) XXX_Size() int {
 	return m.Size()
 }
-func (m *GetUIDWithCodeResp) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetUIDWithCodeResp.DiscardUnknown(m)
+func (m *GetUIDResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetUIDResp.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetUIDWithCodeResp proto.InternalMessageInfo
+var xxx_messageInfo_GetUIDResp proto.InternalMessageInfo
 
-func (m *GetUIDWithCodeResp) GetJwtString() string {
+func (m *GetUIDResp) GetJwtString() string {
 	if m != nil {
 		return m.JwtString
 	}
@@ -216,7 +208,7 @@ func (m *GetUIDWithCodeResp) GetJwtString() string {
 }
 
 type BindQQReq struct {
-	AuthorizationCode    string   `protobuf:"bytes,1,opt,name=authorization_code,json=authorizationCode,proto3" json:"authorization_code,omitempty"`
+	AccessToken          string   `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
 	JwtString            string   `protobuf:"bytes,2,opt,name=jwt_string,json=jwtString,proto3" json:"jwt_string,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -256,9 +248,9 @@ func (m *BindQQReq) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_BindQQReq proto.InternalMessageInfo
 
-func (m *BindQQReq) GetAuthorizationCode() string {
+func (m *BindQQReq) GetAccessToken() string {
 	if m != nil {
-		return m.AuthorizationCode
+		return m.AccessToken
 	}
 	return ""
 }
@@ -500,8 +492,8 @@ func (m *GetQQConnectStatusResp) GetOpenid() string {
 func init() {
 	proto.RegisterType((*SignInWithQQReq)(nil), "ncs.service.auth.qq.v1.SignInWithQQReq")
 	proto.RegisterType((*SignInWithQQResp)(nil), "ncs.service.auth.qq.v1.SignInWithQQResp")
-	proto.RegisterType((*GetUIDWithCodeReq)(nil), "ncs.service.auth.qq.v1.GetUIDWithCodeReq")
-	proto.RegisterType((*GetUIDWithCodeResp)(nil), "ncs.service.auth.qq.v1.GetUIDWithCodeResp")
+	proto.RegisterType((*GetUIDReq)(nil), "ncs.service.auth.qq.v1.GetUIDReq")
+	proto.RegisterType((*GetUIDResp)(nil), "ncs.service.auth.qq.v1.GetUIDResp")
 	proto.RegisterType((*BindQQReq)(nil), "ncs.service.auth.qq.v1.BindQQReq")
 	proto.RegisterType((*BindQQResp)(nil), "ncs.service.auth.qq.v1.BindQQResp")
 	proto.RegisterType((*UnbindQQReq)(nil), "ncs.service.auth.qq.v1.UnbindQQReq")
@@ -515,38 +507,38 @@ func init() {
 }
 
 var fileDescriptor_ab5f95b3254c4306 = []byte{
-	// 493 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x54, 0xcf, 0x6e, 0x12, 0x41,
-	0x18, 0x77, 0xa9, 0xc1, 0xf2, 0x89, 0x50, 0xbe, 0x58, 0xac, 0x1b, 0x45, 0x1d, 0x4d, 0x44, 0x23,
-	0xbb, 0xc1, 0x26, 0x3e, 0x00, 0x35, 0x69, 0x7a, 0x5c, 0x08, 0x31, 0x7a, 0x21, 0xdb, 0xdd, 0xc9,
-	0x76, 0x2a, 0x99, 0x99, 0xdd, 0x19, 0xa8, 0x31, 0xf1, 0xe2, 0xd9, 0x9b, 0x17, 0x1f, 0xc9, 0xa3,
-	0x89, 0x2f, 0xd0, 0xa0, 0x0f, 0x62, 0x66, 0xa0, 0xb4, 0x6c, 0x40, 0x30, 0xf1, 0xb6, 0x33, 0xf3,
-	0xfb, 0x37, 0xfb, 0xfd, 0x32, 0xd0, 0x0c, 0xa5, 0xf4, 0x15, 0xcd, 0xc6, 0x2c, 0xa2, 0x7e, 0x38,
-	0xd2, 0x27, 0x7e, 0x9a, 0xfa, 0xa1, 0x64, 0x7e, 0x92, 0xc9, 0xc8, 0x1f, 0xb7, 0xfd, 0x34, 0xf5,
-	0x64, 0x26, 0xb4, 0xc0, 0x3a, 0x8f, 0x94, 0x37, 0x43, 0x7a, 0x06, 0xe9, 0xa5, 0xa9, 0x37, 0x6e,
-	0xbb, 0xf7, 0x12, 0x21, 0x92, 0x21, 0xb5, 0xa4, 0x90, 0x73, 0xa1, 0x43, 0xcd, 0x04, 0x57, 0x53,
-	0x16, 0xa9, 0x41, 0xb5, 0xc7, 0x12, 0x7e, 0xc4, 0xdf, 0x30, 0x7d, 0x12, 0x04, 0x5d, 0x9a, 0x92,
-	0x16, 0xec, 0x2c, 0x6e, 0x29, 0x89, 0x77, 0x61, 0xdb, 0x48, 0x0e, 0x46, 0xd9, 0x70, 0xcf, 0x79,
-	0xe8, 0x34, 0x4b, 0xdd, 0x1b, 0x66, 0xdd, 0xcf, 0x86, 0x24, 0x84, 0xda, 0x21, 0xd5, 0xfd, 0xa3,
-	0xd7, 0x06, 0x7e, 0x20, 0x62, 0xda, 0xa5, 0x29, 0xb6, 0x00, 0xcd, 0xb9, 0xc8, 0xd8, 0x47, 0x6b,
-	0x37, 0x88, 0x44, 0x4c, 0x67, 0xcc, 0xda, 0xc2, 0x89, 0x61, 0xe0, 0x7d, 0x80, 0xd3, 0x33, 0x3d,
-	0x50, 0x3a, 0x63, 0x3c, 0xd9, 0x2b, 0x58, 0x58, 0xe9, 0xf4, 0x4c, 0xf7, 0xec, 0x06, 0xd9, 0x07,
-	0xcc, 0x5b, 0x28, 0x99, 0x23, 0x39, 0x79, 0xd2, 0x5b, 0x28, 0x75, 0x18, 0x8f, 0xed, 0x9d, 0xfe,
-	0x73, 0x9e, 0x32, 0xc0, 0x85, 0xb4, 0x92, 0xe4, 0x05, 0xdc, 0xec, 0xf3, 0xe3, 0xb9, 0xd5, 0x9a,
-	0x58, 0x15, 0x28, 0x5f, 0xa2, 0x95, 0x24, 0xaf, 0x60, 0xf7, 0x90, 0xea, 0x20, 0x38, 0x10, 0x9c,
-	0xd3, 0x48, 0xf7, 0x74, 0xa8, 0x47, 0x6a, 0x03, 0x9d, 0x0e, 0xd4, 0x97, 0xf1, 0x94, 0xc4, 0x1d,
-	0xd8, 0x1a, 0xb1, 0xd8, 0x32, 0xb6, 0xba, 0xe6, 0x13, 0xeb, 0x50, 0x14, 0x92, 0x72, 0x16, 0xcf,
-	0xae, 0x32, 0x5b, 0xbd, 0x3c, 0xbf, 0x0e, 0x85, 0x20, 0xc0, 0x0f, 0x50, 0xbe, 0x3a, 0x70, 0x7c,
-	0xea, 0x2d, 0xaf, 0x92, 0x97, 0x6b, 0x8a, 0xdb, 0xdc, 0x0c, 0xa8, 0x24, 0xd9, 0xfd, 0xfc, 0xf3,
-	0xf7, 0xd7, 0x42, 0x15, 0x6f, 0xcd, 0x3b, 0xac, 0x58, 0xc2, 0xf1, 0x8b, 0x63, 0x27, 0x9b, 0xbb,
-	0x05, 0xb6, 0x56, 0xe9, 0x2e, 0xfd, 0x53, 0xae, 0xf7, 0x2f, 0x70, 0x25, 0xc9, 0x1d, 0x1b, 0xa6,
-	0x46, 0xaa, 0x97, 0x61, 0xa6, 0xbe, 0x9f, 0xa0, 0xb2, 0xd8, 0x33, 0x7c, 0xf6, 0x17, 0xe9, 0xc5,
-	0xca, 0xbb, 0xcf, 0x37, 0x85, 0x2a, 0x49, 0x6e, 0xdb, 0x04, 0x15, 0x52, 0x9e, 0x27, 0x30, 0x63,
-	0xa2, 0x50, 0x9c, 0xd6, 0x0a, 0x1f, 0xad, 0xd2, 0x9a, 0x37, 0xda, 0x25, 0xeb, 0x20, 0x4b, 0x6d,
-	0x32, 0x9a, 0xe0, 0x7b, 0xd8, 0xbe, 0x68, 0x20, 0x3e, 0x5e, 0xa5, 0x72, 0xa5, 0xd1, 0xee, 0x93,
-	0xf5, 0xa0, 0x55, 0x66, 0x9d, 0xf6, 0xf7, 0x49, 0xc3, 0xf9, 0x31, 0x69, 0x38, 0xe7, 0x93, 0x86,
-	0xf3, 0xed, 0x57, 0xe3, 0xda, 0xbb, 0x07, 0x6b, 0x5e, 0xb4, 0xe3, 0xa2, 0x7d, 0x99, 0xf6, 0xff,
-	0x04, 0x00, 0x00, 0xff, 0xff, 0x49, 0xf7, 0x98, 0xf0, 0xfb, 0x04, 0x00, 0x00,
+	// 491 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x94, 0xcd, 0x6e, 0xd3, 0x40,
+	0x10, 0xc7, 0x71, 0x8a, 0x42, 0x33, 0x35, 0x4d, 0xbb, 0xa2, 0x01, 0x2c, 0x08, 0x74, 0x41, 0x22,
+	0x12, 0x74, 0xad, 0x80, 0xc4, 0x03, 0x04, 0xa4, 0xaa, 0x07, 0x0e, 0x4e, 0x88, 0x90, 0xb8, 0x44,
+	0xae, 0xb3, 0xb8, 0x5b, 0xa2, 0xdd, 0xb5, 0x67, 0x9d, 0x72, 0xe6, 0xcc, 0x8d, 0x0b, 0x8f, 0xc4,
+	0x81, 0x03, 0x12, 0x2f, 0x80, 0x02, 0x0f, 0x82, 0xfc, 0x91, 0x0f, 0x42, 0x82, 0xd3, 0x9b, 0x77,
+	0xfc, 0x9f, 0xff, 0xcc, 0xce, 0xfc, 0xb4, 0xd0, 0xf2, 0xb5, 0x76, 0x91, 0xc7, 0x63, 0x11, 0x70,
+	0xd7, 0x4f, 0xcc, 0x99, 0x1b, 0x45, 0xae, 0xaf, 0x85, 0x1b, 0xc6, 0x3a, 0x70, 0xc7, 0x6d, 0x37,
+	0x8a, 0x98, 0x8e, 0x95, 0x51, 0xa4, 0x21, 0x03, 0x64, 0x85, 0x92, 0xa5, 0x4a, 0x16, 0x45, 0x6c,
+	0xdc, 0x76, 0xee, 0x84, 0x4a, 0x85, 0x23, 0x9e, 0x25, 0xf9, 0x52, 0x2a, 0xe3, 0x1b, 0xa1, 0x24,
+	0xe6, 0x59, 0x74, 0x1f, 0xea, 0x3d, 0x11, 0xca, 0x13, 0xf9, 0x46, 0x98, 0x33, 0xcf, 0xeb, 0xf2,
+	0x88, 0x1e, 0xc1, 0xde, 0xdf, 0x21, 0xd4, 0xe4, 0x36, 0x6c, 0xa7, 0x96, 0x83, 0x24, 0x1e, 0xdd,
+	0xb2, 0xee, 0x5b, 0xad, 0x5a, 0xf7, 0x5a, 0x7a, 0xee, 0xc7, 0x23, 0xca, 0xa0, 0x76, 0xcc, 0x4d,
+	0xff, 0xe4, 0x65, 0x97, 0x47, 0xe4, 0x10, 0x6c, 0x3f, 0x08, 0x38, 0xe2, 0xc0, 0xa8, 0xf7, 0x5c,
+	0x16, 0xda, 0x9d, 0x3c, 0xf6, 0x3a, 0x0d, 0xd1, 0xc7, 0x00, 0x53, 0x3d, 0x6a, 0x72, 0x17, 0xe0,
+	0xfc, 0xc2, 0x0c, 0xd0, 0xc4, 0x42, 0x86, 0x85, 0xbc, 0x76, 0x7e, 0x61, 0x7a, 0x59, 0x80, 0xbe,
+	0x82, 0x5a, 0x47, 0xc8, 0x61, 0xd6, 0xd8, 0x06, 0xe6, 0x4b, 0x76, 0x95, 0x65, 0x3b, 0x1b, 0x60,
+	0x6a, 0x87, 0x9a, 0x3e, 0x81, 0x9d, 0xbe, 0x3c, 0x9d, 0xd9, 0x97, 0xb4, 0xb2, 0x0b, 0xf6, 0x5c,
+	0x8d, 0x9a, 0x3e, 0x87, 0x83, 0x63, 0x6e, 0x3c, 0xef, 0x85, 0x92, 0x92, 0x07, 0xa6, 0x67, 0x7c,
+	0x93, 0xe0, 0x06, 0x3e, 0x1d, 0x68, 0xac, 0xca, 0x43, 0x4d, 0xf6, 0x60, 0x2b, 0x11, 0xc3, 0x2c,
+	0x63, 0xab, 0x9b, 0x7e, 0x92, 0x06, 0x54, 0x95, 0xe6, 0x52, 0x0c, 0x8b, 0xab, 0x14, 0xa7, 0xa7,
+	0xdf, 0xae, 0x42, 0xc5, 0xf3, 0xc8, 0x07, 0xb0, 0x17, 0x37, 0x45, 0x1e, 0xb1, 0xd5, 0x0c, 0xb0,
+	0xa5, 0x15, 0x3b, 0xad, 0xcd, 0x84, 0xa8, 0xe9, 0xc1, 0xc7, 0x1f, 0xbf, 0x3f, 0x57, 0xea, 0xe4,
+	0xfa, 0x0c, 0x3e, 0x14, 0xa1, 0x24, 0x9f, 0x2c, 0x20, 0xff, 0xde, 0x82, 0x1c, 0xad, 0xf3, 0x5d,
+	0x39, 0x29, 0x87, 0x5d, 0x46, 0x8e, 0x9a, 0xde, 0xcc, 0x9a, 0xd9, 0xa7, 0xf5, 0x79, 0x33, 0x79,
+	0x5d, 0x0e, 0xd5, 0x9c, 0x29, 0x72, 0xf8, 0x1f, 0xcb, 0x9c, 0x51, 0x87, 0x96, 0x49, 0x50, 0xd3,
+	0x1b, 0x59, 0xa5, 0x5d, 0x6a, 0xcf, 0x2a, 0xa5, 0xeb, 0x78, 0x07, 0xd5, 0x1c, 0x9f, 0xf5, 0x65,
+	0x66, 0xb4, 0xae, 0x2f, 0xb3, 0x40, 0x60, 0x31, 0x5d, 0x3a, 0x9f, 0x6e, 0x0a, 0x18, 0x91, 0xb0,
+	0x3d, 0x45, 0x8d, 0x3c, 0x58, 0x67, 0xb3, 0x80, 0xae, 0xf3, 0xb0, 0x5c, 0xb4, 0x72, 0x7c, 0x49,
+	0xf6, 0xbb, 0xd3, 0xfe, 0x3a, 0x69, 0x5a, 0xdf, 0x27, 0x4d, 0xeb, 0xe7, 0xa4, 0x69, 0x7d, 0xf9,
+	0xd5, 0xbc, 0xf2, 0xf6, 0x5e, 0xc9, 0xb3, 0x73, 0x5a, 0xcd, 0x9e, 0x8f, 0x67, 0x7f, 0x02, 0x00,
+	0x00, 0xff, 0xff, 0xa2, 0xac, 0x8f, 0x47, 0xa0, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -563,7 +555,7 @@ const _ = grpc.SupportPackageIsVersion4
 type QQClient interface {
 	SignInWithQQ(ctx context.Context, in *SignInWithQQReq, opts ...grpc.CallOption) (*SignInWithQQResp, error)
 	GetQQConnectStatus(ctx context.Context, in *GetQQConnectStatusReq, opts ...grpc.CallOption) (*GetQQConnectStatusResp, error)
-	GetUIDWithCode(ctx context.Context, in *GetUIDWithCodeReq, opts ...grpc.CallOption) (*GetUIDWithCodeResp, error)
+	GetUID(ctx context.Context, in *GetUIDReq, opts ...grpc.CallOption) (*GetUIDResp, error)
 	BindQQ(ctx context.Context, in *BindQQReq, opts ...grpc.CallOption) (*BindQQResp, error)
 	UnbindQQ(ctx context.Context, in *UnbindQQReq, opts ...grpc.CallOption) (*UnbindQQResp, error)
 }
@@ -594,9 +586,9 @@ func (c *qQClient) GetQQConnectStatus(ctx context.Context, in *GetQQConnectStatu
 	return out, nil
 }
 
-func (c *qQClient) GetUIDWithCode(ctx context.Context, in *GetUIDWithCodeReq, opts ...grpc.CallOption) (*GetUIDWithCodeResp, error) {
-	out := new(GetUIDWithCodeResp)
-	err := c.cc.Invoke(ctx, "/ncs.service.auth.qq.v1.QQ/GetUIDWithCode", in, out, opts...)
+func (c *qQClient) GetUID(ctx context.Context, in *GetUIDReq, opts ...grpc.CallOption) (*GetUIDResp, error) {
+	out := new(GetUIDResp)
+	err := c.cc.Invoke(ctx, "/ncs.service.auth.qq.v1.QQ/GetUID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -625,7 +617,7 @@ func (c *qQClient) UnbindQQ(ctx context.Context, in *UnbindQQReq, opts ...grpc.C
 type QQServer interface {
 	SignInWithQQ(context.Context, *SignInWithQQReq) (*SignInWithQQResp, error)
 	GetQQConnectStatus(context.Context, *GetQQConnectStatusReq) (*GetQQConnectStatusResp, error)
-	GetUIDWithCode(context.Context, *GetUIDWithCodeReq) (*GetUIDWithCodeResp, error)
+	GetUID(context.Context, *GetUIDReq) (*GetUIDResp, error)
 	BindQQ(context.Context, *BindQQReq) (*BindQQResp, error)
 	UnbindQQ(context.Context, *UnbindQQReq) (*UnbindQQResp, error)
 }
@@ -640,8 +632,8 @@ func (*UnimplementedQQServer) SignInWithQQ(ctx context.Context, req *SignInWithQ
 func (*UnimplementedQQServer) GetQQConnectStatus(ctx context.Context, req *GetQQConnectStatusReq) (*GetQQConnectStatusResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQQConnectStatus not implemented")
 }
-func (*UnimplementedQQServer) GetUIDWithCode(ctx context.Context, req *GetUIDWithCodeReq) (*GetUIDWithCodeResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUIDWithCode not implemented")
+func (*UnimplementedQQServer) GetUID(ctx context.Context, req *GetUIDReq) (*GetUIDResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUID not implemented")
 }
 func (*UnimplementedQQServer) BindQQ(ctx context.Context, req *BindQQReq) (*BindQQResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BindQQ not implemented")
@@ -690,20 +682,20 @@ func _QQ_GetQQConnectStatus_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _QQ_GetUIDWithCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUIDWithCodeReq)
+func _QQ_GetUID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUIDReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(QQServer).GetUIDWithCode(ctx, in)
+		return srv.(QQServer).GetUID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ncs.service.auth.qq.v1.QQ/GetUIDWithCode",
+		FullMethod: "/ncs.service.auth.qq.v1.QQ/GetUID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QQServer).GetUIDWithCode(ctx, req.(*GetUIDWithCodeReq))
+		return srv.(QQServer).GetUID(ctx, req.(*GetUIDReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -757,8 +749,8 @@ var _QQ_serviceDesc = grpc.ServiceDesc{
 			Handler:    _QQ_GetQQConnectStatus_Handler,
 		},
 		{
-			MethodName: "GetUIDWithCode",
-			Handler:    _QQ_GetUIDWithCode_Handler,
+			MethodName: "GetUID",
+			Handler:    _QQ_GetUID_Handler,
 		},
 		{
 			MethodName: "BindQQ",
@@ -834,7 +826,7 @@ func (m *SignInWithQQResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *GetUIDWithCodeReq) Marshal() (dAtA []byte, err error) {
+func (m *GetUIDReq) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -844,12 +836,12 @@ func (m *GetUIDWithCodeReq) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *GetUIDWithCodeReq) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetUIDReq) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetUIDWithCodeReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetUIDReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -858,24 +850,17 @@ func (m *GetUIDWithCodeReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.JwtString) > 0 {
-		i -= len(m.JwtString)
-		copy(dAtA[i:], m.JwtString)
-		i = encodeVarintQq(dAtA, i, uint64(len(m.JwtString)))
-		i--
-		dAtA[i] = 0x12
-	}
-	if len(m.AuthorizationCode) > 0 {
-		i -= len(m.AuthorizationCode)
-		copy(dAtA[i:], m.AuthorizationCode)
-		i = encodeVarintQq(dAtA, i, uint64(len(m.AuthorizationCode)))
+	if len(m.AccessToken) > 0 {
+		i -= len(m.AccessToken)
+		copy(dAtA[i:], m.AccessToken)
+		i = encodeVarintQq(dAtA, i, uint64(len(m.AccessToken)))
 		i--
 		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
 
-func (m *GetUIDWithCodeResp) Marshal() (dAtA []byte, err error) {
+func (m *GetUIDResp) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
 	n, err := m.MarshalToSizedBuffer(dAtA[:size])
@@ -885,12 +870,12 @@ func (m *GetUIDWithCodeResp) Marshal() (dAtA []byte, err error) {
 	return dAtA[:n], nil
 }
 
-func (m *GetUIDWithCodeResp) MarshalTo(dAtA []byte) (int, error) {
+func (m *GetUIDResp) MarshalTo(dAtA []byte) (int, error) {
 	size := m.Size()
 	return m.MarshalToSizedBuffer(dAtA[:size])
 }
 
-func (m *GetUIDWithCodeResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+func (m *GetUIDResp) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -940,10 +925,10 @@ func (m *BindQQReq) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i--
 		dAtA[i] = 0x12
 	}
-	if len(m.AuthorizationCode) > 0 {
-		i -= len(m.AuthorizationCode)
-		copy(dAtA[i:], m.AuthorizationCode)
-		i = encodeVarintQq(dAtA, i, uint64(len(m.AuthorizationCode)))
+	if len(m.AccessToken) > 0 {
+		i -= len(m.AccessToken)
+		copy(dAtA[i:], m.AccessToken)
+		i = encodeVarintQq(dAtA, i, uint64(len(m.AccessToken)))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1150,17 +1135,13 @@ func (m *SignInWithQQResp) Size() (n int) {
 	return n
 }
 
-func (m *GetUIDWithCodeReq) Size() (n int) {
+func (m *GetUIDReq) Size() (n int) {
 	if m == nil {
 		return 0
 	}
 	var l int
 	_ = l
-	l = len(m.AuthorizationCode)
-	if l > 0 {
-		n += 1 + l + sovQq(uint64(l))
-	}
-	l = len(m.JwtString)
+	l = len(m.AccessToken)
 	if l > 0 {
 		n += 1 + l + sovQq(uint64(l))
 	}
@@ -1170,7 +1151,7 @@ func (m *GetUIDWithCodeReq) Size() (n int) {
 	return n
 }
 
-func (m *GetUIDWithCodeResp) Size() (n int) {
+func (m *GetUIDResp) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1192,7 +1173,7 @@ func (m *BindQQReq) Size() (n int) {
 	}
 	var l int
 	_ = l
-	l = len(m.AuthorizationCode)
+	l = len(m.AccessToken)
 	if l > 0 {
 		n += 1 + l + sovQq(uint64(l))
 	}
@@ -1427,7 +1408,7 @@ func (m *SignInWithQQResp) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetUIDWithCodeReq) Unmarshal(dAtA []byte) error {
+func (m *GetUIDReq) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1450,15 +1431,15 @@ func (m *GetUIDWithCodeReq) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetUIDWithCodeReq: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetUIDReq: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetUIDWithCodeReq: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetUIDReq: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AuthorizationCode", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field AccessToken", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1486,39 +1467,7 @@ func (m *GetUIDWithCodeReq) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.AuthorizationCode = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 2:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field JwtString", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowQq
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthQq
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthQq
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.JwtString = string(dAtA[iNdEx:postIndex])
+			m.AccessToken = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -1545,7 +1494,7 @@ func (m *GetUIDWithCodeReq) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
-func (m *GetUIDWithCodeResp) Unmarshal(dAtA []byte) error {
+func (m *GetUIDResp) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -1568,10 +1517,10 @@ func (m *GetUIDWithCodeResp) Unmarshal(dAtA []byte) error {
 		fieldNum := int32(wire >> 3)
 		wireType := int(wire & 0x7)
 		if wireType == 4 {
-			return fmt.Errorf("proto: GetUIDWithCodeResp: wiretype end group for non-group")
+			return fmt.Errorf("proto: GetUIDResp: wiretype end group for non-group")
 		}
 		if fieldNum <= 0 {
-			return fmt.Errorf("proto: GetUIDWithCodeResp: illegal tag %d (wire type %d)", fieldNum, wire)
+			return fmt.Errorf("proto: GetUIDResp: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:
@@ -1662,7 +1611,7 @@ func (m *BindQQReq) Unmarshal(dAtA []byte) error {
 		switch fieldNum {
 		case 1:
 			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field AuthorizationCode", wireType)
+				return fmt.Errorf("proto: wrong wireType = %d for field AccessToken", wireType)
 			}
 			var stringLen uint64
 			for shift := uint(0); ; shift += 7 {
@@ -1690,7 +1639,7 @@ func (m *BindQQReq) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.AuthorizationCode = string(dAtA[iNdEx:postIndex])
+			m.AccessToken = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 2:
 			if wireType != 2 {

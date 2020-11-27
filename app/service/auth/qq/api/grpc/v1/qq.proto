@@ -16,17 +16,16 @@ message SignInWithQQResp {
     string auth_url = 1;
 }
 
-message GetUIDWithCodeReq {
-    string authorization_code = 1;
-    string jwt_string = 2;
+message GetUIDReq {
+    string access_token = 1;
 }
 
-message GetUIDWithCodeResp {
+message GetUIDResp {
     string jwt_string = 1;
 }
 
 message BindQQReq {
-    string authorization_code = 1;
+    string access_token = 1;
     string jwt_string = 2;
 }
 
@@ -60,19 +59,19 @@ service QQ {
 			post: "/auth/qq/status"
 		};
     }
-    rpc GetUIDWithCode (GetUIDWithCodeReq) returns (GetUIDWithCodeResp) {
+    rpc GetUID (GetUIDReq) returns (GetUIDResp) {
         option (google.api.http) = {
 			post: "/auth/qq/uid"
 		};
     }
     rpc BindQQ (BindQQReq) returns (BindQQResp) {
         option (google.api.http) = {
-			post: "/auth/qq/reg"
+			post: "/auth/qq/bind"
 		};
     }
     rpc UnbindQQ (UnbindQQReq) returns (UnbindQQResp) {
         option (google.api.http) = {
-			post: "/auth/qq/reg"
+			post: "/auth/qq/unbind"
 		};
     }
 }

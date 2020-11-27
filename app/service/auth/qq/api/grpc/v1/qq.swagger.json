@@ -15,14 +15,14 @@
     "application/json"
   ],
   "paths": {
-    "/auth/qq/reg": {
+    "/auth/qq/bind": {
       "post": {
-        "operationId": "UnbindQQ",
+        "operationId": "BindQQ",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1UnbindQQResp"
+              "$ref": "#/definitions/v1BindQQResp"
             }
           }
         },
@@ -65,12 +65,28 @@
     },
     "/auth/qq/uid": {
       "post": {
-        "operationId": "GetUIDWithCode",
+        "operationId": "GetUID",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1GetUIDWithCodeResp"
+              "$ref": "#/definitions/v1GetUIDResp"
+            }
+          }
+        },
+        "tags": [
+          "QQ"
+        ]
+      }
+    },
+    "/auth/qq/unbind": {
+      "post": {
+        "operationId": "UnbindQQ",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UnbindQQResp"
             }
           }
         },
@@ -96,7 +112,7 @@
         }
       }
     },
-    "v1GetUIDWithCodeResp": {
+    "v1GetUIDResp": {
       "type": "object",
       "properties": {
         "jwt_string": {

@@ -74,24 +74,24 @@ func (mr *MockQQClientMockRecorder) GetQQConnectStatus(ctx, in interface{}, opts
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetQQConnectStatus", reflect.TypeOf((*MockQQClient)(nil).GetQQConnectStatus), varargs...)
 }
 
-// GetUIDWithCode mocks base method
-func (m *MockQQClient) GetUIDWithCode(ctx context.Context, in *GetUIDWithCodeReq, opts ...grpc.CallOption) (*GetUIDWithCodeResp, error) {
+// GetUID mocks base method
+func (m *MockQQClient) GetUID(ctx context.Context, in *GetUIDReq, opts ...grpc.CallOption) (*GetUIDResp, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "GetUIDWithCode", varargs...)
-	ret0, _ := ret[0].(*GetUIDWithCodeResp)
+	ret := m.ctrl.Call(m, "GetUID", varargs...)
+	ret0, _ := ret[0].(*GetUIDResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetUIDWithCode indicates an expected call of GetUIDWithCode
-func (mr *MockQQClientMockRecorder) GetUIDWithCode(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+// GetUID indicates an expected call of GetUID
+func (mr *MockQQClientMockRecorder) GetUID(ctx, in interface{}, opts ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUIDWithCode", reflect.TypeOf((*MockQQClient)(nil).GetUIDWithCode), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUID", reflect.TypeOf((*MockQQClient)(nil).GetUID), varargs...)
 }
 
 // BindQQ mocks base method
@@ -187,19 +187,19 @@ func (mr *MockQQServerMockRecorder) GetQQConnectStatus(arg0, arg1 interface{}) *
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetQQConnectStatus", reflect.TypeOf((*MockQQServer)(nil).GetQQConnectStatus), arg0, arg1)
 }
 
-// GetUIDWithCode mocks base method
-func (m *MockQQServer) GetUIDWithCode(arg0 context.Context, arg1 *GetUIDWithCodeReq) (*GetUIDWithCodeResp, error) {
+// GetUID mocks base method
+func (m *MockQQServer) GetUID(arg0 context.Context, arg1 *GetUIDReq) (*GetUIDResp, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetUIDWithCode", arg0, arg1)
-	ret0, _ := ret[0].(*GetUIDWithCodeResp)
+	ret := m.ctrl.Call(m, "GetUID", arg0, arg1)
+	ret0, _ := ret[0].(*GetUIDResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetUIDWithCode indicates an expected call of GetUIDWithCode
-func (mr *MockQQServerMockRecorder) GetUIDWithCode(arg0, arg1 interface{}) *gomock.Call {
+// GetUID indicates an expected call of GetUID
+func (mr *MockQQServerMockRecorder) GetUID(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUIDWithCode", reflect.TypeOf((*MockQQServer)(nil).GetUIDWithCode), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUID", reflect.TypeOf((*MockQQServer)(nil).GetUID), arg0, arg1)
 }
 
 // BindQQ mocks base method

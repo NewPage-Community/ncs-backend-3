@@ -7,6 +7,7 @@ import (
 	"backend/pkg/ecode"
 	"backend/pkg/json"
 	"context"
+	"golang.org/x/oauth2"
 	"google.golang.org/grpc/codes"
 	"io/ioutil"
 	"net/http"
@@ -14,27 +15,16 @@ import (
 
 func (s *Service) SignInWithQQ(ctx context.Context, req *pb.SignInWithQQReq) (resp *pb.SignInWithQQResp, err error) {
 	resp = &pb.SignInWithQQResp{
-		AuthUrl: s.config.QQConnect.AuthCodeURL("state"),
+		AuthUrl: s.config.QQConnect.AuthCodeURL("state", oauth2.SetAuthURLParam("response_type", "token")),
 	}
 	return
 }
 
-func (s *Service) GetUIDWithCode(ctx context.Context, req *pb.GetUIDWithCodeReq) (resp *pb.GetUIDWithCodeResp, err error) {
-	resp = &pb.GetUIDWithCodeResp{}
-	// Get context token
-	ctxToken, err := jwt.GetToken(req.JwtString, *s.config.JWT)
-	if err != nil {
-		ctxToken = &jwt.Token{}
-	}
-
-	// Get access token
-	token, err := s.config.QQConnect.Exchange(ctx, req.AuthorizationCode)
-	if err != nil {
-		return
-	}
+func (s *Service) GetUID(ctx context.Context, req *pb.GetUIDReq) (resp *pb.GetUIDResp, err error) {
+	resp = &pb.GetUIDResp{}
 
 	// Get OpenID
-	openID, err := GetOpenID(token.AccessToken)
+	openID, err := GetOpenID(req.AccessToken)
 	if err != nil {
 		return
 	}
@@ -46,8 +36,8 @@ func (s *Service) GetUIDWithCode(ctx context.Context, req *pb.GetUIDWithCodeReq)
 	}
 
 	// Add to connect token
-	ctxToken.UID = qqConnect.UID
-	tokenString, err := ctxToken.NewTokenString(*s.config.JWT)
+	token := &jwt.Token{UID: qqConnect.UID}
+	tokenString, err := token.NewTokenString(*s.config.JWT)
 	if err != nil {
 		return
 	}
@@ -58,7 +48,7 @@ func (s *Service) GetUIDWithCode(ctx context.Context, req *pb.GetUIDWithCodeReq)
 
 func (s *Service) BindQQ(ctx context.Context, req *pb.BindQQReq) (resp *pb.BindQQResp, err error) {
 	resp = &pb.BindQQResp{}
-	// Get context token
+	// Get uid from context token
 	ctxToken, err := jwt.GetToken(req.JwtString, *s.config.JWT)
 	if err != nil {
 		return
@@ -68,14 +58,8 @@ func (s *Service) BindQQ(ctx context.Context, req *pb.BindQQReq) (resp *pb.BindQ
 		return
 	}
 
-	// Get access token
-	token, err := s.config.QQConnect.Exchange(ctx, req.AuthorizationCode)
-	if err != nil {
-		return
-	}
-
 	// Get OpenID
-	openID, err := GetOpenID(token.AccessToken)
+	openID, err := GetOpenID(req.AccessToken)
 	if err != nil {
 		return
 	}
@@ -89,7 +73,7 @@ func (s *Service) BindQQ(ctx context.Context, req *pb.BindQQReq) (resp *pb.BindQ
 
 func (s *Service) UnbindQQ(ctx context.Context, req *pb.UnbindQQReq) (resp *pb.UnbindQQResp, err error) {
 	resp = &pb.UnbindQQResp{}
-	// Get context token
+	// Get uid from context token
 	ctxToken, err := jwt.GetToken(req.JwtString, *s.config.JWT)
 	if err != nil {
 		return
@@ -105,7 +89,7 @@ func (s *Service) UnbindQQ(ctx context.Context, req *pb.UnbindQQReq) (resp *pb.U
 
 func (s *Service) GetQQConnectStatus(ctx context.Context, req *pb.GetQQConnectStatusReq) (resp *pb.GetQQConnectStatusResp, err error) {
 	resp = &pb.GetQQConnectStatusResp{}
-	// Get context token
+	// Get uid from context token
 	ctxToken, err := jwt.GetToken(req.JwtString, *s.config.JWT)
 	if err != nil {
 		return

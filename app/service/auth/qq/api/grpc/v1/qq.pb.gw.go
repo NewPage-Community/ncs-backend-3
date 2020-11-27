@@ -86,37 +86,37 @@ func local_request_QQ_GetQQConnectStatus_0(ctx context.Context, marshaler runtim
 }
 
 var (
-	filter_QQ_GetUIDWithCode_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_QQ_GetUID_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_QQ_GetUIDWithCode_0(ctx context.Context, marshaler runtime.Marshaler, client QQClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetUIDWithCodeReq
+func request_QQ_GetUID_0(ctx context.Context, marshaler runtime.Marshaler, client QQClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetUIDReq
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_QQ_GetUIDWithCode_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_QQ_GetUID_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.GetUIDWithCode(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetUID(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_QQ_GetUIDWithCode_0(ctx context.Context, marshaler runtime.Marshaler, server QQServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetUIDWithCodeReq
+func local_request_QQ_GetUID_0(ctx context.Context, marshaler runtime.Marshaler, server QQServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetUIDReq
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_QQ_GetUIDWithCode_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_QQ_GetUID_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.GetUIDWithCode(ctx, &protoReq)
+	msg, err := server.GetUID(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -238,7 +238,7 @@ func RegisterQQHandlerServer(ctx context.Context, mux *runtime.ServeMux, server 
 
 	})
 
-	mux.Handle("POST", pattern_QQ_GetUIDWithCode_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_QQ_GetUID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -247,14 +247,14 @@ func RegisterQQHandlerServer(ctx context.Context, mux *runtime.ServeMux, server 
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_QQ_GetUIDWithCode_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_QQ_GetUID_0(rctx, inboundMarshaler, server, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_QQ_GetUIDWithCode_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_QQ_GetUID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -379,7 +379,7 @@ func RegisterQQHandlerClient(ctx context.Context, mux *runtime.ServeMux, client 
 
 	})
 
-	mux.Handle("POST", pattern_QQ_GetUIDWithCode_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_QQ_GetUID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -388,14 +388,14 @@ func RegisterQQHandlerClient(ctx context.Context, mux *runtime.ServeMux, client 
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_QQ_GetUIDWithCode_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_QQ_GetUID_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_QQ_GetUIDWithCode_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_QQ_GetUID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -447,11 +447,11 @@ var (
 
 	pattern_QQ_GetQQConnectStatus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "status"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_QQ_GetUIDWithCode_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "uid"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_QQ_GetUID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "uid"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_QQ_BindQQ_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "reg"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_QQ_BindQQ_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "bind"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_QQ_UnbindQQ_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "reg"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_QQ_UnbindQQ_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"auth", "qq", "unbind"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
@@ -459,7 +459,7 @@ var (
 
 	forward_QQ_GetQQConnectStatus_0 = runtime.ForwardResponseMessage
 
-	forward_QQ_GetUIDWithCode_0 = runtime.ForwardResponseMessage
+	forward_QQ_GetUID_0 = runtime.ForwardResponseMessage
 
 	forward_QQ_BindQQ_0 = runtime.ForwardResponseMessage
 
