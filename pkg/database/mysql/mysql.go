@@ -12,12 +12,14 @@ import (
 )
 
 type Config struct {
-	Host     string
-	User     string
-	Password string
-	DBName   string
-	Charset  string
-	Debug    bool
+	Host         string
+	User         string
+	Password     string
+	DBName       string
+	Charset      string
+	Debug        bool
+	MaxOpenConns int
+	MaxIdleConns int
 }
 
 func (conf *Config) GetDSN() string {
@@ -68,6 +70,7 @@ func Init(conf *Config) (db *gorm.DB) {
 		return gorm.Open(mysql.Open(conf.GetDSN()), &gorm.Config{
 			Logger:                 conf.GetLogger(),
 			SkipDefaultTransaction: true,
+			PrepareStmt:            true,
 		})
 	}
 
@@ -78,6 +81,15 @@ func Init(conf *Config) (db *gorm.DB) {
 			break
 		}
 		time.Sleep(5 * time.Second)
+	}
+
+	// Set conns pool
+	if err == nil {
+		sqlDB, err := db.DB()
+		if err == nil {
+			sqlDB.SetMaxIdleConns(conf.MaxIdleConns)
+			sqlDB.SetMaxOpenConns(conf.MaxOpenConns)
+		}
 	}
 
 	if err != nil {
