@@ -1,7 +1,7 @@
 package model
 
 const (
-	PassLevelPoint = int32(14400)
+	PassLevelPoint = int32(10800)
 	PassPointBoxID = int32(1000)
 )
 

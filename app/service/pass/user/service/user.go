@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	Pass2AddPoint    = model.PassLevelPoint * 8
+	Pass2AddPoint    = model.PassLevelPoint * 10
 	UpgradeNotifyCMD = "ncs_pass_upgrade_notify %d %d"
 )
 
