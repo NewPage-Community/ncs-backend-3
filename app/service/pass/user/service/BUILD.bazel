@@ -9,7 +9,7 @@ go_library(
     importpath = "backend/app/service/pass/user/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/game/chat/api/grpc:go_default_library",
+        "//app/game/server/api/grpc:go_default_library",
         "//app/service/backpack/user/api/grpc:go_default_library",
         "//app/service/pass/reward/api/grpc:go_default_library",
         "//app/service/pass/user/api/grpc:go_default_library",
@@ -28,7 +28,7 @@ go_test(
     srcs = ["user_test.go"],
     embed = [":go_default_library"],
     deps = [
-        "//app/game/chat/api/grpc:go_default_library",
+        "//app/game/server/api/grpc:go_default_library",
         "//app/service/backpack/user/api/grpc:go_default_library",
         "//app/service/pass/reward/api/grpc:go_default_library",
         "//app/service/pass/user/api/grpc:go_default_library",

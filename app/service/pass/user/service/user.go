@@ -1,7 +1,7 @@
 package service
 
 import (
-	chat "backend/app/game/chat/api/grpc"
+	server "backend/app/game/server/api/grpc"
 	backpack "backend/app/service/backpack/user/api/grpc"
 	reward "backend/app/service/pass/reward/api/grpc"
 	pb "backend/app/service/pass/user/api/grpc"
@@ -17,7 +17,7 @@ import (
 
 const (
 	Pass2AddPoint    = model.PassLevelPoint * 8
-	UpgradeNotifyMsg = "{blue}通行证成功升级到 {green}%d{blue} 级，购买高级通行证可解锁更多大奖～"
+	UpgradeNotifyCMD = "ncs_pass_upgrade_notify %d %d"
 )
 
 func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp, err error) {
@@ -212,10 +212,8 @@ func (s *Service) GiveMoney(ctx context.Context, uid int64, rewards []*reward.It
 }
 
 func (s *Service) UpgradeNotify(ctx context.Context, uid int64, level int32) (err error) {
-	_, err = s.chatService.ChatNotify(ctx, &chat.ChatNotifyReq{
-		Uid:     uid,
-		Prefix:  "",
-		Message: fmt.Sprintf(UpgradeNotifyMsg, level),
+	_, err = s.serverService.RconAll(ctx, &server.RconAllReq{
+		Cmd: fmt.Sprintf(UpgradeNotifyCMD, uid, level),
 	})
 	return
 }
