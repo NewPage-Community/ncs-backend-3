@@ -57,8 +57,9 @@ func (s *Service) getRewards(passType int32, level int32, min int32) []*pb.Item 
 		})
 	}
 
+	// REMOVE
 	// Give pass box to adv pass
-	if passType > 0 {
+	/*if passType > 0 {
 		// Upgrade one level
 		if min == 0 {
 			if level > s.reward.MaxLevel {
@@ -83,6 +84,6 @@ func (s *Service) getRewards(passType int32, level int32, min int32) []*pb.Item 
 				}
 			}
 		}
-	}
+	}*/
 	return items
 }
