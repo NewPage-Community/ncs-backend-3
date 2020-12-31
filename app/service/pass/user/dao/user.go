@@ -12,6 +12,7 @@ func (d *dao) Info(uid int64) (res *model.User, err error) {
 	// DB
 	err = d.db.Where(uid).First(res).Error
 	if err == gorm.ErrRecordNotFound {
+		res.UID = uid
 		err = d.create(uid)
 	}
 	return
