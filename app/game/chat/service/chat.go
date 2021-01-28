@@ -27,7 +27,7 @@ func (s *Service) AllChat(ctx context.Context, req *pb.AllChatReq) (resp *pb.All
 	serverShortName := ""
 
 	sendToKaiheila := func(serverName string) {
-		_, err = s.kaiheila.SendChannelMsg(ctx, &kaiheilaBot.SendMessageReq{
+		_, err = s.kaiheila.SendChannelMsg(context.Background(), &kaiheilaBot.SendMessageReq{
 			Type:      int32(kaiheila.MsgTypeKmarkdown),
 			ChannelId: kaiheilaService.AllChatChannelID,
 			Content:   fmt.Sprintf(KaiheilaMessage, serverName, req.Name, req.Message),
