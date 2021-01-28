@@ -101,6 +101,6 @@ ncs-services:
       port: 2333
     - app: ncs-bot-kaiheila
       version: v1
-      image: registry.new-page.xyz/newpage/ncs/ncs-bot-kaiheila
+      image: registry.new-page.xyz/newpage/ncs/bot-kaiheila
       tag: latest
       port: 2333
