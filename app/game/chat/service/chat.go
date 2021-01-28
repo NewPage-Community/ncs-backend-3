@@ -16,7 +16,7 @@ const (
 	DefaultPrefix   = "[系统提示]"
 	KaiheilaName    = "开黑啦"
 	KaiheilaURL     = "https://kaihei.co/p4Bl4i"
-	KaiheilaMessage = "[{\"type\":\"card\",\"theme\":\"secondary\",\"size\":\"lg\",\"modules\":[{\"type\":\"section\",\"text\":{\"type\":\"paragraph\",\"cols\":1,\"fields\":[{\"type\":\"kmarkdown\",\"content\":\"**%s**\"},{\"type\":\"plain-text\",\"content\":\"%s\"}]}},{\"type\":\"context\",\"elements\":[{\"type\":\"kmarkdown\",\"content\":\"📣  [%s](%s)\"}]}]}]"
+	KaiheilaMessage = "[{\"type\":\"card\",\"theme\":\"secondary\",\"size\":\"lg\",\"modules\":[{\"type\":\"section\",\"text\":{\"type\":\"kmarkdown\",\"content\":\":mega: [%s](%s) `%s` :\"}},{\"type\":\"section\",\"text\":{\"type\":\"plain-text\",\"content\":\"%s\"}}]}]"
 	DiscordName     = "Discord"
 	DiscordURL      = "https://discord.gg/SNxCf4Gv"
 	DiscordMessage  = ""
@@ -32,7 +32,7 @@ func (s *Service) AllChat(ctx context.Context, req *pb.AllChatReq) (resp *pb.All
 		_, err = s.kaiheila.SendChannelMsg(context.Background(), &kaiheilaBot.SendMessageReq{
 			Type:      10,
 			ChannelId: kaiheilaService.AllChatChannelID,
-			Content:   fmt.Sprintf(KaiheilaMessage, req.Name, req.Message, serverName, url),
+			Content:   fmt.Sprintf(KaiheilaMessage, serverName, url, removeColor(removeInvalidChar(req.Name)), req.Message),
 		})
 		if err != nil {
 			log.Error(err)
