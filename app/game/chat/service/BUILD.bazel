@@ -15,7 +15,6 @@ go_library(
         "//app/game/chat/conf:go_default_library",
         "//app/game/server/api/grpc:go_default_library",
         "//pkg/log:go_default_library",
-        "@com_github_gunslinger23_kaiheila//:go_default_library",
     ],
 )
 
