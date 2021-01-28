@@ -32,7 +32,7 @@ func (s *Service) SendChannelMsg(ctx context.Context, req *pb.SendMessageReq) (r
 }
 
 func (s *Service) EventHandler(event kaiheila.EventMsg) {
-	if !event.Extra.Author.Bot && event.TargetID == AllChatChannelID && event.Type == kaiheila.MsgTypeText {
+	if IsAllChatEvent(event) {
 		_, err := s.chat.AllChat(context.Background(), &chatService.AllChatReq{
 			Name:     event.Extra.Author.Username + "#" + event.Extra.Author.IdentifyNum,
 			Message:  event.Content,
