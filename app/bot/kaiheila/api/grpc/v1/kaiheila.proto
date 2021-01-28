@@ -1,0 +1,29 @@
+syntax = "proto3";
+package ncs.bot.kaiheila.v1;
+option go_package = "app/bot/kaiheila/api/grpc/v1";
+
+// 规范
+// 1. 包名必须遵守服务文件路径名
+// 2. 请求回复信息必须遵守格式
+
+// HTTP协议(grpc gateway)
+import "google/api/annotations.proto";
+
+message SendMessageReq {
+	int32 type = 1;
+	string channel_id = 2;
+	string content = 3;
+	string quote = 4;
+	string nonce = 5;
+	string temp_target_id = 6;
+}
+
+message SendMessageResp {
+	string msg_id = 1;
+	int64 msg_timestamp = 2;
+	string nonce = 3;
+}
+
+service Kaiheila {
+	rpc SendChannelMsg (SendMessageReq) returns (SendMessageResp);
+}

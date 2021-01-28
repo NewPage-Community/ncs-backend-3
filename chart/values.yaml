@@ -99,3 +99,8 @@ ncs-services:
       image: registry.new-page.xyz/newpage/ncs/game-cvar
       tag: latest
       port: 2333
+    - app: ncs-bot-kaiheila
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/ncs-bot-kaiheila
+      tag: latest
+      port: 2333

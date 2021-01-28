@@ -1,0 +1,18 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "kaiheila.go",
+        "service.go",
+    ],
+    importpath = "backend/app/bot/kaiheila/service",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/bot/kaiheila/api/grpc/v1:go_default_library",
+        "//app/bot/kaiheila/conf:go_default_library",
+        "//app/game/chat/api/grpc:go_default_library",
+        "//pkg/log:go_default_library",
+        "@com_github_gunslinger23_kaiheila//:go_default_library",
+    ],
+)

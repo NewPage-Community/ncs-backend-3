@@ -1,0 +1,35 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/bot/kaiheila/api/grpc/v1/kaiheila.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "v1SendMessageResp": {
+      "type": "object",
+      "properties": {
+        "msg_id": {
+          "type": "string"
+        },
+        "msg_timestamp": {
+          "type": "string",
+          "format": "int64"
+        },
+        "nonce": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

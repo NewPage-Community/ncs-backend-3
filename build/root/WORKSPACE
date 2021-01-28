@@ -742,8 +742,8 @@ go_repository(
 go_repository(
     name = "com_github_json_iterator_go",
     importpath = "github.com/json-iterator/go",
-    sum = "h1:9yzud/Ht36ygwatGx56VwCZtlI/2AD15T1X2sjSuGns=",
-    version = "v1.1.9",
+    sum = "h1:Kz6Cvnvv2wGdaG/V8yMvfkmNiXq9Ya2KUv4rouJJr68=",
+    version = "v1.1.10",
 )
 
 go_repository(
@@ -903,8 +903,8 @@ go_repository(
 go_repository(
     name = "com_github_mitchellh_mapstructure",
     importpath = "github.com/mitchellh/mapstructure",
-    sum = "h1:fmNYVwqnSfB9mZU6OS2O6GsXM+wcskZDuKQzvN1EDeE=",
-    version = "v1.1.2",
+    sum = "h1:CpVNEelQCZBooIPDn+AR3NpivK/TIKU8bDxdASFVQag=",
+    version = "v1.4.1",
 )
 
 go_repository(
@@ -1836,4 +1836,11 @@ go_repository(
     importpath = "github.com/yuin/goldmark",
     sum = "h1:5tjfNdR2ki3yYQ842+eX2sQHeiwpKJ0RnHO4IYOc4V8=",
     version = "v1.1.32",
+)
+
+go_repository(
+    name = "com_github_gunslinger23_kaiheila",
+    importpath = "github.com/gunslinger23/kaiheila",
+    sum = "h1:JkO9zEFaY+qdj17iVfVIlLsZBSa9k2WBjbqtussD3NY=",
+    version = "v0.0.0-20210128124554-d0443c147652",
 )
