@@ -104,3 +104,17 @@ ncs-services:
       image: registry.new-page.xyz/newpage/ncs/bot-kaiheila
       tag: latest
       port: 2333
+
+ncs-gateway-web:
+  ingress:
+    hosts:
+      - host: api.new-page.xyz
+        paths:
+        - /ncs/csgo/web(/|$)(.*)
+
+ncs-gateway-game:
+  ingress:
+    hosts:
+      - host: api.new-page.xyz
+        paths:
+        - /ncs/csgo/game(/|$)(.*)
