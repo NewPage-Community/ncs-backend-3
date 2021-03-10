@@ -153,6 +153,7 @@ func (s *Service) BanCheck(ctx context.Context, req *pb.Info2Req) (resp *pb.Info
 			if err1 != nil {
 				log.Error(err1)
 			} else if res.ID > 0 {
+				// res.ID > 0 -> ban is recorded
 				_, err1 := s.server.RconAll(context.Background(), &serverService.RconAllReq{
 					Cmd: fmt.Sprintf(BanNotifyCMD, res.UID, res.Type, res.Reason),
 				})

@@ -150,7 +150,10 @@ func TestService_BanCheck(t *testing.T) {
 		Reason:     "test",
 	}, nil)
 	d.EXPECT().Info(uint64(4)).Return(&model.Ban{}, nil)
-	d.EXPECT().Add(gomock.Any()).Return(nil)
+	d.EXPECT().Add(gomock.Any()).DoAndReturn(func(info *model.Ban) error {
+		info.ID = 2
+		return nil
+	})
 
 	acc := accountService.NewMockAccountClient(ctl)
 	acc.EXPECT().Info(gomock.Any(), &accountService.InfoReq{Uid: 2}).
@@ -172,10 +175,18 @@ func TestService_BanCheck(t *testing.T) {
 	steam2.EXPECT().IsPlayingSharedGame(uint64(2), 3).
 		Return(steam.PlayingSharedGame{LenderSteamID: 4}, nil)
 
+	server := serverService.NewMockServerClient(ctl)
+	server.EXPECT().RconAll(gomock.Any(), &serverService.RconAllReq{
+		Cmd: "ncs_ban_notify 2 1 \"test(共享者账号被封禁)\"",
+	}).Return(&serverService.RconAllResp{
+		Success: 0,
+	}, nil)
+
 	srv := &Service{
 		dao:     d,
 		account: acc,
 		steam:   steam2,
+		server:  server,
 	}
 
 	Convey("Test BanCheck", t, func() {
@@ -237,10 +248,10 @@ func TestService_BanCheck(t *testing.T) {
 				AppId:    1,
 			})
 			So(err, ShouldBeNil)
-			So(res.Info.ExpireTime, ShouldBeGreaterThan, 0)
 			t.Log(res)
 		})
 	})
+	time.Sleep(time.Second)
 }
 
 func TestService_Info(t *testing.T) {
