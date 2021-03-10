@@ -110,11 +110,11 @@ ncs-gateway-web:
     hosts:
       - host: api.new-page.xyz
         paths:
-        - /ncs/csgo/web(/|$)(.*)
+        - /ncs/v3/web(/|$)(.*)
 
 ncs-gateway-game:
   ingress:
     hosts:
       - host: api.new-page.xyz
         paths:
-        - /ncs/csgo/game(/|$)(.*)
+        - /ncs/v3/game(/|$)(.*)
