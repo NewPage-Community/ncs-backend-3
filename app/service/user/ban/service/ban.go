@@ -83,10 +83,13 @@ func (s *Service) Add(ctx context.Context, req *pb.AddReq) (resp *pb.AddResp, er
 
 	// ban shared game lib owner
 	if req.Info.AppId > 0 {
-		err = s.BanSharedLibOwner(ctx, req)
-		if err != nil {
-			log.Warn(err)
-		}
+		// ASync request
+		go func() {
+			err := s.BanSharedLibOwner(context.Background(), req)
+			if err != nil {
+				log.Warn(err)
+			}
+		}()
 	}
 
 	rcon, err := s.server.RconAll(context.Background(), &serverService.RconAllReq{
@@ -144,17 +147,20 @@ func (s *Service) BanCheck(ctx context.Context, req *pb.Info2Req) (resp *pb.Info
 
 	// Check shared game lib owner
 	if req.AppId > 0 {
-		res, err1 := s.CheckSharedLibOwnerBan(ctx, req)
-		if err1 != nil {
-			log.Warn(err1)
-		} else {
-			// if owner not banned or can not found
-			// just give 0 or empty string to them ;)
-			resp.Info.Id = res.ID
-			resp.Info.ExpireTime = res.ExpireTime
-			resp.Info.Type = res.Type
-			resp.Info.Reason = res.Reason
-		}
+		// ASync check
+		go func() {
+			res, err1 := s.CheckSharedLibOwnerBan(context.Background(), req)
+			if err1 != nil {
+				log.Error(err1)
+			} else if res.ID > 0 {
+				_, err1 := s.server.RconAll(context.Background(), &serverService.RconAllReq{
+					Cmd: fmt.Sprintf(BanNotifyCMD, res.UID, res.Type, res.Reason),
+				})
+				if err1 != nil {
+					log.Error(err1)
+				}
+			}
+		}()
 	}
 	return
 }
