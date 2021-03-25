@@ -73,19 +73,6 @@ push all images:
       when: manual
     - when: never
 
-deploy-csgo:
-  stage: deploy
-  image: registry.new-page.xyz/alpine/helm:3.2.3
-  script:
-    - mkdir ~/.kube && echo -n $KUBE_CONFIG | base64 -d > ~/.kube/config
-    - helm upgrade --install --namespace ncs-csgo -f ./chart/csgo.yaml ncs ./chart
-  rules:
-    - if: $CI_COMMIT_BRANCH == "master"
-      when: manual
-    - when: never
-  needs: ["push changed images"]
-  cache: {}
-
 deploy-ins:
   stage: deploy
   image: registry.new-page.xyz/alpine/helm:3.2.3
