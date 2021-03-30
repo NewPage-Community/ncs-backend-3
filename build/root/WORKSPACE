@@ -1844,3 +1844,17 @@ go_repository(
     sum = "h1:JkO9zEFaY+qdj17iVfVIlLsZBSa9k2WBjbqtussD3NY=",
     version = "v0.0.0-20210128124554-d0443c147652",
 )
+
+go_repository(
+    name = "com_github_gorilla_mux",
+    importpath = "github.com/gorilla/mux",
+    sum = "h1:gnP5JzjVOuiZD07fKKToCAOjS0yOpj/qPETTXCCS6hw=",
+    version = "v1.7.3",
+)
+
+go_repository(
+    name = "com_github_miremid_amy",
+    importpath = "github.com/miRemid/amy",
+    sum = "h1:mfgW/Ch+Bey2jrzgZZLOOJUSXkfxs4zI0oetNUZUkx4=",
+    version = "v0.1.3",
+)

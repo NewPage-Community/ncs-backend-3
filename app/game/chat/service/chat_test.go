@@ -2,6 +2,8 @@ package service
 
 import (
 	kaiheilaBot "backend/app/bot/kaiheila/api/grpc/v1"
+	qqBot "backend/app/bot/qq/api/grpc/v1"
+	"backend/app/game/chat"
 	pb "backend/app/game/chat/api/grpc"
 	server "backend/app/game/server/api/grpc"
 	"backend/pkg/log"
@@ -33,15 +35,21 @@ func TestService_AllChat(t *testing.T) {
 	s.EXPECT().RconAll(gomock.Any(), &server.RconAllReq{
 		Cmd: fmt.Sprintf("ncs_chat_notify 0 \"%s\" \"%s : %s\"", fmt.Sprintf(AllChatPrefix, " · Discord"), tName, tMessage),
 	}).Return(&server.RconAllResp{}, nil)
+	s.EXPECT().RconAll(gomock.Any(), &server.RconAllReq{
+		Cmd: fmt.Sprintf("ncs_chat_notify 0 \"%s\" \"%s : %s\"", fmt.Sprintf(AllChatPrefix, " · QQ"), tName, tMessage),
+	}).Return(&server.RconAllResp{}, nil)
 	kaiheila := kaiheilaBot.NewMockKaiheilaClient(ctl)
-	kaiheila.EXPECT().SendChannelMsg(gomock.Any(), gomock.Any()).Return(nil, nil).Times(2)
+	kaiheila.EXPECT().SendChannelMsg(gomock.Any(), gomock.Any()).Return(nil, nil)
+	qq := qqBot.NewMockQQClient(ctl)
+	qq.EXPECT().SendGroupMessage(gomock.Any(), gomock.Any()).Return(nil, nil)
 
-	srv := &Service{server: s, kaiheila: kaiheila}
+	srv := &Service{server: s, kaiheila: kaiheila, qq: qq}
 	Convey("Test AllChat", t, func() {
 		Convey("Check it work", func() {
 			_, err := srv.AllChat(context.TODO(), &pb.AllChatReq{
-				Name:    tName,
-				Message: tMessage,
+				Name:     tName,
+				Message:  tMessage,
+				ServerId: 1,
 			})
 			So(err, ShouldBeNil)
 		})
@@ -49,7 +57,7 @@ func TestService_AllChat(t *testing.T) {
 			_, err := srv.AllChat(context.TODO(), &pb.AllChatReq{
 				Name:     tName,
 				Message:  tMessage,
-				ServerId: -1,
+				ServerId: chat.KaiheilaID,
 			})
 			So(err, ShouldBeNil)
 		})
@@ -57,7 +65,15 @@ func TestService_AllChat(t *testing.T) {
 			_, err := srv.AllChat(context.TODO(), &pb.AllChatReq{
 				Name:     tName,
 				Message:  tMessage,
-				ServerId: -100,
+				ServerId: chat.DiscordID,
+			})
+			So(err, ShouldBeNil)
+		})
+		Convey("Check qq chat", func() {
+			_, err := srv.AllChat(context.TODO(), &pb.AllChatReq{
+				Name:     tName,
+				Message:  tMessage,
+				ServerId: chat.QQID,
 			})
 			So(err, ShouldBeNil)
 		})

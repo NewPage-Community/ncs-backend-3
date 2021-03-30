@@ -11,7 +11,8 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//app/bot/kaiheila/api/grpc/v1:go_default_library",
-        "//app/bot/kaiheila/service:go_default_library",
+        "//app/bot/qq/api/grpc/v1:go_default_library",
+        "//app/game/chat:go_default_library",
         "//app/game/chat/api/grpc:go_default_library",
         "//app/game/chat/conf:go_default_library",
         "//app/game/server/api/grpc:go_default_library",
@@ -25,6 +26,8 @@ go_test(
     embed = [":go_default_library"],
     deps = [
         "//app/bot/kaiheila/api/grpc/v1:go_default_library",
+        "//app/bot/qq/api/grpc/v1:go_default_library",
+        "//app/game/chat:go_default_library",
         "//app/game/chat/api/grpc:go_default_library",
         "//app/game/server/api/grpc:go_default_library",
         "//pkg/log:go_default_library",

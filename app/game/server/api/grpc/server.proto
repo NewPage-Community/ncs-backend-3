@@ -14,6 +14,40 @@ message Info {
     string hostname = 5;
     string address = 6;
     string short_name = 7;
+    // a2s
+    A2S_Info a2s_info = 8;
+    repeated A2S_Player a2s_player = 9;
+}
+
+message A2S_Info {
+    int32 protocol = 1;
+    string map = 2;
+    string folder = 3;
+    string game = 4;
+    int32 id = 5;
+    int32 players = 6;
+    int32 max_players = 7;
+    int32 bots = 8;
+    int32 server_type = 9;
+    int32 environment = 10;
+    int32 visibility = 11;
+    int32 vac = 12;
+    string version = 13;
+
+    int32 port = 14;
+    int64 steam_id = 15;
+
+    int32 source_tv_port = 16;
+    string source_tv_name = 17;
+
+    string keywords = 18;
+    int64 game_id = 19;
+}
+
+message A2S_Player {
+    string name = 1;
+    int32 score = 2;
+    float duration = 3;
 }
 
 // Message
@@ -36,6 +70,7 @@ message InfoResp {
 }
 
 message AllInfoReq {
+    bool a2s = 1;
 }
 
 message AllInfoResp {

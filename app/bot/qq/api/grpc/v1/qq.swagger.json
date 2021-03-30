@@ -1,0 +1,23 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/bot/qq/api/grpc/v1/qq.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "v1SendGroupMessageResp": {
+      "type": "object"
+    }
+  }
+}

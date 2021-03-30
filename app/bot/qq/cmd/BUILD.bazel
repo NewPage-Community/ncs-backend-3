@@ -1,0 +1,31 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("//build:docker.bzl", "push_docker")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "backend/app/bot/qq/cmd",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//app/bot/qq/api/grpc/v1:go_default_library",
+        "//app/bot/qq/conf:go_default_library",
+        "//app/bot/qq/service:go_default_library",
+        "//pkg/cmd:go_default_library",
+        "//pkg/log:go_default_library",
+        "//pkg/rpc:go_default_library",
+        "//pkg/tracer:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "cmd",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
+
+push_docker(
+    name = "push",
+    app_name = "bot-qq",
+    embed = [":go_default_library"],
+)

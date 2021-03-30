@@ -11,10 +11,12 @@ require (
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/golang/mock v1.4.3
 	github.com/golang/protobuf v1.4.2
+	github.com/gorilla/websocket v1.4.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0
 	github.com/grpc-ecosystem/grpc-gateway v1.14.6
 	github.com/gunslinger23/kaiheila v0.0.0-20210128124554-d0443c147652
 	github.com/json-iterator/go v1.1.10
+	github.com/miRemid/amy v0.1.3
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/robfig/cron/v3 v3.0.0
 	github.com/sirupsen/logrus v1.6.0 // indirect

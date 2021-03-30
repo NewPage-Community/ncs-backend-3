@@ -1,0 +1,19 @@
+syntax = "proto3";
+package ncs.bot.qq.v1;
+option go_package = "app/bot/qq/api/grpc/v1";
+
+// 规范
+// 1. 包名必须遵守服务文件路径名
+// 2. 请求回复信息必须遵守格式
+
+message SendGroupMessageReq {
+	string message = 1;
+	bool auto_escape = 2;
+}
+
+message SendGroupMessageResp {
+}
+
+service QQ {
+	rpc SendGroupMessage (SendGroupMessageReq) returns (SendGroupMessageResp);
+}

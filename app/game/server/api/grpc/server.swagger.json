@@ -26,6 +26,15 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "a2s",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
+          }
+        ],
         "tags": [
           "Server"
         ]
@@ -136,6 +145,97 @@
     }
   },
   "definitions": {
+    "serverA2S_Info": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "map": {
+          "type": "string"
+        },
+        "folder": {
+          "type": "string"
+        },
+        "game": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "players": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "max_players": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "bots": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "server_type": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "environment": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "visibility": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "vac": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "version": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "steam_id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "source_tv_port": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "source_tv_name": {
+          "type": "string"
+        },
+        "keywords": {
+          "type": "string"
+        },
+        "game_id": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "serverA2S_Player": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "duration": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
     "serverAllInfoResp": {
       "type": "object",
       "properties": {
@@ -173,6 +273,16 @@
         },
         "short_name": {
           "type": "string"
+        },
+        "a2s_info": {
+          "$ref": "#/definitions/serverA2S_Info",
+          "title": "a2s"
+        },
+        "a2s_player": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/serverA2S_Player"
+          }
         }
       }
     },

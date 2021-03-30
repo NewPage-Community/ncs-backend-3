@@ -2,15 +2,11 @@ package service
 
 import (
 	pb "backend/app/bot/kaiheila/api/grpc/v1"
+	"backend/app/game/chat"
 	chatService "backend/app/game/chat/api/grpc"
 	"backend/pkg/log"
 	"context"
 	"github.com/gunslinger23/kaiheila"
-)
-
-const (
-	KaiheilaServerID = -1
-	AllChatChannelID = "4349043952859849"
 )
 
 func (s *Service) SendChannelMsg(ctx context.Context, req *pb.SendMessageReq) (resp *pb.SendMessageResp, err error) {
@@ -36,7 +32,7 @@ func (s *Service) EventHandler(event kaiheila.EventMsg) {
 		_, err := s.chat.AllChat(context.Background(), &chatService.AllChatReq{
 			Name:     event.Extra.Author.Username + "#" + event.Extra.Author.IdentifyNum,
 			Message:  event.Content,
-			ServerId: KaiheilaServerID,
+			ServerId: chat.KaiheilaID,
 		})
 		if err != nil {
 			log.Error(err)

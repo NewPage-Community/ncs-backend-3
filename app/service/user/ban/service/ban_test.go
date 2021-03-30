@@ -140,8 +140,8 @@ func TestService_BanCheck(t *testing.T) {
 	}, nil)
 	d.EXPECT().Info(uint64(2)).Return(&model.Ban{
 		UID: 2,
-	}, nil).Times(4)
-	d.EXPECT().IsBlockIP("127.0.0.1").Return(true, nil)
+	}, nil).Times(3)
+	//d.EXPECT().IsBlockIP("127.0.0.1").Return(true, nil)
 	d.EXPECT().Info(uint64(3)).Return(&model.Ban{
 		ID:         1,
 		UID:        3,
@@ -161,7 +161,7 @@ func TestService_BanCheck(t *testing.T) {
 			Info: &accountService.Info{
 				SteamId: 2,
 			},
-		}, nil).Times(4)
+		}, nil).Times(3)
 	acc.EXPECT().UID(gomock.Any(), &accountService.UIDReq{SteamId: 3}).
 		Return(&accountService.UIDResp{Uid: 3}, nil)
 	acc.EXPECT().UID(gomock.Any(), &accountService.UIDReq{SteamId: 4}).
@@ -171,7 +171,7 @@ func TestService_BanCheck(t *testing.T) {
 	steam2.EXPECT().IsPlayingSharedGame(uint64(2), 1).
 		Return(steam.PlayingSharedGame{LenderSteamID: 3}, nil)
 	steam2.EXPECT().IsPlayingSharedGame(uint64(2), 2).
-		Return(steam.PlayingSharedGame{LenderSteamID: 0}, nil).Times(2)
+		Return(steam.PlayingSharedGame{LenderSteamID: 0}, nil).Times(1)
 	steam2.EXPECT().IsPlayingSharedGame(uint64(2), 3).
 		Return(steam.PlayingSharedGame{LenderSteamID: 4}, nil)
 
@@ -213,7 +213,7 @@ func TestService_BanCheck(t *testing.T) {
 			So(res.Info.Id, ShouldEqual, 0)
 			t.Log(res)
 		})
-		Convey("Check record not found but block ip", func() {
+		/*Convey("Check record not found but block ip", func() {
 			res, err := srv.BanCheck(context.TODO(), &pb.Info2Req{
 				Uid:      2,
 				Ip:       "127.0.0.1",
@@ -226,7 +226,7 @@ func TestService_BanCheck(t *testing.T) {
 			So(res.Info.Id, ShouldEqual, 0)
 			So(res.Info.BlockIp, ShouldBeTrue)
 			t.Log(res)
-		})
+		})*/
 		Convey("Check shared lib", func() {
 			res, err := srv.BanCheck(context.TODO(), &pb.Info2Req{
 				Uid:      2,
