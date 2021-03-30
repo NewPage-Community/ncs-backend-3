@@ -66,12 +66,13 @@ func (s *Service) AllChat(ctx context.Context, req *pb.AllChatReq) (resp *pb.All
 	}
 
 	// Always send to game server
+	var prefix string
 	if len(serverShortName) > 0 {
-		serverShortName = " · " + serverShortName
+		prefix = " · " + serverShortName
 	}
 	_, err = s.ChatNotify(ctx, &pb.ChatNotifyReq{
 		Uid:     0,
-		Prefix:  fmt.Sprintf(AllChatPrefix, serverShortName),
+		Prefix:  fmt.Sprintf(AllChatPrefix, prefix),
 		Message: req.Name + " : " + req.Message,
 	})
 	return
