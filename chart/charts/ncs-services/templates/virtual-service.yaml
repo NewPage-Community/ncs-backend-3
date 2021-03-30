@@ -14,6 +14,6 @@ spec:
         subset: {{ .version }}
     retries:
       attempts: 1
-      perTryTimeout: 2s
+      perTryTimeout: 10s
 ---
 {{- end -}}

@@ -39,12 +39,12 @@ var _defaultSerConf = &ServerConfig{
 	Network:           "tcp",
 	GrpcPort:          2333,
 	HealthPort:        23333,
-	Timeout:           time.Second,
-	IdleTimeout:       time.Second * 60,
-	MaxLifeTime:       time.Hour * 2,
-	ForceCloseWait:    time.Second * 20,
-	KeepAliveInterval: time.Second * 60,
-	KeepAliveTimeout:  time.Second * 20,
+	Timeout:           10 * time.Second,
+	IdleTimeout:       60 * time.Second,
+	MaxLifeTime:       2 * time.Hour,
+	ForceCloseWait:    20 * time.Second,
+	KeepAliveInterval: 60 * time.Second,
+	KeepAliveTimeout:  20 * time.Second,
 }
 
 func NewServer(conf *ServerConfig) *Server {

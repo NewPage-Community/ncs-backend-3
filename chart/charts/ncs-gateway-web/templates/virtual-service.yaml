@@ -12,5 +12,5 @@ spec:
         host: {{ $fullName }}
     retries:
       attempts: 1
-      perTryTimeout: 2s
+      perTryTimeout: 10s
 ---

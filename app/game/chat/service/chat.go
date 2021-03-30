@@ -2,7 +2,6 @@ package service
 
 import (
 	kaiheilaBot "backend/app/bot/kaiheila/api/grpc/v1"
-	qqBot "backend/app/bot/qq/api/grpc/v1"
 	"backend/app/game/chat"
 	pb "backend/app/game/chat/api/grpc"
 	server "backend/app/game/server/api/grpc"
@@ -35,13 +34,13 @@ func (s *Service) AllChat(ctx context.Context, req *pb.AllChatReq) (resp *pb.All
 	sendToDiscord := func() {
 	}
 	sendToQQ := func() {
-		_, err = s.qq.SendGroupMessage(context.Background(), &qqBot.SendGroupMessageReq{
+		/*_, err = s.qq.SendGroupMessage(context.Background(), &qqBot.SendGroupMessageReq{
 			Message:    fmt.Sprintf(chat.QQMessage, serverShortName, removeColor(removeInvalidChar(req.Name)), req.Message),
 			AutoEscape: true,
 		})
 		if err != nil {
 			log.Error(err)
-		}
+		}*/
 	}
 
 	// Set non game server short name

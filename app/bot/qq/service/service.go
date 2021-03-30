@@ -5,6 +5,7 @@ import (
 	chatService "backend/app/game/chat/api/grpc"
 	serverService "backend/app/game/server/api/grpc"
 	"github.com/miRemid/amy"
+	"github.com/miRemid/amy/websocket/model"
 )
 
 // Service 服务结构定义
@@ -27,7 +28,9 @@ func Init(config *conf.Config) *Service {
 	}
 	srv.qqAPIClient.SetToken(config.QQConfig.Token)
 	srv.qqWSClient.SetToken(config.QQConfig.Token)
-	srv.qqWSClient.OnMessage(srv.OnMessage)
+	srv.qqWSClient.OnMessage(func(event model.CQEvent) {
+		srv.OnMessage(event)
+	})
 	go srv.qqWSClient.Run()
 	return srv
 }

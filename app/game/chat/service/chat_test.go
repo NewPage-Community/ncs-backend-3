@@ -41,7 +41,7 @@ func TestService_AllChat(t *testing.T) {
 	kaiheila := kaiheilaBot.NewMockKaiheilaClient(ctl)
 	kaiheila.EXPECT().SendChannelMsg(gomock.Any(), gomock.Any()).Return(nil, nil)
 	qq := qqBot.NewMockQQClient(ctl)
-	qq.EXPECT().SendGroupMessage(gomock.Any(), gomock.Any()).Return(nil, nil)
+	//qq.EXPECT().SendGroupMessage(gomock.Any(), gomock.Any()).Return(nil, nil)
 
 	srv := &Service{server: s, kaiheila: kaiheila, qq: qq}
 	Convey("Test AllChat", t, func() {

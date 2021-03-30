@@ -7,7 +7,9 @@ import (
 	"backend/pkg/log"
 	"context"
 	"google.golang.org/grpc/codes"
+	"sort"
 	"strconv"
+	"sync"
 )
 
 func (s *Service) Init(ctx context.Context, req *pb.InitReq) (resp *pb.InitResp, err error) {
@@ -73,53 +75,72 @@ func (s *Service) AllInfo(ctx context.Context, req *pb.AllInfoReq) (resp *pb.All
 		return
 	}
 
+	var lock sync.Mutex
+	var wg sync.WaitGroup
 	for _, v := range res {
-		a2sInfo := pb.A2S_Info{}
-		a2sPlayer := make([]*pb.A2S_Player, 0)
-		if req.A2S {
-			if v.RequestA2S() == nil {
-				a2sInfo = pb.A2S_Info{
-					Protocol:     int32(v.A2SInfo.Protocol),
-					Map:          model.FixA2SString(v.A2SInfo.Map),
-					Folder:       model.FixA2SString(v.A2SInfo.Folder),
-					Game:         model.FixA2SString(v.A2SInfo.Game),
-					Id:           int32(v.A2SInfo.ID),
-					Players:      int32(v.A2SInfo.Players),
-					MaxPlayers:   int32(v.A2SInfo.MaxPlayers),
-					Bots:         int32(v.A2SInfo.Bots),
-					ServerType:   int32(v.A2SInfo.ServerType),
-					Environment:  int32(v.A2SInfo.Environment),
-					Visibility:   int32(v.A2SInfo.Visibility),
-					Vac:          int32(v.A2SInfo.VAC),
-					Version:      model.FixA2SString(v.A2SInfo.Version),
-					Port:         int32(v.A2SInfo.Port),
-					SteamId:      v.A2SInfo.SteamID,
-					SourceTvPort: int32(v.A2SInfo.SourceTVPort),
-					SourceTvName: model.FixA2SString(v.A2SInfo.SourceTVName),
-					Keywords:     model.FixA2SString(v.A2SInfo.Keywords),
-					GameId:       v.A2SInfo.GameID,
-				}
-				for _, v := range v.A2SPlayer.Players {
-					a2sPlayer = append(a2sPlayer, &pb.A2S_Player{
-						Name:     model.FixA2SString(v.Name),
-						Score:    int32(v.Score),
-						Duration: float32(v.Duration),
-					})
+		wg.Add(1)
+		server := v
+		// Async query A2S
+		go func() {
+			a2sInfo := pb.A2S_Info{}
+			a2sPlayer := make([]*pb.A2S_Player, 0)
+			if req.A2S {
+				// Query A2S
+				if server.RequestA2S() == nil {
+					// Push data
+					a2sInfo = pb.A2S_Info{
+						Protocol:     int32(server.A2SInfo.Protocol),
+						Map:          model.FixA2SString(server.A2SInfo.Map),
+						Folder:       model.FixA2SString(server.A2SInfo.Folder),
+						Game:         model.FixA2SString(server.A2SInfo.Game),
+						Id:           int32(server.A2SInfo.ID),
+						Players:      int32(server.A2SInfo.Players),
+						MaxPlayers:   int32(server.A2SInfo.MaxPlayers),
+						Bots:         int32(server.A2SInfo.Bots),
+						ServerType:   int32(server.A2SInfo.ServerType),
+						Environment:  int32(server.A2SInfo.Environment),
+						Visibility:   int32(server.A2SInfo.Visibility),
+						Vac:          int32(server.A2SInfo.VAC),
+						Version:      model.FixA2SString(server.A2SInfo.Version),
+						Port:         int32(server.A2SInfo.Port),
+						SteamId:      server.A2SInfo.SteamID,
+						SourceTvPort: int32(server.A2SInfo.SourceTVPort),
+						SourceTvName: model.FixA2SString(server.A2SInfo.SourceTVName),
+						Keywords:     model.FixA2SString(server.A2SInfo.Keywords),
+						GameId:       server.A2SInfo.GameID,
+					}
+					for _, v := range server.A2SPlayer.Players {
+						a2sPlayer = append(a2sPlayer, &pb.A2S_Player{
+							Name:     model.FixA2SString(v.Name),
+							Score:    int32(v.Score),
+							Duration: float32(v.Duration),
+						})
+					}
 				}
 			}
-		}
-		resp.Info = append(resp.Info, &pb.Info{
-			ServerId:  v.ServerID,
-			ModId:     v.ModID,
-			GameId:    v.GameID,
-			Rcon:      v.Rcon,
-			Hostname:  v.Hostname,
-			Address:   v.Address,
-			ShortName: v.ShortName,
-			A2SInfo:   &a2sInfo,
-			A2SPlayer: a2sPlayer,
-		})
+			// Push result to slice
+			lock.Lock()
+			resp.Info = append(resp.Info, &pb.Info{
+				ServerId:  server.ServerID,
+				ModId:     server.ModID,
+				GameId:    server.GameID,
+				Rcon:      server.Rcon,
+				Hostname:  server.Hostname,
+				Address:   server.Address,
+				ShortName: server.ShortName,
+				A2SInfo:   &a2sInfo,
+				A2SPlayer: a2sPlayer,
+			})
+			lock.Unlock()
+			wg.Done()
+		}()
 	}
+	wg.Wait()
+
+	// Sort server list (by ServerID)
+	sort.Slice(resp.Info, func(i, j int) bool {
+		return resp.Info[i].ServerId < resp.Info[j].ServerId
+	})
 	return
 }
 

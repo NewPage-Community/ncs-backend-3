@@ -25,10 +25,6 @@ func (s *Service) SendGroupMessage(ctx context.Context, req *pb.SendGroupMessage
 	return
 }
 
-func (s *Service) OnResponse(res qqModel.CQResponse) {
-	log.Info(res)
-}
-
 func (s *Service) OnMessage(event qqModel.CQEvent) {
 	msg, ok := event.Map["raw_message"]
 	if !ok {
@@ -67,13 +63,12 @@ func (s *Service) getServerStatus(event qqModel.CQEvent) {
 	var msg string
 	resp, err := s.serverSrv.AllInfo(context.Background(), &serverService.AllInfoReq{A2S: true})
 	if err != nil {
+		log.Error(err)
 		return
 	}
 
 	for _, v := range resp.Info {
-		if v.A2SInfo.Id == 0 {
-			msg += fmt.Sprintf("%s | 服务器未响应\n", v.ShortName)
-		} else {
+		if v.A2SInfo.Id != 0 {
 			msg += fmt.Sprintf("%s | %s (%d/%d)\n", v.ShortName, v.A2SInfo.Map, v.A2SInfo.Players, v.A2SInfo.MaxPlayers)
 		}
 	}

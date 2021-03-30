@@ -51,7 +51,7 @@ func (i *Info) RCON(cmd string) (resp string, err error) {
 func (i *Info) RequestA2S() (err error) {
 	server, err := steam.Connect(i.Address, &steam.ConnectOptions{
 		Dial: (&net.Dialer{
-			Timeout: 500 * time.Millisecond,
+			Timeout: 100 * time.Millisecond,
 		}).Dial,
 	})
 	if err != nil {
@@ -68,12 +68,4 @@ func (i *Info) RequestA2S() (err error) {
 	}
 	server.Close()
 	return
-}
-
-func FixA2SString(s string) string {
-	length := len(s)
-	if length == 0 {
-		return s
-	}
-	return s[:length-1]
 }

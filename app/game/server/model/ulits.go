@@ -17,3 +17,12 @@ func getRandomString(lenght int64) string {
 	}
 	return string(result)
 }
+
+// FixA2SString remove not displayable char from a2s
+func FixA2SString(s string) string {
+	length := len(s)
+	if length == 0 {
+		return s
+	}
+	return s[:length-1]
+}
