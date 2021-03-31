@@ -134,6 +134,26 @@ func (mr *MockServerClientMockRecorder) RconAll(ctx, in interface{}, opts ...int
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RconAll", reflect.TypeOf((*MockServerClient)(nil).RconAll), varargs...)
 }
 
+// ChangeMapNotify mocks base method
+func (m *MockServerClient) ChangeMapNotify(ctx context.Context, in *ChangeMapNotifyReq, opts ...grpc.CallOption) (*ChangeMapNotifyResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ChangeMapNotify", varargs...)
+	ret0, _ := ret[0].(*ChangeMapNotifyResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ChangeMapNotify indicates an expected call of ChangeMapNotify
+func (mr *MockServerClientMockRecorder) ChangeMapNotify(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChangeMapNotify", reflect.TypeOf((*MockServerClient)(nil).ChangeMapNotify), varargs...)
+}
+
 // MockServerServer is a mock of ServerServer interface
 type MockServerServer struct {
 	ctrl     *gomock.Controller
@@ -230,4 +250,19 @@ func (m *MockServerServer) RconAll(arg0 context.Context, arg1 *RconAllReq) (*Rco
 func (mr *MockServerServerMockRecorder) RconAll(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RconAll", reflect.TypeOf((*MockServerServer)(nil).RconAll), arg0, arg1)
+}
+
+// ChangeMapNotify mocks base method
+func (m *MockServerServer) ChangeMapNotify(arg0 context.Context, arg1 *ChangeMapNotifyReq) (*ChangeMapNotifyResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ChangeMapNotify", arg0, arg1)
+	ret0, _ := ret[0].(*ChangeMapNotifyResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ChangeMapNotify indicates an expected call of ChangeMapNotify
+func (mr *MockServerServerMockRecorder) ChangeMapNotify(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChangeMapNotify", reflect.TypeOf((*MockServerServer)(nil).ChangeMapNotify), arg0, arg1)
 }

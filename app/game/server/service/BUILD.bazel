@@ -9,6 +9,7 @@ go_library(
     importpath = "backend/app/game/server/service",
     visibility = ["//visibility:public"],
     deps = [
+        "//app/bot/qq/api/grpc/v1:go_default_library",
         "//app/game/server/api/grpc:go_default_library",
         "//app/game/server/conf:go_default_library",
         "//app/game/server/dao:go_default_library",
@@ -24,6 +25,7 @@ go_test(
     srcs = ["server_test.go"],
     embed = [":go_default_library"],
     deps = [
+        "//app/bot/qq/api/grpc/v1:go_default_library",
         "//app/game/server/api/grpc:go_default_library",
         "//app/game/server/dao:go_default_library",
         "//app/game/server/model:go_default_library",

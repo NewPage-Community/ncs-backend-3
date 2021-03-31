@@ -94,6 +94,15 @@ message RconAllResp {
     int32 success = 1;
 }
 
+message ChangeMapNotifyReq {
+    int32 server_id = 1;
+    string map = 2;
+}
+
+message ChangeMapNotifyResp {
+}
+
+
 service Server {
     rpc Info (InfoReq) returns (InfoResp) {
         option (google.api.http) = {
@@ -120,6 +129,12 @@ service Server {
     rpc RconAll (RconAllReq) returns (RconAllResp) {
         option (google.api.http) = {
             post: "/game/server/rcon/all"
+            body: "*"
+        };
+    }
+    rpc ChangeMapNotify (ChangeMapNotifyReq) returns (ChangeMapNotifyResp) {
+        option (google.api.http) = {
+            post: "/game/server/changemap"
             body: "*"
         };
     }

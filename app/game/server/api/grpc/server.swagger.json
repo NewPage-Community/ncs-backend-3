@@ -40,6 +40,32 @@
         ]
       }
     },
+    "/game/server/changemap": {
+      "post": {
+        "operationId": "ChangeMapNotify",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/serverChangeMapNotifyResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverChangeMapNotifyReq"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
     "/game/server/info/{server_id}": {
       "get": {
         "operationId": "Info",
@@ -246,6 +272,21 @@
           }
         }
       }
+    },
+    "serverChangeMapNotifyReq": {
+      "type": "object",
+      "properties": {
+        "server_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "map": {
+          "type": "string"
+        }
+      }
+    },
+    "serverChangeMapNotifyResp": {
+      "type": "object"
     },
     "serverInfo": {
       "type": "object",

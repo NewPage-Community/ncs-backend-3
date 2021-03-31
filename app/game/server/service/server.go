@@ -1,11 +1,13 @@
 package service
 
 import (
+	qqBot "backend/app/bot/qq/api/grpc/v1"
 	pb "backend/app/game/server/api/grpc"
 	"backend/app/game/server/model"
 	"backend/pkg/ecode"
 	"backend/pkg/log"
 	"context"
+	"fmt"
 	"google.golang.org/grpc/codes"
 	"sort"
 	"strconv"
@@ -86,7 +88,8 @@ func (s *Service) AllInfo(ctx context.Context, req *pb.AllInfoReq) (resp *pb.All
 			a2sPlayer := make([]*pb.A2S_Player, 0)
 			if req.A2S {
 				// Query A2S
-				if server.RequestA2S() == nil {
+				err := server.RequestA2S()
+				if err == nil {
 					// Push data
 					a2sInfo = pb.A2S_Info{
 						Protocol:     int32(server.A2SInfo.Protocol),
@@ -116,6 +119,8 @@ func (s *Service) AllInfo(ctx context.Context, req *pb.AllInfoReq) (resp *pb.All
 							Duration: float32(v.Duration),
 						})
 					}
+				} else {
+					log.Error(server.Address, err)
 				}
 			}
 			// Push result to slice
@@ -179,5 +184,20 @@ func (s *Service) RconAll(ctx context.Context, req *pb.RconAllReq) (resp *pb.Rco
 		}()
 	}
 
+	return
+}
+
+func (s *Service) ChangeMapNotify(ctx context.Context, req *pb.ChangeMapNotifyReq) (resp *pb.ChangeMapNotifyResp, err error) {
+	resp = &pb.ChangeMapNotifyResp{}
+
+	res, err := s.dao.InfoWithID(req.ServerId)
+	if err != nil {
+		return
+	}
+
+	_, err = s.qq.SendGroupMessage(ctx, &qqBot.SendGroupMessageReq{
+		Message:    fmt.Sprintf("%s 更换地图 %s", res.ShortName, req.Map),
+		AutoEscape: false,
+	})
 	return
 }
