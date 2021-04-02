@@ -89,37 +89,36 @@ func (s *Service) AllInfo(ctx context.Context, req *pb.AllInfoReq) (resp *pb.All
 			if req.A2S {
 				// Query A2S
 				err := server.RequestA2S()
-				if err == nil {
-					// Push data
-					a2sInfo = pb.A2S_Info{
-						Protocol:     int32(server.A2SInfo.Protocol),
-						Map:          model.FixA2SString(server.A2SInfo.Map),
-						Folder:       model.FixA2SString(server.A2SInfo.Folder),
-						Game:         model.FixA2SString(server.A2SInfo.Game),
-						Id:           int32(server.A2SInfo.ID),
-						Players:      int32(server.A2SInfo.Players),
-						MaxPlayers:   int32(server.A2SInfo.MaxPlayers),
-						Bots:         int32(server.A2SInfo.Bots),
-						ServerType:   int32(server.A2SInfo.ServerType),
-						Environment:  int32(server.A2SInfo.Environment),
-						Visibility:   int32(server.A2SInfo.Visibility),
-						Vac:          int32(server.A2SInfo.VAC),
-						Version:      model.FixA2SString(server.A2SInfo.Version),
-						Port:         int32(server.A2SInfo.Port),
-						SteamId:      server.A2SInfo.SteamID,
-						SourceTvPort: int32(server.A2SInfo.SourceTVPort),
-						SourceTvName: model.FixA2SString(server.A2SInfo.SourceTVName),
-						Keywords:     model.FixA2SString(server.A2SInfo.Keywords),
-						GameId:       server.A2SInfo.GameID,
-					}
-					for _, v := range server.A2SPlayer.Players {
-						a2sPlayer = append(a2sPlayer, &pb.A2S_Player{
-							Name:     model.FixA2SString(v.Name),
-							Score:    int32(v.Score),
-							Duration: float32(v.Duration),
-						})
-					}
-				} else {
+				// Push data
+				a2sInfo = pb.A2S_Info{
+					Protocol:     int32(server.A2SInfo.Protocol),
+					Map:          model.FixA2SString(server.A2SInfo.Map),
+					Folder:       model.FixA2SString(server.A2SInfo.Folder),
+					Game:         model.FixA2SString(server.A2SInfo.Game),
+					Id:           int32(server.A2SInfo.ID),
+					Players:      int32(server.A2SInfo.Players),
+					MaxPlayers:   int32(server.A2SInfo.MaxPlayers),
+					Bots:         int32(server.A2SInfo.Bots),
+					ServerType:   int32(server.A2SInfo.ServerType),
+					Environment:  int32(server.A2SInfo.Environment),
+					Visibility:   int32(server.A2SInfo.Visibility),
+					Vac:          int32(server.A2SInfo.VAC),
+					Version:      model.FixA2SString(server.A2SInfo.Version),
+					Port:         int32(server.A2SInfo.Port),
+					SteamId:      server.A2SInfo.SteamID,
+					SourceTvPort: int32(server.A2SInfo.SourceTVPort),
+					SourceTvName: model.FixA2SString(server.A2SInfo.SourceTVName),
+					Keywords:     model.FixA2SString(server.A2SInfo.Keywords),
+					GameId:       server.A2SInfo.GameID,
+				}
+				for _, v := range server.A2SPlayer.Players {
+					a2sPlayer = append(a2sPlayer, &pb.A2S_Player{
+						Name:     model.FixA2SString(v.Name),
+						Score:    int32(v.Score),
+						Duration: float32(v.Duration),
+					})
+				}
+				if err != nil {
 					log.Error(server.Address, err)
 				}
 			}
