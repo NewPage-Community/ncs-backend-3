@@ -55,7 +55,7 @@ func (a *API) request(req APIRequest, values url.Values, v interface{}) error {
 	values.Add("key", a.APIKey)
 
 	apiURL := fmt.Sprintf("%s/%s/%s/v%d/?%s", a.APIUrl, req.Service, req.Method, req.Version, values.Encode())
-	client := http.Client{Timeout: time.Second}
+	client := http.Client{Timeout: time.Duration(a.Timeout) * time.Second}
 	if len(a.HttpProxy) > 0 {
 		proxy, err := url.Parse("http://" + a.HttpProxy)
 		if err != nil {
