@@ -131,6 +131,9 @@
     }
   },
   "definitions": {
+    "donateAddDonateResp": {
+      "type": "object"
+    },
     "donateCreateDonateReq": {
       "type": "object",
       "properties": {

@@ -34,6 +34,14 @@ message GetDonateListResp {
     repeated QueryDonateResp list = 1;
 }
 
+message AddDonateReq {
+    int64 steam_id = 1;
+    int32 amount = 2;
+}
+
+message AddDonateResp {
+}
+
 service Donate {
     rpc CreateDonate (CreateDonateReq) returns (CreateDonateResp) {
         option (google.api.http) = {
@@ -54,4 +62,5 @@ service Donate {
 			}
         };
     }
+    rpc AddDonate (AddDonateReq) returns (AddDonateResp);
 }

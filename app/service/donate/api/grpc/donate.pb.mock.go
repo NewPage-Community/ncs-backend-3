@@ -94,6 +94,26 @@ func (mr *MockDonateClientMockRecorder) GetDonateList(ctx, in interface{}, opts 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDonateList", reflect.TypeOf((*MockDonateClient)(nil).GetDonateList), varargs...)
 }
 
+// AddDonate mocks base method
+func (m *MockDonateClient) AddDonate(ctx context.Context, in *AddDonateReq, opts ...grpc.CallOption) (*AddDonateResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "AddDonate", varargs...)
+	ret0, _ := ret[0].(*AddDonateResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddDonate indicates an expected call of AddDonate
+func (mr *MockDonateClientMockRecorder) AddDonate(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddDonate", reflect.TypeOf((*MockDonateClient)(nil).AddDonate), varargs...)
+}
+
 // MockDonateServer is a mock of DonateServer interface
 type MockDonateServer struct {
 	ctrl     *gomock.Controller
@@ -160,4 +180,19 @@ func (m *MockDonateServer) GetDonateList(arg0 context.Context, arg1 *GetDonateLi
 func (mr *MockDonateServerMockRecorder) GetDonateList(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDonateList", reflect.TypeOf((*MockDonateServer)(nil).GetDonateList), arg0, arg1)
+}
+
+// AddDonate mocks base method
+func (m *MockDonateServer) AddDonate(arg0 context.Context, arg1 *AddDonateReq) (*AddDonateResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddDonate", arg0, arg1)
+	ret0, _ := ret[0].(*AddDonateResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddDonate indicates an expected call of AddDonate
+func (mr *MockDonateServerMockRecorder) AddDonate(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddDonate", reflect.TypeOf((*MockDonateServer)(nil).AddDonate), arg0, arg1)
 }

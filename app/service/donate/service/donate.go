@@ -143,3 +143,29 @@ func (s *Service) GetDonateList(ctx context.Context, req *pb.GetDonateListReq) (
 	}
 	return
 }
+
+func (s *Service) AddDonate(ctx context.Context, req *pb.AddDonateReq) (resp *pb.AddDonateResp, err error) {
+	resp = &pb.AddDonateResp{}
+
+	if req.SteamId == 0 || req.Amount == 0 {
+		err = status.Error(codes.InvalidArgument, "Invalid args")
+		return
+	}
+
+	// Get UID
+	acc, err := s.account.UID(ctx, &accountService.UIDReq{
+		SteamId: req.SteamId,
+	})
+	if err != nil {
+		return
+	}
+
+	// Get trade no
+	outTradeNo, err := s.dao.CreateDonate(acc.Uid, req.SteamId, req.Amount)
+	if err != nil {
+		return
+	}
+
+	err = s.FinishDonate(outTradeNo)
+	return
+}
