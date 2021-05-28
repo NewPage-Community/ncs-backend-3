@@ -70,6 +70,7 @@ push all images:
     - build/push-images.sh
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
+      allow_failure: true
       when: manual
     - when: never
 
@@ -81,6 +82,7 @@ deploy-ins:
     - helm upgrade --install --namespace ncs -f ./chart/ins.yaml ncs ./chart
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
+      allow_failure: true
       when: manual
     - when: never
   needs: ["push changed images"]
