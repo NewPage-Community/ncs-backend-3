@@ -19,7 +19,7 @@ func (d *dao) CreateDonate(uid int64, steamID int64, amount int32) (outTradeNo s
 	secondsEastOfUTC := int((8 * time.Hour).Seconds())
 	beijing := time.FixedZone("Beijing Time", secondsEastOfUTC)
 	now := time.Now().In(beijing).Format("20060102150405")
-	outTradeNo = fmt.Sprintf("%s%s", now, steam[:4])
+	outTradeNo = fmt.Sprintf("%s%s", now, steam[len(steam)-4:])
 
 	// DB
 	info := &model.Donate{

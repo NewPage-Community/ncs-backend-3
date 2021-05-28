@@ -64,7 +64,7 @@ push changed images:
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
 
-push all images:
+force push all images:
   stage: push images
   script:
     - build/push-images.sh
