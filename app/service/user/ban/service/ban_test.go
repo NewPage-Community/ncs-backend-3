@@ -124,6 +124,8 @@ func TestService_Add(t *testing.T) {
 			So(err, ShouldBeNil)
 		})
 	})
+	// Wait routine
+	time.Sleep(time.Second)
 }
 
 func TestService_BanCheck(t *testing.T) {
@@ -251,6 +253,7 @@ func TestService_BanCheck(t *testing.T) {
 			t.Log(res)
 		})
 	})
+	// Wait routine
 	time.Sleep(time.Second)
 }
 
