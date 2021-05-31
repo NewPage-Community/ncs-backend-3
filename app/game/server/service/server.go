@@ -175,6 +175,10 @@ func (s *Service) RconAll(ctx context.Context, req *pb.RconAllReq) (resp *pb.Rco
 	// Async
 	for i := range res {
 		server := res[i]
+		// Skip empty rcon password
+		if len(server.Rcon) == 0 {
+			continue
+		}
 		go func() {
 			_, err := server.RCON(req.Cmd)
 			if err != nil {
