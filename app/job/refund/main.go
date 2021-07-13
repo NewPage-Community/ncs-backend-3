@@ -39,7 +39,7 @@ func main() {
 	items = itemsSrv.InitClient(itemsSrv.ServiceAddr)
 	user = userSrv.InitClient(userSrv.ServiceAddr)
 	money = moneySrv.InitClient(moneySrv.ServiceAddr)
-	account = accountSrv.InitClient(moneySrv.ServiceAddr)
+	account = accountSrv.InitClient(accountSrv.ServiceAddr)
 	defer func() {
 		itemsSrv.Close()
 		userSrv.Close()
