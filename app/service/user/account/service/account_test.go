@@ -98,3 +98,22 @@ func TestService_UID(t *testing.T) {
 		t.Log(res)
 	})
 }
+
+func TestService_GetAllUID(t *testing.T) {
+	ctl := gomock.NewController(t)
+	defer ctl.Finish()
+
+	m := dao.NewMockDao(ctl)
+	m.EXPECT().GetAllUID().Return(&[]int64{test.UID}, nil)
+
+	srv := &Service{dao: m}
+	Convey("Test service GetAllUID", t, func() {
+		res, err := srv.GetAllUID(context.Background(), &pb.GetAllUIDReq{})
+		Convey("Then check it work", func() {
+			So(res.Uid[0], ShouldEqual, test.UID)
+			So(len(res.Uid), ShouldEqual, 1)
+			So(err, ShouldBeNil)
+		})
+		t.Log(res)
+	})
+}

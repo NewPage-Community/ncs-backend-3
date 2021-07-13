@@ -15,6 +15,7 @@ type Dao interface {
 	Info(uid int64) (*model.Info, error)
 	Register(steamID int64) (*model.Info, error)
 	ChangeName(info *model.Info) error
+	GetAllUID() (*[]int64, error)
 	Healthy() bool
 	Close()
 }

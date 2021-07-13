@@ -114,6 +114,26 @@ func (mr *MockAccountClientMockRecorder) ChangeName(ctx, in interface{}, opts ..
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChangeName", reflect.TypeOf((*MockAccountClient)(nil).ChangeName), varargs...)
 }
 
+// GetAllUID mocks base method
+func (m *MockAccountClient) GetAllUID(ctx context.Context, in *GetAllUIDReq, opts ...grpc.CallOption) (*GetAllUIDResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetAllUID", varargs...)
+	ret0, _ := ret[0].(*GetAllUIDResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAllUID indicates an expected call of GetAllUID
+func (mr *MockAccountClientMockRecorder) GetAllUID(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllUID", reflect.TypeOf((*MockAccountClient)(nil).GetAllUID), varargs...)
+}
+
 // MockAccountServer is a mock of AccountServer interface
 type MockAccountServer struct {
 	ctrl     *gomock.Controller
@@ -195,6 +215,21 @@ func (m *MockAccountServer) ChangeName(arg0 context.Context, arg1 *ChangeNameReq
 func (mr *MockAccountServerMockRecorder) ChangeName(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChangeName", reflect.TypeOf((*MockAccountServer)(nil).ChangeName), arg0, arg1)
+}
+
+// GetAllUID mocks base method
+func (m *MockAccountServer) GetAllUID(arg0 context.Context, arg1 *GetAllUIDReq) (*GetAllUIDResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAllUID", arg0, arg1)
+	ret0, _ := ret[0].(*GetAllUIDResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAllUID indicates an expected call of GetAllUID
+func (mr *MockAccountServerMockRecorder) GetAllUID(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllUID", reflect.TypeOf((*MockAccountServer)(nil).GetAllUID), arg0, arg1)
 }
 
 // MockWebClient is a mock of WebClient interface

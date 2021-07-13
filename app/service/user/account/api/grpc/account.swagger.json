@@ -139,6 +139,18 @@
     "accountChangeNameResp": {
       "type": "object"
     },
+    "accountGetAllUIDResp": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          }
+        }
+      }
+    },
     "accountInfo": {
       "type": "object",
       "properties": {

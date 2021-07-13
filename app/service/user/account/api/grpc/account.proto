@@ -46,6 +46,13 @@ message ChangeNameReq {
 message ChangeNameResp {
 }
 
+message GetAllUIDReq {
+}
+
+message GetAllUIDResp {
+    repeated int64 uid = 1;
+}
+
 service Account {
     rpc UID (UIDReq) returns (UIDResp) {
         option (google.api.http) = {
@@ -69,6 +76,7 @@ service Account {
             body: "*"
         };
     }
+    rpc GetAllUID (GetAllUIDReq) returns (GetAllUIDResp);
 }
 
 service Web {

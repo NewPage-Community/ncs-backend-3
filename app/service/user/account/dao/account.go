@@ -100,3 +100,16 @@ func (d *dao) ChangeName(info *model.Info) (err error) {
 	err = d.cache.HDel(info.InfoKey(), strconv.FormatInt(info.UID, 10)).Err()
 	return
 }
+
+func (d *dao) GetAllUID() (res *[]int64, err error) {
+	res = &[]int64{}
+	var users []model.Info
+
+	// DB
+	err = d.db.Find(&users).Error
+
+	for _, user := range users {
+		*res = append(*res, user.UID)
+	}
+	return
+}

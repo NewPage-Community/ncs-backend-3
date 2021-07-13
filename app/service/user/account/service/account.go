@@ -81,3 +81,15 @@ func (s *Service) ChangeName(ctx context.Context, req *pb.ChangeNameReq) (res *p
 	})
 	return
 }
+
+func (s *Service) GetAllUID(ctx context.Context, req *pb.GetAllUIDReq) (res *pb.GetAllUIDResp, err error) {
+	res = &pb.GetAllUIDResp{}
+
+	users, err := s.dao.GetAllUID()
+	if err != nil {
+		return
+	}
+
+	res.Uid = *users
+	return
+}
