@@ -78,3 +78,9 @@ img:
 	docker pull $(HELM_IMG)
 	docker pull $(BAZEL_IMG)
 	docker pull $(GO_IMG)
+
+.PHONY: dao-mock
+dao-mock:
+	$(GO_CMD) \
+		go mod download && \
+		build/build-dao-mock.sh app

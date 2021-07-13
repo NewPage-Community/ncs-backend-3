@@ -4,6 +4,7 @@ go_library(
     name = "go_default_library",
     srcs = [
         "dao.go",
+        "dao.mock.go",
         "qq.go",
     ],
     importpath = "backend/app/service/auth/qq/dao",
@@ -13,6 +14,7 @@ go_library(
         "//app/service/auth/qq/model:go_default_library",
         "//pkg/database/mysql:go_default_library",
         "//pkg/log:go_default_library",
+        "@com_github_golang_mock//gomock:go_default_library",
         "@io_gorm_gorm//:go_default_library",
     ],
 )
