@@ -4,7 +4,7 @@ function push_changed() {
     pkgs=$(build/changed-pkgs.sh)
     exitCode=$?
     if [[ ${exitCode} -ne 0 ]]; then
-        echo "build/get-pkgs.sh fail"
+        echo "build/changed-pkgs.sh fail"
         exit ${exitCode}
     fi
     if [[ "${pkgs}" = "" ]]; then
