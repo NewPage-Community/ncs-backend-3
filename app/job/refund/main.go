@@ -104,6 +104,9 @@ func refund() {
 					fmt.Printf("[ERROR] remove %d item (%d) faild\n", uid, item.Id)
 					return
 				}
+				if item.Price == 0 {
+					return
+				}
 				_, err = money.Give(ctx, &moneySrv.GiveReq{
 					Uid:    uid,
 					Money:  item.Price,
