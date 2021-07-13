@@ -95,6 +95,8 @@ func refund() {
 				wg.Done()
 			}()
 
+			isRefund := false
+
 			for _, item := range refundItemsInfo {
 				ctx := context.Background()
 
@@ -142,6 +144,19 @@ func refund() {
 					fmt.Println(err)
 				} else {
 					fmt.Printf("[SUCCESS] refund %d item (%d - %d)\n", uid, item.Id, item.Price)
+					isRefund = true
+				}
+			}
+
+			if isRefund {
+				_, err = money.Give(context.Background(), &moneySrv.GiveReq{
+					Uid:    uid,
+					Money:  300,
+					Reason: fmt.Sprintf("回收补偿"),
+				})
+				if err != nil {
+					fmt.Printf("[ERROR] compensation %d faild\n", uid)
+					fmt.Println(err)
 				}
 			}
 		}()
