@@ -114,6 +114,8 @@ func refund() {
 				})
 				if err != nil {
 					fmt.Printf("[ERROR] refund %d item (%d - %d) faild\n", uid, item.Id, item.Price)
+				} else {
+					fmt.Printf("[SUCCESS] refund %d item (%d - %d)", uid, item.Id, item.Price)
 				}
 			}()
 		}

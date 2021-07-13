@@ -18,7 +18,7 @@ GOLANGCI_CMD    = $(DOCKER_CMD) --env GOPROXY=https://goproxy.cn,direct $(GOLANG
 
 # Rules
 .PHONY: all
-all: img proto dep build test lint
+all: img proto dao-mock dep build test lint
 
 .PHONY: dep
 dep:
