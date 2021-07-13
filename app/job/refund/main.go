@@ -128,6 +128,8 @@ func refund() {
 					continue
 				}
 
+				isRefund = true
+
 				// No refund if do not have price
 				if item.Price == 0 {
 					continue
@@ -144,7 +146,6 @@ func refund() {
 					fmt.Println(err)
 				} else {
 					fmt.Printf("[SUCCESS] refund %d item (%d - %d)\n", uid, item.Id, item.Price)
-					isRefund = true
 				}
 			}
 
