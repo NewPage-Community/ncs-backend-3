@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	MaxProcess = 50
+	MaxProcess = 10
 )
 
 var items itemsSrv.ItemsClient
@@ -47,8 +47,9 @@ func main() {
 		accountSrv.Close()
 	}()
 
-	fmt.Printf("Start to refund items\n%s", refundStr)
+	fmt.Printf("Start to refund items\n%s\n", refundStr)
 	refund()
+	fmt.Printf("Refund done\n")
 }
 
 func refund() {
@@ -81,44 +82,69 @@ func refund() {
 
 	// Refund all
 	for _, uid := range accounts.Uid {
-		for _, item := range refundItemsInfo {
-			// Routine queue
-			sem <- 1
-			wg.Add(1)
+		// Routine queue
+		sem <- 1
+		wg.Add(1)
 
-			item := item
-			go func() {
-				// Routine done
-				defer func() {
-					<-sem
-					wg.Done()
-				}()
+		// 1 user 1 routine
+		uid := uid
+		go func() {
+			// Routine done
+			defer func() {
+				<-sem
+				wg.Done()
+			}()
 
+			for _, item := range refundItemsInfo {
 				ctx := context.Background()
 
+				// Check user have item
+				res, err := user.HaveItem(ctx, &userSrv.HaveItemReq{
+					Uid: uid,
+					Id:  item.Id,
+				})
+				if err != nil {
+					fmt.Printf("[ERROR] check %d item (%d) faild\n", uid, item.Id)
+					fmt.Println(err)
+					continue
+				}
+				// User do not have item
+				if !res.Have {
+					continue
+				}
+
+				// Remove it
 				_, err = user.RemoveItem(ctx, &userSrv.RemoveItemReq{
 					Uid:  uid,
 					Item: &userSrv.Item{Id: item.Id},
+					// Force remove unlimited item
+					All: true,
 				})
 				if err != nil {
 					fmt.Printf("[ERROR] remove %d item (%d) faild\n", uid, item.Id)
-					return
+					fmt.Println(err)
+					continue
 				}
+
+				// No refund if do not have price
 				if item.Price == 0 {
-					return
+					continue
 				}
+
+				// Refund!
 				_, err = money.Give(ctx, &moneySrv.GiveReq{
 					Uid:    uid,
 					Money:  item.Price,
-					Reason: fmt.Sprintf("皮肤 %s 退款", item.Name),
+					Reason: fmt.Sprintf("退款 - %s", item.Name),
 				})
 				if err != nil {
 					fmt.Printf("[ERROR] refund %d item (%d - %d) faild\n", uid, item.Id, item.Price)
+					fmt.Println(err)
 				} else {
-					fmt.Printf("[SUCCESS] refund %d item (%d - %d)", uid, item.Id, item.Price)
+					fmt.Printf("[SUCCESS] refund %d item (%d - %d)\n", uid, item.Id, item.Price)
 				}
-			}()
-		}
+			}
+		}()
 	}
 
 	wg.Wait()
