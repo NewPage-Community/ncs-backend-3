@@ -34,18 +34,18 @@ func (m *MockDao) EXPECT() *MockDaoMockRecorder {
 }
 
 // CreateDonate mocks base method
-func (m *MockDao) CreateDonate(uid, steamID int64, amount int32) (string, error) {
+func (m *MockDao) CreateDonate(uid, steamID int64, amount int32, payment model.DonatePayment) (string, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateDonate", uid, steamID, amount)
+	ret := m.ctrl.Call(m, "CreateDonate", uid, steamID, amount, payment)
 	ret0, _ := ret[0].(string)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // CreateDonate indicates an expected call of CreateDonate
-func (mr *MockDaoMockRecorder) CreateDonate(uid, steamID, amount interface{}) *gomock.Call {
+func (mr *MockDaoMockRecorder) CreateDonate(uid, steamID, amount, payment interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateDonate", reflect.TypeOf((*MockDao)(nil).CreateDonate), uid, steamID, amount)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateDonate", reflect.TypeOf((*MockDao)(nil).CreateDonate), uid, steamID, amount, payment)
 }
 
 // GetTradeInfo mocks base method

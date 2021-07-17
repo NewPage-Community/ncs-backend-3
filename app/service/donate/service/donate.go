@@ -7,19 +7,17 @@ import (
 	moneyService "backend/app/service/user/money/api/grpc"
 	"backend/pkg/log"
 	"context"
-	"fmt"
-	"github.com/smartwalle/alipay/v3"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"strconv"
 	"time"
 )
 
 const (
-	TradeSubject      = "捐助NewPage社区"
-	TradeBody         = "SteamID账号 %d 捐助NewPage社区 %d 元"
-	Timeout           = "5m"
-	DonateRMBExchange = 100
+	TradeSubject        = "捐助NewPage社区"
+	TradeBody           = "捐助NewPage社区-%d"
+	Timeout             = "5m"
+	DonateRMBExchange   = 100
+	DonateCheckSchedule = "@every 5s"
 )
 
 func (s *Service) CreateDonate(ctx context.Context, req *pb.CreateDonateReq) (resp *pb.CreateDonateResp, err error) {
@@ -39,34 +37,27 @@ func (s *Service) CreateDonate(ctx context.Context, req *pb.CreateDonateReq) (re
 	}
 
 	// Get trade no
-	outTradeNo, err := s.dao.CreateDonate(acc.Uid, req.SteamId, req.Amount)
+	outTradeNo, err := s.dao.CreateDonate(acc.Uid, req.SteamId, req.Amount, model.DonatePayment(req.Payment))
 	if err != nil {
 		return
 	}
 
-	// alipay
-	res, err := s.alipay.TradePreCreate(alipay.TradePreCreate{
-		Trade: alipay.Trade{
-			Subject:        TradeSubject,
-			OutTradeNo:     outTradeNo,
-			TotalAmount:    strconv.FormatInt(int64(req.Amount), 10),
-			Body:           fmt.Sprintf(TradeBody, req.SteamId, req.Amount),
-			TimeoutExpress: Timeout,
-		},
-	})
-	if err != nil {
+	// Payment
+	var payment Payment
+	switch model.DonatePayment(req.Payment) {
+	case model.Alipay:
+		payment = s.alipay
+	case model.Wepay:
+		payment = s.wepay
+	default:
 		return
 	}
-	if !res.IsSuccess() {
-		log.Error(res.Content.Msg, res.Content.SubMsg)
-		err = fmt.Errorf("%s - %s", res.Content.Code, res.Content.SubCode)
-	}
 
-	// resp
-	resp.QrCode = res.Content.QRCode
 	resp.OutTradeNo = outTradeNo
-	// Check trade loop
-	s.CheckTrade(outTradeNo)
+	resp.QrCode, err = payment.CreateTrade(outTradeNo, req.SteamId, req.Amount)
+	if err != nil {
+		return
+	}
 
 	return
 }
@@ -161,11 +152,59 @@ func (s *Service) AddDonate(ctx context.Context, req *pb.AddDonateReq) (resp *pb
 	}
 
 	// Get trade no
-	outTradeNo, err := s.dao.CreateDonate(acc.Uid, req.SteamId, req.Amount)
+	outTradeNo, err := s.dao.CreateDonate(acc.Uid, req.SteamId, req.Amount, 0)
 	if err != nil {
 		return
 	}
 
 	err = s.FinishDonate(outTradeNo)
 	return
+}
+
+func (s *Service) CheckTrade() {
+	list, err := s.dao.GetCheckTradeList()
+	if err != nil {
+		log.Error(err)
+		return
+	}
+
+	for _, trade := range list {
+		var payment Payment
+		switch trade.Payment {
+		case model.Alipay:
+			payment = s.alipay
+		case model.Wepay:
+			payment = s.wepay
+		default:
+			// Skip invalid payment
+			continue
+		}
+
+		// Query trade
+		success, err := payment.CheckTrade(trade.OutTradeNo)
+		// Finish trade when it is success
+		if err == nil && success {
+			if err := s.FinishDonate(trade.OutTradeNo); err != nil {
+				log.Error(err)
+			}
+			continue
+		}
+
+		// Timeout to cancel trade
+		if trade.CreatedAt < time.Now().Add(-5*time.Minute).Unix() {
+			if err := payment.CancelTrade(trade.OutTradeNo); err != nil {
+				log.Error(err)
+			}
+			if err := s.dao.CancelTrade(trade.OutTradeNo); err != nil {
+				log.Error(err)
+			}
+		}
+	}
+}
+
+func (s *Service) regCron() {
+	_, err := s.cron.AddFunc(DonateCheckSchedule, s.CheckTrade)
+	if err != nil {
+		log.Error(err)
+	}
 }

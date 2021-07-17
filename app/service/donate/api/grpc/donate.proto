@@ -4,14 +4,22 @@ option go_package = "grpc";
 
 import "google/api/annotations.proto";
 
+enum PAY_TYPE {
+    NULL = 0;
+    ALIPAY = 1;
+    WEPAY = 2;
+}
+
 message CreateDonateReq {
     int64 steam_id = 1;
     int32 amount = 2;
+    PAY_TYPE payment = 3;
 }
 
 message CreateDonateResp {
     string out_trade_no = 1;
     string qr_code = 2;
+    PAY_TYPE payment = 3;
 }
 
 message QueryDonateReq {

@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-func (d *dao) CreateDonate(uid int64, steamID int64, amount int32) (outTradeNo string, err error) {
+func (d *dao) CreateDonate(uid int64, steamID int64, amount int32, payment model.DonatePayment) (outTradeNo string, err error) {
 	steam := strconv.FormatInt(steamID, 10)
 	if len(steam) < 4 {
 		err = errors.New("invalid steamid")
@@ -26,6 +26,7 @@ func (d *dao) CreateDonate(uid int64, steamID int64, amount int32) (outTradeNo s
 		OutTradeNo: outTradeNo,
 		UID:        uid,
 		Amount:     amount,
+		Payment:    payment,
 	}
 	err = d.db.Create(info).Error
 	return
@@ -61,5 +62,11 @@ func (d *dao) GetDonateList(startTime int64, endTime int64) (res []*model.Donate
 	res = make([]*model.Donate, 0)
 	err = d.db.Where(gorm.Expr("status = ? AND created_at BETWEEN ? AND ?", model.DonatePayed, startTime, endTime)).
 		Order("created_at desc").Find(&res).Error
+	return
+}
+
+func (d *dao) GetCheckTradeList() (res []*model.Donate, err error) {
+	res = make([]*model.Donate, 0)
+	err = d.db.Where(gorm.Expr("status = ?", model.DonateUnPay)).Find(&res).Error
 	return
 }

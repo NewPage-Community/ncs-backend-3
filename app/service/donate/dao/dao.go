@@ -9,11 +9,12 @@ import (
 )
 
 type Dao interface {
-	CreateDonate(uid int64, steamID int64, amount int32) (outTradeNo string, err error)
+	CreateDonate(uid int64, steamID int64, amount int32, payment model.DonatePayment) (outTradeNo string, err error)
 	GetTradeInfo(outTradeNo string) (res *model.Donate, err error)
 	FinishTrade(outTradeNo string) (err error)
 	CancelTrade(outTradeNo string) (err error)
 	GetDonateList(startTime int64, endTime int64) (res []*model.Donate, err error)
+	GetCheckTradeList() (res []*model.Donate, err error)
 	Healthy() bool
 	Close()
 }

@@ -153,7 +153,7 @@ func refund() {
 				_, err = money.Give(context.Background(), &moneySrv.GiveReq{
 					Uid:    uid,
 					Money:  300,
-					Reason: fmt.Sprintf("回收补偿"),
+					Reason: "回收补偿",
 				})
 				if err != nil {
 					fmt.Printf("[ERROR] compensation %d faild\n", uid)
