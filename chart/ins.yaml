@@ -109,6 +109,11 @@ ncs-services:
       image: registry.new-page.xyz/newpage/ncs/bot-qq
       tag: latest
       port: 2333
+    - app: ncs-game-a2s
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/game-a2s
+      tag: latest
+      port: 2333
 
 ncs-gateway-web:
   ingress:
