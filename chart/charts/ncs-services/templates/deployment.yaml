@@ -19,10 +19,14 @@ spec:
       app: {{ .app }}
       version: {{ .version }}
   strategy:
+    {{- if .hostNetwork }}
+    type: Recreate
+    {{- else }}
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
     type: RollingUpdate
+    {{- end }}
   template:
     metadata:
     {{- with $this.Values.podAnnotations }}
