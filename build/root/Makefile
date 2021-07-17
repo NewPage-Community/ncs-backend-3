@@ -7,14 +7,19 @@ HELM_IMG        = alpine/helm
 BAZEL_IMG       = registry.new-page.xyz/cloud-marketplace-containers/google/bazel:$(BAZEL_VERSION)
 GO_IMG          = golang:$(GO_VERSION)-alpine
 GOLANGCI_IMG    = golangci/golangci-lint:latest-alpine
+# Golang
+ifdef GOPATH
+	GO_PATH_SET = --env GOPATH=/gopath -v $(GOPATH):/gopath
+endif
 # Docker command
 PROXY_PASS      = --network host --env HTTP_PROXY=$(HTTP_PROXY) --env HTTPS_PROXY=$(HTTPS_PROXY) --env http_proxy=$(http_proxy) --env https_proxy=$(https_proxy) --env NO_PROXY=goproxy.cn,new-page.xyz
 DOCKER_CMD      = docker run --rm -v $(shell pwd):/apps -w /apps --entrypoint "" $(PROXY_PASS)
+GO_ENV			= --env GOPROXY=https://goproxy.cn,direct $(GO_PATH_SET)
 # Tools run on docker
 HELM_CMD        = $(DOCKER_CMD) $(HELM_IMG)
 BAZEL_CMD       = $(DOCKER_CMD) $(BAZEL_IMG)
-GO_CMD          = $(DOCKER_CMD) --env GOPROXY=https://goproxy.cn,direct $(GO_IMG)
-GOLANGCI_CMD    = $(DOCKER_CMD) --env GOPROXY=https://goproxy.cn,direct $(GOLANGCI_IMG)
+GO_CMD          = $(DOCKER_CMD) $(GO_ENV) $(GO_IMG)
+GOLANGCI_CMD    = $(DOCKER_CMD) $(GO_ENV) $(GOLANGCI_IMG)
 
 # Rules
 .PHONY: all

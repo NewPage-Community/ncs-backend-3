@@ -106,6 +106,21 @@ func (mr *MockDaoMockRecorder) GetDonateList(startTime, endTime interface{}) *go
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDonateList", reflect.TypeOf((*MockDao)(nil).GetDonateList), startTime, endTime)
 }
 
+// GetCheckTradeList mocks base method
+func (m *MockDao) GetCheckTradeList() ([]*model.Donate, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCheckTradeList")
+	ret0, _ := ret[0].([]*model.Donate)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetCheckTradeList indicates an expected call of GetCheckTradeList
+func (mr *MockDaoMockRecorder) GetCheckTradeList() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCheckTradeList", reflect.TypeOf((*MockDao)(nil).GetCheckTradeList))
+}
+
 // Healthy mocks base method
 func (m *MockDao) Healthy() bool {
 	m.ctrl.T.Helper()

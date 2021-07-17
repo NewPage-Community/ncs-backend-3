@@ -65,7 +65,7 @@ service Donate {
     rpc GetDonateList (GetDonateListReq) returns (GetDonateListResp) {
         option (google.api.http) = {
             get: "/donate/list/{start_time}/{end_time}"
-            additional_bindings {
+            additional_bindings: {
 				get: "/donate/list/{start_time}"
 			}
         };

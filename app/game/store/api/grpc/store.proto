@@ -72,7 +72,7 @@ service Store {
     rpc SaleList (SaleListReq) returns (SaleListResp) {
         option (google.api.http) = {
             get: "/game/store/list"
-            additional_bindings {
+            additional_bindings: {
 				get: "/game/store/list/{uid}"
 			}
         };

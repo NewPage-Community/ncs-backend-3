@@ -1,0 +1,24 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["main.go"],
+    importpath = "backend/app/game/a2s/cmd",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//app/game/a2s/api/grpc/v1:go_default_library",
+        "//app/game/a2s/conf:go_default_library",
+        "//app/game/a2s/service:go_default_library",
+        "//pkg/cmd:go_default_library",
+        "//pkg/log:go_default_library",
+        "//pkg/rpc:go_default_library",
+        "//pkg/tracer:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "cmd",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)

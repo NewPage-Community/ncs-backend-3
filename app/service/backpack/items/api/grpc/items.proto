@@ -28,7 +28,7 @@ service Items {
     rpc GetItems (GetItemsReq) returns (GetItemsResp) {
         option (google.api.http) = {
             get: "/backpack/items"
-            additional_bindings {
+            additional_bindings: {
 				get: "/backpack/items/type/{type}"
 			}
         };

@@ -19,7 +19,7 @@ func (config Config) NewTokenString(payload map[string]interface{}) (string, err
 	return token.SignedString([]byte(config.SecretKey))
 }
 
-// GetToken get a token from JWT string
+// GetTokenPayload get a token from JWT string
 func (config Config) GetTokenPayload(tokenString string) (Payload, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {

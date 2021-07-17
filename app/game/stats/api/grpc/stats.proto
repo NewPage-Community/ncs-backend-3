@@ -78,7 +78,7 @@ service Stats {
     rpc Get (GetReq) returns (GetResp) {
         option (google.api.http) = {
             get: "/game/stats/user/{uid}/{stats_name}/{version}"
-            additional_bindings {
+            additional_bindings: {
 				get: "/game/stats/user/{uid}/{stats_name}/{version}/{range}"
 			}
         };
@@ -86,7 +86,7 @@ service Stats {
     rpc GetAll (GetAllReq) returns (GetAllResp) {
         option (google.api.http) = {
             get: "/game/stats/{stats_name}/{version}"
-            additional_bindings {
+            additional_bindings: {
 				get: "/game/stats/{stats_name}/{version}/{range}"
 			}
         };

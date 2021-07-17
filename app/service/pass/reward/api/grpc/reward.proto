@@ -27,10 +27,10 @@ service Reward {
     rpc GetRewards (GetRewardsReq) returns (GetRewardsResp) {
         option (google.api.http) = {
             get: "/pass/reward"
-            additional_bindings {
+            additional_bindings: {
 				get: "/pass/reward/level/{level}"
 			}
-			additional_bindings {
+			additional_bindings: {
 				get: "/pass/reward/level/{level}/{min}"
 			}
         };

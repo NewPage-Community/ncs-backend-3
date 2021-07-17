@@ -33,7 +33,7 @@ type MsgClient struct {
 // WebEventHandler is the handler function of receive message
 type WebEventHandler func(event model.CQEvent)
 
-// NewClient return a new websocket server ptr
+// NewWSClient return a new websocket server ptr
 func NewWSClient(url string, port int) *MsgClient {
 	var client MsgClient
 	client.URL = url

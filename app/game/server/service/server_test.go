@@ -2,6 +2,7 @@ package service
 
 import (
 	qqBot "backend/app/bot/qq/api/grpc/v1"
+	a2sSrv "backend/app/game/a2s/api/grpc/v1"
 	pb "backend/app/game/server/api/grpc"
 	"backend/app/game/server/dao"
 	"backend/app/game/server/model"
@@ -34,7 +35,32 @@ func TestService_AllInfo(t *testing.T) {
 			Address:  "127.0.0.1:27016",
 		},
 	}, nil)
-	srv := &Service{dao: m}
+	a2s := a2sSrv.NewMockA2SClient(ctl)
+	a2s.EXPECT().A2SQuery(gomock.Any(), &a2sSrv.A2SQueryReq{Address: []string{
+		"127.0.0.1:27015",
+		"127.0.0.1:27016",
+	}}).Return(&a2sSrv.A2SQueryResp{
+		Servers: []*a2sSrv.ServerInfo{
+			{
+				Address: "127.0.0.1:27015",
+				Info: &a2sSrv.A2SInfo{
+					Hostname: "test",
+				},
+				Player: make([]*a2sSrv.A2SPlayer, 0),
+			},
+			{
+				Address: "127.0.0.1:27016",
+				Info: &a2sSrv.A2SInfo{
+					Hostname: "test",
+				},
+				Player: make([]*a2sSrv.A2SPlayer, 0),
+			},
+		},
+	}, nil)
+	srv := &Service{
+		dao: m,
+		a2s: a2s,
+	}
 
 	Convey("Test AllInfo", t, func() {
 		res, err := srv.AllInfo(context.TODO(), &pb.AllInfoReq{})

@@ -171,7 +171,137 @@
     }
   },
   "definitions": {
-    "serverA2S_Info": {
+    "serverAllInfoResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/serverInfo"
+          }
+        }
+      }
+    },
+    "serverChangeMapNotifyReq": {
+      "type": "object",
+      "properties": {
+        "server_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "map": {
+          "type": "string"
+        }
+      }
+    },
+    "serverChangeMapNotifyResp": {
+      "type": "object"
+    },
+    "serverInfo": {
+      "type": "object",
+      "properties": {
+        "server_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "mod_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "game_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "rcon": {
+          "type": "string"
+        },
+        "hostname": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "short_name": {
+          "type": "string"
+        },
+        "a2s_info": {
+          "$ref": "#/definitions/v1A2SInfo",
+          "title": "a2s"
+        },
+        "a2s_player": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1A2SPlayer"
+          }
+        }
+      }
+    },
+    "serverInfoResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/serverInfo"
+        }
+      }
+    },
+    "serverInitReq": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "serverInitResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/serverInfo"
+        }
+      }
+    },
+    "serverRconAllReq": {
+      "type": "object",
+      "properties": {
+        "cmd": {
+          "type": "string"
+        }
+      }
+    },
+    "serverRconAllResp": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "serverRconReq": {
+      "type": "object",
+      "properties": {
+        "server_id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cmd": {
+          "type": "string"
+        }
+      }
+    },
+    "serverRconResp": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "string"
+        }
+      }
+    },
+    "v1A2SInfo": {
       "type": "object",
       "properties": {
         "protocol": {
@@ -243,10 +373,13 @@
         "game_id": {
           "type": "string",
           "format": "int64"
+        },
+        "hostname": {
+          "type": "string"
         }
       }
     },
-    "serverA2S_Player": {
+    "v1A2SPlayer": {
       "type": "object",
       "properties": {
         "name": {
@@ -259,136 +392,6 @@
         "duration": {
           "type": "number",
           "format": "float"
-        }
-      }
-    },
-    "serverAllInfoResp": {
-      "type": "object",
-      "properties": {
-        "info": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/serverInfo"
-          }
-        }
-      }
-    },
-    "serverChangeMapNotifyReq": {
-      "type": "object",
-      "properties": {
-        "server_id": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "map": {
-          "type": "string"
-        }
-      }
-    },
-    "serverChangeMapNotifyResp": {
-      "type": "object"
-    },
-    "serverInfo": {
-      "type": "object",
-      "properties": {
-        "server_id": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "mod_id": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "game_id": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "rcon": {
-          "type": "string"
-        },
-        "hostname": {
-          "type": "string"
-        },
-        "address": {
-          "type": "string"
-        },
-        "short_name": {
-          "type": "string"
-        },
-        "a2s_info": {
-          "$ref": "#/definitions/serverA2S_Info",
-          "title": "a2s"
-        },
-        "a2s_player": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/serverA2S_Player"
-          }
-        }
-      }
-    },
-    "serverInfoResp": {
-      "type": "object",
-      "properties": {
-        "info": {
-          "$ref": "#/definitions/serverInfo"
-        }
-      }
-    },
-    "serverInitReq": {
-      "type": "object",
-      "properties": {
-        "address": {
-          "type": "string"
-        },
-        "port": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "serverInitResp": {
-      "type": "object",
-      "properties": {
-        "info": {
-          "$ref": "#/definitions/serverInfo"
-        }
-      }
-    },
-    "serverRconAllReq": {
-      "type": "object",
-      "properties": {
-        "cmd": {
-          "type": "string"
-        }
-      }
-    },
-    "serverRconAllResp": {
-      "type": "object",
-      "properties": {
-        "success": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "serverRconReq": {
-      "type": "object",
-      "properties": {
-        "server_id": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "cmd": {
-          "type": "string"
-        }
-      }
-    },
-    "serverRconResp": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "string"
         }
       }
     }
