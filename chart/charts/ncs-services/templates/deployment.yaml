@@ -83,5 +83,8 @@ spec:
       - configMap:
           name: {{ $this.Values.configMap.name}}
         name: config
+      {{- if .hostNetwork }}
+      hostNetwork: true
+      {{- end }}
 ---
 {{- end -}}

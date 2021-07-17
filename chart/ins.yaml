@@ -114,6 +114,7 @@ ncs-services:
       image: registry.new-page.xyz/newpage/ncs/game-a2s
       tag: latest
       port: 2333
+      hostNetwork: true
 
 ncs-gateway-web:
   ingress:
