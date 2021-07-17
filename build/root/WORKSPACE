@@ -784,8 +784,8 @@ go_repository(
 go_repository(
     name = "com_github_konsorten_go_windows_terminal_sequences",
     importpath = "github.com/konsorten/go-windows-terminal-sequences",
-    sum = "h1:CE8S1cTafDpPvMhIxNJKvHsGVBgn1xWYf1NbHQhywc8=",
-    version = "v1.0.3",
+    sum = "h1:DB17ag19krx9CFsz4o3enTrPXyIXCl+2iCXH/aMAp9s=",
+    version = "v1.0.2",
 )
 
 go_repository(
@@ -1064,8 +1064,8 @@ go_repository(
 go_repository(
     name = "com_github_sirupsen_logrus",
     importpath = "github.com/sirupsen/logrus",
-    sum = "h1:UBcNElsrwanuuMsnGSlYmtmgbb23qDR5dG+6X6Oo89I=",
-    version = "v1.6.0",
+    sum = "h1:dJKuHgqk1NNQlqoA6BTlM1Wf9DOH3NBjQyu0h9+AZZE=",
+    version = "v1.8.1",
 )
 
 go_repository(
@@ -1414,8 +1414,8 @@ go_repository(
 go_repository(
     name = "org_golang_x_sys",
     importpath = "golang.org/x/sys",
-    sum = "h1:Ih9Yo4hSPImZOpfGuA4bR/ORKTAbhZo2AbWNRCnevdo=",
-    version = "v0.0.0-20200625212154-ddb9806d33ae",
+    sum = "h1:F1jZWGFhYfh0Ci55sIpILtKKK8p3i2/krTr0H1rg74I=",
+    version = "v0.0.0-20210630005230-0f9fa26af87c",
 )
 
 go_repository(
@@ -1799,8 +1799,8 @@ go_repository(
 go_repository(
     name = "com_github_newpage_community_go_steam",
     importpath = "github.com/NewPage-Community/go-steam",
-    sum = "h1:TdsyxuoHJxEkiKZDXz5zlm2UZgA6gymidzMmHNqNBnQ=",
-    version = "v0.0.0-20190902233638-f1c4971ee6b7",
+    sum = "h1:kpgxsOCSuf0U4e+bwCfs/FEGoB8qLVetAJcf+PxkVlM=",
+    version = "v0.0.0-20210330193820-9106f0f773ad",
 )
 
 go_repository(

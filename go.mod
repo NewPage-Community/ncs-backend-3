@@ -3,7 +3,7 @@ module backend
 go 1.14
 
 require (
-	github.com/NewPage-Community/go-steam v0.0.0-20190902233638-f1c4971ee6b7
+	github.com/NewPage-Community/go-steam v0.0.0-20210330193820-9106f0f773ad
 	github.com/alicebob/miniredis/v2 v2.11.4
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -19,7 +19,7 @@ require (
 	github.com/miRemid/amy v0.1.3
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/robfig/cron/v3 v3.0.0
-	github.com/sirupsen/logrus v1.6.0 // indirect
+	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/smartwalle/alipay/v3 v3.1.5
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/spf13/viper v1.7.0
@@ -28,7 +28,7 @@ require (
 	github.com/wechatpay-apiv3/wechatpay-go v0.2.3
 	go.uber.org/zap v1.15.0
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
-	golang.org/x/sys v0.0.0-20200625212154-ddb9806d33ae // indirect
+	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
 	google.golang.org/genproto v0.0.0-20200608115520-7c474a2e3482
 	google.golang.org/grpc v1.29.1
 	gorm.io/datatypes v0.0.0-20200709131824-976937c55e2d
