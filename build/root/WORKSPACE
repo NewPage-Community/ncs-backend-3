@@ -1799,8 +1799,8 @@ go_repository(
 go_repository(
     name = "com_github_newpage_community_go_steam",
     importpath = "github.com/NewPage-Community/go-steam",
-    sum = "h1:kpgxsOCSuf0U4e+bwCfs/FEGoB8qLVetAJcf+PxkVlM=",
-    version = "v0.0.0-20210330193820-9106f0f773ad",
+    sum = "h1:0zOznAVJ05pBjvRBvVRjWWsECgWbfX6xK3ydfY5bsa0=",
+    version = "v1.0.0",
 )
 
 go_repository(
