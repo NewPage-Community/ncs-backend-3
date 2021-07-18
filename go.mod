@@ -3,7 +3,7 @@ module backend
 go 1.14
 
 require (
-	github.com/NewPage-Community/go-steam v0.0.0-20210330193820-9106f0f773ad
+	github.com/NewPage-Community/go-steam v1.0.0
 	github.com/alicebob/miniredis/v2 v2.11.4
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
