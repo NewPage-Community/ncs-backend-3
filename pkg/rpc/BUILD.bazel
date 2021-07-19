@@ -12,6 +12,7 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//pkg/ecode:go_default_library",
+        "//pkg/jwt:go_default_library",
         "//pkg/log:go_default_library",
         "@com_github_golang_glog//:go_default_library",
         "@com_github_grpc_ecosystem_go_grpc_middleware//:go_default_library",

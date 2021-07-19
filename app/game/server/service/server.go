@@ -58,10 +58,10 @@ func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp,
 	}
 
 	resp.Info = &pb.Info{
-		ServerId:  res.ServerID,
-		ModId:     res.ModID,
-		GameId:    res.GameID,
-		Rcon:      res.Rcon,
+		ServerId: res.ServerID,
+		ModId:    res.ModID,
+		GameId:   res.GameID,
+		//Rcon:      res.Rcon,
 		Hostname:  res.Hostname,
 		Address:   res.Address,
 		ShortName: res.ShortName,
@@ -90,10 +90,10 @@ func (s *Service) AllInfo(ctx context.Context, req *pb.AllInfoReq) (resp *pb.All
 	for _, server := range a2s.Servers {
 		info := servers[server.Address]
 		resp.Info = append(resp.Info, &pb.Info{
-			ServerId:  info.ServerID,
-			ModId:     info.ModID,
-			GameId:    info.GameID,
-			Rcon:      info.Rcon,
+			ServerId: info.ServerID,
+			ModId:    info.ModID,
+			GameId:   info.GameID,
+			//Rcon:      info.Rcon,
 			Hostname:  info.Hostname,
 			Address:   server.Address,
 			ShortName: info.ShortName,

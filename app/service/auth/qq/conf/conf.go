@@ -1,9 +1,9 @@
 package conf
 
 import (
-	"backend/app/service/auth/jwt"
 	"backend/pkg/conf"
 	"backend/pkg/database/mysql"
+	"backend/pkg/jwt"
 	"backend/pkg/log"
 	"golang.org/x/oauth2"
 )
@@ -12,7 +12,7 @@ import (
 type Config struct {
 	Log       *log.Config
 	QQConnect *oauth2.Config
-	JWT       *jwt.Config
+	JWT       *jwt.JWT
 	Mysql     *mysql.Config
 }
 
@@ -21,7 +21,7 @@ func Init() (c *Config) {
 	c = &Config{
 		&log.Config{},
 		&oauth2.Config{},
-		&jwt.Config{},
+		&jwt.JWT{},
 		&mysql.Config{},
 	}
 	// 读取配置

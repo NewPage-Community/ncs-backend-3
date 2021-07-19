@@ -9,60 +9,53 @@ option go_package = "app/service/auth/qq/api/grpc/v1";
 // HTTP协议(grpc gateway)
 import "google/api/annotations.proto";
 
-message GetUIDReq {
-    string jwt_string = 1;
+message AuthQQReq {
+    string open_id = 1;
 }
 
-message GetUIDResp {
+message AuthQQResp {
     string jwt_string = 1;
 }
 
 message BindQQReq {
-    string authorization_code = 1;
-    int64 uid = 2;
+    string open_id = 1;
 }
 
 message BindQQResp {
 }
 
 message UnbindQQReq {
-    int64 uid = 1;
 }
 
 message UnbindQQResp {
 }
 
-message GetQQConnectStatusReq {
+message QQStatusReq {
+}
+
+message QQStatusResp {
     string jwt_string = 1;
 }
 
-message GetQQConnectStatusResp {
-    int64 uid = 1;
-    string openid = 2;
-}
-
 service Web {
-    rpc GetQQConnectStatus (GetQQConnectStatusReq) returns (GetQQConnectStatusResp) {
-        option (google.api.http) = {
-			post: "/auth/qq/status"
-		};
-    }
-    rpc GetUID (GetUIDReq) returns (GetUIDResp) {
+    rpc AuthQQ (AuthQQReq) returns (AuthQQResp) {
         option (google.api.http) = {
 			post: "/auth/qq/uid"
 		};
     }
-}
-
-service Game {
     rpc BindQQ (BindQQReq) returns (BindQQResp) {
         option (google.api.http) = {
-			post: "/auth/qq/bind"
-		};
+            post: "/auth/qq/bind"
+        };
     }
     rpc UnbindQQ (UnbindQQReq) returns (UnbindQQResp) {
         option (google.api.http) = {
-			post: "/auth/qq/unbind"
-		};
+            post: "/auth/qq/unbind"
+        };
+    }
+    rpc QQStatus (QQStatusReq) returns (QQStatusResp) {
+        option (google.api.http) = {
+            post: "/auth/qq/status"
+        };
     }
 }

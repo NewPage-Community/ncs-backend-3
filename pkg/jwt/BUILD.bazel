@@ -3,15 +3,18 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "go_default_library",
     srcs = [
+        "grpc.go",
         "jwt.go",
         "payload.go",
     ],
-    importpath = "backend/app/service/auth/jwt",
+    importpath = "backend/pkg/jwt",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/ecode:go_default_library",
         "@com_github_dgrijalva_jwt_go//:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
         "@org_golang_google_grpc//codes:go_default_library",
+        "@org_golang_google_grpc//metadata:go_default_library",
+        "@org_golang_google_grpc//status:go_default_library",
     ],
 )
 
@@ -19,5 +22,8 @@ go_test(
     name = "go_default_test",
     srcs = ["jwt_test.go"],
     embed = [":go_default_library"],
-    deps = ["@com_github_smartystreets_goconvey//convey:go_default_library"],
+    deps = [
+        "@com_github_smartystreets_goconvey//convey:go_default_library",
+        "@org_golang_google_grpc//metadata:go_default_library",
+    ],
 )

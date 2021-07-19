@@ -27,18 +27,18 @@
           }
         },
         "tags": [
-          "Game"
+          "Web"
         ]
       }
     },
     "/auth/qq/status": {
       "post": {
-        "operationId": "GetQQConnectStatus",
+        "operationId": "QQStatus",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1GetQQConnectStatusResp"
+              "$ref": "#/definitions/v1QQStatusResp"
             }
           }
         },
@@ -49,12 +49,12 @@
     },
     "/auth/qq/uid": {
       "post": {
-        "operationId": "GetUID",
+        "operationId": "AuthQQ",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1GetUIDResp"
+              "$ref": "#/definitions/v1AuthQQResp"
             }
           }
         },
@@ -75,28 +75,24 @@
           }
         },
         "tags": [
-          "Game"
+          "Web"
         ]
       }
     }
   },
   "definitions": {
-    "v1BindQQResp": {
-      "type": "object"
-    },
-    "v1GetQQConnectStatusResp": {
+    "v1AuthQQResp": {
       "type": "object",
       "properties": {
-        "uid": {
-          "type": "string",
-          "format": "int64"
-        },
-        "openid": {
+        "jwt_string": {
           "type": "string"
         }
       }
     },
-    "v1GetUIDResp": {
+    "v1BindQQResp": {
+      "type": "object"
+    },
+    "v1QQStatusResp": {
       "type": "object",
       "properties": {
         "jwt_string": {

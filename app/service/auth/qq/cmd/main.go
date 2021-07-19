@@ -27,7 +27,6 @@ func main() {
 	server := rpc.NewServer(nil)
 	server.Grpc(func(s *grpc.Server) {
 		pb.RegisterWebServer(s, srv)
-		pb.RegisterGameServer(s, srv)
 	})
 	server.HealthCheck(srv.Healthy)
 

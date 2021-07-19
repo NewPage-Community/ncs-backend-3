@@ -34,44 +34,84 @@ func (m *MockWebClient) EXPECT() *MockWebClientMockRecorder {
 	return m.recorder
 }
 
-// GetQQConnectStatus mocks base method
-func (m *MockWebClient) GetQQConnectStatus(ctx context.Context, in *GetQQConnectStatusReq, opts ...grpc.CallOption) (*GetQQConnectStatusResp, error) {
+// AuthQQ mocks base method
+func (m *MockWebClient) AuthQQ(ctx context.Context, in *AuthQQReq, opts ...grpc.CallOption) (*AuthQQResp, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "GetQQConnectStatus", varargs...)
-	ret0, _ := ret[0].(*GetQQConnectStatusResp)
+	ret := m.ctrl.Call(m, "AuthQQ", varargs...)
+	ret0, _ := ret[0].(*AuthQQResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetQQConnectStatus indicates an expected call of GetQQConnectStatus
-func (mr *MockWebClientMockRecorder) GetQQConnectStatus(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+// AuthQQ indicates an expected call of AuthQQ
+func (mr *MockWebClientMockRecorder) AuthQQ(ctx, in interface{}, opts ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetQQConnectStatus", reflect.TypeOf((*MockWebClient)(nil).GetQQConnectStatus), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuthQQ", reflect.TypeOf((*MockWebClient)(nil).AuthQQ), varargs...)
 }
 
-// GetUID mocks base method
-func (m *MockWebClient) GetUID(ctx context.Context, in *GetUIDReq, opts ...grpc.CallOption) (*GetUIDResp, error) {
+// BindQQ mocks base method
+func (m *MockWebClient) BindQQ(ctx context.Context, in *BindQQReq, opts ...grpc.CallOption) (*BindQQResp, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "GetUID", varargs...)
-	ret0, _ := ret[0].(*GetUIDResp)
+	ret := m.ctrl.Call(m, "BindQQ", varargs...)
+	ret0, _ := ret[0].(*BindQQResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetUID indicates an expected call of GetUID
-func (mr *MockWebClientMockRecorder) GetUID(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+// BindQQ indicates an expected call of BindQQ
+func (mr *MockWebClientMockRecorder) BindQQ(ctx, in interface{}, opts ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUID", reflect.TypeOf((*MockWebClient)(nil).GetUID), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindQQ", reflect.TypeOf((*MockWebClient)(nil).BindQQ), varargs...)
+}
+
+// UnbindQQ mocks base method
+func (m *MockWebClient) UnbindQQ(ctx context.Context, in *UnbindQQReq, opts ...grpc.CallOption) (*UnbindQQResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UnbindQQ", varargs...)
+	ret0, _ := ret[0].(*UnbindQQResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UnbindQQ indicates an expected call of UnbindQQ
+func (mr *MockWebClientMockRecorder) UnbindQQ(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnbindQQ", reflect.TypeOf((*MockWebClient)(nil).UnbindQQ), varargs...)
+}
+
+// QQStatus mocks base method
+func (m *MockWebClient) QQStatus(ctx context.Context, in *QQStatusReq, opts ...grpc.CallOption) (*QQStatusResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "QQStatus", varargs...)
+	ret0, _ := ret[0].(*QQStatusResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// QQStatus indicates an expected call of QQStatus
+func (mr *MockWebClientMockRecorder) QQStatus(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QQStatus", reflect.TypeOf((*MockWebClient)(nil).QQStatus), varargs...)
 }
 
 // MockWebServer is a mock of WebServer interface
@@ -97,124 +137,23 @@ func (m *MockWebServer) EXPECT() *MockWebServerMockRecorder {
 	return m.recorder
 }
 
-// GetQQConnectStatus mocks base method
-func (m *MockWebServer) GetQQConnectStatus(arg0 context.Context, arg1 *GetQQConnectStatusReq) (*GetQQConnectStatusResp, error) {
+// AuthQQ mocks base method
+func (m *MockWebServer) AuthQQ(arg0 context.Context, arg1 *AuthQQReq) (*AuthQQResp, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetQQConnectStatus", arg0, arg1)
-	ret0, _ := ret[0].(*GetQQConnectStatusResp)
+	ret := m.ctrl.Call(m, "AuthQQ", arg0, arg1)
+	ret0, _ := ret[0].(*AuthQQResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetQQConnectStatus indicates an expected call of GetQQConnectStatus
-func (mr *MockWebServerMockRecorder) GetQQConnectStatus(arg0, arg1 interface{}) *gomock.Call {
+// AuthQQ indicates an expected call of AuthQQ
+func (mr *MockWebServerMockRecorder) AuthQQ(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetQQConnectStatus", reflect.TypeOf((*MockWebServer)(nil).GetQQConnectStatus), arg0, arg1)
-}
-
-// GetUID mocks base method
-func (m *MockWebServer) GetUID(arg0 context.Context, arg1 *GetUIDReq) (*GetUIDResp, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetUID", arg0, arg1)
-	ret0, _ := ret[0].(*GetUIDResp)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetUID indicates an expected call of GetUID
-func (mr *MockWebServerMockRecorder) GetUID(arg0, arg1 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUID", reflect.TypeOf((*MockWebServer)(nil).GetUID), arg0, arg1)
-}
-
-// MockGameClient is a mock of GameClient interface
-type MockGameClient struct {
-	ctrl     *gomock.Controller
-	recorder *MockGameClientMockRecorder
-}
-
-// MockGameClientMockRecorder is the mock recorder for MockGameClient
-type MockGameClientMockRecorder struct {
-	mock *MockGameClient
-}
-
-// NewMockGameClient creates a new mock instance
-func NewMockGameClient(ctrl *gomock.Controller) *MockGameClient {
-	mock := &MockGameClient{ctrl: ctrl}
-	mock.recorder = &MockGameClientMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use
-func (m *MockGameClient) EXPECT() *MockGameClientMockRecorder {
-	return m.recorder
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AuthQQ", reflect.TypeOf((*MockWebServer)(nil).AuthQQ), arg0, arg1)
 }
 
 // BindQQ mocks base method
-func (m *MockGameClient) BindQQ(ctx context.Context, in *BindQQReq, opts ...grpc.CallOption) (*BindQQResp, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "BindQQ", varargs...)
-	ret0, _ := ret[0].(*BindQQResp)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// BindQQ indicates an expected call of BindQQ
-func (mr *MockGameClientMockRecorder) BindQQ(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindQQ", reflect.TypeOf((*MockGameClient)(nil).BindQQ), varargs...)
-}
-
-// UnbindQQ mocks base method
-func (m *MockGameClient) UnbindQQ(ctx context.Context, in *UnbindQQReq, opts ...grpc.CallOption) (*UnbindQQResp, error) {
-	m.ctrl.T.Helper()
-	varargs := []interface{}{ctx, in}
-	for _, a := range opts {
-		varargs = append(varargs, a)
-	}
-	ret := m.ctrl.Call(m, "UnbindQQ", varargs...)
-	ret0, _ := ret[0].(*UnbindQQResp)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// UnbindQQ indicates an expected call of UnbindQQ
-func (mr *MockGameClientMockRecorder) UnbindQQ(ctx, in interface{}, opts ...interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnbindQQ", reflect.TypeOf((*MockGameClient)(nil).UnbindQQ), varargs...)
-}
-
-// MockGameServer is a mock of GameServer interface
-type MockGameServer struct {
-	ctrl     *gomock.Controller
-	recorder *MockGameServerMockRecorder
-}
-
-// MockGameServerMockRecorder is the mock recorder for MockGameServer
-type MockGameServerMockRecorder struct {
-	mock *MockGameServer
-}
-
-// NewMockGameServer creates a new mock instance
-func NewMockGameServer(ctrl *gomock.Controller) *MockGameServer {
-	mock := &MockGameServer{ctrl: ctrl}
-	mock.recorder = &MockGameServerMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use
-func (m *MockGameServer) EXPECT() *MockGameServerMockRecorder {
-	return m.recorder
-}
-
-// BindQQ mocks base method
-func (m *MockGameServer) BindQQ(arg0 context.Context, arg1 *BindQQReq) (*BindQQResp, error) {
+func (m *MockWebServer) BindQQ(arg0 context.Context, arg1 *BindQQReq) (*BindQQResp, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "BindQQ", arg0, arg1)
 	ret0, _ := ret[0].(*BindQQResp)
@@ -223,13 +162,13 @@ func (m *MockGameServer) BindQQ(arg0 context.Context, arg1 *BindQQReq) (*BindQQR
 }
 
 // BindQQ indicates an expected call of BindQQ
-func (mr *MockGameServerMockRecorder) BindQQ(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockWebServerMockRecorder) BindQQ(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindQQ", reflect.TypeOf((*MockGameServer)(nil).BindQQ), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindQQ", reflect.TypeOf((*MockWebServer)(nil).BindQQ), arg0, arg1)
 }
 
 // UnbindQQ mocks base method
-func (m *MockGameServer) UnbindQQ(arg0 context.Context, arg1 *UnbindQQReq) (*UnbindQQResp, error) {
+func (m *MockWebServer) UnbindQQ(arg0 context.Context, arg1 *UnbindQQReq) (*UnbindQQResp, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UnbindQQ", arg0, arg1)
 	ret0, _ := ret[0].(*UnbindQQResp)
@@ -238,7 +177,22 @@ func (m *MockGameServer) UnbindQQ(arg0 context.Context, arg1 *UnbindQQReq) (*Unb
 }
 
 // UnbindQQ indicates an expected call of UnbindQQ
-func (mr *MockGameServerMockRecorder) UnbindQQ(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockWebServerMockRecorder) UnbindQQ(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnbindQQ", reflect.TypeOf((*MockGameServer)(nil).UnbindQQ), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnbindQQ", reflect.TypeOf((*MockWebServer)(nil).UnbindQQ), arg0, arg1)
+}
+
+// QQStatus mocks base method
+func (m *MockWebServer) QQStatus(arg0 context.Context, arg1 *QQStatusReq) (*QQStatusResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "QQStatus", arg0, arg1)
+	ret0, _ := ret[0].(*QQStatusResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// QQStatus indicates an expected call of QQStatus
+func (mr *MockWebServerMockRecorder) QQStatus(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QQStatus", reflect.TypeOf((*MockWebServer)(nil).QQStatus), arg0, arg1)
 }

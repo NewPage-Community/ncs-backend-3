@@ -5,12 +5,14 @@ go_library(
     srcs = [
         "backpack.go",
         "donate.go",
+        "game.go",
         "service.go",
         "user.go",
     ],
     importpath = "backend/app/gateway/web/service",
     visibility = ["//visibility:public"],
     deps = [
+        "//app/game/server/api/grpc:go_default_library",
         "//app/service/backpack/items/api/grpc:go_default_library",
         "//app/service/donate/api/grpc:go_default_library",
         "//app/service/user/account/api/grpc:go_default_library",

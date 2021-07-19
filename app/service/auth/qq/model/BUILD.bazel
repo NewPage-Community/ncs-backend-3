@@ -5,4 +5,5 @@ go_library(
     srcs = ["qq.go"],
     importpath = "backend/app/service/auth/qq/model",
     visibility = ["//visibility:public"],
+    deps = ["//pkg/jwt:go_default_library"],
 )

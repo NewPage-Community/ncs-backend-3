@@ -6,26 +6,29 @@ import (
 	"time"
 )
 
-type Config struct {
+type JWT struct {
 	ExpireTime int64
 	SecretKey  string
 }
 
 // NewTokenString create a new valid JWT
-func (config Config) NewTokenString(payload map[string]interface{}) (string, error) {
-	payload["exp"] = time.Now().Add(time.Duration(config.ExpireTime)).Unix()
+func (c *JWT) NewTokenString(payload map[string]interface{}) (string, error) {
+	now := time.Now()
+	payload["exp"] = now.Add(time.Duration(c.ExpireTime)).Unix()
 	payload["iss"] = "NewPage"
+	payload["iat"] = now.Unix()
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims(payload))
-	return token.SignedString([]byte(config.SecretKey))
+	return token.SignedString([]byte(c.SecretKey))
 }
 
 // GetTokenPayload get a token from JWT string
-func (config Config) GetTokenPayload(tokenString string) (Payload, error) {
+func (c *JWT) GetTokenPayload(tokenString string) (Payload, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
-		return []byte(config.SecretKey), nil
+		return []byte(c.SecretKey), nil
 	})
 	if err != nil {
 		return nil, err

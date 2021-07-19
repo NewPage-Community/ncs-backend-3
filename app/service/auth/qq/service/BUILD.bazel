@@ -9,13 +9,13 @@ go_library(
     importpath = "backend/app/service/auth/qq/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/service/auth/jwt:go_default_library",
         "//app/service/auth/qq/api/grpc/v1:go_default_library",
         "//app/service/auth/qq/conf:go_default_library",
         "//app/service/auth/qq/dao:go_default_library",
         "//app/service/auth/qq/model:go_default_library",
         "//pkg/ecode:go_default_library",
         "//pkg/json:go_default_library",
+        "//pkg/jwt:go_default_library",
         "@org_golang_google_grpc//codes:go_default_library",
     ],
 )
