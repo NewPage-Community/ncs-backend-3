@@ -83,6 +83,7 @@ img:
 	docker pull $(HELM_IMG)
 	docker pull $(BAZEL_IMG)
 	docker pull $(GO_IMG)
+	docker pull $(GOLANGCI_IMG)
 
 .PHONY: dao-mock
 dao-mock:

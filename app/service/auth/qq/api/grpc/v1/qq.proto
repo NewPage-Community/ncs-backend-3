@@ -10,7 +10,7 @@ option go_package = "app/service/auth/qq/api/grpc/v1";
 import "google/api/annotations.proto";
 
 message AuthQQReq {
-    string open_id = 1;
+    string access_token = 1;
 }
 
 message AuthQQResp {
@@ -18,7 +18,7 @@ message AuthQQResp {
 }
 
 message BindQQReq {
-    string open_id = 1;
+    string access_token = 1;
 }
 
 message BindQQResp {

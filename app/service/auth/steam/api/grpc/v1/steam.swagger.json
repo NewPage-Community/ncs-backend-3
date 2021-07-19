@@ -1,0 +1,166 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/service/auth/steam/api/grpc/v1/steam.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/auth/steam/callback": {
+      "get": {
+        "operationId": "SteamCallback",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SteamCallbackResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "openid.ns",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "openid.mode",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "openid.op_endpoint",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "openid.claimed_id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "openid.identity",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "openid.return_to",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "openid.response_nonce",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "openid.assoc_handle",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "openid.signed",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "openid.sig",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Web"
+        ]
+      }
+    },
+    "/auth/steam/login": {
+      "get": {
+        "operationId": "SteamLogin",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SteamLoginResp"
+            }
+          }
+        },
+        "tags": [
+          "Web"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "SteamCallbackReqOpenID": {
+      "type": "object",
+      "properties": {
+        "ns": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string"
+        },
+        "op_endpoint": {
+          "type": "string"
+        },
+        "claimed_id": {
+          "type": "string"
+        },
+        "identity": {
+          "type": "string"
+        },
+        "return_to": {
+          "type": "string"
+        },
+        "response_nonce": {
+          "type": "string"
+        },
+        "assoc_handle": {
+          "type": "string"
+        },
+        "signed": {
+          "type": "string"
+        },
+        "sig": {
+          "type": "string"
+        }
+      }
+    },
+    "v1SteamCallbackResp": {
+      "type": "object",
+      "properties": {
+        "jwt_string": {
+          "type": "string"
+        }
+      }
+    },
+    "v1SteamLoginResp": {
+      "type": "object",
+      "properties": {
+        "redirect": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

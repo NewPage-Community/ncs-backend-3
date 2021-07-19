@@ -23,6 +23,6 @@ func (i *QQConnect) GetJWTPayload(parent *jwt.Payload) *jwt.Payload {
 func GetQQConnectFromJWTPayload(payload *jwt.Payload) *QQConnect {
 	return &QQConnect{
 		UID:    payload.Get("uid").(int64),
-		OpenID: payload.Get("open_id").(string),
+		OpenID: payload.Get("qq_open_id").(string),
 	}
 }

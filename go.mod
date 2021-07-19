@@ -26,7 +26,9 @@ require (
 	github.com/uber/jaeger-client-go v2.23.1+incompatible
 	github.com/uber/jaeger-lib v2.2.0+incompatible
 	github.com/wechatpay-apiv3/wechatpay-go v0.2.3
+	github.com/yohcop/openid-go v1.0.0
 	go.uber.org/zap v1.15.0
+	golang.org/x/net v0.0.0-20210716203947-853a461950ff // indirect
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
 	google.golang.org/genproto v0.0.0-20200608115520-7c474a2e3482

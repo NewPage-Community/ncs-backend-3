@@ -7,4 +7,5 @@ func RegService(gws *rpc.Gateways) {
 	regUserService(gws)
 	regBackpackService(gws)
 	regGameService(gws)
+	regAuthService(gws)
 }
