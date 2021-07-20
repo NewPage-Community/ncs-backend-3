@@ -21,7 +21,7 @@ GOLANGCI_CMD    = $(DOCKER_CMD) $(GO_ENV) $(GOLANGCI_IMG)
 
 # Rules
 .PHONY: all
-all: img proto dao-mock dep build test lint
+all: img proto dao-mock build lint
 
 .PHONY: dep
 dep:
@@ -48,15 +48,12 @@ push_docker_changed:
 
 .PHONY: build
 build:
+	$(GO_CMD) go mod tidy
 	$(BAZEL_CMD) /bin/bash -c "\
 		bazel version && \
+		bazel run //:gazelle -- update-repos -from_file=go.mod && \
+        bazel run //:gazelle -- update -exclude .cache \
 		bazel build -k --noshow_progress //app/... //pkg/... \
-		"
-
-.PHONY: test
-test:
-	$(BAZEL_CMD) /bin/bash -c "\
-		bazel version && \
 		bazel test -k --noshow_progress //app/... //pkg/... \
 		"
 

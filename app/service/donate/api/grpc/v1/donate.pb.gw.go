@@ -117,35 +117,19 @@ func local_request_Donate_QueryDonate_0(ctx context.Context, marshaler runtime.M
 
 }
 
+var (
+	filter_Donate_GetDonateList_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+)
+
 func request_Donate_GetDonateList_0(ctx context.Context, marshaler runtime.Marshaler, client DonateClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetDonateListReq
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["start_time"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "start_time")
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-
-	protoReq.StartTime, err = runtime.Int64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "start_time", err)
-	}
-
-	val, ok = pathParams["end_time"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "end_time")
-	}
-
-	protoReq.EndTime, err = runtime.Int64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "end_time", err)
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Donate_GetDonateList_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := client.GetDonateList(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -157,31 +141,11 @@ func local_request_Donate_GetDonateList_0(ctx context.Context, marshaler runtime
 	var protoReq GetDonateListReq
 	var metadata runtime.ServerMetadata
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["start_time"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "start_time")
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-
-	protoReq.StartTime, err = runtime.Int64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "start_time", err)
-	}
-
-	val, ok = pathParams["end_time"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "end_time")
-	}
-
-	protoReq.EndTime, err = runtime.Int64(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "end_time", err)
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Donate_GetDonateList_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
 	msg, err := server.GetDonateList(ctx, &protoReq)
@@ -259,6 +223,78 @@ func local_request_Donate_GetDonateList_1(ctx context.Context, marshaler runtime
 
 }
 
+func request_Donate_GetDonateList_2(ctx context.Context, marshaler runtime.Marshaler, client DonateClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetDonateListReq
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["start_time"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "start_time")
+	}
+
+	protoReq.StartTime, err = runtime.Int64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "start_time", err)
+	}
+
+	val, ok = pathParams["end_time"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "end_time")
+	}
+
+	protoReq.EndTime, err = runtime.Int64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "end_time", err)
+	}
+
+	msg, err := client.GetDonateList(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_Donate_GetDonateList_2(ctx context.Context, marshaler runtime.Marshaler, server DonateServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetDonateListReq
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["start_time"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "start_time")
+	}
+
+	protoReq.StartTime, err = runtime.Int64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "start_time", err)
+	}
+
+	val, ok = pathParams["end_time"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "end_time")
+	}
+
+	protoReq.EndTime, err = runtime.Int64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "end_time", err)
+	}
+
+	msg, err := server.GetDonateList(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
 // RegisterDonateHandlerServer registers the http handlers for service Donate to "mux".
 // UnaryRPC     :call DonateServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
@@ -317,7 +353,7 @@ func RegisterDonateHandlerServer(ctx context.Context, mux *runtime.ServeMux, ser
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ncs.service.donate.v1.Donate/GetDonateList", runtime.WithHTTPPathPattern("/donate/list/{start_time}/{end_time}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ncs.service.donate.v1.Donate/GetDonateList", runtime.WithHTTPPathPattern("/donate/list"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -354,6 +390,29 @@ func RegisterDonateHandlerServer(ctx context.Context, mux *runtime.ServeMux, ser
 		}
 
 		forward_Donate_GetDonateList_1(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_Donate_GetDonateList_2, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/ncs.service.donate.v1.Donate/GetDonateList", runtime.WithHTTPPathPattern("/donate/list/{start_time}/{end_time}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_Donate_GetDonateList_2(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_Donate_GetDonateList_2(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -442,7 +501,7 @@ func RegisterDonateHandlerClient(ctx context.Context, mux *runtime.ServeMux, cli
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ncs.service.donate.v1.Donate/GetDonateList", runtime.WithHTTPPathPattern("/donate/list/{start_time}/{end_time}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ncs.service.donate.v1.Donate/GetDonateList", runtime.WithHTTPPathPattern("/donate/list"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -478,6 +537,26 @@ func RegisterDonateHandlerClient(ctx context.Context, mux *runtime.ServeMux, cli
 
 	})
 
+	mux.Handle("GET", pattern_Donate_GetDonateList_2, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/ncs.service.donate.v1.Donate/GetDonateList", runtime.WithHTTPPathPattern("/donate/list/{start_time}/{end_time}"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_Donate_GetDonateList_2(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_Donate_GetDonateList_2(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	return nil
 }
 
@@ -486,9 +565,11 @@ var (
 
 	pattern_Donate_QueryDonate_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"donate", "query", "out_trade_no"}, ""))
 
-	pattern_Donate_GetDonateList_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"donate", "list", "start_time", "end_time"}, ""))
+	pattern_Donate_GetDonateList_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"donate", "list"}, ""))
 
 	pattern_Donate_GetDonateList_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"donate", "list", "start_time"}, ""))
+
+	pattern_Donate_GetDonateList_2 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"donate", "list", "start_time", "end_time"}, ""))
 )
 
 var (
@@ -499,4 +580,6 @@ var (
 	forward_Donate_GetDonateList_0 = runtime.ForwardResponseMessage
 
 	forward_Donate_GetDonateList_1 = runtime.ForwardResponseMessage
+
+	forward_Donate_GetDonateList_2 = runtime.ForwardResponseMessage
 )

@@ -48,6 +48,44 @@
         ]
       }
     },
+    "/donate/list": {
+      "get": {
+        "operationId": "Donate_GetDonateList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetDonateListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "startTime",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Donate"
+        ]
+      }
+    },
     "/donate/list/{startTime}": {
       "get": {
         "operationId": "Donate_GetDonateList2",
@@ -88,7 +126,7 @@
     },
     "/donate/list/{startTime}/{endTime}": {
       "get": {
-        "operationId": "Donate_GetDonateList",
+        "operationId": "Donate_GetDonateList3",
         "responses": {
           "200": {
             "description": "A successful response.",
