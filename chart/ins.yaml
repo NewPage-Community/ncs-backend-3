@@ -115,6 +115,16 @@ ncs-services:
       tag: latest
       port: 2333
       hostNetwork: true
+    - app: ncs-service-auth-steam
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-auth-steam
+      tag: latest
+      port: 2333
+    - app: ncs-service-auth-qq
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-auth-qq
+      tag: latest
+      port: 2333
 
 ncs-gateway-web:
   ingress:
