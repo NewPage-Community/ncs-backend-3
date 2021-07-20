@@ -1,14 +1,14 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "conf",
     srcs = ["conf.go"],
     importpath = "backend/app/service/user/sign/conf",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/conf:go_default_library",
-        "//pkg/database/mysql:go_default_library",
-        "//pkg/log:go_default_library",
-        "@com_github_go_redis_redis_v7//:go_default_library",
+        "//pkg/conf",
+        "//pkg/database/mysql",
+        "//pkg/log",
+        "@com_github_go_redis_redis_v7//:redis",
     ],
 )

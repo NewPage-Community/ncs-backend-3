@@ -1,10 +1,10 @@
 package main
 
 import (
-	itemsSrv "backend/app/service/backpack/items/api/grpc"
-	userSrv "backend/app/service/backpack/user/api/grpc"
-	accountSrv "backend/app/service/user/account/api/grpc"
-	moneySrv "backend/app/service/user/money/api/grpc"
+	itemsSrv "backend/app/service/backpack/items/api/grpc/v1"
+	userSrv "backend/app/service/backpack/user/api/grpc/v1"
+	accountSrv "backend/app/service/user/account/api/grpc/v1"
+	moneySrv "backend/app/service/user/money/api/grpc/v1"
 	"context"
 	"fmt"
 	"os"

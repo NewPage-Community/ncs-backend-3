@@ -1,0 +1,278 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/service/user/ban/api/grpc/v1/ban.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Ban"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/ban/add": {
+      "post": {
+        "operationId": "Ban_Add",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AddResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1AddReq"
+            }
+          }
+        ],
+        "tags": [
+          "Ban"
+        ]
+      }
+    },
+    "/user/ban/check/{uid}": {
+      "post": {
+        "operationId": "Ban_BanCheck",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1InfoResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ip": {
+                  "type": "string"
+                },
+                "serverId": {
+                  "type": "string",
+                  "format": "int64"
+                },
+                "modId": {
+                  "type": "string",
+                  "format": "int64"
+                },
+                "gameId": {
+                  "type": "string",
+                  "format": "int64"
+                },
+                "appId": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Ban"
+        ]
+      }
+    },
+    "/user/ban/remove/{id}": {
+      "delete": {
+        "operationId": "Ban_Remove",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RemoveResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Ban"
+        ]
+      }
+    },
+    "/user/ban/{uid}": {
+      "get": {
+        "operationId": "Ban_Info",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1InfoResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "Ban"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1AddReq": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/v1Info"
+        }
+      }
+    },
+    "v1AddResp": {
+      "type": "object"
+    },
+    "v1Info": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "uid": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "ip": {
+          "type": "string"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "expireTime": {
+          "type": "string",
+          "format": "int64"
+        },
+        "type": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "serverId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "modId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "gameId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "blockIp": {
+          "type": "boolean"
+        },
+        "appId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "v1InfoResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/v1Info"
+        }
+      }
+    },
+    "v1RemoveResp": {
+      "type": "object"
+    }
+  }
+}

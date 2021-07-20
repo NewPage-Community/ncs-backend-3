@@ -6,34 +6,75 @@ package dao
 
 import (
 	model "backend/app/service/user/ban/model"
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockDao is a mock of Dao interface
+// MockDao is a mock of Dao interface.
 type MockDao struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaoMockRecorder
 }
 
-// MockDaoMockRecorder is the mock recorder for MockDao
+// MockDaoMockRecorder is the mock recorder for MockDao.
 type MockDaoMockRecorder struct {
 	mock *MockDao
 }
 
-// NewMockDao creates a new mock instance
+// NewMockDao creates a new mock instance.
 func NewMockDao(ctrl *gomock.Controller) *MockDao {
 	mock := &MockDao{ctrl: ctrl}
 	mock.recorder = &MockDaoMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDao) EXPECT() *MockDaoMockRecorder {
 	return m.recorder
 }
 
-// Info mocks base method
+// Add mocks base method.
+func (m *MockDao) Add(info *model.Ban) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Add", info)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Add indicates an expected call of Add.
+func (mr *MockDaoMockRecorder) Add(info interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Add", reflect.TypeOf((*MockDao)(nil).Add), info)
+}
+
+// Close mocks base method.
+func (m *MockDao) Close() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "Close")
+}
+
+// Close indicates an expected call of Close.
+func (mr *MockDaoMockRecorder) Close() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+}
+
+// Healthy mocks base method.
+func (m *MockDao) Healthy() bool {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Healthy")
+	ret0, _ := ret[0].(bool)
+	return ret0
+}
+
+// Healthy indicates an expected call of Healthy.
+func (mr *MockDaoMockRecorder) Healthy() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Healthy", reflect.TypeOf((*MockDao)(nil).Healthy))
+}
+
+// Info mocks base method.
 func (m *MockDao) Info(uid uint64) (*model.Ban, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Info", uid)
@@ -42,41 +83,13 @@ func (m *MockDao) Info(uid uint64) (*model.Ban, error) {
 	return ret0, ret1
 }
 
-// Info indicates an expected call of Info
+// Info indicates an expected call of Info.
 func (mr *MockDaoMockRecorder) Info(uid interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockDao)(nil).Info), uid)
 }
 
-// Add mocks base method
-func (m *MockDao) Add(info *model.Ban) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Add", info)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Add indicates an expected call of Add
-func (mr *MockDaoMockRecorder) Add(info interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Add", reflect.TypeOf((*MockDao)(nil).Add), info)
-}
-
-// Remove mocks base method
-func (m *MockDao) Remove(info *model.Ban) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Remove", info)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Remove indicates an expected call of Remove
-func (mr *MockDaoMockRecorder) Remove(info interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Remove", reflect.TypeOf((*MockDao)(nil).Remove), info)
-}
-
-// IsBlockIP mocks base method
+// IsBlockIP mocks base method.
 func (m *MockDao) IsBlockIP(ip string) (bool, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "IsBlockIP", ip)
@@ -85,34 +98,22 @@ func (m *MockDao) IsBlockIP(ip string) (bool, error) {
 	return ret0, ret1
 }
 
-// IsBlockIP indicates an expected call of IsBlockIP
+// IsBlockIP indicates an expected call of IsBlockIP.
 func (mr *MockDaoMockRecorder) IsBlockIP(ip interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsBlockIP", reflect.TypeOf((*MockDao)(nil).IsBlockIP), ip)
 }
 
-// Healthy mocks base method
-func (m *MockDao) Healthy() bool {
+// Remove mocks base method.
+func (m *MockDao) Remove(info *model.Ban) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Healthy")
-	ret0, _ := ret[0].(bool)
+	ret := m.ctrl.Call(m, "Remove", info)
+	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// Healthy indicates an expected call of Healthy
-func (mr *MockDaoMockRecorder) Healthy() *gomock.Call {
+// Remove indicates an expected call of Remove.
+func (mr *MockDaoMockRecorder) Remove(info interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Healthy", reflect.TypeOf((*MockDao)(nil).Healthy))
-}
-
-// Close mocks base method
-func (m *MockDao) Close() {
-	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Close")
-}
-
-// Close indicates an expected call of Close
-func (mr *MockDaoMockRecorder) Close() *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Remove", reflect.TypeOf((*MockDao)(nil).Remove), info)
 }

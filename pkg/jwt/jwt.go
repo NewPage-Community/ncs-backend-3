@@ -7,15 +7,18 @@ import (
 )
 
 type JWT struct {
-	ExpireTime int64
-	SecretKey  string
+	ExpireTime   int64
+	SecretKey    string
+	Issuer       string
+	CookieKey    string
+	CookieDomain string
 }
 
 // NewTokenString create a new valid JWT
 func (c *JWT) NewTokenString(payload map[string]interface{}) (string, error) {
 	now := time.Now()
 	payload["exp"] = now.Add(time.Duration(c.ExpireTime)).Unix()
-	payload["iss"] = "NewPage"
+	payload["iss"] = c.Issuer
 	payload["iat"] = now.Unix()
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims(payload))

@@ -1,5 +1,5 @@
 image:
-  name: registry.new-page.xyz/cloud-marketplace-containers/google/bazel:3.2.0
+  name: registry.new-page.xyz/bazel-public/ubuntu2004-java11:latest
 
 variables:
   GIT_CLEAN_FLAGS: -ffdx -e .cache/

@@ -11,6 +11,7 @@ type Config struct {
 	Alipay *Alipay
 	Wepay  *Wepay
 	Mysql  *mysql.Config
+	Donate *Donate
 }
 
 type Alipay struct {
@@ -28,12 +29,17 @@ type Wepay struct {
 	MchAPIv3Key                string
 }
 
+type Donate struct {
+	Target int
+}
+
 func Init() (c *Config) {
 	c = &Config{
 		&log.Config{},
 		&Alipay{},
 		&Wepay{},
 		&mysql.Config{},
+		&Donate{},
 	}
 	conf.Load(c)
 	return

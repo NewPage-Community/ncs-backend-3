@@ -1,12 +1,12 @@
 package service
 
 import (
-	server "backend/app/game/server/api/grpc"
-	backpack "backend/app/service/backpack/user/api/grpc"
-	reward "backend/app/service/pass/reward/api/grpc"
-	pb "backend/app/service/pass/user/api/grpc"
+	server "backend/app/game/server/api/grpc/v1"
+	backpack "backend/app/service/backpack/user/api/grpc/v1"
+	reward "backend/app/service/pass/reward/api/grpc/v1"
+	pb "backend/app/service/pass/user/api/grpc/v1"
 	"backend/app/service/pass/user/model"
-	money_pb "backend/app/service/user/money/api/grpc"
+	money_pb "backend/app/service/user/money/api/grpc/v1"
 	"backend/pkg/ecode"
 	"backend/pkg/log"
 	"context"

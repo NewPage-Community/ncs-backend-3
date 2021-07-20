@@ -1,11 +1,13 @@
 package service
 
 import (
+	pb "backend/app/game/a2s/api/grpc/v1"
 	"backend/app/game/a2s/conf"
 )
 
 // Service 服务结构定义
 type Service struct {
+	pb.UnimplementedA2SServer
 }
 
 // Init 服务初始化

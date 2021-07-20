@@ -1,7 +1,7 @@
 package service
 
 import (
-	pb "backend/app/game/stats/api/grpc"
+	pb "backend/app/game/stats/api/grpc/v1"
 	"backend/app/game/stats/model"
 	"backend/pkg/ecode"
 	"context"

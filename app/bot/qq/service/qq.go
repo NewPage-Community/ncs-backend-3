@@ -3,8 +3,8 @@ package service
 import (
 	pb "backend/app/bot/qq/api/grpc/v1"
 	"backend/app/game/chat"
-	chatService "backend/app/game/chat/api/grpc"
-	serverService "backend/app/game/server/api/grpc"
+	chatService "backend/app/game/chat/api/grpc/v1"
+	serverService "backend/app/game/server/api/grpc/v1"
 	"backend/pkg/log"
 	"context"
 	"encoding/json"

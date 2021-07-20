@@ -1,0 +1,80 @@
+syntax = "proto3";
+package ncs.service.user.ban.v1;
+option go_package = "backend/app/service/user/ban/api/grpc/v1";
+
+import "google/api/annotations.proto";
+
+// Base
+
+message Info {
+    uint32 id = 1;
+    uint64 uid = 2;
+    string ip = 3;
+    int64 create_time = 4;
+    int64 expire_time = 5;
+    int32 type = 6;
+    int64 server_id = 7;
+    int64 mod_id = 8;
+    int64 game_id = 9;
+    string reason = 10;
+    bool block_ip = 11;
+    uint32 app_id = 12;
+}
+
+// Message
+
+message InfoReq {
+    uint64 uid = 1;
+}
+
+message Info2Req {
+    uint64 uid = 1;
+    string ip = 2;
+    int64 server_id = 3;
+    int64 mod_id = 4;
+    int64 game_id = 5;
+    uint32 app_id = 6;
+}
+
+message InfoResp {
+    Info info = 1;
+}
+
+message AddReq {
+    Info info = 1;
+}
+
+message AddResp {
+}
+
+message RemoveReq {
+    uint32 id = 1;
+}
+
+message RemoveResp {
+}
+
+service Ban {
+    rpc Info (InfoReq) returns (InfoResp) {
+        option (google.api.http) = {
+            get: "/user/ban/{uid}"
+        };
+    }
+    rpc Add (AddReq) returns (AddResp) {
+        option (google.api.http) = {
+            post: "/user/ban/add"
+            body: "*"
+        };
+    }
+    rpc Remove (RemoveReq) returns (RemoveResp) {
+        option (google.api.http) = {
+            delete: "/user/ban/remove/{id}"
+        };
+    }
+    rpc BanCheck (Info2Req) returns (InfoResp) {
+        option (google.api.http) = {
+            post: "/user/ban/check/{uid}"
+            body: "*"
+        };
+    }
+}

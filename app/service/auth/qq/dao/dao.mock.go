@@ -6,49 +6,61 @@ package dao
 
 import (
 	model "backend/app/service/auth/qq/model"
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockDao is a mock of Dao interface
+// MockDao is a mock of Dao interface.
 type MockDao struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaoMockRecorder
 }
 
-// MockDaoMockRecorder is the mock recorder for MockDao
+// MockDaoMockRecorder is the mock recorder for MockDao.
 type MockDaoMockRecorder struct {
 	mock *MockDao
 }
 
-// NewMockDao creates a new mock instance
+// NewMockDao creates a new mock instance.
 func NewMockDao(ctrl *gomock.Controller) *MockDao {
 	mock := &MockDao{ctrl: ctrl}
 	mock.recorder = &MockDaoMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDao) EXPECT() *MockDaoMockRecorder {
 	return m.recorder
 }
 
-// GetUID mocks base method
-func (m *MockDao) GetUID(openID string) (*model.QQConnect, error) {
+// BindQQ mocks base method.
+func (m *MockDao) BindQQ(info model.QQConnect) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetUID", openID)
-	ret0, _ := ret[0].(*model.QQConnect)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret := m.ctrl.Call(m, "BindQQ", info)
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
-// GetUID indicates an expected call of GetUID
-func (mr *MockDaoMockRecorder) GetUID(openID interface{}) *gomock.Call {
+// BindQQ indicates an expected call of BindQQ.
+func (mr *MockDaoMockRecorder) BindQQ(info interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUID", reflect.TypeOf((*MockDao)(nil).GetUID), openID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindQQ", reflect.TypeOf((*MockDao)(nil).BindQQ), info)
 }
 
-// GetStatus mocks base method
+// Close mocks base method.
+func (m *MockDao) Close() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "Close")
+}
+
+// Close indicates an expected call of Close.
+func (mr *MockDaoMockRecorder) Close() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+}
+
+// GetStatus mocks base method.
 func (m *MockDao) GetStatus(uid int64) (*model.QQConnect, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetStatus", uid)
@@ -57,41 +69,28 @@ func (m *MockDao) GetStatus(uid int64) (*model.QQConnect, error) {
 	return ret0, ret1
 }
 
-// GetStatus indicates an expected call of GetStatus
+// GetStatus indicates an expected call of GetStatus.
 func (mr *MockDaoMockRecorder) GetStatus(uid interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetStatus", reflect.TypeOf((*MockDao)(nil).GetStatus), uid)
 }
 
-// BindQQ mocks base method
-func (m *MockDao) BindQQ(info model.QQConnect) error {
+// GetUID mocks base method.
+func (m *MockDao) GetUID(openID string) (*model.QQConnect, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BindQQ", info)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret := m.ctrl.Call(m, "GetUID", openID)
+	ret0, _ := ret[0].(*model.QQConnect)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
-// BindQQ indicates an expected call of BindQQ
-func (mr *MockDaoMockRecorder) BindQQ(info interface{}) *gomock.Call {
+// GetUID indicates an expected call of GetUID.
+func (mr *MockDaoMockRecorder) GetUID(openID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BindQQ", reflect.TypeOf((*MockDao)(nil).BindQQ), info)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUID", reflect.TypeOf((*MockDao)(nil).GetUID), openID)
 }
 
-// UnbindQQ mocks base method
-func (m *MockDao) UnbindQQ(info model.QQConnect) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UnbindQQ", info)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// UnbindQQ indicates an expected call of UnbindQQ
-func (mr *MockDaoMockRecorder) UnbindQQ(info interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnbindQQ", reflect.TypeOf((*MockDao)(nil).UnbindQQ), info)
-}
-
-// Healthy mocks base method
+// Healthy mocks base method.
 func (m *MockDao) Healthy() bool {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Healthy")
@@ -99,20 +98,22 @@ func (m *MockDao) Healthy() bool {
 	return ret0
 }
 
-// Healthy indicates an expected call of Healthy
+// Healthy indicates an expected call of Healthy.
 func (mr *MockDaoMockRecorder) Healthy() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Healthy", reflect.TypeOf((*MockDao)(nil).Healthy))
 }
 
-// Close mocks base method
-func (m *MockDao) Close() {
+// UnbindQQ mocks base method.
+func (m *MockDao) UnbindQQ(info model.QQConnect) error {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Close")
+	ret := m.ctrl.Call(m, "UnbindQQ", info)
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
-// Close indicates an expected call of Close
-func (mr *MockDaoMockRecorder) Close() *gomock.Call {
+// UnbindQQ indicates an expected call of UnbindQQ.
+func (mr *MockDaoMockRecorder) UnbindQQ(info interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UnbindQQ", reflect.TypeOf((*MockDao)(nil).UnbindQQ), info)
 }

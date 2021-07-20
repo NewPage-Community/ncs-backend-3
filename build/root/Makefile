@@ -1,11 +1,9 @@
 # Tools version
-PROTOC_VERSION  = 3.11.4
 GO_VERSION      = 1.14.4
-BAZEL_VERSION   = 3.2.0
 # Docker image
 HELM_IMG        = alpine/helm
-BAZEL_IMG       = registry.new-page.xyz/cloud-marketplace-containers/google/bazel:$(BAZEL_VERSION)
-GO_IMG          = golang:$(GO_VERSION)-alpine
+BAZEL_IMG       = registry.new-page.xyz/bazel-public/ubuntu2004-java11
+GO_IMG          = golang:$(GO_VERSION)
 GOLANGCI_IMG    = golangci/golangci-lint:latest-alpine
 # Golang
 ifdef GOPATH
@@ -17,7 +15,7 @@ DOCKER_CMD      = docker run --rm -v $(shell pwd):/apps -w /apps --entrypoint ""
 GO_ENV			= --env GOPROXY=https://goproxy.cn,direct $(GO_PATH_SET)
 # Tools run on docker
 HELM_CMD        = $(DOCKER_CMD) $(HELM_IMG)
-BAZEL_CMD       = $(DOCKER_CMD) $(BAZEL_IMG)
+BAZEL_CMD       = $(DOCKER_CMD) $(GO_ENV) $(BAZEL_IMG)
 GO_CMD          = $(DOCKER_CMD) $(GO_ENV) $(GO_IMG)
 GOLANGCI_CMD    = $(DOCKER_CMD) $(GO_ENV) $(GOLANGCI_IMG)
 
@@ -28,46 +26,53 @@ all: img proto dao-mock dep build test lint
 .PHONY: dep
 dep:
 	$(GO_CMD) go mod tidy
-	$(BAZEL_CMD) \
+	$(BAZEL_CMD) /bin/bash -c "\
 		bazel version && \
 		bazel run //:gazelle -- update-repos -from_file=go.mod && \
-		bazel run //:gazelle -- update -exclude .cache
+		bazel run //:gazelle -- update -exclude .cache \
+		"
 
 .PHONY: push_docker
 push_docker:
-	$(BAZEL_CMD) \
+	$(BAZEL_CMD) /bin/bash -c "\
 		bazel version && \
-		./build/push-images.sh
+		./build/push-images.sh \
+		"
 
 .PHONY: push_docker_changed
 push_docker_changed:
-	$(BAZEL_CMD) \
+	$(BAZEL_CMD) /bin/bash -c "\
 		bazel version && \
-		./build/push-images.sh changed
+		./build/push-images.sh changed \
+		"
 
 .PHONY: build
 build:
-	$(BAZEL_CMD) \
+	$(BAZEL_CMD) /bin/bash -c "\
 		bazel version && \
-		bazel build -k --noshow_progress //app/... //pkg/...
+		bazel build -k --noshow_progress //app/... //pkg/... \
+		"
 
 .PHONY: test
 test:
-	$(BAZEL_CMD) \
+	$(BAZEL_CMD) /bin/bash -c "\
 		bazel version && \
-		bazel test -k --noshow_progress //app/... //pkg/...
+		bazel test -k --noshow_progress //app/... //pkg/... \
+		"
 
 .PHONY: clean
 clean:
-	$(BAZEL_CMD) \
+	$(BAZEL_CMD) /bin/bash -c "\
 		bazel version && \
-		bazel clean
+		bazel clean \
+		"
 
 .PHONY: proto
 proto:
-	$(GO_CMD) \
+	$(GO_CMD) /bin/bash -c "\
 		go mod download && \
-		build/build-proto.sh app
+		./build/build-proto.sh app \
+		"
 
 .PHONY: deploy
 deploy:
@@ -87,6 +92,7 @@ img:
 
 .PHONY: dao-mock
 dao-mock:
-	$(GO_CMD) \
+	$(GO_CMD) /bin/bash -c "\
 		go mod download && \
-		build/build-dao-mock.sh app
+		build/build-dao-mock.sh app \
+		"

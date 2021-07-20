@@ -1,0 +1,60 @@
+syntax = "proto3";
+package ncs.service.user.vip.v1;
+option go_package = "backend/app/service/user/vip/api/grpc/v1";
+
+import "google/api/annotations.proto";
+
+// Base
+
+message Info {
+    int64 uid = 1;
+    int32 point = 2;
+    int32 level = 3;
+    int64 expire_date = 4;
+}
+
+message InfoReq {
+    int64 uid = 1;
+}
+
+message InfoResp {
+    Info info = 1;
+}
+
+message RenewalReq {
+    int64 uid = 1;
+    int64 length = 2;
+}
+
+message RenewalResp {
+    int64 expire_date = 1;
+}
+
+message AddPointReq {
+    int64 uid = 1;
+    int32 add_point = 2;
+}
+
+message AddPointResp {
+    int32 point = 3;
+}
+
+service VIP {
+    rpc Info (InfoReq) returns (InfoResp) {
+        option (google.api.http) = {
+            get: "/user/vip/{uid}"
+        };
+    }
+    rpc Renewal (RenewalReq) returns (RenewalResp) {
+        option (google.api.http) = {
+            post: "/user/vip/renewal"
+            body: "*"
+        };
+    }
+    rpc AddPoint (AddPointReq) returns (AddPointResp) {
+        option (google.api.http) = {
+            put: "/user/vip/{uid}/addpoint"
+            body: "*"
+        };
+    }
+}

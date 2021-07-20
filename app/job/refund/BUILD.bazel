@@ -2,26 +2,26 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("//build:docker.bzl", "push_docker")
 
 go_library(
-    name = "go_default_library",
+    name = "refund_lib",
     srcs = ["main.go"],
     importpath = "backend/app/job/refund",
     visibility = ["//visibility:private"],
     deps = [
-        "//app/service/backpack/items/api/grpc:go_default_library",
-        "//app/service/backpack/user/api/grpc:go_default_library",
-        "//app/service/user/account/api/grpc:go_default_library",
-        "//app/service/user/money/api/grpc:go_default_library",
+        "//app/service/backpack/items/api/grpc/v1:grpc",
+        "//app/service/backpack/user/api/grpc/v1:grpc",
+        "//app/service/user/account/api/grpc/v1:grpc",
+        "//app/service/user/money/api/grpc/v1:grpc",
     ],
 )
 
 go_binary(
     name = "refund",
-    embed = [":go_default_library"],
+    embed = [":refund_lib"],
     visibility = ["//visibility:public"],
 )
 
 push_docker(
     name = "push",
     app_name = "job-refund",
-    embed = [":go_default_library"],
+    embed = [":refund_lib"],
 )

@@ -4,9 +4,10 @@
     "title": "app/service/auth/steam/api/grpc/v1/steam.proto",
     "version": "version not set"
   },
-  "schemes": [
-    "http",
-    "https"
+  "tags": [
+    {
+      "name": "Web"
+    }
   ],
   "consumes": [
     "application/json"
@@ -17,12 +18,18 @@
   "paths": {
     "/auth/steam/callback": {
       "get": {
-        "operationId": "SteamCallback",
+        "operationId": "Web_SteamCallback",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/v1SteamCallbackResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
             }
           }
         },
@@ -40,13 +47,13 @@
             "type": "string"
           },
           {
-            "name": "openid.op_endpoint",
+            "name": "openid.opEndpoint",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
-            "name": "openid.claimed_id",
+            "name": "openid.claimedId",
             "in": "query",
             "required": false,
             "type": "string"
@@ -58,19 +65,19 @@
             "type": "string"
           },
           {
-            "name": "openid.return_to",
+            "name": "openid.returnTo",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
-            "name": "openid.response_nonce",
+            "name": "openid.responseNonce",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
-            "name": "openid.assoc_handle",
+            "name": "openid.assocHandle",
             "in": "query",
             "required": false,
             "type": "string"
@@ -95,12 +102,18 @@
     },
     "/auth/steam/login": {
       "get": {
-        "operationId": "SteamLogin",
+        "operationId": "Web_SteamLogin",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/v1SteamLoginResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
             }
           }
         },
@@ -120,22 +133,22 @@
         "mode": {
           "type": "string"
         },
-        "op_endpoint": {
+        "opEndpoint": {
           "type": "string"
         },
-        "claimed_id": {
+        "claimedId": {
           "type": "string"
         },
         "identity": {
           "type": "string"
         },
-        "return_to": {
+        "returnTo": {
           "type": "string"
         },
-        "response_nonce": {
+        "responseNonce": {
           "type": "string"
         },
-        "assoc_handle": {
+        "assocHandle": {
           "type": "string"
         },
         "signed": {
@@ -146,10 +159,40 @@
         }
       }
     },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
     "v1SteamCallbackResp": {
       "type": "object",
       "properties": {
-        "jwt_string": {
+        "jwtString": {
           "type": "string"
         }
       }

@@ -1,9 +1,10 @@
 package service
 
 import (
+	pb "backend/app/bot/qq/api/grpc/v1"
 	"backend/app/bot/qq/conf"
-	chatService "backend/app/game/chat/api/grpc"
-	serverService "backend/app/game/server/api/grpc"
+	chatService "backend/app/game/chat/api/grpc/v1"
+	serverService "backend/app/game/server/api/grpc/v1"
 	"github.com/miRemid/amy"
 	"github.com/miRemid/amy/websocket/model"
 )
@@ -15,6 +16,7 @@ type Service struct {
 	serverSrv   serverService.ServerClient
 	chatSrv     chatService.ChatClient
 	qqGroups    []int
+	pb.UnimplementedQQServer
 }
 
 // Init 服务初始化

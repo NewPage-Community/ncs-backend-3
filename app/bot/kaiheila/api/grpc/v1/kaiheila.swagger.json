@@ -4,9 +4,10 @@
     "title": "app/bot/kaiheila/api/grpc/v1/kaiheila.proto",
     "version": "version not set"
   },
-  "schemes": [
-    "http",
-    "https"
+  "tags": [
+    {
+      "name": "Kaiheila"
+    }
   ],
   "consumes": [
     "application/json"
@@ -16,13 +17,43 @@
   ],
   "paths": {},
   "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
     "v1SendMessageResp": {
       "type": "object",
       "properties": {
-        "msg_id": {
+        "msgId": {
           "type": "string"
         },
-        "msg_timestamp": {
+        "msgTimestamp": {
           "type": "string",
           "format": "int64"
         },

@@ -1,12 +1,14 @@
 package service
 
 import (
+	pb "backend/app/service/user/vip/api/grpc/v1"
 	"backend/app/service/user/vip/conf"
 	"backend/app/service/user/vip/dao"
 )
 
 type Service struct {
 	dao dao.Dao
+	pb.UnimplementedVIPServer
 }
 
 func Init(c *conf.Config) *Service {

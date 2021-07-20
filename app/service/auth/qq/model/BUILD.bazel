@@ -1,9 +1,9 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "model",
     srcs = ["qq.go"],
     importpath = "backend/app/service/auth/qq/model",
     visibility = ["//visibility:public"],
-    deps = ["//pkg/jwt:go_default_library"],
+    deps = ["//pkg/jwt"],
 )

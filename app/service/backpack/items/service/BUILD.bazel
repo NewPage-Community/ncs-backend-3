@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "go_default_library",
+    name = "service",
     srcs = [
         "items.go",
         "service.go",
@@ -9,23 +9,23 @@ go_library(
     importpath = "backend/app/service/backpack/items/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/service/backpack/items/api/grpc:go_default_library",
-        "//app/service/backpack/items/conf:go_default_library",
-        "//app/service/backpack/items/dao:go_default_library",
-        "//app/service/backpack/items/model:go_default_library",
-        "//pkg/log:go_default_library",
+        "//app/service/backpack/items/api/grpc/v1:grpc",
+        "//app/service/backpack/items/conf",
+        "//app/service/backpack/items/dao",
+        "//app/service/backpack/items/model",
+        "//pkg/log",
     ],
 )
 
 go_test(
-    name = "go_default_test",
+    name = "service_test",
     srcs = ["items_test.go"],
-    embed = [":go_default_library"],
+    embed = [":service"],
     deps = [
-        "//app/service/backpack/items/api/grpc:go_default_library",
-        "//app/service/backpack/items/dao:go_default_library",
-        "//app/service/backpack/items/model:go_default_library",
-        "@com_github_golang_mock//gomock:go_default_library",
-        "@com_github_smartystreets_goconvey//convey:go_default_library",
+        "//app/service/backpack/items/api/grpc/v1:grpc",
+        "//app/service/backpack/items/dao",
+        "//app/service/backpack/items/model",
+        "@com_github_golang_mock//gomock",
+        "@com_github_smartystreets_goconvey//convey",
     ],
 )

@@ -1,7 +1,7 @@
 package main
 
 import (
-	api "backend/app/service/user/ban/api/grpc"
+	api "backend/app/service/user/ban/api/grpc/v1"
 	"backend/app/service/user/ban/conf"
 	"backend/app/service/user/ban/service"
 	"backend/pkg/cmd"

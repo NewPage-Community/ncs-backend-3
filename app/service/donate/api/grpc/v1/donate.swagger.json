@@ -1,0 +1,264 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/service/donate/api/grpc/v1/donate.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Donate"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/donate/create": {
+      "post": {
+        "operationId": "Donate_CreateDonate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateDonateResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateDonateReq"
+            }
+          }
+        ],
+        "tags": [
+          "Donate"
+        ]
+      }
+    },
+    "/donate/list/{startTime}": {
+      "get": {
+        "operationId": "Donate_GetDonateList2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetDonateListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "startTime",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Donate"
+        ]
+      }
+    },
+    "/donate/list/{startTime}/{endTime}": {
+      "get": {
+        "operationId": "Donate_GetDonateList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetDonateListResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "startTime",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "endTime",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Donate"
+        ]
+      }
+    },
+    "/donate/query/{outTradeNo}": {
+      "get": {
+        "operationId": "Donate_QueryDonate",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1QueryDonateResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "outTradeNo",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Donate"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1AddDonateResp": {
+      "type": "object"
+    },
+    "v1CreateDonateReq": {
+      "type": "object",
+      "properties": {
+        "steamId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "amount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "payment": {
+          "$ref": "#/definitions/v1PAY_TYPE"
+        }
+      }
+    },
+    "v1CreateDonateResp": {
+      "type": "object",
+      "properties": {
+        "outTradeNo": {
+          "type": "string"
+        },
+        "qrCode": {
+          "type": "string"
+        },
+        "payment": {
+          "$ref": "#/definitions/v1PAY_TYPE"
+        }
+      }
+    },
+    "v1GetDonateListResp": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1QueryDonateResp"
+          }
+        }
+      }
+    },
+    "v1PAY_TYPE": {
+      "type": "string",
+      "enum": [
+        "NULL",
+        "ALIPAY",
+        "WEPAY"
+      ],
+      "default": "NULL"
+    },
+    "v1QueryDonateResp": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "amount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createAt": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    }
+  }
+}

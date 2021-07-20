@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "service",
     srcs = [
         "qq.go",
         "service.go",
@@ -9,13 +9,13 @@ go_library(
     importpath = "backend/app/service/auth/qq/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/service/auth/qq/api/grpc/v1:go_default_library",
-        "//app/service/auth/qq/conf:go_default_library",
-        "//app/service/auth/qq/dao:go_default_library",
-        "//app/service/auth/qq/model:go_default_library",
-        "//pkg/ecode:go_default_library",
-        "//pkg/json:go_default_library",
-        "//pkg/jwt:go_default_library",
-        "@org_golang_google_grpc//codes:go_default_library",
+        "//app/service/auth/qq/api/grpc/v1:grpc",
+        "//app/service/auth/qq/conf",
+        "//app/service/auth/qq/dao",
+        "//app/service/auth/qq/model",
+        "//pkg/ecode",
+        "//pkg/json",
+        "//pkg/jwt",
+        "@org_golang_google_grpc//codes",
     ],
 )

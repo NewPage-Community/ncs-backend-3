@@ -3,7 +3,7 @@ package service
 import (
 	qqBot "backend/app/bot/qq/api/grpc/v1"
 	a2sSrv "backend/app/game/a2s/api/grpc/v1"
-	pb "backend/app/game/server/api/grpc"
+	pb "backend/app/game/server/api/grpc/v1"
 	"backend/app/game/server/dao"
 	"backend/app/game/server/model"
 	"context"

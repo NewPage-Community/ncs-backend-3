@@ -1,11 +1,12 @@
 package service
 
 import (
+	pb "backend/app/game/pass/api/grpc/v1"
 	"backend/app/game/pass/conf"
-	itemService "backend/app/service/backpack/items/api/grpc"
-	userItemService "backend/app/service/backpack/user/api/grpc"
-	rewardService "backend/app/service/pass/reward/api/grpc"
-	userPassService "backend/app/service/pass/user/api/grpc"
+	itemService "backend/app/service/backpack/items/api/grpc/v1"
+	userItemService "backend/app/service/backpack/user/api/grpc/v1"
+	rewardService "backend/app/service/pass/reward/api/grpc/v1"
+	userPassService "backend/app/service/pass/user/api/grpc/v1"
 )
 
 type Service struct {
@@ -13,6 +14,7 @@ type Service struct {
 	reward   rewardService.RewardClient
 	userItem userItemService.UserClient
 	userPass userPassService.UserClient
+	pb.UnimplementedPassServer
 }
 
 func Init(config *conf.Config) *Service {

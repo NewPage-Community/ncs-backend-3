@@ -1,7 +1,7 @@
 package main
 
 import (
-	api "backend/app/game/cvar/api/grpc"
+	api "backend/app/game/cvar/api/grpc/v1"
 	"backend/app/game/cvar/conf"
 	"backend/app/game/cvar/service"
 	"backend/pkg/cmd"

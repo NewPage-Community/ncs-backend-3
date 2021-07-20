@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "go_default_library",
+    name = "service",
     srcs = [
         "money.go",
         "service.go",
@@ -9,24 +9,24 @@ go_library(
     importpath = "backend/app/service/user/money/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/service/user/money/api/grpc:go_default_library",
-        "//app/service/user/money/conf:go_default_library",
-        "//app/service/user/money/dao:go_default_library",
-        "//pkg/ecode:go_default_library",
-        "//pkg/log:go_default_library",
-        "@org_golang_google_grpc//codes:go_default_library",
+        "//app/service/user/money/api/grpc/v1:grpc",
+        "//app/service/user/money/conf",
+        "//app/service/user/money/dao",
+        "//pkg/ecode",
+        "//pkg/log",
+        "@org_golang_google_grpc//codes",
     ],
 )
 
 go_test(
-    name = "go_default_test",
+    name = "service_test",
     srcs = ["money_test.go"],
-    embed = [":go_default_library"],
+    embed = [":service"],
     deps = [
-        "//app/service/user/money/api/grpc:go_default_library",
-        "//app/service/user/money/dao:go_default_library",
-        "//app/service/user/money/model:go_default_library",
-        "@com_github_golang_mock//gomock:go_default_library",
-        "@com_github_smartystreets_goconvey//convey:go_default_library",
+        "//app/service/user/money/api/grpc/v1:grpc",
+        "//app/service/user/money/dao",
+        "//app/service/user/money/model",
+        "@com_github_golang_mock//gomock",
+        "@com_github_smartystreets_goconvey//convey",
     ],
 )

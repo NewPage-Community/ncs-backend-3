@@ -1,0 +1,33 @@
+syntax = "proto3";
+package ncs.game.chat.v1;
+option go_package = "backend/app/game/chat/api/grpc/v1";
+
+import "google/api/annotations.proto";
+
+message AllChatReq {
+    string name = 1;
+    string message = 2;
+    int32 server_id = 3;
+}
+
+message AllChatResp {
+}
+
+message ChatNotifyReq {
+    int64 uid = 1;
+    string prefix = 2;
+    string message = 3;
+}
+
+message ChatNotifyResp {
+}
+
+service Chat {
+    rpc AllChat (AllChatReq) returns (AllChatResp) {
+        option (google.api.http) = {
+            post: "/game/chat/allchat"
+            body: "*"
+        };
+    }
+    rpc ChatNotify (ChatNotifyReq) returns (ChatNotifyResp);
+}

@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "service",
     srcs = [
         "alipay.go",
         "donate.go",
@@ -12,19 +12,19 @@ go_library(
     importpath = "backend/app/service/donate/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/service/donate/api/grpc:go_default_library",
-        "//app/service/donate/conf:go_default_library",
-        "//app/service/donate/dao:go_default_library",
-        "//app/service/donate/model:go_default_library",
-        "//app/service/user/account/api/grpc:go_default_library",
-        "//app/service/user/money/api/grpc:go_default_library",
-        "//pkg/log:go_default_library",
-        "@com_github_robfig_cron_v3//:go_default_library",
-        "@com_github_smartwalle_alipay_v3//:go_default_library",
-        "@com_github_wechatpay_apiv3_wechatpay_go//core:go_default_library",
-        "@com_github_wechatpay_apiv3_wechatpay_go//core/option:go_default_library",
-        "@com_github_wechatpay_apiv3_wechatpay_go//services/payments/native:go_default_library",
-        "@org_golang_google_grpc//codes:go_default_library",
-        "@org_golang_google_grpc//status:go_default_library",
+        "//app/service/donate/api/grpc/v1:grpc",
+        "//app/service/donate/conf",
+        "//app/service/donate/dao",
+        "//app/service/donate/model",
+        "//app/service/user/account/api/grpc/v1:grpc",
+        "//app/service/user/money/api/grpc/v1:grpc",
+        "//pkg/log",
+        "@com_github_robfig_cron_v3//:cron",
+        "@com_github_smartwalle_alipay_v3//:alipay",
+        "@com_github_wechatpay_apiv3_wechatpay_go//core",
+        "@com_github_wechatpay_apiv3_wechatpay_go//core/option",
+        "@com_github_wechatpay_apiv3_wechatpay_go//services/payments/native",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//status",
     ],
 )

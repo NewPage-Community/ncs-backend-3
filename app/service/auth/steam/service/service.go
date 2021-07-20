@@ -1,14 +1,16 @@
 package service
 
 import (
+	pb "backend/app/service/auth/steam/api/grpc/v1"
 	"backend/app/service/auth/steam/conf"
-	accountSrv "backend/app/service/user/account/api/grpc"
+	accountSrv "backend/app/service/user/account/api/grpc/v1"
 )
 
 // Service 服务结构定义
 type Service struct {
 	config  *conf.Config
 	account accountSrv.AccountClient
+	pb.UnimplementedWebServer
 }
 
 // Init 服务初始化

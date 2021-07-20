@@ -1,7 +1,7 @@
 package service
 
 import (
-	serverGW "backend/app/game/server/api/grpc"
+	serverGW "backend/app/game/server/api/grpc/v1"
 	"backend/pkg/rpc"
 )
 
