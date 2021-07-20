@@ -10,7 +10,6 @@ before_script:
   - chmod -R +x build
   - mkdir $HOME/.docker
   - export HTTP_PROXY=http://hkt.v2ray:1080 HTTPS_PROXY=http://hkt.v2ray:1080 NO_PROXY=hkt.v2ray,goproxy.golang,*.new-page.xyz,nexus3.nexus3
-  - mkdir $HOME/.docker
   - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
 
 cache:
