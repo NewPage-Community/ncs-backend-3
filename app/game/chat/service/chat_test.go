@@ -11,14 +11,16 @@ import (
 	"fmt"
 	"github.com/golang/mock/gomock"
 	. "github.com/smartystreets/goconvey/convey"
+	"sync"
 	"testing"
-	"time"
 )
 
 func TestService_AllChat(t *testing.T) {
 	log.Init(nil)
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
+
+	wg := sync.WaitGroup{}
 
 	tName := "TEST"
 	tMessage := "This is a test message"
@@ -39,19 +41,21 @@ func TestService_AllChat(t *testing.T) {
 		Cmd: fmt.Sprintf("ncs_chat_notify 0 \"%s\" \"%s : %s\"", fmt.Sprintf(AllChatPrefix, " · QQ"), tName, tMessage),
 	}).Return(&server.RconAllResp{}, nil)
 	kaiheila := kaiheilaBot.NewMockKaiheilaClient(ctl)
-	kaiheila.EXPECT().SendChannelMsg(gomock.Any(), gomock.Any()).Return(nil, nil)
+	kaiheila.EXPECT().SendChannelMsg(gomock.Any(), gomock.Any()).Return(nil, nil).Do(func(ctx, in interface{}, opts ...interface{}) { wg.Done() })
 	qq := qqBot.NewMockQQClient(ctl)
 	//qq.EXPECT().SendGroupMessage(gomock.Any(), gomock.Any()).Return(nil, nil)
 
 	srv := &Service{server: s, kaiheila: kaiheila, qq: qq}
 	Convey("Test AllChat", t, func() {
 		Convey("Check it work", func() {
+			wg.Add(1)
 			_, err := srv.AllChat(context.TODO(), &pb.AllChatReq{
 				Name:     tName,
 				Message:  tMessage,
 				ServerId: 1,
 			})
 			So(err, ShouldBeNil)
+			wg.Wait()
 		})
 		Convey("Check kaiheila chat", func() {
 			_, err := srv.AllChat(context.TODO(), &pb.AllChatReq{
@@ -78,5 +82,4 @@ func TestService_AllChat(t *testing.T) {
 			So(err, ShouldBeNil)
 		})
 	})
-	time.Sleep(time.Second)
 }
