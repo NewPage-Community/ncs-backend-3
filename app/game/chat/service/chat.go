@@ -3,8 +3,8 @@ package service
 import (
 	kaiheilaBot "backend/app/bot/kaiheila/api/grpc/v1"
 	"backend/app/game/chat"
-	pb "backend/app/game/chat/api/grpc"
-	server "backend/app/game/server/api/grpc"
+	pb "backend/app/game/chat/api/grpc/v1"
+	server "backend/app/game/server/api/grpc/v1"
 	"backend/pkg/log"
 	"context"
 	"fmt"

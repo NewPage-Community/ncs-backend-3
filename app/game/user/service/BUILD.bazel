@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "service",
     srcs = [
         "service.go",
         "user.go",
@@ -9,10 +9,10 @@ go_library(
     importpath = "backend/app/game/user/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/game/user/api/grpc:go_default_library",
-        "//app/service/backpack/user/api/grpc:go_default_library",
-        "//app/service/user/account/api/grpc:go_default_library",
-        "//pkg/ecode:go_default_library",
-        "@org_golang_google_grpc//codes:go_default_library",
+        "//app/game/user/api/grpc/v1:grpc",
+        "//app/service/backpack/user/api/grpc/v1:grpc",
+        "//app/service/user/account/api/grpc/v1:grpc",
+        "//pkg/ecode",
+        "@org_golang_google_grpc//codes",
     ],
 )

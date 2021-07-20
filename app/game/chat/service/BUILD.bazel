@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "go_default_library",
+    name = "service",
     srcs = [
         "chat.go",
         "helper.go",
@@ -10,28 +10,28 @@ go_library(
     importpath = "backend/app/game/chat/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/bot/kaiheila/api/grpc/v1:go_default_library",
-        "//app/bot/qq/api/grpc/v1:go_default_library",
-        "//app/game/chat:go_default_library",
-        "//app/game/chat/api/grpc:go_default_library",
-        "//app/game/chat/conf:go_default_library",
-        "//app/game/server/api/grpc:go_default_library",
-        "//pkg/log:go_default_library",
+        "//app/bot/kaiheila/api/grpc/v1:grpc",
+        "//app/bot/qq/api/grpc/v1:grpc",
+        "//app/game/chat",
+        "//app/game/chat/api/grpc/v1:grpc",
+        "//app/game/chat/conf",
+        "//app/game/server/api/grpc/v1:grpc",
+        "//pkg/log",
     ],
 )
 
 go_test(
-    name = "go_default_test",
+    name = "service_test",
     srcs = ["chat_test.go"],
-    embed = [":go_default_library"],
+    embed = [":service"],
     deps = [
-        "//app/bot/kaiheila/api/grpc/v1:go_default_library",
-        "//app/bot/qq/api/grpc/v1:go_default_library",
-        "//app/game/chat:go_default_library",
-        "//app/game/chat/api/grpc:go_default_library",
-        "//app/game/server/api/grpc:go_default_library",
-        "//pkg/log:go_default_library",
-        "@com_github_golang_mock//gomock:go_default_library",
-        "@com_github_smartystreets_goconvey//convey:go_default_library",
+        "//app/bot/kaiheila/api/grpc/v1:grpc",
+        "//app/bot/qq/api/grpc/v1:grpc",
+        "//app/game/chat",
+        "//app/game/chat/api/grpc/v1:grpc",
+        "//app/game/server/api/grpc/v1:grpc",
+        "//pkg/log",
+        "@com_github_golang_mock//gomock",
+        "@com_github_smartystreets_goconvey//convey",
     ],
 )

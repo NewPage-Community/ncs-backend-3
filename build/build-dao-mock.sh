@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Install tools
+go get github.com/golang/mock/mockgen
+
+export PATH=$PATH:/$GOPATH/bin
+
 find ${1} -name 'dao.go' -print0 |
     while IFS= read -r -d '' file; do
         path=${file%/*}

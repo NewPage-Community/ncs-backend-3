@@ -1,12 +1,14 @@
 package service
 
 import (
+	pb "backend/app/service/user/account/api/grpc/v1"
 	"backend/app/service/user/account/conf"
 	"backend/app/service/user/account/dao"
 )
 
 type Service struct {
 	dao dao.Dao
+	pb.UnimplementedAccountServer
 }
 
 func Init(c *conf.Config) *Service {

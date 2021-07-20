@@ -1,6 +1,7 @@
 package service
 
 import (
+	pb "backend/app/service/auth/qq/api/grpc/v1"
 	"backend/app/service/auth/qq/conf"
 	"backend/app/service/auth/qq/dao"
 )
@@ -9,6 +10,7 @@ import (
 type Service struct {
 	config *conf.Config
 	dao    dao.Dao
+	pb.UnimplementedWebServer
 }
 
 // Init 服务初始化

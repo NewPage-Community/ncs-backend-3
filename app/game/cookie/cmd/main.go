@@ -1,7 +1,7 @@
 package main
 
 import (
-	api "backend/app/game/cookie/api/grpc"
+	api "backend/app/game/cookie/api/grpc/v1"
 	"backend/app/game/cookie/conf"
 	"backend/app/game/cookie/service"
 	"backend/pkg/cmd"

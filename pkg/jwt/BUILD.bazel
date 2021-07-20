@@ -1,8 +1,9 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "go_default_library",
+    name = "jwt",
     srcs = [
+        "cookie.go",
         "grpc.go",
         "jwt.go",
         "payload.go",
@@ -10,20 +11,21 @@ go_library(
     importpath = "backend/pkg/jwt",
     visibility = ["//visibility:public"],
     deps = [
-        "@com_github_dgrijalva_jwt_go//:go_default_library",
-        "@org_golang_google_grpc//:go_default_library",
-        "@org_golang_google_grpc//codes:go_default_library",
-        "@org_golang_google_grpc//metadata:go_default_library",
-        "@org_golang_google_grpc//status:go_default_library",
+        "//pkg/rpc/gateway",
+        "@com_github_dgrijalva_jwt_go//:jwt-go",
+        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//metadata",
+        "@org_golang_google_grpc//status",
     ],
 )
 
 go_test(
-    name = "go_default_test",
+    name = "jwt_test",
     srcs = ["jwt_test.go"],
-    embed = [":go_default_library"],
+    embed = [":jwt"],
     deps = [
-        "@com_github_smartystreets_goconvey//convey:go_default_library",
-        "@org_golang_google_grpc//metadata:go_default_library",
+        "@com_github_smartystreets_goconvey//convey",
+        "@org_golang_google_grpc//metadata",
     ],
 )

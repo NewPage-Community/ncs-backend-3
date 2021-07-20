@@ -1,0 +1,560 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/game/stats/api/grpc/v1/stats.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Stats"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/game/stats/gets": {
+      "post": {
+        "operationId": "Stats_Gets",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetsResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetsReq"
+            }
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/user/incr": {
+      "post": {
+        "operationId": "Stats_Incr",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1IncrResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1IncrReq"
+            }
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/user/incrs": {
+      "post": {
+        "operationId": "Stats_Incrs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1IncrResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1IncrsReq"
+            }
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/user/set": {
+      "post": {
+        "operationId": "Stats_Set",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SetResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SetReq"
+            }
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/user/sets": {
+      "post": {
+        "operationId": "Stats_Sets",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SetResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SetsReq"
+            }
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/user/{uid}/{statsName}/{version}": {
+      "get": {
+        "operationId": "Stats_Get",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "statsName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "range",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/user/{uid}/{statsName}/{version}/{range}": {
+      "get": {
+        "operationId": "Stats_Get2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "statsName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "range",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/{statsName}/{version}": {
+      "get": {
+        "operationId": "Stats_GetAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetAllResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "statsName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "range",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    },
+    "/game/stats/{statsName}/{version}/{range}": {
+      "get": {
+        "operationId": "Stats_GetAll2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetAllResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "statsName",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "range",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Stats"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1GetAllResp": {
+      "type": "object",
+      "properties": {
+        "stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1GetResp"
+          }
+        }
+      }
+    },
+    "v1GetReq": {
+      "type": "object",
+      "properties": {
+        "range": {
+          "type": "string"
+        },
+        "statsName": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GetResp": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "score": {
+          "type": "number",
+          "format": "float"
+        },
+        "rank": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GetsReq": {
+      "type": "object",
+      "properties": {
+        "stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1GetReq"
+          }
+        }
+      }
+    },
+    "v1GetsResp": {
+      "type": "object",
+      "properties": {
+        "stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1StatsInfo"
+          }
+        }
+      }
+    },
+    "v1IncrReq": {
+      "type": "object",
+      "properties": {
+        "range": {
+          "type": "string"
+        },
+        "statsName": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "increment": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "v1IncrResp": {
+      "type": "object"
+    },
+    "v1IncrsReq": {
+      "type": "object",
+      "properties": {
+        "stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1IncrReq"
+          }
+        }
+      }
+    },
+    "v1SetReq": {
+      "type": "object",
+      "properties": {
+        "range": {
+          "type": "string"
+        },
+        "statsName": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "score": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "v1SetResp": {
+      "type": "object"
+    },
+    "v1SetsReq": {
+      "type": "object",
+      "properties": {
+        "stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SetReq"
+          }
+        }
+      }
+    },
+    "v1StatsInfo": {
+      "type": "object",
+      "properties": {
+        "range": {
+          "type": "string"
+        },
+        "statsName": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string",
+          "format": "int64"
+        },
+        "score": {
+          "type": "number",
+          "format": "float"
+        },
+        "rank": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    }
+  }
+}

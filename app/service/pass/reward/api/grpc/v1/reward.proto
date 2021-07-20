@@ -1,0 +1,38 @@
+syntax = "proto3";
+package ncs.service.pass.reward.v1;
+option go_package = "backend/app/service/pass/reward/api/grpc/v1";
+
+import "google/api/annotations.proto";
+
+message Item {
+    int32 level = 1;
+    int32 id = 2;
+    int32 amount = 3;
+    int64 length = 4;
+}
+
+message GetRewardsReq {
+    int32 level = 1;
+    int32 min = 2;
+}
+
+message GetRewardsResp {
+    int32 season = 1;
+    repeated Item free_rewards = 2;
+    repeated Item adv_rewards = 3;
+    int32 max_level = 4;
+}
+
+service Reward {
+    rpc GetRewards (GetRewardsReq) returns (GetRewardsResp) {
+        option (google.api.http) = {
+            get: "/pass/reward"
+            additional_bindings: {
+				get: "/pass/reward/level/{level}"
+			}
+			additional_bindings: {
+				get: "/pass/reward/level/{level}/{min}"
+			}
+        };
+    }
+}

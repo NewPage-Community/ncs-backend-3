@@ -1,7 +1,7 @@
 package service
 
 import (
-	pb "backend/app/service/backpack/items/api/grpc"
+	pb "backend/app/service/backpack/items/api/grpc/v1"
 	"backend/app/service/backpack/items/model"
 	"backend/pkg/log"
 	"context"

@@ -6,63 +6,35 @@ package dao
 
 import (
 	model "backend/app/service/pass/user/model"
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockDao is a mock of Dao interface
+// MockDao is a mock of Dao interface.
 type MockDao struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaoMockRecorder
 }
 
-// MockDaoMockRecorder is the mock recorder for MockDao
+// MockDaoMockRecorder is the mock recorder for MockDao.
 type MockDaoMockRecorder struct {
 	mock *MockDao
 }
 
-// NewMockDao creates a new mock instance
+// NewMockDao creates a new mock instance.
 func NewMockDao(ctrl *gomock.Controller) *MockDao {
 	mock := &MockDao{ctrl: ctrl}
 	mock.recorder = &MockDaoMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDao) EXPECT() *MockDaoMockRecorder {
 	return m.recorder
 }
 
-// Info mocks base method
-func (m *MockDao) Info(uid int64) (*model.User, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Info", uid)
-	ret0, _ := ret[0].(*model.User)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Info indicates an expected call of Info
-func (mr *MockDaoMockRecorder) Info(uid interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockDao)(nil).Info), uid)
-}
-
-// UpgradePass mocks base method
-func (m *MockDao) UpgradePass(uid int64, passType int32) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpgradePass", uid, passType)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// UpgradePass indicates an expected call of UpgradePass
-func (mr *MockDaoMockRecorder) UpgradePass(uid, passType interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpgradePass", reflect.TypeOf((*MockDao)(nil).UpgradePass), uid, passType)
-}
-
-// AddPoint mocks base method
+// AddPoint mocks base method.
 func (m *MockDao) AddPoint(uid int64, addPoint int32) (*model.User, int32, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AddPoint", uid, addPoint)
@@ -72,13 +44,25 @@ func (m *MockDao) AddPoint(uid int64, addPoint int32) (*model.User, int32, error
 	return ret0, ret1, ret2
 }
 
-// AddPoint indicates an expected call of AddPoint
+// AddPoint indicates an expected call of AddPoint.
 func (mr *MockDaoMockRecorder) AddPoint(uid, addPoint interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddPoint", reflect.TypeOf((*MockDao)(nil).AddPoint), uid, addPoint)
 }
 
-// Healthy mocks base method
+// Close mocks base method.
+func (m *MockDao) Close() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "Close")
+}
+
+// Close indicates an expected call of Close.
+func (mr *MockDaoMockRecorder) Close() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+}
+
+// Healthy mocks base method.
 func (m *MockDao) Healthy() bool {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Healthy")
@@ -86,20 +70,37 @@ func (m *MockDao) Healthy() bool {
 	return ret0
 }
 
-// Healthy indicates an expected call of Healthy
+// Healthy indicates an expected call of Healthy.
 func (mr *MockDaoMockRecorder) Healthy() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Healthy", reflect.TypeOf((*MockDao)(nil).Healthy))
 }
 
-// Close mocks base method
-func (m *MockDao) Close() {
+// Info mocks base method.
+func (m *MockDao) Info(uid int64) (*model.User, error) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Close")
+	ret := m.ctrl.Call(m, "Info", uid)
+	ret0, _ := ret[0].(*model.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
-// Close indicates an expected call of Close
-func (mr *MockDaoMockRecorder) Close() *gomock.Call {
+// Info indicates an expected call of Info.
+func (mr *MockDaoMockRecorder) Info(uid interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockDao)(nil).Info), uid)
+}
+
+// UpgradePass mocks base method.
+func (m *MockDao) UpgradePass(uid int64, passType int32) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpgradePass", uid, passType)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpgradePass indicates an expected call of UpgradePass.
+func (mr *MockDaoMockRecorder) UpgradePass(uid, passType interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpgradePass", reflect.TypeOf((*MockDao)(nil).UpgradePass), uid, passType)
 }

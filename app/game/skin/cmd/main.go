@@ -1,7 +1,7 @@
 package main
 
 import (
-	api "backend/app/game/skin/api/grpc"
+	api "backend/app/game/skin/api/grpc/v1"
 	"backend/app/game/skin/conf"
 	"backend/app/game/skin/service"
 	"backend/pkg/cmd"

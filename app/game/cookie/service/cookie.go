@@ -1,7 +1,7 @@
 package service
 
 import (
-	pb "backend/app/game/cookie/api/grpc"
+	pb "backend/app/game/cookie/api/grpc/v1"
 	"backend/pkg/ecode"
 	"context"
 	"google.golang.org/grpc/codes"

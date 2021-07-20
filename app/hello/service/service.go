@@ -1,6 +1,7 @@
 package service
 
 import (
+	pb "backend/app/hello/api/grpc/v1"
 	"backend/app/hello/conf"
 	"backend/app/hello/dao"
 )
@@ -8,6 +9,7 @@ import (
 // Service 服务结构定义
 type Service struct {
 	dao dao.Dao
+	pb.UnimplementedHelloServer
 }
 
 // Init 服务初始化

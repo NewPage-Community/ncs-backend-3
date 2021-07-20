@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "service",
     srcs = [
         "service.go",
         "sign.go",
@@ -9,10 +9,10 @@ go_library(
     importpath = "backend/app/service/user/sign/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/service/user/sign/api/grpc:go_default_library",
-        "//app/service/user/sign/conf:go_default_library",
-        "//app/service/user/sign/dao:go_default_library",
-        "//pkg/ecode:go_default_library",
-        "@org_golang_google_grpc//codes:go_default_library",
+        "//app/service/user/sign/api/grpc/v1:grpc",
+        "//app/service/user/sign/conf",
+        "//app/service/user/sign/dao",
+        "//pkg/ecode",
+        "@org_golang_google_grpc//codes",
     ],
 )

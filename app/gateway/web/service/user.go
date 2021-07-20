@@ -1,7 +1,7 @@
 package service
 
 import (
-	accountGW "backend/app/service/user/account/api/grpc"
+	accountGW "backend/app/service/user/account/api/grpc/v1"
 	"backend/pkg/rpc"
 )
 

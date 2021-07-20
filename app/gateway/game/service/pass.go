@@ -1,8 +1,8 @@
 package service
 
 import (
-	rewardGW "backend/app/service/pass/reward/api/grpc"
-	userGW "backend/app/service/pass/user/api/grpc"
+	rewardGW "backend/app/service/pass/reward/api/grpc/v1"
+	userGW "backend/app/service/pass/user/api/grpc/v1"
 	"backend/pkg/rpc"
 )
 

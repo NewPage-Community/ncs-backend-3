@@ -1,0 +1,40 @@
+syntax = "proto3";
+package ncs.service.user.title.v1;
+option go_package = "backend/app/service/user/title/api/grpc/v1";
+
+import "google/api/annotations.proto";
+
+message Info {
+    int64 uid = 1;
+    string custom_title = 2;
+    int32 title_type = 3;
+}
+
+message GetTitleReq {
+    int64 uid = 1;
+}
+
+message GetTitleResp {
+    Info info = 1;
+}
+
+message SetTitleReq {
+    Info info = 1;
+}
+
+message SetTitleResp {
+}
+
+service Title {
+    rpc GetTitle (GetTitleReq) returns (GetTitleResp) {
+        option (google.api.http) = {
+            get: "/user/title/{uid}"
+        };
+    }
+    rpc SetTitle (SetTitleReq) returns (SetTitleResp) {
+        option (google.api.http) = {
+            put: "/user/title/{info.uid}"
+            body: "*"
+        };
+    }
+}

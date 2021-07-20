@@ -1,12 +1,14 @@
 package service
 
 import (
+	pb "backend/app/game/stats/api/grpc/v1"
 	"backend/app/game/stats/conf"
 	"backend/app/game/stats/dao"
 )
 
 type Service struct {
 	dao dao.Dao
+	pb.UnimplementedStatsServer
 }
 
 func Init(config *conf.Config) *Service {

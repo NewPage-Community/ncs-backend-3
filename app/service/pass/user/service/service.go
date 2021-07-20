@@ -1,12 +1,13 @@
 package service
 
 import (
-	server "backend/app/game/server/api/grpc"
-	backpack "backend/app/service/backpack/user/api/grpc"
-	reward "backend/app/service/pass/reward/api/grpc"
+	server "backend/app/game/server/api/grpc/v1"
+	backpack "backend/app/service/backpack/user/api/grpc/v1"
+	reward "backend/app/service/pass/reward/api/grpc/v1"
+	pb "backend/app/service/pass/user/api/grpc/v1"
 	"backend/app/service/pass/user/conf"
 	"backend/app/service/pass/user/dao"
-	money "backend/app/service/user/money/api/grpc"
+	money "backend/app/service/user/money/api/grpc/v1"
 )
 
 type Service struct {
@@ -15,6 +16,7 @@ type Service struct {
 	backpackService backpack.UserClient
 	moneyService    money.MoneyClient
 	serverService   server.ServerClient
+	pb.UnimplementedUserServer
 }
 
 func Init(config *conf.Config) *Service {

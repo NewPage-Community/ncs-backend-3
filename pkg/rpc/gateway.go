@@ -2,12 +2,13 @@ package rpc
 
 import (
 	"backend/pkg/log"
+	"backend/pkg/rpc/gateway"
 	"context"
 	"github.com/golang/glog"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"google.golang.org/grpc"
@@ -67,7 +68,8 @@ func NewGateway() *Gateways {
 	return &Gateways{
 		mux: runtime.NewServeMux(runtime.WithMarshalerOption(
 			runtime.MIMEWildcard,
-			&runtime.JSONPb{OrigName: true, EmitDefaults: true}),
+			&runtime.HTTPBodyMarshaler{}),
+			runtime.WithForwardResponseOption(gateway.HttpResponseModifier),
 		),
 		opts: []grpc.DialOption{
 			grpc.WithUnaryInterceptor(

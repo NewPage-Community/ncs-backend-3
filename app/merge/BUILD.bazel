@@ -2,7 +2,7 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("//build:docker.bzl", "push_docker")
 
 go_library(
-    name = "go_default_library",
+    name = "merge_lib",
     srcs = [
         "main.go",
         "model.go",
@@ -10,27 +10,27 @@ go_library(
     importpath = "backend/app/merge",
     visibility = ["//visibility:private"],
     deps = [
-        "//app/service/backpack/items/model:go_default_library",
-        "//app/service/backpack/user/model:go_default_library",
-        "//app/service/user/account/model:go_default_library",
-        "//app/service/user/money/model:go_default_library",
-        "//app/service/user/vip/model:go_default_library",
-        "//pkg/json:go_default_library",
-        "@io_gorm_datatypes//:go_default_library",
-        "@io_gorm_driver_mysql//:go_default_library",
-        "@io_gorm_gorm//:go_default_library",
-        "@io_gorm_gorm//logger:go_default_library",
+        "//app/service/backpack/items/model",
+        "//app/service/backpack/user/model",
+        "//app/service/user/account/model",
+        "//app/service/user/money/model",
+        "//app/service/user/vip/model",
+        "//pkg/json",
+        "@io_gorm_datatypes//:datatypes",
+        "@io_gorm_driver_mysql//:mysql",
+        "@io_gorm_gorm//:gorm",
+        "@io_gorm_gorm//logger",
     ],
 )
 
 go_binary(
     name = "merge",
-    embed = [":go_default_library"],
+    embed = [":merge_lib"],
     visibility = ["//visibility:public"],
 )
 
 push_docker(
     name = "push",
     app_name = "merge",
-    embed = [":go_default_library"],
+    embed = [":merge_lib"],
 )

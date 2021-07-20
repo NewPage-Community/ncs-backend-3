@@ -1,15 +1,15 @@
 package service
 
 import (
-	"backend/app/service/user/vip/api/grpc"
+	pb "backend/app/service/user/vip/api/grpc/v1"
 	"backend/app/service/user/vip/model"
 	"backend/pkg/ecode"
 	"context"
 	"google.golang.org/grpc/codes"
 )
 
-func (s *Service) Info(ctx context.Context, req *grpc.InfoReq) (resp *grpc.InfoResp, err error) {
-	resp = &grpc.InfoResp{}
+func (s *Service) Info(ctx context.Context, req *pb.InfoReq) (resp *pb.InfoResp, err error) {
+	resp = &pb.InfoResp{}
 
 	if req.Uid <= 0 {
 		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%v)", req.Uid)
@@ -18,7 +18,7 @@ func (s *Service) Info(ctx context.Context, req *grpc.InfoReq) (resp *grpc.InfoR
 
 	info, err := s._Info(req.Uid)
 	if info != nil {
-		resp.Info = &grpc.Info{
+		resp.Info = &pb.Info{
 			Uid:        info.UID,
 			Point:      int32(info.Point),
 			Level:      int32(info.Level()),
@@ -45,8 +45,8 @@ func (s *Service) _Info(uid int64) (info *model.VIP, err error) {
 	return
 }
 
-func (s *Service) Renewal(ctx context.Context, req *grpc.RenewalReq) (resp *grpc.RenewalResp, err error) {
-	resp = &grpc.RenewalResp{}
+func (s *Service) Renewal(ctx context.Context, req *pb.RenewalReq) (resp *pb.RenewalResp, err error) {
+	resp = &pb.RenewalResp{}
 
 	if req.Uid <= 0 {
 		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%v)", req.Uid)
@@ -62,8 +62,8 @@ func (s *Service) Renewal(ctx context.Context, req *grpc.RenewalReq) (resp *grpc
 	return
 }
 
-func (s *Service) AddPoint(ctx context.Context, req *grpc.AddPointReq) (resp *grpc.AddPointResp, err error) {
-	resp = &grpc.AddPointResp{}
+func (s *Service) AddPoint(ctx context.Context, req *pb.AddPointReq) (resp *pb.AddPointResp, err error) {
+	resp = &pb.AddPointResp{}
 
 	if req.Uid <= 0 {
 		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%v)", req.Uid)

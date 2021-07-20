@@ -1,7 +1,7 @@
 package main
 
 import (
-	api "backend/app/service/pass/reward/api/grpc"
+	api "backend/app/service/pass/reward/api/grpc/v1"
 	"backend/app/service/pass/reward/conf"
 	"backend/app/service/pass/reward/service"
 	"backend/pkg/cmd"

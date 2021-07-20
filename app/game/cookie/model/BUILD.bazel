@@ -1,9 +1,9 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "model",
     srcs = ["cookie.go"],
     importpath = "backend/app/game/cookie/model",
     visibility = ["//visibility:public"],
-    deps = ["//pkg/json:go_default_library"],
+    deps = ["//pkg/json"],
 )

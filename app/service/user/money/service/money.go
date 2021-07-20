@@ -1,7 +1,7 @@
 package service
 
 import (
-	pb "backend/app/service/user/money/api/grpc"
+	pb "backend/app/service/user/money/api/grpc/v1"
 	"backend/pkg/ecode"
 	"backend/pkg/log"
 	"context"

@@ -1,11 +1,11 @@
 package service
 
 import (
-	pb "backend/app/game/pass/api/grpc"
-	itemService "backend/app/service/backpack/items/api/grpc"
-	userItemService "backend/app/service/backpack/user/api/grpc"
-	rewardService "backend/app/service/pass/reward/api/grpc"
-	passService "backend/app/service/pass/user/api/grpc"
+	pb "backend/app/game/pass/api/grpc/v1"
+	itemService "backend/app/service/backpack/items/api/grpc/v1"
+	userItemService "backend/app/service/backpack/user/api/grpc/v1"
+	rewardService "backend/app/service/pass/reward/api/grpc/v1"
+	passService "backend/app/service/pass/user/api/grpc/v1"
 	"context"
 	"github.com/golang/mock/gomock"
 	. "github.com/smartystreets/goconvey/convey"

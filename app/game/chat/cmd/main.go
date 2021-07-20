@@ -1,7 +1,7 @@
 package main
 
 import (
-	api "backend/app/game/chat/api/grpc"
+	api "backend/app/game/chat/api/grpc/v1"
 	"backend/app/game/chat/conf"
 	"backend/app/game/chat/service"
 	"backend/pkg/cmd"

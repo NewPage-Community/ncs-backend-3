@@ -1,9 +1,9 @@
 package service
 
 import (
-	pb "backend/app/game/skin/api/grpc"
-	itemsService "backend/app/service/backpack/items/api/grpc"
-	userService "backend/app/service/backpack/user/api/grpc"
+	pb "backend/app/game/skin/api/grpc/v1"
+	itemsService "backend/app/service/backpack/items/api/grpc/v1"
+	userService "backend/app/service/backpack/user/api/grpc/v1"
 	"backend/pkg/ecode"
 	"context"
 	"google.golang.org/grpc/codes"

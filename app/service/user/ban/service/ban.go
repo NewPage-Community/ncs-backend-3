@@ -1,9 +1,9 @@
 package service
 
 import (
-	serverService "backend/app/game/server/api/grpc"
-	accountService "backend/app/service/user/account/api/grpc"
-	pb "backend/app/service/user/ban/api/grpc"
+	serverService "backend/app/game/server/api/grpc/v1"
+	accountService "backend/app/service/user/account/api/grpc/v1"
+	pb "backend/app/service/user/ban/api/grpc/v1"
 	"backend/app/service/user/ban/model"
 	"backend/pkg/ecode"
 	"backend/pkg/log"

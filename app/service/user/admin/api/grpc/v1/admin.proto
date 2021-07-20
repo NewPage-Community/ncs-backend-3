@@ -1,0 +1,31 @@
+syntax = "proto3";
+package ncs.service.user.admin.v1;
+option go_package = "backend/app/service/user/admin/api/grpc/v1";
+
+import "google/api/annotations.proto";
+
+// Base
+
+message Info  {
+    int64 uid = 1;
+    int32 flag = 2;
+    int32 immunity = 3;
+}
+
+// Message
+
+message InfoReq {
+    int64 uid = 1;
+}
+
+message InfoResp {
+    Info info = 1;
+}
+
+service Admin {
+    rpc Info (InfoReq) returns (InfoResp) {
+        option (google.api.http) = {
+            get: "/user/admin/{uid}"
+        };
+    }
+}

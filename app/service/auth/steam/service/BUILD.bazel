@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "service",
     srcs = [
         "service.go",
         "steam.go",
@@ -9,12 +9,12 @@ go_library(
     importpath = "backend/app/service/auth/steam/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/service/auth/steam/api/grpc/v1:go_default_library",
-        "//app/service/auth/steam/conf:go_default_library",
-        "//app/service/user/account/api/grpc:go_default_library",
-        "//pkg/ecode:go_default_library",
-        "//pkg/jwt:go_default_library",
-        "@com_github_yohcop_openid_go//:go_default_library",
-        "@org_golang_google_grpc//codes:go_default_library",
+        "//app/service/auth/steam/api/grpc/v1:grpc",
+        "//app/service/auth/steam/conf",
+        "//app/service/user/account/api/grpc/v1:grpc",
+        "//pkg/ecode",
+        "//pkg/jwt",
+        "@com_github_yohcop_openid_go//:openid-go",
+        "@org_golang_google_grpc//codes",
     ],
 )

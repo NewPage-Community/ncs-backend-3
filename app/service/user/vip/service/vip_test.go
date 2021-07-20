@@ -1,7 +1,7 @@
 package service
 
 import (
-	"backend/app/service/user/vip/api/grpc"
+	pb "backend/app/service/user/vip/api/grpc/v1"
 	"backend/app/service/user/vip/dao"
 	"backend/app/service/user/vip/model"
 	"context"
@@ -21,7 +21,7 @@ func TestService_AddPoint(t *testing.T) {
 
 	srv := &Service{dao: m}
 	Convey("Test service AddPoint", t, func() {
-		res, err := srv.AddPoint(context.Background(), &grpc.AddPointReq{
+		res, err := srv.AddPoint(context.Background(), &pb.AddPointReq{
 			Uid:      1,
 			AddPoint: 1,
 		})
@@ -43,7 +43,7 @@ func TestService_Renewal(t *testing.T) {
 
 	srv := &Service{dao: m}
 	Convey("Test service Renewal", t, func() {
-		res, err := srv.Renewal(context.Background(), &grpc.RenewalReq{
+		res, err := srv.Renewal(context.Background(), &pb.RenewalReq{
 			Uid:    1,
 			Length: length,
 		})
@@ -65,13 +65,13 @@ func TestService_Info(t *testing.T) {
 
 	srv := &Service{dao: m}
 	Convey("Test service Info", t, func() {
-		res, err := srv.Info(context.Background(), &grpc.InfoReq{
+		res, err := srv.Info(context.Background(), &pb.InfoReq{
 			Uid: 1,
 		})
 		Convey("Check it work", func() {
 			So(res.Info, ShouldNotBeNil)
 			So(err, ShouldBeNil)
-			t.Log(*res.Info)
+			t.Log(res.Info.String())
 		})
 	})
 }
