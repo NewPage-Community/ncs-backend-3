@@ -1,13 +1,14 @@
 package service
 
 import (
+	pb "backend/app/game/store/api/grpc/v1"
 	"backend/app/game/store/conf"
 	"backend/app/game/store/model"
-	itemsService "backend/app/service/backpack/items/api/grpc"
-	userService "backend/app/service/backpack/user/api/grpc"
-	passService "backend/app/service/pass/user/api/grpc"
-	moneyService "backend/app/service/user/money/api/grpc"
-	vipService "backend/app/service/user/vip/api/grpc"
+	itemsService "backend/app/service/backpack/items/api/grpc/v1"
+	userService "backend/app/service/backpack/user/api/grpc/v1"
+	passService "backend/app/service/pass/user/api/grpc/v1"
+	moneyService "backend/app/service/user/money/api/grpc/v1"
+	vipService "backend/app/service/user/vip/api/grpc/v1"
 )
 
 type Service struct {
@@ -17,6 +18,7 @@ type Service struct {
 	pass    passService.UserClient
 	vip     vipService.VIPClient
 	hotSale model.HotSale
+	pb.UnimplementedStoreServer
 }
 
 func Init(config *conf.Config) *Service {

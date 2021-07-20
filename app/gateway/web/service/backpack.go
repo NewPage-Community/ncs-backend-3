@@ -1,7 +1,7 @@
 package service
 
 import (
-	itemsGW "backend/app/service/backpack/items/api/grpc"
+	itemsGW "backend/app/service/backpack/items/api/grpc/v1"
 	"backend/pkg/rpc"
 )
 

@@ -1,13 +1,13 @@
 package service
 
 import (
-	accountGW "backend/app/service/user/account/api/grpc"
-	adminGW "backend/app/service/user/admin/api/grpc"
-	banGW "backend/app/service/user/ban/api/grpc"
-	moneyGW "backend/app/service/user/money/api/grpc"
-	signGW "backend/app/service/user/sign/api/grpc"
-	titleGW "backend/app/service/user/title/api/grpc"
-	vipGW "backend/app/service/user/vip/api/grpc"
+	accountGW "backend/app/service/user/account/api/grpc/v1"
+	adminGW "backend/app/service/user/admin/api/grpc/v1"
+	banGW "backend/app/service/user/ban/api/grpc/v1"
+	moneyGW "backend/app/service/user/money/api/grpc/v1"
+	signGW "backend/app/service/user/sign/api/grpc/v1"
+	titleGW "backend/app/service/user/title/api/grpc/v1"
+	vipGW "backend/app/service/user/vip/api/grpc/v1"
 	"backend/pkg/rpc"
 )
 

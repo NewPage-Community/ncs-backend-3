@@ -1,15 +1,15 @@
 package service
 
 import (
-	chatGW "backend/app/game/chat/api/grpc"
-	cookieGW "backend/app/game/cookie/api/grpc"
-	cvarGW "backend/app/game/cvar/api/grpc"
-	passGW "backend/app/game/pass/api/grpc"
-	serverGW "backend/app/game/server/api/grpc"
-	skinGW "backend/app/game/skin/api/grpc"
-	statsGW "backend/app/game/stats/api/grpc"
-	storeGW "backend/app/game/store/api/grpc"
-	userGW "backend/app/game/user/api/grpc"
+	chatGW "backend/app/game/chat/api/grpc/v1"
+	cookieGW "backend/app/game/cookie/api/grpc/v1"
+	cvarGW "backend/app/game/cvar/api/grpc/v1"
+	passGW "backend/app/game/pass/api/grpc/v1"
+	serverGW "backend/app/game/server/api/grpc/v1"
+	skinGW "backend/app/game/skin/api/grpc/v1"
+	statsGW "backend/app/game/stats/api/grpc/v1"
+	storeGW "backend/app/game/store/api/grpc/v1"
+	userGW "backend/app/game/user/api/grpc/v1"
 	"backend/pkg/rpc"
 )
 

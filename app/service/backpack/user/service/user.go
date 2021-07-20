@@ -1,8 +1,8 @@
 package service
 
 import (
-	itemsSrv "backend/app/service/backpack/items/api/grpc"
-	pb "backend/app/service/backpack/user/api/grpc"
+	itemsSrv "backend/app/service/backpack/items/api/grpc/v1"
+	pb "backend/app/service/backpack/user/api/grpc/v1"
 	"backend/app/service/backpack/user/model"
 	"backend/pkg/ecode"
 	"context"

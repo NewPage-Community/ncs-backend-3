@@ -1,7 +1,7 @@
 package service
 
 import (
-	donateGW "backend/app/service/donate/api/grpc"
+	donateGW "backend/app/service/donate/api/grpc/v1"
 	"backend/pkg/rpc"
 )
 

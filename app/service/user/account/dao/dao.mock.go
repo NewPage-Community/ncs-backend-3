@@ -6,79 +6,35 @@ package dao
 
 import (
 	model "backend/app/service/user/account/model"
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockDao is a mock of Dao interface
+// MockDao is a mock of Dao interface.
 type MockDao struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaoMockRecorder
 }
 
-// MockDaoMockRecorder is the mock recorder for MockDao
+// MockDaoMockRecorder is the mock recorder for MockDao.
 type MockDaoMockRecorder struct {
 	mock *MockDao
 }
 
-// NewMockDao creates a new mock instance
+// NewMockDao creates a new mock instance.
 func NewMockDao(ctrl *gomock.Controller) *MockDao {
 	mock := &MockDao{ctrl: ctrl}
 	mock.recorder = &MockDaoMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDao) EXPECT() *MockDaoMockRecorder {
 	return m.recorder
 }
 
-// UID mocks base method
-func (m *MockDao) UID(steamID int64) (*model.Info, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UID", steamID)
-	ret0, _ := ret[0].(*model.Info)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// UID indicates an expected call of UID
-func (mr *MockDaoMockRecorder) UID(steamID interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UID", reflect.TypeOf((*MockDao)(nil).UID), steamID)
-}
-
-// Info mocks base method
-func (m *MockDao) Info(uid int64) (*model.Info, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Info", uid)
-	ret0, _ := ret[0].(*model.Info)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Info indicates an expected call of Info
-func (mr *MockDaoMockRecorder) Info(uid interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockDao)(nil).Info), uid)
-}
-
-// Register mocks base method
-func (m *MockDao) Register(steamID int64) (*model.Info, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Register", steamID)
-	ret0, _ := ret[0].(*model.Info)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Register indicates an expected call of Register
-func (mr *MockDaoMockRecorder) Register(steamID interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Register", reflect.TypeOf((*MockDao)(nil).Register), steamID)
-}
-
-// ChangeName mocks base method
+// ChangeName mocks base method.
 func (m *MockDao) ChangeName(info *model.Info) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ChangeName", info)
@@ -86,13 +42,25 @@ func (m *MockDao) ChangeName(info *model.Info) error {
 	return ret0
 }
 
-// ChangeName indicates an expected call of ChangeName
+// ChangeName indicates an expected call of ChangeName.
 func (mr *MockDaoMockRecorder) ChangeName(info interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ChangeName", reflect.TypeOf((*MockDao)(nil).ChangeName), info)
 }
 
-// GetAllUID mocks base method
+// Close mocks base method.
+func (m *MockDao) Close() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "Close")
+}
+
+// Close indicates an expected call of Close.
+func (mr *MockDaoMockRecorder) Close() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+}
+
+// GetAllUID mocks base method.
 func (m *MockDao) GetAllUID() (*[]int64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetAllUID")
@@ -101,13 +69,13 @@ func (m *MockDao) GetAllUID() (*[]int64, error) {
 	return ret0, ret1
 }
 
-// GetAllUID indicates an expected call of GetAllUID
+// GetAllUID indicates an expected call of GetAllUID.
 func (mr *MockDaoMockRecorder) GetAllUID() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllUID", reflect.TypeOf((*MockDao)(nil).GetAllUID))
 }
 
-// Healthy mocks base method
+// Healthy mocks base method.
 func (m *MockDao) Healthy() bool {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Healthy")
@@ -115,20 +83,53 @@ func (m *MockDao) Healthy() bool {
 	return ret0
 }
 
-// Healthy indicates an expected call of Healthy
+// Healthy indicates an expected call of Healthy.
 func (mr *MockDaoMockRecorder) Healthy() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Healthy", reflect.TypeOf((*MockDao)(nil).Healthy))
 }
 
-// Close mocks base method
-func (m *MockDao) Close() {
+// Info mocks base method.
+func (m *MockDao) Info(uid int64) (*model.Info, error) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Close")
+	ret := m.ctrl.Call(m, "Info", uid)
+	ret0, _ := ret[0].(*model.Info)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
-// Close indicates an expected call of Close
-func (mr *MockDaoMockRecorder) Close() *gomock.Call {
+// Info indicates an expected call of Info.
+func (mr *MockDaoMockRecorder) Info(uid interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockDao)(nil).Info), uid)
+}
+
+// Register mocks base method.
+func (m *MockDao) Register(steamID int64) (*model.Info, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Register", steamID)
+	ret0, _ := ret[0].(*model.Info)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Register indicates an expected call of Register.
+func (mr *MockDaoMockRecorder) Register(steamID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Register", reflect.TypeOf((*MockDao)(nil).Register), steamID)
+}
+
+// UID mocks base method.
+func (m *MockDao) UID(steamID int64) (*model.Info, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UID", steamID)
+	ret0, _ := ret[0].(*model.Info)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UID indicates an expected call of UID.
+func (mr *MockDaoMockRecorder) UID(steamID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UID", reflect.TypeOf((*MockDao)(nil).UID), steamID)
 }

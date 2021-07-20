@@ -1,12 +1,14 @@
 package service
 
 import (
+	pb "backend/app/game/cookie/api/grpc/v1"
 	"backend/app/game/cookie/conf"
 	"backend/app/game/cookie/dao"
 )
 
 type Service struct {
 	dao dao.Dao
+	pb.UnimplementedCookieServer
 }
 
 func Init(config *conf.Config) *Service {

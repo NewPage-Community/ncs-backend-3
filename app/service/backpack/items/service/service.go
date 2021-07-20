@@ -1,12 +1,14 @@
 package service
 
 import (
+	pb "backend/app/service/backpack/items/api/grpc/v1"
 	"backend/app/service/backpack/items/conf"
 	"backend/app/service/backpack/items/dao"
 )
 
 type Service struct {
 	dao dao.Dao
+	pb.UnimplementedItemsServer
 }
 
 func Init(config *conf.Config) *Service {

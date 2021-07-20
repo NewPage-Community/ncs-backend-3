@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "go_default_library",
+    name = "model",
     srcs = [
         "items.go",
         "user.go",
@@ -9,17 +9,17 @@ go_library(
     importpath = "backend/app/service/backpack/user/model",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/json:go_default_library",
-        "@io_gorm_datatypes//:go_default_library",
+        "//pkg/json",
+        "@io_gorm_datatypes//:datatypes",
     ],
 )
 
 go_test(
-    name = "go_default_test",
+    name = "model_test",
     srcs = [
         "items_test.go",
         "user_test.go",
     ],
-    embed = [":go_default_library"],
-    deps = ["@com_github_smartystreets_goconvey//convey:go_default_library"],
+    embed = [":model"],
+    deps = ["@com_github_smartystreets_goconvey//convey"],
 )

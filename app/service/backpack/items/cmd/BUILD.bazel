@@ -2,28 +2,28 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("//build:docker.bzl", "push_docker")
 
 go_library(
-    name = "go_default_library",
+    name = "cmd_lib",
     srcs = ["main.go"],
     importpath = "backend/app/service/backpack/items/cmd",
     visibility = ["//visibility:private"],
     deps = [
-        "//app/service/backpack/items/api/grpc:go_default_library",
-        "//app/service/backpack/items/conf:go_default_library",
-        "//app/service/backpack/items/service:go_default_library",
-        "//pkg/cmd:go_default_library",
-        "//pkg/log:go_default_library",
-        "//pkg/tracer:go_default_library",
+        "//app/service/backpack/items/api/grpc/v1:grpc",
+        "//app/service/backpack/items/conf",
+        "//app/service/backpack/items/service",
+        "//pkg/cmd",
+        "//pkg/log",
+        "//pkg/tracer",
     ],
 )
 
 go_binary(
     name = "cmd",
-    embed = [":go_default_library"],
+    embed = [":cmd_lib"],
     visibility = ["//visibility:public"],
 )
 
 push_docker(
     name = "push",
     app_name = "service-backpack-items",
-    embed = [":go_default_library"],
+    embed = [":cmd_lib"],
 )

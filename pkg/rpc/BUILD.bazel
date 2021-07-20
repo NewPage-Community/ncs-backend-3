@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "go_default_library",
+    name = "rpc",
     srcs = [
         "client.go",
         "gateway.go",
@@ -11,27 +11,28 @@ go_library(
     importpath = "backend/pkg/rpc",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/ecode:go_default_library",
-        "//pkg/jwt:go_default_library",
-        "//pkg/log:go_default_library",
-        "@com_github_golang_glog//:go_default_library",
-        "@com_github_grpc_ecosystem_go_grpc_middleware//:go_default_library",
-        "@com_github_grpc_ecosystem_go_grpc_middleware//retry:go_default_library",
-        "@com_github_grpc_ecosystem_go_grpc_middleware//tracing/opentracing:go_default_library",
-        "@com_github_grpc_ecosystem_grpc_gateway//runtime:go_default_library",
-        "@com_github_opentracing_opentracing_go//:go_default_library",
-        "@com_github_opentracing_opentracing_go//ext:go_default_library",
-        "@org_golang_google_grpc//:go_default_library",
-        "@org_golang_google_grpc//codes:go_default_library",
-        "@org_golang_google_grpc//health/grpc_health_v1:go_default_library",
-        "@org_golang_google_grpc//keepalive:go_default_library",
-        "@org_golang_google_grpc//reflection:go_default_library",
+        "//pkg/ecode",
+        "//pkg/jwt",
+        "//pkg/log",
+        "//pkg/rpc/gateway",
+        "@com_github_golang_glog//:glog",
+        "@com_github_grpc_ecosystem_go_grpc_middleware//:go-grpc-middleware",
+        "@com_github_grpc_ecosystem_go_grpc_middleware//retry",
+        "@com_github_grpc_ecosystem_go_grpc_middleware//tracing/opentracing",
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//runtime",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@com_github_opentracing_opentracing_go//ext",
+        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//codes",
+        "@org_golang_google_grpc//health/grpc_health_v1",
+        "@org_golang_google_grpc//keepalive",
+        "@org_golang_google_grpc//reflection",
     ],
 )
 
 go_test(
-    name = "go_default_test",
+    name = "rpc_test",
     srcs = ["rpc_test.go"],
-    embed = [":go_default_library"],
-    deps = ["@org_golang_google_grpc//:go_default_library"],
+    embed = [":rpc"],
+    deps = ["@org_golang_google_grpc//:grpc"],
 )

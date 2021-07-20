@@ -1,9 +1,9 @@
 package service
 
 import (
-	pb "backend/app/game/cvar/api/grpc"
+	pb "backend/app/game/cvar/api/grpc/v1"
 	"backend/app/game/cvar/model"
-	serverService "backend/app/game/server/api/grpc"
+	serverService "backend/app/game/server/api/grpc/v1"
 	"backend/pkg/log"
 	"context"
 	"fmt"

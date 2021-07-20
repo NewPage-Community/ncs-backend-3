@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "go_default_library",
+    name = "service",
     srcs = [
         "reward.go",
         "service.go",
@@ -9,22 +9,22 @@ go_library(
     importpath = "backend/app/service/pass/reward/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/service/pass/reward/api/grpc:go_default_library",
-        "//app/service/pass/reward/conf:go_default_library",
-        "//app/service/pass/reward/model:go_default_library",
-        "//pkg/ecode:go_default_library",
-        "//pkg/json:go_default_library",
-        "//pkg/log:go_default_library",
-        "@org_golang_google_grpc//codes:go_default_library",
+        "//app/service/pass/reward/api/grpc/v1:grpc",
+        "//app/service/pass/reward/conf",
+        "//app/service/pass/reward/model",
+        "//pkg/ecode",
+        "//pkg/json",
+        "//pkg/log",
+        "@org_golang_google_grpc//codes",
     ],
 )
 
 go_test(
-    name = "go_default_test",
+    name = "service_test",
     srcs = ["reward_test.go"],
-    embed = [":go_default_library"],
+    embed = [":service"],
     deps = [
-        "//app/service/pass/reward/model:go_default_library",
-        "@com_github_smartystreets_goconvey//convey:go_default_library",
+        "//app/service/pass/reward/model",
+        "@com_github_smartystreets_goconvey//convey",
     ],
 )

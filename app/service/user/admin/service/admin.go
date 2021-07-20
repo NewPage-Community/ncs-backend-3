@@ -1,7 +1,7 @@
 package service
 
 import (
-	pb "backend/app/service/user/admin/api/grpc"
+	pb "backend/app/service/user/admin/api/grpc/v1"
 	"backend/pkg/ecode"
 	"context"
 	"google.golang.org/grpc/codes"

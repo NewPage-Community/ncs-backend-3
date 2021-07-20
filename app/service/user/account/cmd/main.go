@@ -1,7 +1,7 @@
 package main
 
 import (
-	api "backend/app/service/user/account/api/grpc"
+	api "backend/app/service/user/account/api/grpc/v1"
 	"backend/app/service/user/account/conf"
 	"backend/app/service/user/account/service"
 	"backend/pkg/cmd"

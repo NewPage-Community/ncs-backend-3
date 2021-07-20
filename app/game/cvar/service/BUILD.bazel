@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
-    name = "go_default_library",
+    name = "service",
     srcs = [
         "cvar.go",
         "service.go",
@@ -9,28 +9,28 @@ go_library(
     importpath = "backend/app/game/cvar/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/game/cvar/api/grpc:go_default_library",
-        "//app/game/cvar/conf:go_default_library",
-        "//app/game/cvar/dao:go_default_library",
-        "//app/game/cvar/model:go_default_library",
-        "//app/game/server/api/grpc:go_default_library",
-        "//pkg/log:go_default_library",
-        "@com_github_opentracing_opentracing_go//:go_default_library",
-        "@com_github_robfig_cron_v3//:go_default_library",
+        "//app/game/cvar/api/grpc/v1:grpc",
+        "//app/game/cvar/conf",
+        "//app/game/cvar/dao",
+        "//app/game/cvar/model",
+        "//app/game/server/api/grpc/v1:grpc",
+        "//pkg/log",
+        "@com_github_opentracing_opentracing_go//:opentracing-go",
+        "@com_github_robfig_cron_v3//:cron",
     ],
 )
 
 go_test(
-    name = "go_default_test",
+    name = "service_test",
     srcs = ["cvar_test.go"],
-    embed = [":go_default_library"],
+    embed = [":service"],
     deps = [
-        "//app/game/cvar/api/grpc:go_default_library",
-        "//app/game/cvar/dao:go_default_library",
-        "//app/game/cvar/model:go_default_library",
-        "//app/game/server/api/grpc:go_default_library",
-        "@com_github_golang_mock//gomock:go_default_library",
-        "@com_github_robfig_cron_v3//:go_default_library",
-        "@com_github_smartystreets_goconvey//convey:go_default_library",
+        "//app/game/cvar/api/grpc/v1:grpc",
+        "//app/game/cvar/dao",
+        "//app/game/cvar/model",
+        "//app/game/server/api/grpc/v1:grpc",
+        "@com_github_golang_mock//gomock",
+        "@com_github_robfig_cron_v3//:cron",
+        "@com_github_smartystreets_goconvey//convey",
     ],
 )

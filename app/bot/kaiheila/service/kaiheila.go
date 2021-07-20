@@ -3,7 +3,7 @@ package service
 import (
 	pb "backend/app/bot/kaiheila/api/grpc/v1"
 	"backend/app/game/chat"
-	chatService "backend/app/game/chat/api/grpc"
+	chatService "backend/app/game/chat/api/grpc/v1"
 	"backend/pkg/log"
 	"context"
 	"github.com/gunslinger23/kaiheila"

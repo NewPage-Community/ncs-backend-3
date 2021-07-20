@@ -1,7 +1,7 @@
 package service
 
 import (
-	pb "backend/app/service/user/account/api/grpc"
+	pb "backend/app/service/user/account/api/grpc/v1"
 	"backend/app/service/user/account/dao"
 	"backend/app/service/user/account/model"
 	"backend/app/service/user/account/test"

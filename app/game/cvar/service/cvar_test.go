@@ -1,21 +1,23 @@
 package service
 
 import (
-	pb "backend/app/game/cvar/api/grpc"
+	pb "backend/app/game/cvar/api/grpc/v1"
 	"backend/app/game/cvar/dao"
 	"backend/app/game/cvar/model"
-	serverService "backend/app/game/server/api/grpc"
+	serverService "backend/app/game/server/api/grpc/v1"
 	"context"
 	"github.com/golang/mock/gomock"
 	"github.com/robfig/cron/v3"
 	. "github.com/smartystreets/goconvey/convey"
+	"sync"
 	"testing"
-	"time"
 )
 
 func TestService_CheckCVars(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
+
+	wg := sync.WaitGroup{}
 
 	d := dao.NewMockDao(ctl)
 	d.EXPECT().GetCVars().Return([]*model.CVar{
@@ -40,15 +42,16 @@ func TestService_CheckCVars(t *testing.T) {
 					GameId:   1,
 				},
 			}}, nil)
-	server.EXPECT().Rcon(gomock.Any(), gomock.Any()).Return(nil, nil)
+	server.EXPECT().Rcon(gomock.Any(), gomock.Any()).Return(nil, nil).Do(func(a, b interface{}, c ...interface{}) { wg.Done() })
 
 	srv := &Service{dao: d, server: server}
 
 	Convey("Test CheckCVars", t, func() {
 		Convey("Check it work", func() {
+			wg.Add(1)
 			srv.CheckCVars()
 			// Wait for Goroutines
-			time.Sleep(time.Second)
+			wg.Wait()
 		})
 	})
 }

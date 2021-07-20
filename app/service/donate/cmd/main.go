@@ -1,7 +1,7 @@
 package main
 
 import (
-	api "backend/app/service/donate/api/grpc"
+	api "backend/app/service/donate/api/grpc/v1"
 	"backend/app/service/donate/conf"
 	"backend/app/service/donate/service"
 	"backend/pkg/cmd"

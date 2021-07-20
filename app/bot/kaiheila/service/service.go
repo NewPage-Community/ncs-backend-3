@@ -1,8 +1,9 @@
 package service
 
 import (
+	pb "backend/app/bot/kaiheila/api/grpc/v1"
 	"backend/app/bot/kaiheila/conf"
-	chatService "backend/app/game/chat/api/grpc"
+	chatService "backend/app/game/chat/api/grpc/v1"
 	"github.com/gunslinger23/kaiheila"
 )
 
@@ -11,6 +12,7 @@ type Service struct {
 	kaiheilaClient *kaiheila.Client
 	kaiheilaWSS    *kaiheila.WebSocketSession
 	chat           chatService.ChatClient
+	pb.UnimplementedKaiheilaServer
 }
 
 // Init 服务初始化

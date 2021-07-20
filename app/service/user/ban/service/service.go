@@ -1,8 +1,9 @@
 package service
 
 import (
-	serverService "backend/app/game/server/api/grpc"
-	accountService "backend/app/service/user/account/api/grpc"
+	serverService "backend/app/game/server/api/grpc/v1"
+	accountService "backend/app/service/user/account/api/grpc/v1"
+	pb "backend/app/service/user/ban/api/grpc/v1"
 	"backend/app/service/user/ban/conf"
 	"backend/app/service/user/ban/dao"
 	"backend/pkg/steam"
@@ -13,6 +14,7 @@ type Service struct {
 	server  serverService.ServerClient
 	steam   steam.APIClient
 	account accountService.AccountClient
+	pb.UnimplementedBanServer
 }
 
 func Init(c *conf.Config) *Service {

@@ -1,6 +1,7 @@
 package service
 
 import (
+	pb "backend/app/service/pass/reward/api/grpc/v1"
 	"backend/app/service/pass/reward/conf"
 	"backend/app/service/pass/reward/model"
 	"backend/pkg/json"
@@ -9,6 +10,7 @@ import (
 
 type Service struct {
 	reward *model.Reward
+	pb.UnimplementedRewardServer
 }
 
 func Init(config *conf.Config) (s *Service) {

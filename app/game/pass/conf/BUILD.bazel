@@ -1,12 +1,12 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "conf",
     srcs = ["config.go"],
     importpath = "backend/app/game/pass/conf",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/conf:go_default_library",
-        "//pkg/log:go_default_library",
+        "//pkg/conf",
+        "//pkg/log",
     ],
 )

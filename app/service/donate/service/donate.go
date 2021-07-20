@@ -1,10 +1,10 @@
 package service
 
 import (
-	pb "backend/app/service/donate/api/grpc"
+	pb "backend/app/service/donate/api/grpc/v1"
 	"backend/app/service/donate/model"
-	accountService "backend/app/service/user/account/api/grpc"
-	moneyService "backend/app/service/user/money/api/grpc"
+	accountService "backend/app/service/user/account/api/grpc/v1"
+	moneyService "backend/app/service/user/money/api/grpc/v1"
 	"backend/pkg/log"
 	"context"
 	"google.golang.org/grpc/codes"

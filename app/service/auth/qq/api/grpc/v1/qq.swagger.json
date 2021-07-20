@@ -4,9 +4,10 @@
     "title": "app/service/auth/qq/api/grpc/v1/qq.proto",
     "version": "version not set"
   },
-  "schemes": [
-    "http",
-    "https"
+  "tags": [
+    {
+      "name": "Web"
+    }
   ],
   "consumes": [
     "application/json"
@@ -17,12 +18,18 @@
   "paths": {
     "/auth/qq/bind": {
       "post": {
-        "operationId": "BindQQ",
+        "operationId": "Web_BindQQ",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/v1BindQQResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
             }
           }
         },
@@ -33,12 +40,18 @@
     },
     "/auth/qq/status": {
       "post": {
-        "operationId": "QQStatus",
+        "operationId": "Web_QQStatus",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/v1QQStatusResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
             }
           }
         },
@@ -49,12 +62,18 @@
     },
     "/auth/qq/uid": {
       "post": {
-        "operationId": "AuthQQ",
+        "operationId": "Web_AuthQQ",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/v1AuthQQResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
             }
           }
         },
@@ -65,12 +84,18 @@
     },
     "/auth/qq/unbind": {
       "post": {
-        "operationId": "UnbindQQ",
+        "operationId": "Web_UnbindQQ",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/v1UnbindQQResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
             }
           }
         },
@@ -81,10 +106,40 @@
     }
   },
   "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
     "v1AuthQQResp": {
       "type": "object",
       "properties": {
-        "jwt_string": {
+        "jwtString": {
           "type": "string"
         }
       }
@@ -95,7 +150,7 @@
     "v1QQStatusResp": {
       "type": "object",
       "properties": {
-        "jwt_string": {
+        "jwtString": {
           "type": "string"
         }
       }

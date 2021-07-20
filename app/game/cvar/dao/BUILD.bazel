@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "dao",
     srcs = [
         "cvar.go",
         "dao.go",
@@ -10,11 +10,11 @@ go_library(
     importpath = "backend/app/game/cvar/dao",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/game/cvar/conf:go_default_library",
-        "//app/game/cvar/model:go_default_library",
-        "//pkg/database/mysql:go_default_library",
-        "//pkg/log:go_default_library",
-        "@com_github_golang_mock//gomock:go_default_library",
-        "@io_gorm_gorm//:go_default_library",
+        "//app/game/cvar/conf",
+        "//app/game/cvar/model",
+        "//pkg/database/mysql",
+        "//pkg/log",
+        "@com_github_golang_mock//gomock",
+        "@io_gorm_gorm//:gorm",
     ],
 )

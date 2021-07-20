@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "dao",
     srcs = [
         "dao.go",
         "dao.mock.go",
@@ -10,12 +10,12 @@ go_library(
     importpath = "backend/app/service/pass/user/dao",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/service/pass/user/conf:go_default_library",
-        "//app/service/pass/user/model:go_default_library",
-        "//pkg/database/mysql:go_default_library",
-        "//pkg/log:go_default_library",
-        "@com_github_golang_mock//gomock:go_default_library",
-        "@io_gorm_gorm//:go_default_library",
-        "@io_gorm_gorm//clause:go_default_library",
+        "//app/service/pass/user/conf",
+        "//app/service/pass/user/model",
+        "//pkg/database/mysql",
+        "//pkg/log",
+        "@com_github_golang_mock//gomock",
+        "@io_gorm_gorm//:gorm",
+        "@io_gorm_gorm//clause",
     ],
 )

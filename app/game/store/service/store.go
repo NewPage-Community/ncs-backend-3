@@ -1,13 +1,13 @@
 package service
 
 import (
-	pb "backend/app/game/store/api/grpc"
-	itemsService "backend/app/service/backpack/items/api/grpc"
-	userService "backend/app/service/backpack/user/api/grpc"
-	passService "backend/app/service/pass/user/api/grpc"
+	pb "backend/app/game/store/api/grpc/v1"
+	itemsService "backend/app/service/backpack/items/api/grpc/v1"
+	userService "backend/app/service/backpack/user/api/grpc/v1"
+	passService "backend/app/service/pass/user/api/grpc/v1"
 	passModel "backend/app/service/pass/user/model"
-	moneyService "backend/app/service/user/money/api/grpc"
-	vipService "backend/app/service/user/vip/api/grpc"
+	moneyService "backend/app/service/user/money/api/grpc/v1"
+	vipService "backend/app/service/user/vip/api/grpc/v1"
 	"backend/pkg/ecode"
 	"context"
 	"fmt"

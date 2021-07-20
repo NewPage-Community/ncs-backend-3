@@ -1,6 +1,6 @@
 syntax = "proto3";
 package ncs.hello.v1;
-option go_package = "app/hello/api/grpc/v1";
+option go_package = "backend/app/hello/api/grpc/v1";
 
 // 规范
 // 1. 包名必须遵守服务文件路径名

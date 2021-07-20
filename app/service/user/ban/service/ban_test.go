@@ -1,9 +1,9 @@
 package service
 
 import (
-	serverService "backend/app/game/server/api/grpc"
-	accountService "backend/app/service/user/account/api/grpc"
-	pb "backend/app/service/user/ban/api/grpc"
+	serverService "backend/app/game/server/api/grpc/v1"
+	accountService "backend/app/service/user/account/api/grpc/v1"
+	pb "backend/app/service/user/ban/api/grpc/v1"
 	"backend/app/service/user/ban/dao"
 	"backend/app/service/user/ban/model"
 	"backend/pkg/log"
@@ -13,6 +13,7 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"sync"
 	"testing"
 	"time"
 )
@@ -23,13 +24,14 @@ func TestService_Add(t *testing.T) {
 	defer ctl.Finish()
 
 	now := time.Now()
+	wg := sync.WaitGroup{}
 
 	server := serverService.NewMockServerClient(ctl)
 	server.EXPECT().RconAll(gomock.Any(), &serverService.RconAllReq{
 		Cmd: "ncs_ban_notify 1 1 \"test\"",
 	}).Return(&serverService.RconAllResp{
 		Success: 0,
-	}, nil).Times(3)
+	}, nil).Times(2)
 
 	d := dao.NewMockDao(ctl)
 	d.EXPECT().Add(&model.Ban{
@@ -39,43 +41,32 @@ func TestService_Add(t *testing.T) {
 		ExpireTime: now.Add(time.Minute).Unix(),
 		Type:       1,
 		Reason:     "test",
-	}).Return(nil).Times(3)
+	}).Return(nil).Times(2)
 	d.EXPECT().Add(&model.Ban{
 		UID:        2,
 		CreateTime: now.Unix(),
 		ExpireTime: now.Add(time.Minute).Unix(),
 		Type:       1,
 		Reason:     "test" + LibOwnerBanReason,
-	}).Return(nil)
-	d.EXPECT().Add(&model.Ban{
-		UID:        3,
-		CreateTime: now.Unix(),
-		ExpireTime: now.Add(time.Minute).Unix(),
-		Type:       1,
-		Reason:     "test" + LibOwnerBanReason,
-	}).Return(nil)
+	}).Return(nil).Do(func(info interface{}) { wg.Done() })
 
 	acc := accountService.NewMockAccountClient(ctl)
 	acc.EXPECT().Info(gomock.Any(), &accountService.InfoReq{Uid: 1}).
 		Return(&accountService.InfoResp{Info: &accountService.Info{
 			SteamId: 1,
-		}}, nil).Times(2)
+		}}, nil)
 	acc.EXPECT().UID(gomock.Any(), &accountService.UIDReq{SteamId: 2}).
-		Return(&accountService.UIDResp{Uid: 2}, nil)
-	acc.EXPECT().UID(gomock.Any(), &accountService.UIDReq{SteamId: 3}).
 		Return(
 			&accountService.UIDResp{},
 			status.Error(codes.NotFound, ""),
 		)
 	acc.EXPECT().Register(gomock.Any(), &accountService.RegisterReq{
-		SteamId: 3,
-	}).Return(&accountService.RegisterResp{Uid: 3}, nil)
+		SteamId: 2,
+	}).Return(&accountService.RegisterResp{Uid: 2}, nil)
 
 	steam2 := steam.NewMockAPIClient(ctl)
 	steam2.EXPECT().IsPlayingSharedGame(uint64(1), 1).
 		Return(steam.PlayingSharedGame{LenderSteamID: 2}, nil)
-	steam2.EXPECT().IsPlayingSharedGame(uint64(1), 2).
-		Return(steam.PlayingSharedGame{LenderSteamID: 3}, nil)
 
 	srv := &Service{
 		dao:     d,
@@ -98,6 +89,7 @@ func TestService_Add(t *testing.T) {
 			So(err, ShouldBeNil)
 		})
 		Convey("add ban with lib owner", func() {
+			wg.Add(1)
 			_, err := srv.Add(context.TODO(), &pb.AddReq{
 				Info: &pb.Info{
 					Uid:        1,
@@ -109,28 +101,16 @@ func TestService_Add(t *testing.T) {
 				},
 			})
 			So(err, ShouldBeNil)
-		})
-		Convey("add ban with lib owner but owner do not have account", func() {
-			_, err := srv.Add(context.TODO(), &pb.AddReq{
-				Info: &pb.Info{
-					Uid:        1,
-					Ip:         "127.0.0.1",
-					ExpireTime: now.Add(time.Minute).Unix(),
-					Type:       1,
-					Reason:     "test",
-					AppId:      2,
-				},
-			})
-			So(err, ShouldBeNil)
+			wg.Wait()
 		})
 	})
-	// Wait routine
-	time.Sleep(time.Second)
 }
 
 func TestService_BanCheck(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
+
+	wg := sync.WaitGroup{}
 
 	d := dao.NewMockDao(ctl)
 	d.EXPECT().Info(uint64(1)).Return(&model.Ban{
@@ -142,7 +122,7 @@ func TestService_BanCheck(t *testing.T) {
 	}, nil)
 	d.EXPECT().Info(uint64(2)).Return(&model.Ban{
 		UID: 2,
-	}, nil).Times(3)
+	}, nil).Times(2)
 	//d.EXPECT().IsBlockIP("127.0.0.1").Return(true, nil)
 	d.EXPECT().Info(uint64(3)).Return(&model.Ban{
 		ID:         1,
@@ -151,7 +131,6 @@ func TestService_BanCheck(t *testing.T) {
 		Type:       1,
 		Reason:     "test",
 	}, nil)
-	d.EXPECT().Info(uint64(4)).Return(&model.Ban{}, nil)
 	d.EXPECT().Add(gomock.Any()).DoAndReturn(func(info *model.Ban) error {
 		info.ID = 2
 		return nil
@@ -163,26 +142,22 @@ func TestService_BanCheck(t *testing.T) {
 			Info: &accountService.Info{
 				SteamId: 2,
 			},
-		}, nil).Times(3)
+		}, nil).Times(2)
 	acc.EXPECT().UID(gomock.Any(), &accountService.UIDReq{SteamId: 3}).
 		Return(&accountService.UIDResp{Uid: 3}, nil)
-	acc.EXPECT().UID(gomock.Any(), &accountService.UIDReq{SteamId: 4}).
-		Return(&accountService.UIDResp{Uid: 4}, nil)
 
 	steam2 := steam.NewMockAPIClient(ctl)
 	steam2.EXPECT().IsPlayingSharedGame(uint64(2), 1).
 		Return(steam.PlayingSharedGame{LenderSteamID: 3}, nil)
 	steam2.EXPECT().IsPlayingSharedGame(uint64(2), 2).
 		Return(steam.PlayingSharedGame{LenderSteamID: 0}, nil).Times(1)
-	steam2.EXPECT().IsPlayingSharedGame(uint64(2), 3).
-		Return(steam.PlayingSharedGame{LenderSteamID: 4}, nil)
 
 	server := serverService.NewMockServerClient(ctl)
 	server.EXPECT().RconAll(gomock.Any(), &serverService.RconAllReq{
 		Cmd: "ncs_ban_notify 2 1 \"test(共享者账号被封禁)\"",
 	}).Return(&serverService.RconAllResp{
 		Success: 0,
-	}, nil)
+	}, nil).Do(func(ctx, in interface{}, opts ...interface{}) { wg.Done() })
 
 	srv := &Service{
 		dao:     d,
@@ -230,18 +205,7 @@ func TestService_BanCheck(t *testing.T) {
 			t.Log(res)
 		})*/
 		Convey("Check shared lib", func() {
-			res, err := srv.BanCheck(context.TODO(), &pb.Info2Req{
-				Uid:      2,
-				ServerId: 1,
-				ModId:    1,
-				GameId:   1,
-				AppId:    3,
-			})
-			So(err, ShouldBeNil)
-			So(res.Info.ExpireTime, ShouldEqual, 0)
-			t.Log(res)
-		})
-		Convey("Check shared lib but owner got ban", func() {
+			wg.Add(1)
 			res, err := srv.BanCheck(context.TODO(), &pb.Info2Req{
 				Uid:      2,
 				ServerId: 1,
@@ -251,10 +215,9 @@ func TestService_BanCheck(t *testing.T) {
 			})
 			So(err, ShouldBeNil)
 			t.Log(res)
+			wg.Wait()
 		})
 	})
-	// Wait routine
-	time.Sleep(time.Second)
 }
 
 func TestService_Info(t *testing.T) {

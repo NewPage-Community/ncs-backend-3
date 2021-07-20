@@ -6,77 +6,35 @@ package dao
 
 import (
 	model "backend/app/service/user/vip/model"
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockDao is a mock of Dao interface
+// MockDao is a mock of Dao interface.
 type MockDao struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaoMockRecorder
 }
 
-// MockDaoMockRecorder is the mock recorder for MockDao
+// MockDaoMockRecorder is the mock recorder for MockDao.
 type MockDaoMockRecorder struct {
 	mock *MockDao
 }
 
-// NewMockDao creates a new mock instance
+// NewMockDao creates a new mock instance.
 func NewMockDao(ctrl *gomock.Controller) *MockDao {
 	mock := &MockDao{ctrl: ctrl}
 	mock.recorder = &MockDaoMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDao) EXPECT() *MockDaoMockRecorder {
 	return m.recorder
 }
 
-// Register mocks base method
-func (m *MockDao) Register(info *model.VIP) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Register", info)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Register indicates an expected call of Register
-func (mr *MockDaoMockRecorder) Register(info interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Register", reflect.TypeOf((*MockDao)(nil).Register), info)
-}
-
-// Info mocks base method
-func (m *MockDao) Info(info *model.VIP) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Info", info)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Info indicates an expected call of Info
-func (mr *MockDaoMockRecorder) Info(info interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockDao)(nil).Info), info)
-}
-
-// Renewal mocks base method
-func (m *MockDao) Renewal(uid, length int64) (int64, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Renewal", uid, length)
-	ret0, _ := ret[0].(int64)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Renewal indicates an expected call of Renewal
-func (mr *MockDaoMockRecorder) Renewal(uid, length interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Renewal", reflect.TypeOf((*MockDao)(nil).Renewal), uid, length)
-}
-
-// AddPoint mocks base method
+// AddPoint mocks base method.
 func (m *MockDao) AddPoint(uid int64, addPoint int) (int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AddPoint", uid, addPoint)
@@ -85,13 +43,25 @@ func (m *MockDao) AddPoint(uid int64, addPoint int) (int, error) {
 	return ret0, ret1
 }
 
-// AddPoint indicates an expected call of AddPoint
+// AddPoint indicates an expected call of AddPoint.
 func (mr *MockDaoMockRecorder) AddPoint(uid, addPoint interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddPoint", reflect.TypeOf((*MockDao)(nil).AddPoint), uid, addPoint)
 }
 
-// Healthy mocks base method
+// Close mocks base method.
+func (m *MockDao) Close() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "Close")
+}
+
+// Close indicates an expected call of Close.
+func (mr *MockDaoMockRecorder) Close() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+}
+
+// Healthy mocks base method.
 func (m *MockDao) Healthy() bool {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Healthy")
@@ -99,20 +69,51 @@ func (m *MockDao) Healthy() bool {
 	return ret0
 }
 
-// Healthy indicates an expected call of Healthy
+// Healthy indicates an expected call of Healthy.
 func (mr *MockDaoMockRecorder) Healthy() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Healthy", reflect.TypeOf((*MockDao)(nil).Healthy))
 }
 
-// Close mocks base method
-func (m *MockDao) Close() {
+// Info mocks base method.
+func (m *MockDao) Info(info *model.VIP) error {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Close")
+	ret := m.ctrl.Call(m, "Info", info)
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
-// Close indicates an expected call of Close
-func (mr *MockDaoMockRecorder) Close() *gomock.Call {
+// Info indicates an expected call of Info.
+func (mr *MockDaoMockRecorder) Info(info interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Info", reflect.TypeOf((*MockDao)(nil).Info), info)
+}
+
+// Register mocks base method.
+func (m *MockDao) Register(info *model.VIP) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Register", info)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Register indicates an expected call of Register.
+func (mr *MockDaoMockRecorder) Register(info interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Register", reflect.TypeOf((*MockDao)(nil).Register), info)
+}
+
+// Renewal mocks base method.
+func (m *MockDao) Renewal(uid, length int64) (int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Renewal", uid, length)
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Renewal indicates an expected call of Renewal.
+func (mr *MockDaoMockRecorder) Renewal(uid, length interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Renewal", reflect.TypeOf((*MockDao)(nil).Renewal), uid, length)
 }

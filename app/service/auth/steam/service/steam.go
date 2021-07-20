@@ -2,7 +2,7 @@ package service
 
 import (
 	pb "backend/app/service/auth/steam/api/grpc/v1"
-	accountSrv "backend/app/service/user/account/api/grpc"
+	accountSrv "backend/app/service/user/account/api/grpc/v1"
 	"backend/pkg/ecode"
 	"backend/pkg/jwt"
 	"context"

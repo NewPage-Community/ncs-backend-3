@@ -4,9 +4,10 @@
     "title": "app/game/a2s/api/grpc/v1/a2s.proto",
     "version": "version not set"
   },
-  "schemes": [
-    "http",
-    "https"
+  "tags": [
+    {
+      "name": "A2S"
+    }
   ],
   "consumes": [
     "application/json"
@@ -16,6 +17,36 @@
   ],
   "paths": {},
   "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
     "v1A2SInfo": {
       "type": "object",
       "properties": {
@@ -40,7 +71,7 @@
           "type": "integer",
           "format": "int32"
         },
-        "max_players": {
+        "maxPlayers": {
           "type": "integer",
           "format": "int32"
         },
@@ -48,7 +79,7 @@
           "type": "integer",
           "format": "int32"
         },
-        "server_type": {
+        "serverType": {
           "type": "integer",
           "format": "int32"
         },
@@ -71,21 +102,21 @@
           "type": "integer",
           "format": "int32"
         },
-        "steam_id": {
+        "steamId": {
           "type": "string",
           "format": "int64"
         },
-        "source_tv_port": {
+        "sourceTvPort": {
           "type": "integer",
           "format": "int32"
         },
-        "source_tv_name": {
+        "sourceTvName": {
           "type": "string"
         },
         "keywords": {
           "type": "string"
         },
-        "game_id": {
+        "gameId": {
           "type": "string",
           "format": "int64"
         },

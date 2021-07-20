@@ -1,7 +1,7 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
-    name = "go_default_library",
+    name = "service",
     srcs = [
         "qq.go",
         "qqwebsocket.go",
@@ -10,15 +10,15 @@ go_library(
     importpath = "backend/app/bot/qq/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/bot/qq/api/grpc/v1:go_default_library",
-        "//app/bot/qq/conf:go_default_library",
-        "//app/game/chat:go_default_library",
-        "//app/game/chat/api/grpc:go_default_library",
-        "//app/game/server/api/grpc:go_default_library",
-        "//pkg/log:go_default_library",
-        "@com_github_gorilla_websocket//:go_default_library",
-        "@com_github_miremid_amy//:go_default_library",
-        "@com_github_miremid_amy//message:go_default_library",
-        "@com_github_miremid_amy//websocket/model:go_default_library",
+        "//app/bot/qq/api/grpc/v1:grpc",
+        "//app/bot/qq/conf",
+        "//app/game/chat",
+        "//app/game/chat/api/grpc/v1:grpc",
+        "//app/game/server/api/grpc/v1:grpc",
+        "//pkg/log",
+        "@com_github_gorilla_websocket//:websocket",
+        "@com_github_miremid_amy//:amy",
+        "@com_github_miremid_amy//message",
+        "@com_github_miremid_amy//websocket/model",
     ],
 )

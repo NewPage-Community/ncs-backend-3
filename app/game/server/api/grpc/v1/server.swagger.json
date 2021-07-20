@@ -1,0 +1,468 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/game/server/api/grpc/v1/server.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Server"
+    },
+    {
+      "name": "Web"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/game/server/allinfo": {
+      "get": {
+        "operationId": "Web_AllInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AllInfoResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "a2s",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "tags": [
+          "Web"
+        ]
+      }
+    },
+    "/game/server/changemap": {
+      "post": {
+        "operationId": "Server_ChangeMapNotify",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ChangeMapNotifyResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ChangeMapNotifyReq"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/game/server/info/{serverId}": {
+      "get": {
+        "operationId": "Web_Info",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1InfoResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "serverId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Web"
+        ]
+      }
+    },
+    "/game/server/init": {
+      "post": {
+        "operationId": "Server_Init",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1InitResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1InitReq"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/game/server/rcon": {
+      "post": {
+        "operationId": "Server_Rcon",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RconResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RconReq"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    },
+    "/game/server/rcon/all": {
+      "post": {
+        "operationId": "Server_RconAll",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1RconAllResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1RconAllReq"
+            }
+          }
+        ],
+        "tags": [
+          "Server"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1A2SInfo": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "map": {
+          "type": "string"
+        },
+        "folder": {
+          "type": "string"
+        },
+        "game": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "players": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "maxPlayers": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "bots": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "serverType": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "environment": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "visibility": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "vac": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "version": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "steamId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "sourceTvPort": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "sourceTvName": {
+          "type": "string"
+        },
+        "keywords": {
+          "type": "string"
+        },
+        "gameId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "hostname": {
+          "type": "string"
+        }
+      }
+    },
+    "v1A2SPlayer": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "duration": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "v1AllInfoResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Info"
+          }
+        }
+      }
+    },
+    "v1ChangeMapNotifyReq": {
+      "type": "object",
+      "properties": {
+        "serverId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "map": {
+          "type": "string"
+        }
+      }
+    },
+    "v1ChangeMapNotifyResp": {
+      "type": "object"
+    },
+    "v1Info": {
+      "type": "object",
+      "properties": {
+        "serverId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "modId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "gameId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "rcon": {
+          "type": "string"
+        },
+        "hostname": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "shortName": {
+          "type": "string"
+        },
+        "a2sInfo": {
+          "$ref": "#/definitions/v1A2SInfo",
+          "title": "a2s"
+        },
+        "a2sPlayer": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1A2SPlayer"
+          }
+        }
+      }
+    },
+    "v1InfoResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/v1Info"
+        }
+      }
+    },
+    "v1InitReq": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1InitResp": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/v1Info"
+        }
+      }
+    },
+    "v1RconAllReq": {
+      "type": "object",
+      "properties": {
+        "cmd": {
+          "type": "string"
+        }
+      }
+    },
+    "v1RconAllResp": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1RconReq": {
+      "type": "object",
+      "properties": {
+        "serverId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "cmd": {
+          "type": "string"
+        }
+      }
+    },
+    "v1RconResp": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

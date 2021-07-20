@@ -1,0 +1,37 @@
+syntax = "proto3";
+package ncs.game.user.v1;
+option go_package = "backend/app/game/user/api/grpc/v1";
+
+import "google/api/annotations.proto";
+
+message PlayerConnectReq {
+    int64 steam_id = 1;
+    string username = 2;
+}
+
+message PlayerConnectResp {
+    int64 uid = 1;
+}
+
+message PlayerDisconnectReq {
+    int64 steam_id = 1;
+}
+
+message PlayerDisconnectResp {
+}
+
+
+service Game {
+    rpc PlayerConnect (PlayerConnectReq) returns (PlayerConnectResp) {
+        option (google.api.http) = {
+            post: "/user/account/game/playerconnect"
+            body: "*"
+        };
+    }
+    rpc PlayerDisconnect (PlayerDisconnectReq) returns (PlayerDisconnectResp) {
+        option (google.api.http) = {
+            post: "/user/account/game/playerdisconnect"
+            body: "*"
+        };
+    }
+}

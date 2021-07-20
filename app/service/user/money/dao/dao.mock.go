@@ -6,34 +6,61 @@ package dao
 
 import (
 	model "backend/app/service/user/money/model"
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockDao is a mock of Dao interface
+// MockDao is a mock of Dao interface.
 type MockDao struct {
 	ctrl     *gomock.Controller
 	recorder *MockDaoMockRecorder
 }
 
-// MockDaoMockRecorder is the mock recorder for MockDao
+// MockDaoMockRecorder is the mock recorder for MockDao.
 type MockDaoMockRecorder struct {
 	mock *MockDao
 }
 
-// NewMockDao creates a new mock instance
+// NewMockDao creates a new mock instance.
 func NewMockDao(ctrl *gomock.Controller) *MockDao {
 	mock := &MockDao{ctrl: ctrl}
 	mock.recorder = &MockDaoMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockDao) EXPECT() *MockDaoMockRecorder {
 	return m.recorder
 }
 
-// Get mocks base method
+// AddRecord mocks base method.
+func (m *MockDao) AddRecord(uid int64, amount int32, reason string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddRecord", uid, amount, reason)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// AddRecord indicates an expected call of AddRecord.
+func (mr *MockDaoMockRecorder) AddRecord(uid, amount, reason interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddRecord", reflect.TypeOf((*MockDao)(nil).AddRecord), uid, amount, reason)
+}
+
+// Close mocks base method.
+func (m *MockDao) Close() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "Close")
+}
+
+// Close indicates an expected call of Close.
+func (mr *MockDaoMockRecorder) Close() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+}
+
+// Get mocks base method.
 func (m *MockDao) Get(uid int64) (*model.Money, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", uid)
@@ -42,55 +69,13 @@ func (m *MockDao) Get(uid int64) (*model.Money, error) {
 	return ret0, ret1
 }
 
-// Get indicates an expected call of Get
+// Get indicates an expected call of Get.
 func (mr *MockDaoMockRecorder) Get(uid interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockDao)(nil).Get), uid)
 }
 
-// Pay mocks base method
-func (m *MockDao) Pay(uid int64, price int32) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Pay", uid, price)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Pay indicates an expected call of Pay
-func (mr *MockDaoMockRecorder) Pay(uid, price interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Pay", reflect.TypeOf((*MockDao)(nil).Pay), uid, price)
-}
-
-// Give mocks base method
-func (m *MockDao) Give(uid int64, money int32) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Give", uid, money)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Give indicates an expected call of Give
-func (mr *MockDaoMockRecorder) Give(uid, money interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Give", reflect.TypeOf((*MockDao)(nil).Give), uid, money)
-}
-
-// AddRecord mocks base method
-func (m *MockDao) AddRecord(uid int64, amount int32, reason string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AddRecord", uid, amount, reason)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// AddRecord indicates an expected call of AddRecord
-func (mr *MockDaoMockRecorder) AddRecord(uid, amount, reason interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddRecord", reflect.TypeOf((*MockDao)(nil).AddRecord), uid, amount, reason)
-}
-
-// GetRecords mocks base method
+// GetRecords mocks base method.
 func (m *MockDao) GetRecords(uid int64) (*model.Records, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetRecords", uid)
@@ -99,13 +84,27 @@ func (m *MockDao) GetRecords(uid int64) (*model.Records, error) {
 	return ret0, ret1
 }
 
-// GetRecords indicates an expected call of GetRecords
+// GetRecords indicates an expected call of GetRecords.
 func (mr *MockDaoMockRecorder) GetRecords(uid interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRecords", reflect.TypeOf((*MockDao)(nil).GetRecords), uid)
 }
 
-// Healthy mocks base method
+// Give mocks base method.
+func (m *MockDao) Give(uid int64, money int32) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Give", uid, money)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Give indicates an expected call of Give.
+func (mr *MockDaoMockRecorder) Give(uid, money interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Give", reflect.TypeOf((*MockDao)(nil).Give), uid, money)
+}
+
+// Healthy mocks base method.
 func (m *MockDao) Healthy() bool {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Healthy")
@@ -113,20 +112,22 @@ func (m *MockDao) Healthy() bool {
 	return ret0
 }
 
-// Healthy indicates an expected call of Healthy
+// Healthy indicates an expected call of Healthy.
 func (mr *MockDaoMockRecorder) Healthy() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Healthy", reflect.TypeOf((*MockDao)(nil).Healthy))
 }
 
-// Close mocks base method
-func (m *MockDao) Close() {
+// Pay mocks base method.
+func (m *MockDao) Pay(uid int64, price int32) error {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "Close")
+	ret := m.ctrl.Call(m, "Pay", uid, price)
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
-// Close indicates an expected call of Close
-func (mr *MockDaoMockRecorder) Close() *gomock.Call {
+// Pay indicates an expected call of Pay.
+func (mr *MockDaoMockRecorder) Pay(uid, price interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Pay", reflect.TypeOf((*MockDao)(nil).Pay), uid, price)
 }

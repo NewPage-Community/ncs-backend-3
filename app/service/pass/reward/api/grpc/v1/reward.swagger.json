@@ -1,0 +1,212 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "app/service/pass/reward/api/grpc/v1/reward.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Reward"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/pass/reward": {
+      "get": {
+        "operationId": "Reward_GetRewards",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetRewardsResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "level",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "min",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Reward"
+        ]
+      }
+    },
+    "/pass/reward/level/{level}": {
+      "get": {
+        "operationId": "Reward_GetRewards2",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetRewardsResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "level",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "min",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Reward"
+        ]
+      }
+    },
+    "/pass/reward/level/{level}/{min}": {
+      "get": {
+        "operationId": "Reward_GetRewards3",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetRewardsResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "level",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "min",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Reward"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1GetRewardsResp": {
+      "type": "object",
+      "properties": {
+        "season": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "freeRewards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Item"
+          }
+        },
+        "advRewards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Item"
+          }
+        },
+        "maxLevel": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1Item": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "amount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "length": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    }
+  }
+}
