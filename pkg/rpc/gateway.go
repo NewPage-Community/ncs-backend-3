@@ -12,6 +12,7 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"google.golang.org/grpc"
+	"google.golang.org/protobuf/encoding/protojson"
 	"net/http"
 )
 
@@ -68,8 +69,13 @@ func NewGateway() *Gateways {
 	return &Gateways{
 		mux: runtime.NewServeMux(runtime.WithMarshalerOption(
 			runtime.MIMEWildcard,
-			&runtime.HTTPBodyMarshaler{
-				Marshaler: &runtime.JSONPb{},
+			&runtime.JSONPb{
+				MarshalOptions: protojson.MarshalOptions{
+					UseProtoNames: true,
+				},
+				UnmarshalOptions: protojson.UnmarshalOptions{
+					DiscardUnknown: true,
+				},
 			}),
 			runtime.WithForwardResponseOption(gateway.HttpResponseModifier),
 		),
