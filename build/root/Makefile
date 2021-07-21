@@ -52,8 +52,8 @@ build:
 	$(BAZEL_CMD) /bin/bash -c "\
 		bazel version && \
 		bazel run //:gazelle -- update-repos -from_file=go.mod && \
-        bazel run //:gazelle -- update -exclude .cache \
-		bazel build -k --noshow_progress //app/... //pkg/... \
+		bazel run //:gazelle -- update -exclude .cache && \
+		bazel build -k --noshow_progress //app/... //pkg/... && \
 		bazel test -k --noshow_progress //app/... //pkg/... \
 		"
 

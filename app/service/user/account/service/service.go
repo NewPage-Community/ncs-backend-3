@@ -9,6 +9,7 @@ import (
 type Service struct {
 	dao dao.Dao
 	pb.UnimplementedAccountServer
+	pb.UnimplementedWebServer
 }
 
 func Init(c *conf.Config) *Service {

@@ -68,7 +68,9 @@ func NewGateway() *Gateways {
 	return &Gateways{
 		mux: runtime.NewServeMux(runtime.WithMarshalerOption(
 			runtime.MIMEWildcard,
-			&runtime.HTTPBodyMarshaler{}),
+			&runtime.HTTPBodyMarshaler{
+				Marshaler: &runtime.JSONPb{},
+			}),
 			runtime.WithForwardResponseOption(gateway.HttpResponseModifier),
 		),
 		opts: []grpc.DialOption{
