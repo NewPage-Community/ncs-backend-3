@@ -79,6 +79,13 @@
             "required": false,
             "type": "string",
             "format": "int64"
+          },
+          {
+            "name": "steamId",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -113,6 +120,13 @@
           },
           {
             "name": "endTime",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "steamId",
             "in": "query",
             "required": false,
             "type": "string",
@@ -153,6 +167,13 @@
             "name": "endTime",
             "in": "path",
             "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "steamId",
+            "in": "query",
+            "required": false,
             "type": "string",
             "format": "int64"
           }

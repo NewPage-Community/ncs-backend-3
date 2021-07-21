@@ -119,7 +119,16 @@ func (s *Service) GetDonateList(ctx context.Context, req *pb.GetDonateListReq) (
 		req.EndTime = time.Now().Unix()
 	}
 
-	res, err := s.dao.GetDonateList(req.StartTime, req.EndTime)
+	var uid int64
+	if req.SteamId > 0 {
+		res, err := s.account.UID(ctx, &accountService.UIDReq{SteamId: req.SteamId})
+		if err != nil {
+			return resp, err
+		}
+		uid = res.Uid
+	}
+
+	res, err := s.dao.GetDonateList(req.StartTime, req.EndTime, uid)
 	if err != nil {
 		return
 	}

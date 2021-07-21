@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 	"strconv"
 	"time"
 )
@@ -58,10 +59,15 @@ func (d *dao) CancelTrade(outTradeNo string) (err error) {
 	return
 }
 
-func (d *dao) GetDonateList(startTime int64, endTime int64) (res []*model.Donate, err error) {
+func (d *dao) GetDonateList(startTime int64, endTime int64, uid int64) (res []*model.Donate, err error) {
 	res = make([]*model.Donate, 0)
-	err = d.db.Where(gorm.Expr("status = ? AND created_at BETWEEN ? AND ?", model.DonatePayed, startTime, endTime)).
-		Order("created_at desc").Find(&res).Error
+	var expr clause.Expr
+	if uid > 0 {
+		expr = gorm.Expr("status = ? AND created_at BETWEEN ? AND ? AND uid = ?", model.DonatePayed, startTime, endTime, uid)
+	} else {
+		expr = gorm.Expr("status = ? AND created_at BETWEEN ? AND ?", model.DonatePayed, startTime, endTime)
+	}
+	err = d.db.Where(expr).Order("created_at desc").Find(&res).Error
 	return
 }
 

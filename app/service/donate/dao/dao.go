@@ -13,7 +13,7 @@ type Dao interface {
 	GetTradeInfo(outTradeNo string) (res *model.Donate, err error)
 	FinishTrade(outTradeNo string) (err error)
 	CancelTrade(outTradeNo string) (err error)
-	GetDonateList(startTime int64, endTime int64) (res []*model.Donate, err error)
+	GetDonateList(startTime int64, endTime int64, uid int64) (res []*model.Donate, err error)
 	GetCheckTradeList() (res []*model.Donate, err error)
 	Healthy() bool
 	Close()
