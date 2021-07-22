@@ -16,7 +16,7 @@ import (
 )
 
 func TestService_AllChat(t *testing.T) {
-	log.Init(nil)
+	log.Init()
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 

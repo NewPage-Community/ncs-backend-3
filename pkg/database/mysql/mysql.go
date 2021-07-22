@@ -1,6 +1,7 @@
 package mysql
 
 import (
+	"backend/pkg/conf"
 	"backend/pkg/log"
 	"fmt"
 	"gorm.io/driver/mysql"
@@ -22,6 +23,14 @@ type Config struct {
 	MaxIdleConns int
 }
 
+var _defaultConfig = Config{
+	Host:     "127.0.0.1",
+	User:     "root",
+	Password: "password",
+	DBName:   "ncs",
+	Charset:  "utf8mb4",
+}
+
 func (conf *Config) GetDSN() string {
 	return fmt.Sprintf(
 		"%s:%s@(%s)/%s?charset=%s&parseTime=True&loc=Local",
@@ -31,24 +40,6 @@ func (conf *Config) GetDSN() string {
 		conf.DBName,
 		conf.Charset,
 	)
-}
-
-func (conf *Config) Init() {
-	if conf.Host == "" {
-		conf.Host = "127.0.0.1"
-	}
-	if conf.User == "" {
-		conf.User = "root"
-	}
-	if conf.Password == "" {
-		conf.Password = "password"
-	}
-	if conf.DBName == "" {
-		conf.DBName = "mysql"
-	}
-	if conf.Charset == "" {
-		conf.Charset = "utf8mb4"
-	}
 }
 
 func (conf *Config) GetLogger() logger.Interface {
@@ -63,12 +54,22 @@ func (conf *Config) GetLogger() logger.Interface {
 	})
 }
 
-func Init(conf *Config) (db *gorm.DB) {
+func loadConf() *Config {
+	c := &struct {
+		Mysql *Config
+	}{}
+	*(c.Mysql) = _defaultConfig
+	conf.Load(c)
+	return c.Mysql
+}
+
+func Init() (db *gorm.DB) {
 	var err error
-	conf.Init()
+	c := loadConf()
+
 	conn := func() (*gorm.DB, error) {
-		return gorm.Open(mysql.Open(conf.GetDSN()), &gorm.Config{
-			Logger:                 conf.GetLogger(),
+		return gorm.Open(mysql.Open(c.GetDSN()), &gorm.Config{
+			Logger:                 c.GetLogger(),
 			SkipDefaultTransaction: true,
 			PrepareStmt:            true,
 		})
@@ -87,8 +88,8 @@ func Init(conf *Config) (db *gorm.DB) {
 	if err == nil {
 		sqlDB, err := db.DB()
 		if err == nil {
-			sqlDB.SetMaxIdleConns(conf.MaxIdleConns)
-			sqlDB.SetMaxOpenConns(conf.MaxOpenConns)
+			sqlDB.SetMaxIdleConns(c.MaxIdleConns)
+			sqlDB.SetMaxOpenConns(c.MaxOpenConns)
 		}
 	}
 

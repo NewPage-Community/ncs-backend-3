@@ -19,12 +19,12 @@ const (
 func main() {
 	// Init 初始化模块
 	config := conf.Init()
-	log.Init(config.Log)
+	log.Init()
 	tracer.Init(serviceName)
 	srv := service.Init(config)
 
 	// rpc 服务注册
-	server := rpc.NewServer(nil)
+	server := rpc.NewServer()
 	server.Grpc(func(s *grpc.Server) {
 		pb.RegisterWebServer(s, srv)
 	})

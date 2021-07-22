@@ -14,7 +14,7 @@ const serviceName = "pass-reward"
 func main() {
 	// Init
 	config := conf.Init()
-	log.Init(config.Log)
+	log.Init()
 	tracer.Init(serviceName)
 	srv := service.Init(config)
 

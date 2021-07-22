@@ -21,7 +21,7 @@ type dao struct {
 
 func New(config *conf.Config) (d *dao) {
 	d = &dao{
-		db: db.Init(config.Mysql),
+		db: db.Init(),
 	}
 	if err := d.db.AutoMigrate(&model.Sign{}); err != nil {
 		log.Error(err)

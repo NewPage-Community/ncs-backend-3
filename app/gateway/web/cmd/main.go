@@ -12,7 +12,7 @@ const serviceName = "gateway-web"
 
 func main() {
 	// Init
-	log.Init(&log.Config{Debug: true})
+	log.Init()
 	tracer.Init(serviceName)
 	gateways := rpc.NewGateway(serviceName)
 

@@ -20,7 +20,7 @@ type dao struct {
 
 func Init(config *conf.Config) (d *dao) {
 	d = &dao{
-		db: mysql.Init(config.Mysql),
+		db: mysql.Init(),
 	}
 	if err := d.db.AutoMigrate(&model.Item{}); err != nil {
 		log.Error(err)

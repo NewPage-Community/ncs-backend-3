@@ -6,6 +6,7 @@ go_library(
     importpath = "backend/pkg/database/mysql",
     visibility = ["//visibility:public"],
     deps = [
+        "//pkg/conf",
         "//pkg/log",
         "@io_gorm_driver_mysql//:mysql",
         "@io_gorm_gorm//:gorm",

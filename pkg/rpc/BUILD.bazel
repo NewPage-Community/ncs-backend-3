@@ -11,6 +11,7 @@ go_library(
     importpath = "backend/pkg/rpc",
     visibility = ["//visibility:public"],
     deps = [
+        "//pkg/conf",
         "//pkg/ecode",
         "//pkg/jwt",
         "//pkg/log",

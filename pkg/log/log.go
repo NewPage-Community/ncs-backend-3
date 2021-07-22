@@ -1,6 +1,7 @@
 package log
 
 import (
+	"backend/pkg/conf"
 	"fmt"
 	"go.uber.org/zap"
 )
@@ -9,19 +10,27 @@ type Config struct {
 	Debug bool
 }
 
-var _defConfig = &Config{
+var _defConfig = Config{
 	Debug: false,
 }
 
 var logger *zap.Logger
 
-func Init(conf *Config) {
-	if conf == nil {
-		conf = _defConfig
-	}
+func loadConf() *Config {
+	c := &struct {
+		Logger *Config
+	}{}
+	*(c.Logger) = _defConfig
+	conf.Load(c)
+	return c.Logger
+}
+
+func Init() {
+	// Config
+	c := loadConf()
 
 	var err error
-	if conf.Debug {
+	if c.Debug {
 		logger, err = zap.NewDevelopment(zap.AddCallerSkip(1))
 	} else {
 		logger, err = zap.NewProduction(zap.AddCallerSkip(1))

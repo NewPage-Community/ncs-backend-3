@@ -27,8 +27,8 @@ type dao struct {
 
 func Init(config *conf.Config) (d *dao) {
 	d = &dao{
-		db:    mysql.Init(config.Mysql),
-		cache: cache.Init(config.Redis),
+		db:    mysql.Init(),
+		cache: cache.Init(),
 	}
 	if err := d.db.AutoMigrate(&model.Money{}); err != nil {
 		log.Error(err)

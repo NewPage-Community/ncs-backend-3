@@ -21,7 +21,7 @@ type dao struct {
 
 func Init(config *conf.Config) (d *dao) {
 	d = &dao{
-		db: cache.Init(config.Redis),
+		db: cache.Init(),
 	}
 	return
 }

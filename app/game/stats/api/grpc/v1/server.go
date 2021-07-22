@@ -6,7 +6,7 @@ import (
 )
 
 func InitServer(srv StatsServer, health func() bool) (s *rpc.Server) {
-	s = rpc.NewServer(nil)
+	s = rpc.NewServer()
 	s.Grpc(func(s *grpc.Server) {
 		RegisterStatsServer(s, srv)
 	})

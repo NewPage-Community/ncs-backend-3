@@ -28,7 +28,7 @@ type dao struct {
 func Init(config *conf.Config) (d *dao) {
 	// Mysql 例子
 	d = &dao{
-		db: mysql.Init(config.Mysql),
+		db: mysql.Init(),
 	}
 	// 数据库自动融合
 	if err := d.db.AutoMigrate(&model.QQConnect{}); err != nil {
