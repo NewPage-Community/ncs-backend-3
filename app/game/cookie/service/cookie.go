@@ -3,7 +3,6 @@ package service
 import (
 	pb "backend/app/game/cookie/api/grpc/v1"
 	"backend/pkg/ecode"
-	"backend/pkg/jwt"
 	"backend/pkg/rpc/gateway"
 	"context"
 	"google.golang.org/grpc/codes"
@@ -50,7 +49,7 @@ func (s *Service) SetCookie(ctx context.Context, req *pb.SetCookieReq) (resp *pb
 
 	// Web gateway force cover UID ()
 	if id := gateway.GetID(ctx); id == "gateway-web" {
-		req.Uid = s.config.JWT.PayloadFormContext(ctx).Get("uid").(int64)
+		req.Uid = s.jwt.PayloadFormContext(ctx).Get("uid").(int64)
 	}
 
 	if req.Uid <= 0 {

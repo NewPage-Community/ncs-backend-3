@@ -5,7 +5,6 @@ import (
 	pb "backend/app/service/backpack/user/api/grpc/v1"
 	"backend/app/service/backpack/user/model"
 	"backend/pkg/ecode"
-	"backend/pkg/jwt"
 	"backend/pkg/rpc/gateway"
 	"context"
 	"google.golang.org/grpc/codes"
@@ -17,7 +16,7 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 
 	// Web gateway force cover UID ()
 	if id := gateway.GetID(ctx); id == "gateway-web" {
-		req.Uid = s.config.JWT.PayloadFormContext(ctx).Get("uid").(int64)
+		req.Uid = s.jwt.PayloadFormContext(ctx).Get("uid").(int64)
 	}
 
 	if req.Uid <= 0 {
