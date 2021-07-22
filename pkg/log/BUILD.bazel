@@ -1,12 +1,15 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "log",
     srcs = ["log.go"],
     importpath = "backend/pkg/log",
     visibility = ["//visibility:public"],
-    deps = [
-        "//pkg/conf",
-        "@org_uber_go_zap//:zap",
-    ],
+    deps = ["@org_uber_go_zap//:zap"],
+)
+
+go_test(
+    name = "log_test",
+    srcs = ["log_test.go"],
+    embed = [":log"],
 )

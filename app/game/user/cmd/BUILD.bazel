@@ -8,6 +8,7 @@ go_library(
     visibility = ["//visibility:private"],
     deps = [
         "//app/game/user/api/grpc/v1:grpc",
+        "//app/game/user/conf",
         "//app/game/user/service",
         "//pkg/cmd",
         "//pkg/log",

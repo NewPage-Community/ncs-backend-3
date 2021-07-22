@@ -7,7 +7,7 @@ import (
 )
 
 func TestAll(t *testing.T) {
-	server := NewServer()
+	server := NewServer(nil)
 	server.Grpc(func(s *grpc.Server) {
 		t.Log("regGRPC()")
 	})

@@ -14,7 +14,7 @@ const serviceName = "user-money"
 func main() {
 	// Init
 	config := conf.Init()
-	log.Init()
+	log.Init(config.Log)
 	tracer.Init(serviceName)
 	srv := service.Init(config)
 

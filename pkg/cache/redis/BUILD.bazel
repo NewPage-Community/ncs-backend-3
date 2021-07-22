@@ -6,7 +6,6 @@ go_library(
     importpath = "backend/pkg/cache/redis",
     visibility = ["//visibility:public"],
     deps = [
-        "//pkg/conf",
         "@com_github_alicebob_miniredis_v2//:miniredis",
         "@com_github_go_redis_redis_v7//:redis",
     ],

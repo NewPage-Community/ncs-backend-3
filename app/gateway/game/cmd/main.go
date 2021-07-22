@@ -12,7 +12,7 @@ const serviceName = "gateway-game"
 
 func main() {
 	// Init
-	log.Init()
+	log.Init(&log.Config{Debug: true})
 	tracer.Init(serviceName)
 	gateways := rpc.NewGateway(serviceName)
 

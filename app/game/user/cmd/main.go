@@ -2,6 +2,7 @@ package main
 
 import (
 	api "backend/app/game/user/api/grpc/v1"
+	"backend/app/game/user/conf"
 	"backend/app/game/user/service"
 	"backend/pkg/cmd"
 	"backend/pkg/log"
@@ -12,7 +13,8 @@ const serviceName = "game-user"
 
 func main() {
 	// Init
-	log.Init()
+	config := conf.Init()
+	log.Init(config.Log)
 	tracer.Init(serviceName)
 	srv := service.Init()
 

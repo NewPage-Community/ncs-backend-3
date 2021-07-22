@@ -1,7 +1,6 @@
 package rpc
 
 import (
-	"backend/pkg/conf"
 	"backend/pkg/jwt"
 	"backend/pkg/log"
 	"context"
@@ -38,7 +37,7 @@ type ServerConfig struct {
 	JWT               jwt.JWT
 }
 
-var _defaultSerConf = ServerConfig{
+var _defaultSerConf = &ServerConfig{
 	Network:           "tcp",
 	GrpcPort:          2333,
 	HealthPort:        23333,
@@ -54,18 +53,49 @@ var _defaultSerConf = ServerConfig{
 	},
 }
 
-func loadConf() *ServerConfig {
-	c := &struct {
-		Rpc *ServerConfig
-	}{}
-	*(c.Rpc) = _defaultSerConf
-	conf.Load(c)
-	return c.Rpc
+func NewServer(conf *ServerConfig) *Server {
+	// Config
+	if conf == nil {
+		conf = _defaultSerConf
+	}
+	conf.Init()
+	return &Server{config: conf}
 }
 
-func NewServer() *Server {
-	// Config
-	return &Server{config: loadConf()}
+func (conf *ServerConfig) Init() {
+	if conf.Timeout <= 0 {
+		conf.Timeout = _defaultSerConf.Timeout
+	}
+	if conf.IdleTimeout <= 0 {
+		conf.IdleTimeout = _defaultSerConf.IdleTimeout
+	}
+	if conf.MaxLifeTime <= 0 {
+		conf.MaxLifeTime = _defaultSerConf.MaxLifeTime
+	}
+	if conf.ForceCloseWait <= 0 {
+		conf.ForceCloseWait = _defaultSerConf.ForceCloseWait
+	}
+	if conf.KeepAliveInterval <= 0 {
+		conf.KeepAliveInterval = _defaultSerConf.KeepAliveInterval
+	}
+	if conf.KeepAliveTimeout <= 0 {
+		conf.KeepAliveTimeout = _defaultSerConf.KeepAliveTimeout
+	}
+	if conf.GrpcPort == 0 {
+		conf.GrpcPort = _defaultSerConf.GrpcPort
+	}
+	if conf.Network == "" {
+		conf.Network = _defaultSerConf.Network
+	}
+	if conf.HealthPort == 0 {
+		conf.HealthPort = _defaultSerConf.HealthPort
+	}
+	if conf.JWT.ExpireTime == 0 {
+		conf.JWT.ExpireTime = _defaultSerConf.JWT.ExpireTime
+	}
+	if conf.JWT.SecretKey == "" {
+		conf.JWT.SecretKey = _defaultSerConf.JWT.SecretKey
+	}
 }
 
 func (s *Server) Grpc(reg func(s *grpc.Server)) {
