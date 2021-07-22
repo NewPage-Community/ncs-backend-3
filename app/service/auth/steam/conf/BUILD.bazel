@@ -9,5 +9,6 @@ go_library(
         "//pkg/conf",
         "//pkg/jwt",
         "//pkg/log",
+        "//pkg/rpc",
     ],
 )

@@ -24,7 +24,7 @@ func main() {
 	srv := service.Init(config)
 
 	// rpc 服务注册
-	server := rpc.NewServer(nil)
+	server := rpc.NewServer(config.Rpc)
 	server.Grpc(func(s *grpc.Server) {
 		pb.RegisterWebServer(s, srv)
 	})
