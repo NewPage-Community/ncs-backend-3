@@ -1,7 +1,6 @@
 package rpc
 
 import (
-	"backend/pkg/jwt"
 	"backend/pkg/log"
 	"context"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
@@ -34,7 +33,6 @@ type ServerConfig struct {
 	ForceCloseWait    time.Duration
 	KeepAliveInterval time.Duration
 	KeepAliveTimeout  time.Duration
-	JWT               jwt.JWT
 }
 
 var _defaultSerConf = &ServerConfig{
@@ -47,10 +45,6 @@ var _defaultSerConf = &ServerConfig{
 	ForceCloseWait:    20 * time.Second,
 	KeepAliveInterval: 60 * time.Second,
 	KeepAliveTimeout:  20 * time.Second,
-	JWT: jwt.JWT{
-		ExpireTime: 86400,
-		SecretKey:  "",
-	},
 }
 
 func NewServer(conf *ServerConfig) *Server {
@@ -90,12 +84,6 @@ func (conf *ServerConfig) Init() {
 	if conf.HealthPort == 0 {
 		conf.HealthPort = _defaultSerConf.HealthPort
 	}
-	if conf.JWT.ExpireTime == 0 {
-		conf.JWT.ExpireTime = _defaultSerConf.JWT.ExpireTime
-	}
-	if conf.JWT.SecretKey == "" {
-		conf.JWT.SecretKey = _defaultSerConf.JWT.SecretKey
-	}
 }
 
 func (s *Server) Grpc(reg func(s *grpc.Server)) {
@@ -111,7 +99,6 @@ func (s *Server) Grpc(reg func(s *grpc.Server)) {
 	opts := []grpc.ServerOption{
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			grpc_opentracing.UnaryServerInterceptor(tracer),
-			jwt.UnaryServerInterceptor(&s.config.JWT),
 		)),
 		grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
 			grpc_opentracing.StreamServerInterceptor(tracer),

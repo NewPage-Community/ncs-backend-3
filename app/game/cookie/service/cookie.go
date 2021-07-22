@@ -50,7 +50,7 @@ func (s *Service) SetCookie(ctx context.Context, req *pb.SetCookieReq) (resp *pb
 
 	// Web gateway force cover UID ()
 	if id := gateway.GetID(ctx); id == "gateway-web" {
-		req.Uid = jwt.PayloadFormContext(ctx).Get("uid").(int64)
+		req.Uid = s.config.JWT.PayloadFormContext(ctx).Get("uid").(int64)
 	}
 
 	if req.Uid <= 0 {

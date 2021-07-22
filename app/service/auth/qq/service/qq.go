@@ -40,7 +40,7 @@ func (s *Service) BindQQ(ctx context.Context, req *pb.BindQQReq) (resp *pb.BindQ
 	resp = &pb.BindQQResp{}
 
 	// Get info
-	uid := model.GetQQConnectFromJWTPayload(jwt.PayloadFormContext(ctx)).UID
+	uid := model.GetQQConnectFromJWTPayload(s.config.JWT.PayloadFormContext(ctx)).UID
 	if uid == 0 {
 		err = ecode.Errorf(codes.Unauthenticated, "invalid uid")
 		return
@@ -63,7 +63,7 @@ func (s *Service) UnbindQQ(ctx context.Context, req *pb.UnbindQQReq) (resp *pb.U
 	resp = &pb.UnbindQQResp{}
 
 	// Get UID
-	uid := model.GetQQConnectFromJWTPayload(jwt.PayloadFormContext(ctx)).UID
+	uid := model.GetQQConnectFromJWTPayload(s.config.JWT.PayloadFormContext(ctx)).UID
 	if uid == 0 {
 		err = ecode.Errorf(codes.Unauthenticated, "invalid uid")
 		return
@@ -75,7 +75,7 @@ func (s *Service) UnbindQQ(ctx context.Context, req *pb.UnbindQQReq) (resp *pb.U
 
 func (s *Service) QQStatus(ctx context.Context, req *pb.QQStatusReq) (resp *pb.QQStatusResp, err error) {
 	resp = &pb.QQStatusResp{}
-	payload := jwt.PayloadFormContext(ctx)
+	payload := s.config.JWT.PayloadFormContext(ctx)
 
 	// Get UID
 	uid := model.GetQQConnectFromJWTPayload(payload).UID

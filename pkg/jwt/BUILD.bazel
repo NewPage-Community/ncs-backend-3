@@ -13,7 +13,6 @@ go_library(
     deps = [
         "//pkg/rpc/gateway",
         "@com_github_dgrijalva_jwt_go//:jwt-go",
-        "@org_golang_google_grpc//:grpc",
         "@org_golang_google_grpc//metadata",
     ],
 )

@@ -29,15 +29,12 @@ func TestJWT(t *testing.T) {
 			t.Log(payload)
 		})
 		Convey("GRPC interceptor", func() {
-			unaryHandler := func(ctx context.Context, req interface{}) (interface{}, error) {
-				return PayloadFormContext(ctx), nil
-			}
 			md := metadata.MD{}
 			md.Set(authorizationHeader, bearerPrefix+token)
 			ctx := metadata.NewIncomingContext(context.Background(), md)
-			payload, err := jwt.GetPayload(ctx, nil, nil, unaryHandler)
+			payload := jwt.PayloadFormContext(ctx)
 			So(err, ShouldBeNil)
-			So((*payload.(*Payload))["test"], ShouldEqual, data["test"])
+			So(payload.Get("test"), ShouldEqual, data["test"])
 			t.Log(payload)
 		})
 	})
