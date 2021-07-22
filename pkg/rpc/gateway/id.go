@@ -19,7 +19,7 @@ func GetID(ctx context.Context) string {
 	if len(id) == 0 {
 		return ""
 	}
-	return id[1]
+	return id[0]
 }
 
 func InjectID(ctx context.Context, id string) {
