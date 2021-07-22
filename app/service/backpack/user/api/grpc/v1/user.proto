@@ -87,3 +87,10 @@ service User {
     }
 }
 
+service Web {
+    rpc GetItems (GetItemsReq) returns (GetItemsResp) {
+        option (google.api.http) = {
+            get: "/backpack/user/{uid}"
+        };
+    }
+}

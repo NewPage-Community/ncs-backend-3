@@ -3,9 +3,7 @@ package jwt
 import (
 	"context"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
-	"google.golang.org/grpc/status"
 	"strings"
 )
 
@@ -19,19 +17,18 @@ type jwtPayload struct{}
 func (c *JWT) GetPayload(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp interface{}, err error) {
 	// Get token
 	token := TokenFromContext(ctx)
-	// Skip when do not have token
-	if len(token) == 0 {
-		return handler(ctx, req)
-	}
 
-	// Valid token and get payload
-	payload, err := c.GetTokenPayload(token)
-	if err != nil {
-		return nil, status.Errorf(codes.Unauthenticated, "token not valid: %v", err)
+	// Skip when do not have token
+	if len(token) > 0 {
+		// Verify token and get payload
+		payload, err := c.GetTokenPayload(token)
+		if err == nil {
+			return handler(ContextWithPayload(ctx, payload), req)
+		}
 	}
 
 	// Call handler
-	return handler(ContextWithPayload(ctx, payload), req)
+	return handler(ctx, req)
 }
 
 // UnaryServerInterceptor ...

@@ -14,7 +14,7 @@ func main() {
 	// Init
 	log.Init(&log.Config{Debug: true})
 	tracer.Init(serviceName)
-	gateways := rpc.NewGateway()
+	gateways := rpc.NewGateway(serviceName)
 
 	// Gateway
 	service.RegService(gateways)

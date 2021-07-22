@@ -13,10 +13,12 @@ go_library(
     importpath = "backend/app/gateway/web/service",
     visibility = ["//visibility:public"],
     deps = [
+        "//app/game/cookie/api/grpc/v1:grpc",
         "//app/game/server/api/grpc/v1:grpc",
         "//app/service/auth/qq/api/grpc/v1:grpc",
         "//app/service/auth/steam/api/grpc/v1:grpc",
         "//app/service/backpack/items/api/grpc/v1:grpc",
+        "//app/service/backpack/user/api/grpc/v1:grpc",
         "//app/service/donate/api/grpc/v1:grpc",
         "//app/service/user/account/api/grpc/v1:grpc",
         "//pkg/rpc",

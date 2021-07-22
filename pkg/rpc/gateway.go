@@ -26,9 +26,10 @@ type Gateways struct {
 	opts   []grpc.DialOption
 	ctx    context.Context
 	cancel context.CancelFunc
+	id     string
 }
 
-func tracingWrapper(h http.Handler) func(w http.ResponseWriter, r *http.Request) {
+func (gws *Gateways) middlewareWrapper() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		parentSpanContext, err := opentracing.GlobalTracer().Extract(
 			opentracing.HTTPHeaders,
@@ -43,7 +44,9 @@ func tracingWrapper(h http.Handler) func(w http.ResponseWriter, r *http.Request)
 			r = r.WithContext(opentracing.ContextWithSpan(r.Context(), serverSpan))
 			defer serverSpan.Finish()
 		}
-		h.ServeHTTP(w, r)
+		// Force inject gateway id
+		gateway.InjectID(r.Context(), gws.id)
+		gws.mux.ServeHTTP(w, r)
 	}
 }
 
@@ -63,7 +66,7 @@ func (gws *Gateways) Close() {
 	gws.cancel()
 }
 
-func NewGateway() *Gateways {
+func NewGateway(name string) *Gateways {
 	ctx, cancel := context.WithCancel(context.Background())
 	tracer := grpc_opentracing.WithTracer(opentracing.GlobalTracer())
 	return &Gateways{
@@ -95,13 +98,14 @@ func NewGateway() *Gateways {
 		},
 		ctx:    ctx,
 		cancel: cancel,
+		id:     name,
 	}
 }
 
 func (gws *Gateways) Gateway(health func() bool) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", HttpHealthHandler(health))
-	mux.HandleFunc("/", tracingWrapper(gws.mux))
+	mux.HandleFunc("/", gws.middlewareWrapper())
 	gws.server = &http.Server{
 		Addr:    ":23333",
 		Handler: mux,

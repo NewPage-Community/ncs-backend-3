@@ -16,7 +16,7 @@ func (*QQConnect) TableName() string {
 
 func (i *QQConnect) GetJWTPayload(parent *jwt.Payload) *jwt.Payload {
 	parent.Set("uid", i.UID)
-	parent.Set("open_id", i.OpenID)
+	parent.Set("qq_open_id", i.OpenID)
 	return parent
 }
 

@@ -6,7 +6,6 @@ import (
 	"backend/pkg/ecode"
 	"backend/pkg/jwt"
 	"context"
-	"fmt"
 	"github.com/yohcop/openid-go"
 	"google.golang.org/grpc/codes"
 	"net/http"
@@ -47,8 +46,10 @@ func (s *Service) SteamLogin(ctx context.Context, req *pb.SteamLoginReq) (resp *
 func (s *Service) SteamCallback(ctx context.Context, req *pb.SteamCallbackReq) (resp *pb.SteamCallbackResp, err error) {
 	resp = &pb.SteamCallbackResp{}
 
+	fullURL, _ := url.Parse(req.Openid.ReturnTo)
+
 	// OpenID verify
-	value := &url.Values{}
+	value := fullURL.Query()
 	value.Set("openid.ns", req.Openid.Ns)
 	value.Set("openid.mode", req.Openid.Mode)
 	value.Set("openid.op_endpoint", req.Openid.OpEndpoint)
@@ -59,8 +60,8 @@ func (s *Service) SteamCallback(ctx context.Context, req *pb.SteamCallbackReq) (
 	value.Set("openid.assoc_handle", req.Openid.AssocHandle)
 	value.Set("openid.signed", req.Openid.Signed)
 	value.Set("openid.sig", req.Openid.Sig)
+	fullURL.RawQuery = value.Encode()
 
-	fullURL := fmt.Sprintf("%s%s?%s", s.config.SteamOpenID.Host, callbackURL, value.Encode())
 	client := &http.Client{}
 	if len(s.config.SteamOpenID.HttpProxy) > 0 {
 		proxy, _ := url.Parse("http://" + s.config.SteamOpenID.HttpProxy)
@@ -69,7 +70,7 @@ func (s *Service) SteamCallback(ctx context.Context, req *pb.SteamCallbackReq) (
 		}
 	}
 	openID := openid.NewOpenID(client)
-	id, err := openID.Verify(fullURL, discoveryCache, nonceStore)
+	id, err := openID.Verify(fullURL.String(), discoveryCache, nonceStore)
 	if err != nil {
 		return
 	}

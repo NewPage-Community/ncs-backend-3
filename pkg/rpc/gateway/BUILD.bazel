@@ -2,7 +2,10 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "gateway",
-    srcs = ["http.go"],
+    srcs = [
+        "http.go",
+        "id.go",
+    ],
     importpath = "backend/pkg/rpc/gateway",
     visibility = ["//visibility:public"],
     deps = [

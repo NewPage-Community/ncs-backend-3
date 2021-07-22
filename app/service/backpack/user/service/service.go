@@ -11,6 +11,7 @@ type Service struct {
 	dao   dao.Dao
 	items itemsSrv.ItemsClient
 	pb.UnimplementedUserServer
+	pb.UnimplementedWebServer
 }
 
 func Init(config *conf.Config) *Service {
