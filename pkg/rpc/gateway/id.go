@@ -2,7 +2,6 @@ package gateway
 
 import (
 	"context"
-	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
 
@@ -11,17 +10,14 @@ const (
 )
 
 func GetID(ctx context.Context) string {
-	md, ok := metadata.FromIncomingContext(ctx)
-	if !ok {
-		return ""
+	if md, ok := metadata.FromIncomingContext(ctx); ok {
+		if id, ok := md[IDKey]; ok {
+			return id[0]
+		}
 	}
-	id := md.Get(IDKey)
-	if len(id) == 0 {
-		return ""
-	}
-	return id[0]
+	return ""
 }
 
-func InjectID(ctx context.Context, id string) {
-	_ = grpc.SetHeader(ctx, metadata.Pairs(IDKey, id))
+func InjectID(ctx context.Context, id string) context.Context {
+	return metadata.NewOutgoingContext(ctx, metadata.Pairs(IDKey, id))
 }

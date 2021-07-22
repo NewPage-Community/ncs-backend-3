@@ -45,7 +45,7 @@ func (gws *Gateways) middlewareWrapper() func(w http.ResponseWriter, r *http.Req
 			defer serverSpan.Finish()
 		}
 		// Force inject gateway id
-		gateway.InjectID(r.Context(), gws.id)
+		r = r.WithContext(gateway.InjectID(r.Context(), gws.id))
 		gws.mux.ServeHTTP(w, r)
 	}
 }
