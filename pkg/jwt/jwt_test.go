@@ -9,7 +9,7 @@ import (
 
 func TestJWT(t *testing.T) {
 	jwt := JWT{
-		ExpireTime: 3600,
+		ExpireTime: 720,
 		SecretKey:  "key",
 	}
 	data := map[string]interface{}{

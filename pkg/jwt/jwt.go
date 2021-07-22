@@ -17,7 +17,7 @@ type JWT struct {
 // NewTokenString create a new valid JWT
 func (c *JWT) NewTokenString(payload map[string]interface{}) (string, error) {
 	now := time.Now()
-	payload["exp"] = now.Add(time.Duration(c.ExpireTime)).Unix()
+	payload["exp"] = now.Add(time.Duration(c.ExpireTime) * time.Hour).Unix()
 	payload["iss"] = c.Issuer
 	payload["iat"] = now.Unix()
 
