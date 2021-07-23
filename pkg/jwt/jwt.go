@@ -27,7 +27,8 @@ func (c *JWT) NewTokenString(payload map[string]interface{}) (string, error) {
 
 // GetTokenPayload get a token from JWT string
 func (c *JWT) GetTokenPayload(tokenString string) (Payload, error) {
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+	p := jwt.Parser{UseJSONNumber: true}
+	token, err := p.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}

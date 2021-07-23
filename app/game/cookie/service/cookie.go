@@ -11,6 +11,11 @@ import (
 func (s *Service) GetCookie(ctx context.Context, req *pb.GetCookieReq) (resp *pb.GetCookieResp, err error) {
 	resp = &pb.GetCookieResp{}
 
+	// Web gateway force cover UID
+	if id := gateway.GetID(ctx); id == "gateway-web" {
+		req.Uid = s.jwt.PayloadFormContext(ctx).GetInt64("uid")
+	}
+
 	if req.Uid <= 0 {
 		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%d)", req.Uid)
 		return
@@ -31,6 +36,11 @@ func (s *Service) GetCookie(ctx context.Context, req *pb.GetCookieReq) (resp *pb
 func (s *Service) GetAllCookie(ctx context.Context, req *pb.GetAllCookieReq) (resp *pb.GetAllCookieResp, err error) {
 	resp = &pb.GetAllCookieResp{}
 
+	// Web gateway force cover UID
+	if id := gateway.GetID(ctx); id == "gateway-web" {
+		req.Uid = s.jwt.PayloadFormContext(ctx).GetInt64("uid")
+	}
+
 	if req.Uid <= 0 {
 		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID(%d)", req.Uid)
 		return
@@ -47,9 +57,9 @@ func (s *Service) GetAllCookie(ctx context.Context, req *pb.GetAllCookieReq) (re
 func (s *Service) SetCookie(ctx context.Context, req *pb.SetCookieReq) (resp *pb.SetCookieResp, err error) {
 	resp = &pb.SetCookieResp{}
 
-	// Web gateway force cover UID ()
+	// Web gateway force cover UID
 	if id := gateway.GetID(ctx); id == "gateway-web" {
-		req.Uid = s.jwt.PayloadFormContext(ctx).Get("uid").(int64)
+		req.Uid = s.jwt.PayloadFormContext(ctx).GetInt64("uid")
 	}
 
 	if req.Uid <= 0 {

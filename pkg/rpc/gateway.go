@@ -12,6 +12,7 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/encoding/protojson"
 	"net/http"
 )
@@ -29,7 +30,7 @@ type Gateways struct {
 	id     string
 }
 
-func (gws *Gateways) middlewareWrapper() func(w http.ResponseWriter, r *http.Request) {
+func tracingWrapper(h http.Handler) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		parentSpanContext, err := opentracing.GlobalTracer().Extract(
 			opentracing.HTTPHeaders,
@@ -44,9 +45,13 @@ func (gws *Gateways) middlewareWrapper() func(w http.ResponseWriter, r *http.Req
 			r = r.WithContext(opentracing.ContextWithSpan(r.Context(), serverSpan))
 			defer serverSpan.Finish()
 		}
-		// Force inject gateway id
-		r = r.WithContext(gateway.InjectID(r.Context(), gws.id))
-		gws.mux.ServeHTTP(w, r)
+		h.ServeHTTP(w, r)
+	}
+}
+
+func metadataModify(id string) func(ctx context.Context, req *http.Request) metadata.MD {
+	return func(ctx context.Context, req *http.Request) metadata.MD {
+		return gateway.InjectID(ctx, id)
 	}
 }
 
@@ -81,6 +86,7 @@ func NewGateway(name string) *Gateways {
 					DiscardUnknown: true,
 				},
 			}),
+			runtime.WithMetadata(metadataModify(name)),
 			runtime.WithForwardResponseOption(gateway.HttpResponseModifier),
 		),
 		opts: []grpc.DialOption{
@@ -105,7 +111,7 @@ func NewGateway(name string) *Gateways {
 func (gws *Gateways) Gateway(health func() bool) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", HttpHealthHandler(health))
-	mux.HandleFunc("/", gws.middlewareWrapper())
+	mux.HandleFunc("/", tracingWrapper(gws.mux))
 	gws.server = &http.Server{
 		Addr:    ":23333",
 		Handler: mux,

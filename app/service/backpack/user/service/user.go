@@ -14,9 +14,9 @@ import (
 func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.GetItemsResp, err error) {
 	resp = &pb.GetItemsResp{}
 
-	// Web gateway force cover UID ()
+	// Web gateway force cover UID
 	if id := gateway.GetID(ctx); id == "gateway-web" {
-		req.Uid = s.jwt.PayloadFormContext(ctx).Get("uid").(int64)
+		req.Uid = s.jwt.PayloadFormContext(ctx).GetInt64("uid")
 	}
 
 	if req.Uid <= 0 {

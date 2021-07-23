@@ -18,6 +18,10 @@ func GetID(ctx context.Context) string {
 	return ""
 }
 
-func InjectID(ctx context.Context, id string) context.Context {
-	return metadata.NewOutgoingContext(ctx, metadata.Pairs(IDKey, id))
+func InjectID(ctx context.Context, id string) metadata.MD {
+	pairs := metadata.Pairs(IDKey, id)
+	if md, ok := metadata.FromIncomingContext(ctx); ok {
+		return metadata.Join(md, pairs)
+	}
+	return pairs
 }
