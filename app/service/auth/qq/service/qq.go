@@ -7,7 +7,6 @@ import (
 	"backend/pkg/json"
 	"backend/pkg/jwt"
 	"context"
-	"fmt"
 	"google.golang.org/grpc/codes"
 	"io/ioutil"
 	"net/http"
@@ -29,6 +28,8 @@ func (s *Service) AuthQQ(ctx context.Context, req *pb.AuthQQReq) (resp *pb.AuthQ
 	if err != nil {
 		return
 	}
+	// Override openID when is zero from dao
+	qqConnect.OpenID = openID
 
 	// Add to connect token
 	resp.JwtString, err = s.config.JWT.NewTokenString(*qqConnect.GetJWTPayload(&jwt.Payload{}))
@@ -40,22 +41,18 @@ func (s *Service) BindQQ(ctx context.Context, req *pb.BindQQReq) (resp *pb.BindQ
 	resp = &pb.BindQQResp{}
 
 	// Get info
-	uid := model.GetQQConnectFromJWTPayload(s.config.JWT.PayloadFormContext(ctx)).UID
-	if uid == 0 {
+	qqConnect := model.GetQQConnectFromJWTPayload(s.config.JWT.PayloadFormContext(ctx))
+	if qqConnect.UID == 0 {
 		err = ecode.Errorf(codes.Unauthenticated, "invalid uid")
 		return
 	}
-	openID, err := GetOpenID(req.AccessToken)
-	if err != nil {
+	if len(qqConnect.OpenID) == 0 {
 		err = ecode.Errorf(codes.Unauthenticated, "failed to get openID: %v", err)
 		return
 	}
 
 	// Bind account
-	err = s.dao.BindQQ(model.QQConnect{
-		UID:    uid,
-		OpenID: openID,
-	})
+	err = s.dao.BindQQ(*qqConnect)
 	return
 }
 
@@ -112,13 +109,12 @@ func GetOpenID(accessToken string) (openID string, err error) {
 		return
 	}
 	data = data[10 : len(data)-4]
-	fmt.Println(string(data))
 
 	var callback struct {
 		Error            int    `json:"error"`
 		ErrorDescription string `json:"error_description"`
 		OpenID           string `json:"openid"`
-		ClientID         int    `json:"client_id"`
+		ClientID         string `json:"client_id"`
 	}
 	err = json.Unmarshal(data, &callback)
 

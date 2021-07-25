@@ -13,7 +13,6 @@ go_library(
         "//app/service/auth/steam/conf",
         "//app/service/user/account/api/grpc/v1:grpc",
         "//pkg/ecode",
-        "//pkg/jwt",
         "@com_github_yohcop_openid_go//:openid-go",
         "@org_golang_google_grpc//codes",
     ],

@@ -18,6 +18,6 @@ func (d *dao) UnbindQQ(info model.QQConnect) error {
 
 func (d *dao) GetStatus(uid int64) (res *model.QQConnect, err error) {
 	res = &model.QQConnect{}
-	err = d.db.Find(res, uid).Error
+	err = d.db.First(res, uid).Error
 	return
 }

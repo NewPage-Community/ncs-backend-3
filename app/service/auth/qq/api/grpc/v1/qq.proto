@@ -40,7 +40,7 @@ message QQStatusResp {
 service Web {
     rpc AuthQQ (AuthQQReq) returns (AuthQQResp) {
         option (google.api.http) = {
-			post: "/auth/qq/uid"
+			get: "/auth/qq/uid"
 		};
     }
     rpc BindQQ (BindQQReq) returns (BindQQResp) {
@@ -55,7 +55,7 @@ service Web {
     }
     rpc QQStatus (QQStatusReq) returns (QQStatusResp) {
         option (google.api.http) = {
-            post: "/auth/qq/status"
+            get: "/auth/qq/status"
         };
     }
 }

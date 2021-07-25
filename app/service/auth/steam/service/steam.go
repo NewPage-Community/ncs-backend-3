@@ -4,7 +4,6 @@ import (
 	pb "backend/app/service/auth/steam/api/grpc/v1"
 	accountSrv "backend/app/service/user/account/api/grpc/v1"
 	"backend/pkg/ecode"
-	"backend/pkg/jwt"
 	"context"
 	"github.com/yohcop/openid-go"
 	"google.golang.org/grpc/codes"
@@ -46,6 +45,12 @@ func (s *Service) SteamLogin(ctx context.Context, req *pb.SteamLoginReq) (resp *
 func (s *Service) SteamCallback(ctx context.Context, req *pb.SteamCallbackReq) (resp *pb.SteamCallbackResp, err error) {
 	resp = &pb.SteamCallbackResp{}
 
+	if req.Openid == nil {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid openid filed")
+		return
+	}
+
+	payload := s.config.JWT.PayloadFormContext(ctx)
 	fullURL, _ := url.Parse(req.Openid.ReturnTo)
 
 	// OpenID verify
@@ -76,7 +81,6 @@ func (s *Service) SteamCallback(ctx context.Context, req *pb.SteamCallbackReq) (
 	}
 
 	// Get SteamID
-	payload := jwt.Payload{}
 	r := regexp.MustCompile(`https?://steamcommunity.com/openid/id/(\d+)`).FindStringSubmatch(id)
 	if len(r) < 2 {
 		err = ecode.Errorf(codes.Unknown, "failed to get SteamID")
@@ -93,6 +97,6 @@ func (s *Service) SteamCallback(ctx context.Context, req *pb.SteamCallbackReq) (
 	payload.Set("uid", uid.Uid)
 
 	// Add to connect token
-	resp.JwtString, err = s.config.JWT.NewTokenString(payload)
+	resp.JwtString, err = s.config.JWT.NewTokenString(*payload)
 	return
 }

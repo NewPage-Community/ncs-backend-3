@@ -21,7 +21,7 @@ func (c *JWT) PayloadFormContext(ctx context.Context) *Payload {
 			return &payload
 		}
 	}
-	return new(Payload)
+	return &Payload{}
 }
 
 // TokenFromContext ...

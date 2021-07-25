@@ -39,7 +39,7 @@
       }
     },
     "/auth/qq/status": {
-      "post": {
+      "get": {
         "operationId": "Web_QQStatus",
         "responses": {
           "200": {
@@ -61,7 +61,7 @@
       }
     },
     "/auth/qq/uid": {
-      "post": {
+      "get": {
         "operationId": "Web_AuthQQ",
         "responses": {
           "200": {
@@ -77,6 +77,14 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "accessToken",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
         "tags": [
           "Web"
         ]

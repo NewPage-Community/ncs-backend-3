@@ -23,8 +23,8 @@ func Init(config *conf.Config) *Service {
 	s := &Service{
 		account: accountService.InitClient(accountService.ServiceAddr),
 		money:   moneyService.InitClient(moneyService.ServiceAddr),
-		alipay:  InitAlipay(config.Alipay),
-		wepay:   InitWepay(config.Wepay),
+		alipay:  nil,
+		wepay:   nil,
 		dao:     dao.Init(config),
 		cron:    cron.New(),
 	}
