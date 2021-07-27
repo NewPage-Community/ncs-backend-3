@@ -207,3 +207,89 @@ var Ban_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "app/service/user/ban/api/grpc/v1/ban.proto",
 }
+
+// WebClient is the client API for Web service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type WebClient interface {
+	List(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error)
+}
+
+type webClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewWebClient(cc grpc.ClientConnInterface) WebClient {
+	return &webClient{cc}
+}
+
+func (c *webClient) List(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error) {
+	out := new(ListResp)
+	err := c.cc.Invoke(ctx, "/ncs.service.user.ban.v1.Web/List", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// WebServer is the server API for Web service.
+// All implementations must embed UnimplementedWebServer
+// for forward compatibility
+type WebServer interface {
+	List(context.Context, *ListReq) (*ListResp, error)
+	mustEmbedUnimplementedWebServer()
+}
+
+// UnimplementedWebServer must be embedded to have forward compatible implementations.
+type UnimplementedWebServer struct {
+}
+
+func (UnimplementedWebServer) List(context.Context, *ListReq) (*ListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
+}
+func (UnimplementedWebServer) mustEmbedUnimplementedWebServer() {}
+
+// UnsafeWebServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to WebServer will
+// result in compilation errors.
+type UnsafeWebServer interface {
+	mustEmbedUnimplementedWebServer()
+}
+
+func RegisterWebServer(s grpc.ServiceRegistrar, srv WebServer) {
+	s.RegisterService(&Web_ServiceDesc, srv)
+}
+
+func _Web_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WebServer).List(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ncs.service.user.ban.v1.Web/List",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WebServer).List(ctx, req.(*ListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Web_ServiceDesc is the grpc.ServiceDesc for Web service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Web_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "ncs.service.user.ban.v1.Web",
+	HandlerType: (*WebServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "List",
+			Handler:    _Web_List_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "app/service/user/ban/api/grpc/v1/ban.proto",
+}

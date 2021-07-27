@@ -78,3 +78,16 @@ func (d *dao) IsBlockIP(ip string) (bool, error) {
 		return false, err
 	}
 }
+
+func (d *dao) List(uid uint64) (res []*model.Ban, err error) {
+	res = make([]*model.Ban, 0)
+
+	// DB
+	if uid > 0 {
+		err = d.db.Where(&model.Ban{UID: uid}).Order("create_time desc").Find(&res).Error
+	} else {
+		err = d.db.Limit(100).Order("create_time desc").Find(&res).Error
+	}
+
+	return
+}

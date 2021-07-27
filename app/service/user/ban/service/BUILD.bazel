@@ -5,6 +5,7 @@ go_library(
     srcs = [
         "ban.go",
         "service.go",
+        "steam.go",
     ],
     importpath = "backend/app/service/user/ban/service",
     visibility = ["//visibility:public"],

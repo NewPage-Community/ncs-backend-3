@@ -104,6 +104,21 @@ func (mr *MockDaoMockRecorder) IsBlockIP(ip interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsBlockIP", reflect.TypeOf((*MockDao)(nil).IsBlockIP), ip)
 }
 
+// List mocks base method.
+func (m *MockDao) List(uid uint64) ([]*model.Ban, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "List", uid)
+	ret0, _ := ret[0].([]*model.Ban)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// List indicates an expected call of List.
+func (mr *MockDaoMockRecorder) List(uid interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockDao)(nil).List), uid)
+}
+
 // Remove mocks base method.
 func (m *MockDao) Remove(info *model.Ban) error {
 	m.ctrl.T.Helper()

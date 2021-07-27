@@ -15,6 +15,7 @@ type Service struct {
 	steam   steam.APIClient
 	account accountService.AccountClient
 	pb.UnimplementedBanServer
+	pb.UnimplementedWebServer
 }
 
 func Init(c *conf.Config) *Service {

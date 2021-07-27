@@ -244,3 +244,131 @@ func (mr *MockUnsafeBanServerMockRecorder) mustEmbedUnimplementedBanServer() *go
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "mustEmbedUnimplementedBanServer", reflect.TypeOf((*MockUnsafeBanServer)(nil).mustEmbedUnimplementedBanServer))
 }
+
+// MockWebClient is a mock of WebClient interface.
+type MockWebClient struct {
+	ctrl     *gomock.Controller
+	recorder *MockWebClientMockRecorder
+}
+
+// MockWebClientMockRecorder is the mock recorder for MockWebClient.
+type MockWebClientMockRecorder struct {
+	mock *MockWebClient
+}
+
+// NewMockWebClient creates a new mock instance.
+func NewMockWebClient(ctrl *gomock.Controller) *MockWebClient {
+	mock := &MockWebClient{ctrl: ctrl}
+	mock.recorder = &MockWebClientMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockWebClient) EXPECT() *MockWebClientMockRecorder {
+	return m.recorder
+}
+
+// List mocks base method.
+func (m *MockWebClient) List(ctx context.Context, in *ListReq, opts ...grpc.CallOption) (*ListResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "List", varargs...)
+	ret0, _ := ret[0].(*ListResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// List indicates an expected call of List.
+func (mr *MockWebClientMockRecorder) List(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockWebClient)(nil).List), varargs...)
+}
+
+// MockWebServer is a mock of WebServer interface.
+type MockWebServer struct {
+	ctrl     *gomock.Controller
+	recorder *MockWebServerMockRecorder
+}
+
+// MockWebServerMockRecorder is the mock recorder for MockWebServer.
+type MockWebServerMockRecorder struct {
+	mock *MockWebServer
+}
+
+// NewMockWebServer creates a new mock instance.
+func NewMockWebServer(ctrl *gomock.Controller) *MockWebServer {
+	mock := &MockWebServer{ctrl: ctrl}
+	mock.recorder = &MockWebServerMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockWebServer) EXPECT() *MockWebServerMockRecorder {
+	return m.recorder
+}
+
+// List mocks base method.
+func (m *MockWebServer) List(arg0 context.Context, arg1 *ListReq) (*ListResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "List", arg0, arg1)
+	ret0, _ := ret[0].(*ListResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// List indicates an expected call of List.
+func (mr *MockWebServerMockRecorder) List(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockWebServer)(nil).List), arg0, arg1)
+}
+
+// mustEmbedUnimplementedWebServer mocks base method.
+func (m *MockWebServer) mustEmbedUnimplementedWebServer() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "mustEmbedUnimplementedWebServer")
+}
+
+// mustEmbedUnimplementedWebServer indicates an expected call of mustEmbedUnimplementedWebServer.
+func (mr *MockWebServerMockRecorder) mustEmbedUnimplementedWebServer() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "mustEmbedUnimplementedWebServer", reflect.TypeOf((*MockWebServer)(nil).mustEmbedUnimplementedWebServer))
+}
+
+// MockUnsafeWebServer is a mock of UnsafeWebServer interface.
+type MockUnsafeWebServer struct {
+	ctrl     *gomock.Controller
+	recorder *MockUnsafeWebServerMockRecorder
+}
+
+// MockUnsafeWebServerMockRecorder is the mock recorder for MockUnsafeWebServer.
+type MockUnsafeWebServerMockRecorder struct {
+	mock *MockUnsafeWebServer
+}
+
+// NewMockUnsafeWebServer creates a new mock instance.
+func NewMockUnsafeWebServer(ctrl *gomock.Controller) *MockUnsafeWebServer {
+	mock := &MockUnsafeWebServer{ctrl: ctrl}
+	mock.recorder = &MockUnsafeWebServerMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockUnsafeWebServer) EXPECT() *MockUnsafeWebServerMockRecorder {
+	return m.recorder
+}
+
+// mustEmbedUnimplementedWebServer mocks base method.
+func (m *MockUnsafeWebServer) mustEmbedUnimplementedWebServer() {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "mustEmbedUnimplementedWebServer")
+}
+
+// mustEmbedUnimplementedWebServer indicates an expected call of mustEmbedUnimplementedWebServer.
+func (mr *MockUnsafeWebServerMockRecorder) mustEmbedUnimplementedWebServer() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "mustEmbedUnimplementedWebServer", reflect.TypeOf((*MockUnsafeWebServer)(nil).mustEmbedUnimplementedWebServer))
+}

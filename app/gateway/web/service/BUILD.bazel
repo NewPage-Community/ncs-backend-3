@@ -21,6 +21,7 @@ go_library(
         "//app/service/backpack/user/api/grpc/v1:grpc",
         "//app/service/donate/api/grpc/v1:grpc",
         "//app/service/user/account/api/grpc/v1:grpc",
+        "//app/service/user/ban/api/grpc/v1:grpc",
         "//pkg/rpc",
     ],
 )

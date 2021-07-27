@@ -54,6 +54,14 @@ message RemoveReq {
 message RemoveResp {
 }
 
+message ListReq {
+    int64 steam_id = 1;
+}
+
+message ListResp {
+    repeated Info list = 1;
+}
+
 service Ban {
     rpc Info (InfoReq) returns (InfoResp) {
         option (google.api.http) = {
@@ -75,6 +83,14 @@ service Ban {
         option (google.api.http) = {
             post: "/user/ban/check/{uid}"
             body: "*"
+        };
+    }
+}
+
+service Web {
+    rpc List (ListReq) returns (ListResp) {
+        option  (google.api.http) = {
+            get: "/user/ban/list"
         };
     }
 }

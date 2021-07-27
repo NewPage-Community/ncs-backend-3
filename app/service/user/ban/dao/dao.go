@@ -13,6 +13,7 @@ type Dao interface {
 	Add(info *model.Ban) error
 	Remove(info *model.Ban) error
 	IsBlockIP(ip string) (bool, error)
+	List(uid uint64) ([]*model.Ban, error)
 	Healthy() bool
 	Close()
 }
