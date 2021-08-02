@@ -64,9 +64,10 @@ func (d *dao) IsBlockIP(ip string) (bool, error) {
 	info := &model.Ban{}
 
 	err := d.db.Where(
-		"ip = ? AND create_time > ?",
+		"ip = ? AND create_time > ? AND expire_time < ?",
 		ip,
 		time.Now().Add(-DayTime).Unix(),
+		time.Now().Unix(),
 	).First(info).Error
 
 	switch err {

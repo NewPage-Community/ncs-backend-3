@@ -136,14 +136,14 @@ func (s *Service) BanCheck(ctx context.Context, req *pb.Info2Req) (resp *pb.Info
 	}
 
 	// Check block ip
-	//blockIP := false
-	//if len(req.Ip) > 0 {
-	//	blockIP, err = s.dao.IsBlockIP(req.Ip)
-	//	if err != nil {
-	//		log.Warn(err)
-	//	}
-	//	resp.Info.BlockIp = blockIP
-	//}
+	blockIP := false
+	if len(req.Ip) > 0 {
+		blockIP, err = s.dao.IsBlockIP(req.Ip)
+		if err != nil {
+			log.Warn(err)
+		}
+		resp.Info.BlockIp = blockIP
+	}
 
 	// Check shared game lib owner
 	if req.AppId > 0 {
