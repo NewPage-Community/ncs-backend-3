@@ -72,7 +72,7 @@ func (s *Service) getServerStatus(event qqModel.CQEvent) {
 			msg += fmt.Sprintf("%s | %s (%d/%d)\n", v.ShortName, v.A2SInfo.Map, v.A2SInfo.Players, v.A2SInfo.MaxPlayers)
 		}
 	}
-	msg += "仪表盘：https://game.new-page.xyz/dashboard/home"
+	msg += "仪表盘：https://game.new-page.xyz"
 
 	// Send message
 	builder := qqMessage.NewCQMsgBuilder()
