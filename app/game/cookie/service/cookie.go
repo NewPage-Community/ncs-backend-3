@@ -2,9 +2,11 @@ package service
 
 import (
 	pb "backend/app/game/cookie/api/grpc/v1"
+	serverSrv "backend/app/game/server/api/grpc/v1"
 	"backend/pkg/ecode"
 	"backend/pkg/rpc/gateway"
 	"context"
+	"fmt"
 	"google.golang.org/grpc/codes"
 )
 
@@ -72,5 +74,12 @@ func (s *Service) SetCookie(ctx context.Context, req *pb.SetCookieReq) (resp *pb
 	}
 
 	err = s.dao.Set(req.Uid, req.Key, req.Value)
+
+	// Game server notify
+	if err == nil && req.Notify {
+		_, _ = s.server.RconAll(ctx, &serverSrv.RconAllReq{
+			Cmd: fmt.Sprintf("ncs_cookie_notify %d", req.Uid),
+		})
+	}
 	return
 }

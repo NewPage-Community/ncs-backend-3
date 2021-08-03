@@ -11,5 +11,5 @@ const (
 	QQName                   = "QQ"
 	QQID                     = -102
 	QQMessage                = "[📣%s] %s:\n%s"
-	ServerURL                = "https://game.new-page.xyz/dashboard/home"
+	ServerURL                = "https://game.new-page.xyz"
 )

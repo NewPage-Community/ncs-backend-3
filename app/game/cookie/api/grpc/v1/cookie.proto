@@ -26,6 +26,7 @@ message SetCookieReq {
     int64 uid = 1;
     string key = 2;
     string value = 3;
+    bool notify = 4;
 }
 
 message SetCookieResp {

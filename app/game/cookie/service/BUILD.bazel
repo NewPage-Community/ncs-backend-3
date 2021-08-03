@@ -12,6 +12,7 @@ go_library(
         "//app/game/cookie/api/grpc/v1:grpc",
         "//app/game/cookie/conf",
         "//app/game/cookie/dao",
+        "//app/game/server/api/grpc/v1:grpc",
         "//pkg/ecode",
         "//pkg/jwt",
         "//pkg/rpc/gateway",
