@@ -127,6 +127,13 @@ go_repository(
     version = "v1.5.2",
 )
 
+go_repository(
+    name = "com_github_newpage_community_go_source_server_query",
+    importpath = "github.com/NewPage-Community/go-source-server-query",
+    sum = "h1:SG5ium+DslLdPaPc8MzS9wAZ4jQWUHbf7i0VzPXVodg=",
+    version = "v1.1.2",
+)
+
 go_rules_dependencies()
 
 go_register_toolchains()
@@ -1817,13 +1824,6 @@ go_repository(
     importpath = "gopkg.in/inconshreveable/log15.v2",
     sum = "h1:RlWgLqCMMIYYEVcAR5MDsuHlVkaIPDAF+5Dehzg8L5A=",
     version = "v2.0.0-20180818164646-67afb5ed74ec",
-)
-
-go_repository(
-    name = "com_github_newpage_community_go_steam",
-    importpath = "github.com/NewPage-Community/go-steam",
-    sum = "h1:9xhXOvKVOzqoEHyw5tf30QpUspHtNcgsUAiXxdzy9Yk=",
-    version = "v1.1.0",
 )
 
 go_repository(

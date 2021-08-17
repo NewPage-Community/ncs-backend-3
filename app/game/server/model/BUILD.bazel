@@ -8,5 +8,5 @@ go_library(
     ],
     importpath = "backend/app/game/server/model",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_newpage_community_go_steam//:go-steam"],
+    deps = ["@com_github_newpage_community_go_source_server_query//:go-source-server-query"],
 )

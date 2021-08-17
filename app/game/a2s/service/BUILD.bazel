@@ -11,6 +11,7 @@ go_library(
     deps = [
         "//app/game/a2s/api/grpc/v1:grpc",
         "//app/game/a2s/conf",
-        "@com_github_newpage_community_go_steam//:go-steam",
+        "//pkg/log",
+        "@com_github_newpage_community_go_source_server_query//:go-source-server-query",
     ],
 )

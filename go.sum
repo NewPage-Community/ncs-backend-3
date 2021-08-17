@@ -35,8 +35,8 @@ dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7
 github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
-github.com/NewPage-Community/go-steam v1.1.0 h1:9xhXOvKVOzqoEHyw5tf30QpUspHtNcgsUAiXxdzy9Yk=
-github.com/NewPage-Community/go-steam v1.1.0/go.mod h1:BsDa1vyhvrdiVyq7FlBFI8MR1nXTw4vY08P6vyoqM18=
+github.com/NewPage-Community/go-source-server-query v1.1.2 h1:SG5ium+DslLdPaPc8MzS9wAZ4jQWUHbf7i0VzPXVodg=
+github.com/NewPage-Community/go-source-server-query v1.1.2/go.mod h1:Lx7mHDRx/tsEI4tRSoScvpHYAjk/bDqqr/mTFx5RsV4=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/PuerkitoBio/goquery v1.5.1/go.mod h1:GsLWisAFVj4WgDibEWF4pvYnkVQBpKBKeU+7zCJoLcc=
 github.com/agiledragon/gomonkey v2.0.2+incompatible h1:eXKi9/piiC3cjJD1658mEE2o3NjkJ5vDLgYjCQu0Xlw=

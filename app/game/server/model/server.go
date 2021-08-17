@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/NewPage-Community/go-steam"
+	"github.com/NewPage-Community/go-source-server-query"
 	"net"
 	"time"
 )

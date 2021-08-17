@@ -85,7 +85,10 @@ func (s *Service) AllInfo(ctx context.Context, req *pb.AllInfoReq) (resp *pb.All
 		servers[server.Address] = server
 	}
 
-	a2s, _ := s.a2s.A2SQuery(ctx, &a2sSrv.A2SQueryReq{Address: ips})
+	a2s, err := s.a2s.A2SQuery(ctx, &a2sSrv.A2SQueryReq{Address: ips})
+	if err != nil {
+		return
+	}
 
 	for _, server := range a2s.Servers {
 		info := servers[server.Address]

@@ -5,7 +5,7 @@ go 1.14
 replace google.golang.org/grpc => google.golang.org/grpc v1.37.1
 
 require (
-	github.com/NewPage-Community/go-steam v1.1.0
+	github.com/NewPage-Community/go-source-server-query v1.1.2
 	github.com/alicebob/miniredis/v2 v2.11.4
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
