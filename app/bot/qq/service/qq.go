@@ -68,7 +68,7 @@ func (s *Service) getServerStatus(event qqModel.CQEvent) {
 	}
 
 	for _, v := range resp.Info {
-		if v.A2SInfo.Id != 0 {
+		if v.A2SInfo.MaxPlayers > 0 {
 			msg += fmt.Sprintf("%s | %s (%d/%d)\n", v.ShortName, v.A2SInfo.Map, v.A2SInfo.Players, v.A2SInfo.MaxPlayers)
 		}
 	}
