@@ -1086,8 +1086,8 @@ go_repository(
 go_repository(
     name = "com_github_sirupsen_logrus",
     importpath = "github.com/sirupsen/logrus",
-    sum = "h1:dJKuHgqk1NNQlqoA6BTlM1Wf9DOH3NBjQyu0h9+AZZE=",
-    version = "v1.8.1",
+    sum = "h1:SPIRibHv4MatM3XXNO2BJeFLZwZ2LvZgfQ5+UNI2im4=",
+    version = "v1.4.2",
 )
 
 go_repository(
@@ -1822,8 +1822,8 @@ go_repository(
 go_repository(
     name = "com_github_newpage_community_go_steam",
     importpath = "github.com/NewPage-Community/go-steam",
-    sum = "h1:0zOznAVJ05pBjvRBvVRjWWsECgWbfX6xK3ydfY5bsa0=",
-    version = "v1.0.0",
+    sum = "h1:9xhXOvKVOzqoEHyw5tf30QpUspHtNcgsUAiXxdzy9Yk=",
+    version = "v1.1.0",
 )
 
 go_repository(

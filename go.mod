@@ -5,7 +5,7 @@ go 1.14
 replace google.golang.org/grpc => google.golang.org/grpc v1.37.1
 
 require (
-	github.com/NewPage-Community/go-steam v1.0.0
+	github.com/NewPage-Community/go-steam v1.1.0
 	github.com/alicebob/miniredis/v2 v2.11.4
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
@@ -20,7 +20,6 @@ require (
 	github.com/miRemid/amy v0.1.3
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/robfig/cron/v3 v3.0.0
-	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/smartwalle/alipay/v3 v3.1.5
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/spf13/viper v1.7.0
