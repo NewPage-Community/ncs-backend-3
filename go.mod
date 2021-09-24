@@ -15,9 +15,10 @@ require (
 	github.com/gorilla/websocket v1.4.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.5.0
-	github.com/gunslinger23/kaiheila v0.0.0-20210128124554-d0443c147652
-	github.com/json-iterator/go v1.1.10
+	github.com/gunslinger23/kaiheila v0.0.0-20210924143707-1bb10fbcddd0
+	github.com/json-iterator/go v1.1.12
 	github.com/miRemid/amy v0.1.3
+	github.com/mitchellh/mapstructure v1.4.2 // indirect
 	github.com/opentracing/opentracing-go v1.1.0
 	github.com/robfig/cron/v3 v3.0.0
 	github.com/smartwalle/alipay/v3 v3.1.5
