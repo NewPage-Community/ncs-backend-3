@@ -2,7 +2,6 @@ image:
   name: registry.new-page.xyz/bazel-public/ubuntu2004-java11:latest
 
 variables:
-  GIT_CLEAN_FLAGS: -ffdx -e .cache/
   GOPROXY: http://goproxy.golang:8080
   GO111MODULE: "on"
 
@@ -14,11 +13,6 @@ before_script:
 
 .proxy: &proxy
   - export HTTP_PROXY=$CI_PROXY HTTPS_PROXY=$CI_PROXY NO_PROXY=goproxy.golang,*.new-page.xyz,nexus3.nexus3
-
-cache:
-  key: bazel_cache
-  paths:
-    - .cache/
 
 stages:
   - build
@@ -32,7 +26,6 @@ lint-golang:
     - *proxy
     - golangci-lint run -v --timeout 5m
   allow_failure: true
-  cache: {}
 
 lint-helm:
   stage: build
@@ -41,7 +34,6 @@ lint-helm:
     - *proxy
     - helm lint ./chart
   allow_failure: true
-  cache: {}
 
 build:
   stage: build
@@ -95,4 +87,3 @@ deploy-ins:
       when: manual
     - when: never
   needs: ["push changed images"]
-  cache: {}
