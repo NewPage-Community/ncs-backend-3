@@ -11,6 +11,10 @@ build --workspace_status_command build/print-workspace-status.sh
 build --verbose_failures
 test --test_output=errors
 
+# Cache
+build --remote_cache=http://cache.new-page.xyz/bazel/grpc
+build:ci --remote_cache=http://bazel-remote-cache:9092
+
 # CI
 build:ci -j 8
 build:ci --genrule_strategy=local --spawn_strategy=local --show_progress_rate_limit=5
