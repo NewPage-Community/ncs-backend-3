@@ -11,9 +11,6 @@ before_script:
   - export HTTP_PROXY=$CI_PROXY HTTPS_PROXY=$CI_PROXY NO_PROXY=goproxy.golang,*.new-page.xyz,nexus3.nexus3
   - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
 
-.proxy: &proxy
-  - export HTTP_PROXY=$CI_PROXY HTTPS_PROXY=$CI_PROXY NO_PROXY=goproxy.golang,*.new-page.xyz,nexus3.nexus3
-
 stages:
   - build
   - push images
@@ -23,7 +20,6 @@ lint-golang:
   stage: build
   image: registry.new-page.xyz/golangci/golangci-lint:latest-alpine
   script:
-    - *proxy
     - golangci-lint run -v --timeout 5m
   allow_failure: true
 
@@ -31,14 +27,12 @@ lint-helm:
   stage: build
   image: registry.new-page.xyz/alpine/helm:3.2.3
   script:
-    - *proxy
     - helm lint ./chart
   allow_failure: true
 
 build:
   stage: build
   script:
-    - *proxy
     - bazel version
     - bazel build --config=ci -k //app/... //pkg/...
     - bazel test --config=ci -k //app/... //pkg/...
@@ -46,7 +40,6 @@ build:
 build-merged:
   stage: build
   script:
-    - *proxy
     - git config --global user.email "runner@gitlab.com"
     - git config --global user.name "Runner"
     - git pull origin master
@@ -59,7 +52,6 @@ build-merged:
 push changed images:
   stage: push images
   script:
-    - *proxy
     - build/push-images.sh changed
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
@@ -67,7 +59,6 @@ push changed images:
 force push all images:
   stage: push images
   script:
-    - *proxy
     - build/push-images.sh
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
