@@ -12,8 +12,8 @@ build --verbose_failures
 test --test_output=errors
 
 # Cache
-build --remote_cache=http://cache.new-page.xyz/bazel/grpc
-build:ci --remote_cache=http://bazel-remote-cache:9092
+build --remote_cache=http://cache.new-page.xyz/bazel
+build:ci --remote_cache=http://bazel-remote-cache:8080
 
 # CI
 build:ci -j 8

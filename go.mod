@@ -23,7 +23,6 @@ require (
 	github.com/smartwalle/alipay/v3 v3.1.5
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/spf13/viper v1.7.0
-	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518
 	github.com/uber/jaeger-client-go v2.23.1+incompatible
 	github.com/uber/jaeger-lib v2.2.0+incompatible
 	github.com/wechatpay-apiv3/wechatpay-go v0.2.3
