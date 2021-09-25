@@ -13,8 +13,8 @@ test --test_output=errors
 
 # CI
 build:ci -j 8
-build:ci --genrule_strategy=local --spawn_strategy=local
+build:ci --genrule_strategy=local --spawn_strategy=local --show_progress_rate_limit=5
 test:ci -j 8
-test:ci --genrule_strategy=local --spawn_strategy=local
+test:ci --genrule_strategy=local --spawn_strategy=local --show_progress_rate_limit=5
 run:ci -j 8
-run:ci --genrule_strategy=local --spawn_strategy=local
+run:ci --genrule_strategy=local --spawn_strategy=local --show_progress_rate_limit=5
