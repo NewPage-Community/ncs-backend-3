@@ -1,5 +1,5 @@
 # Tools version
-GO_VERSION      = 1.14.4
+GO_VERSION      = latest
 # Docker image
 HELM_IMG        = alpine/helm
 BAZEL_IMG       = registry.new-page.xyz/bazel-public/ubuntu2004-java11
