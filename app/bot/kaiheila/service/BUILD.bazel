@@ -14,6 +14,7 @@ go_library(
         "//app/bot/kaiheila/conf",
         "//app/game/chat",
         "//app/game/chat/api/grpc/v1:grpc",
+        "//pkg/json",
         "//pkg/log",
         "@com_github_gunslinger23_kaiheila//:kaiheila",
     ],

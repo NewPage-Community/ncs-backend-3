@@ -12,7 +12,7 @@ go_library(
     deps = [
         "//app/game/stats/conf",
         "//app/game/stats/model",
-        "//pkg/cache/redis",
+        "//pkg/database/redis",
         "//pkg/ecode",
         "//pkg/log",
         "@com_github_go_redis_redis_v7//:redis",

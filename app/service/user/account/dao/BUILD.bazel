@@ -12,8 +12,8 @@ go_library(
     deps = [
         "//app/service/user/account/conf",
         "//app/service/user/account/model",
-        "//pkg/cache/redis",
         "//pkg/database/mysql",
+        "//pkg/database/redis",
         "//pkg/ecode",
         "//pkg/json",
         "//pkg/log",

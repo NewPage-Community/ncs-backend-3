@@ -77,7 +77,7 @@ deploy:
 
 .PHONY: lint
 lint:
-	$(GOLANGCI_CMD) golangci-lint run -v --timeout 2m
+	$(GOLANGCI_CMD) golangci-lint run -v --timeout 5m
 	$(HELM_CMD) helm lint ./chart
 
 .PHONY: img

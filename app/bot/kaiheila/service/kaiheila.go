@@ -4,8 +4,10 @@ import (
 	pb "backend/app/bot/kaiheila/api/grpc/v1"
 	"backend/app/game/chat"
 	chatService "backend/app/game/chat/api/grpc/v1"
+	"backend/pkg/json"
 	"backend/pkg/log"
 	"context"
+
 	"github.com/gunslinger23/kaiheila"
 )
 
@@ -28,6 +30,8 @@ func (s *Service) SendChannelMsg(ctx context.Context, req *pb.SendMessageReq) (r
 }
 
 func (s *Service) EventHandler(event kaiheila.EventMsg) {
+	raw, _ := json.Marshal(event)
+	log.Info(string(raw))
 	if IsAllChatEvent(event) {
 		_, err := s.chat.AllChat(context.Background(), &chatService.AllChatReq{
 			Name:     event.Extra.Author.Username + "#" + event.Extra.Author.IdentifyNum,

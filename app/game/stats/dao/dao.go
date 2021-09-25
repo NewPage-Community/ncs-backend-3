@@ -3,9 +3,9 @@ package dao
 import (
 	"backend/app/game/stats/conf"
 	"backend/app/game/stats/model"
-	cache "backend/pkg/cache/redis"
+	cache "backend/pkg/database/redis"
 	"backend/pkg/log"
-	"github.com/go-redis/redis/v7"
+	goredis "github.com/go-redis/redis/v8"
 )
 
 type Dao interface {
@@ -18,7 +18,7 @@ type Dao interface {
 }
 
 type dao struct {
-	redis *redis.Client
+	redis *goredis.Client
 }
 
 func Init(config *conf.Config) (d *dao) {

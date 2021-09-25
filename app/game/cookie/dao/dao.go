@@ -3,9 +3,10 @@ package dao
 import (
 	"backend/app/game/cookie/conf"
 	"backend/app/game/cookie/model"
-	cache "backend/pkg/cache/redis"
+	"backend/pkg/database/redis"
 	"backend/pkg/log"
-	"github.com/go-redis/redis/v7"
+
+	goredis "github.com/go-redis/redis/v8"
 )
 
 type Dao interface {
@@ -16,18 +17,18 @@ type Dao interface {
 }
 
 type dao struct {
-	db *redis.Client
+	db *goredis.Client
 }
 
 func Init(config *conf.Config) (d *dao) {
 	d = &dao{
-		db: cache.Init(config.Redis),
+		db: redis.Init(config.Redis),
 	}
 	return
 }
 
 func (d *dao) Healthy() bool {
-	return cache.Healthy(d.db)
+	return redis.Healthy(d.db)
 }
 
 func (d *dao) Close() {

@@ -12,9 +12,9 @@ build --verbose_failures
 test --test_output=errors
 
 # CI
-build:ci -j 4
+build:ci -j 8
 build:ci --genrule_strategy=local --spawn_strategy=local
-test:ci -j 4
+test:ci -j 8
 test:ci --genrule_strategy=local --spawn_strategy=local
-run:ci -j 4
+run:ci -j 8
 run:ci --genrule_strategy=local --spawn_strategy=local
