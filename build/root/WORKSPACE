@@ -92,6 +92,16 @@ http_archive(
     ],
 )
 
+http_archive(
+    name = "rules_python",
+    sha256 = "e5470e92a18aa51830db99a4d9c492cc613761d5bdb7131c04bd92b9834380f6",
+    strip_prefix = "rules_python-4b84ad270387a7c439ebdccfd530e2339601ef27",
+    urls = [
+        "http://nexus3.nexus3:8081/repository/github/bazelbuild/rules_python/archive/4b84ad270387a7c439ebdccfd530e2339601ef27.tar.gz",
+        "https://nexus.new-page.xyz/repository/github/bazelbuild/rules_python/archive/4b84ad270387a7c439ebdccfd530e2339601ef27.tar.gz",
+    ],
+)
+
 load("@io_bazel_rules_go//go:deps.bzl", "go_download_sdk", "go_register_toolchains", "go_rules_dependencies")
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 load(
