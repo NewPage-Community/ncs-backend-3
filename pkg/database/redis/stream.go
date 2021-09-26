@@ -13,29 +13,29 @@ import (
 
 const (
 	maxLen            = 100
-	idLen             = 5
-	comsumerSpawnTime = 5 * time.Second
+	idLen             = 6
+	comsumerSpawnTime = 1 * time.Second
 	retryTime         = 5 * time.Second
 	groupExistErr     = "BUSYGROUP Consumer Group name already exists"
+	canceledErr       = "context canceled"
 )
 
 type Stream struct {
-	client     *goredis.Client
-	service    string
-	comsumer   string
-	close      bool
-	callbackWG sync.WaitGroup
+	client   *goredis.Client
+	group    string
+	comsumer string
+	closer   func()
+	wg       sync.WaitGroup
 }
 
 type StreamCallback func(context.Context, string)
 
 func NewStream(client *goredis.Client, service string) *Stream {
 	return &Stream{
-		client:     client,
-		service:    service,
-		comsumer:   "",
-		close:      false,
-		callbackWG: sync.WaitGroup{},
+		client:   client,
+		group:    service,
+		comsumer: "",
+		wg:       sync.WaitGroup{},
 	}
 }
 
@@ -51,44 +51,59 @@ func (s *Stream) Subscribe(topic string, callback StreamCallback) (err error) {
 	ctx := context.Background()
 
 	// Create group
-	err = s.client.XGroupCreateMkStream(ctx, topic, s.service, "$").Err()
+	err = s.client.XGroupCreateMkStream(ctx, topic, s.group, "$").Err()
 	if err != nil {
 		if err.Error() != groupExistErr {
 			return
 		}
 	}
 
-	// Create group
+	// Create comsumer
 	if len(s.comsumer) == 0 {
-		for {
+		for i := 0; i < idLen; i++ {
 			s.comsumer = getRandomID()
-			if s.client.XGroupCreateConsumer(ctx, topic, s.service, s.comsumer).Val() == 1 {
+			res, err := s.client.XGroupCreateConsumer(ctx, topic, s.group, s.comsumer).Result()
+
+			// Create successfully
+			if res == 1 {
 				break
+			}
+
+			if err != nil {
+				log.Error(err)
+			} else {
+				// Not things wrong, just keep go on!
+				i--
 			}
 			time.Sleep(comsumerSpawnTime)
 		}
 	}
 
 	// Loop message from topic
+	// Add wait group for waiting block cancel and delete consumer
+	s.wg.Add(1)
 	go func() {
 		for {
-			// Check stream close
-			if s.close {
-				return
-			}
+			ctx := context.Background()
 
 			// Read message
-			ctx := context.Background()
+			ctx, s.closer = context.WithCancel(ctx)
 			res, err := s.client.XReadGroup(ctx, &goredis.XReadGroupArgs{
-				Group:    topic,
+				Group:    s.group,
 				Consumer: s.comsumer,
-				Streams:  []string{topic},
+				Streams:  []string{topic, ">"},
 				Count:    1,
 				Block:    0,
-				NoAck:    false,
+				NoAck:    true,
 			}).Result()
 
 			if err != nil {
+				// Go to cancel
+				if err.Error() == canceledErr {
+					_ = s.client.XGroupDelConsumer(context.Background(), topic, s.group, s.comsumer)
+					s.wg.Done()
+					return
+				}
 				log.Error("redis XReadGroup:", err)
 				time.Sleep(retryTime)
 			} else {
@@ -96,10 +111,10 @@ func (s *Stream) Subscribe(topic string, callback StreamCallback) (err error) {
 					for _, ms := range xs.Messages {
 						for _, m := range ms.Values {
 							v, _ := m.(string)
-							s.callbackWG.Add(1)
+							s.wg.Add(1)
 							go func() {
 								callback(ctx, v)
-								s.callbackWG.Done()
+								s.wg.Done()
 							}()
 						}
 					}
@@ -107,12 +122,13 @@ func (s *Stream) Subscribe(topic string, callback StreamCallback) (err error) {
 			}
 		}
 	}()
+
 	return
 }
 
 func (s *Stream) Close() {
-	s.close = true
-	s.callbackWG.Wait()
+	s.closer()
+	s.wg.Wait()
 }
 
 func getRandomID() string {
