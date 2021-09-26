@@ -21,14 +21,18 @@ const (
 
 type Stream struct {
 	client     *goredis.Client
+	service    string
 	comsumer   string
 	close      bool
 	callbackWG sync.WaitGroup
 }
 
-func NewStream(client *goredis.Client) *Stream {
+type StreamCallback func(context.Context, string)
+
+func NewStream(client *goredis.Client, service string) *Stream {
 	return &Stream{
 		client:     client,
+		service:    service,
 		comsumer:   "",
 		close:      false,
 		callbackWG: sync.WaitGroup{},
@@ -43,11 +47,11 @@ func (s *Stream) Publish(ctx context.Context, topic, msg string) (err error) {
 	}).Err()
 }
 
-func (s *Stream) Subscribe(service, topic string, callback func(context.Context, string, error)) (err error) {
+func (s *Stream) Subscribe(topic string, callback StreamCallback) (err error) {
 	ctx := context.Background()
 
 	// Create group
-	err = s.client.XGroupCreateMkStream(ctx, topic, service, "$").Err()
+	err = s.client.XGroupCreateMkStream(ctx, topic, s.service, "$").Err()
 	if err != nil {
 		if err.Error() != groupExistErr {
 			return
@@ -58,7 +62,7 @@ func (s *Stream) Subscribe(service, topic string, callback func(context.Context,
 	if len(s.comsumer) == 0 {
 		for {
 			s.comsumer = getRandomID()
-			if s.client.XGroupCreateConsumer(ctx, topic, service, s.comsumer).Val() == 1 {
+			if s.client.XGroupCreateConsumer(ctx, topic, s.service, s.comsumer).Val() == 1 {
 				break
 			}
 			time.Sleep(comsumerSpawnTime)
@@ -94,7 +98,7 @@ func (s *Stream) Subscribe(service, topic string, callback func(context.Context,
 							v, _ := m.(string)
 							s.callbackWG.Add(1)
 							go func() {
-								callback(ctx, v, nil)
+								callback(ctx, v)
 								s.callbackWG.Done()
 							}()
 						}
