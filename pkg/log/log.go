@@ -6,7 +6,7 @@ import (
 	"go.uber.org/zap"
 )
 
-const callerSkip = 2
+const callerSkip = 1
 
 type Config struct {
 	Debug bool
@@ -25,9 +25,9 @@ func Init(conf *Config) {
 
 	var err error
 	if conf.Debug {
-		logger, err = zap.NewDevelopment(zap.AddCallerSkip(callerSkip))
+		logger, err = zap.NewDevelopment(zap.AddCaller(), zap.AddCallerSkip(callerSkip))
 	} else {
-		logger, err = zap.NewProduction(zap.AddCallerSkip(callerSkip))
+		logger, err = zap.NewProduction(zap.AddCaller(), zap.AddCallerSkip(callerSkip))
 	}
 
 	if err != nil {
