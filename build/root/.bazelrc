@@ -17,8 +17,12 @@ build --verbose_failures
 test --test_output=errors
 
 # Cache
-build --remote_cache=http://cache.new-page.xyz/bazel
-test --remote_cache=http://cache.new-page.xyz/bazel
+build --remote_cache=https://cache.new-page.xyz/bazel
+test --remote_cache=https://cache.new-page.xyz/bazel
+
+# Keep run
+build -k
+test -k
 
 # CI
 build:ci -j 8

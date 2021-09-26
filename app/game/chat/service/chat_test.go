@@ -5,14 +5,16 @@ import (
 	qqBot "backend/app/bot/qq/api/grpc/v1"
 	"backend/app/game/chat"
 	pb "backend/app/game/chat/api/grpc/v1"
+	"backend/app/game/chat/dao"
 	server "backend/app/game/server/api/grpc/v1"
 	"backend/pkg/log"
 	"context"
 	"fmt"
-	"github.com/golang/mock/gomock"
-	. "github.com/smartystreets/goconvey/convey"
 	"sync"
 	"testing"
+
+	"github.com/golang/mock/gomock"
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 func TestService_AllChat(t *testing.T) {
@@ -21,6 +23,7 @@ func TestService_AllChat(t *testing.T) {
 	defer ctl.Finish()
 
 	wg := sync.WaitGroup{}
+	wg.Add(5)
 
 	tName := "TEST"
 	tMessage := "This is a test message"
@@ -44,18 +47,18 @@ func TestService_AllChat(t *testing.T) {
 	kaiheila.EXPECT().SendChannelMsg(gomock.Any(), gomock.Any()).Return(nil, nil).Do(func(ctx, in interface{}, opts ...interface{}) { wg.Done() })
 	qq := qqBot.NewMockQQClient(ctl)
 	//qq.EXPECT().SendGroupMessage(gomock.Any(), gomock.Any()).Return(nil, nil)
+	d := dao.NewMockDao(ctl)
+	d.EXPECT().CreateChatEvent(gomock.Any(), gomock.Any()).Return(nil).Times(4).Do(func(ctx, in interface{}) { wg.Done() })
 
-	srv := &Service{server: s, kaiheila: kaiheila, qq: qq}
+	srv := &Service{server: s, kaiheila: kaiheila, qq: qq, dao: d}
 	Convey("Test AllChat", t, func() {
 		Convey("Check it work", func() {
-			wg.Add(1)
 			_, err := srv.AllChat(context.TODO(), &pb.AllChatReq{
 				Name:     tName,
 				Message:  tMessage,
 				ServerId: 1,
 			})
 			So(err, ShouldBeNil)
-			wg.Wait()
 		})
 		Convey("Check kaiheila chat", func() {
 			_, err := srv.AllChat(context.TODO(), &pb.AllChatReq{
@@ -82,4 +85,5 @@ func TestService_AllChat(t *testing.T) {
 			So(err, ShouldBeNil)
 		})
 	})
+	wg.Wait()
 }

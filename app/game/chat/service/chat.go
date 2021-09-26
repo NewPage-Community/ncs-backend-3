@@ -4,6 +4,7 @@ import (
 	kaiheilaBot "backend/app/bot/kaiheila/api/grpc/v1"
 	"backend/app/game/chat"
 	pb "backend/app/game/chat/api/grpc/v1"
+	event "backend/app/game/chat/event"
 	server "backend/app/game/server/api/grpc/v1"
 	"backend/pkg/log"
 	"context"
@@ -64,6 +65,14 @@ func (s *Service) AllChat(ctx context.Context, req *pb.AllChatReq) (resp *pb.All
 		go sendToDiscord()
 		go sendToQQ()
 	}
+
+	// Create event to message queue
+	go func ()  {
+		err = s.dao.CreateChatEvent(ctx, (*event.AllChatEventData)(req))
+		if err != nil {
+			log.Error(err)
+		}
+	}()
 
 	// Always send to game server
 	var prefix string
