@@ -28,7 +28,7 @@ func Init(config *conf.Config) (d *dao) {
 }
 
 func (d *dao) Healthy() bool {
-	return redis.Healthy(d.db)
+	return redis.Healthy()
 }
 
 func (d *dao) Close() {

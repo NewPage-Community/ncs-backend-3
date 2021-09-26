@@ -45,5 +45,5 @@ func (d *dao) Close() {
 }
 
 func (d *dao) Healthy() bool {
-	return mysql.Healthy(d.db)
+	return mysql.Healthy()
 }

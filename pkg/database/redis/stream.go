@@ -30,13 +30,16 @@ type Stream struct {
 
 type StreamCallback func(context.Context, string)
 
+var stream *Stream
+
 func NewStream(client *goredis.Client, service string) *Stream {
-	return &Stream{
+	stream = &Stream{
 		client:   client,
 		group:    service,
 		comsumer: "",
 		wg:       sync.WaitGroup{},
 	}
+	return stream
 }
 
 func (s *Stream) Publish(ctx context.Context, topic, msg string) (err error) {

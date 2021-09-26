@@ -3,12 +3,13 @@ package mysql
 import (
 	"backend/pkg/log"
 	"fmt"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	l "log"
 	"os"
 	"time"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type Config struct {
@@ -21,6 +22,8 @@ type Config struct {
 	MaxOpenConns int
 	MaxIdleConns int
 }
+
+var client *gorm.DB
 
 func (conf *Config) GetDSN() string {
 	return fmt.Sprintf(
@@ -63,7 +66,7 @@ func (conf *Config) GetLogger() logger.Interface {
 	})
 }
 
-func Init(conf *Config) (db *gorm.DB) {
+func Init(conf *Config) *gorm.DB {
 	var err error
 	conf.Init()
 	conn := func() (*gorm.DB, error) {
@@ -76,7 +79,7 @@ func Init(conf *Config) (db *gorm.DB) {
 
 	// Retry
 	for i := 0; i < 3; i++ {
-		db, err = conn()
+		client, err = conn()
 		if err == nil {
 			break
 		}
@@ -85,7 +88,7 @@ func Init(conf *Config) (db *gorm.DB) {
 
 	// Set conns pool
 	if err == nil {
-		sqlDB, err := db.DB()
+		sqlDB, err := client.DB()
 		if err == nil {
 			sqlDB.SetMaxIdleConns(conf.MaxIdleConns)
 			sqlDB.SetMaxOpenConns(conf.MaxOpenConns)
@@ -95,21 +98,23 @@ func Init(conf *Config) (db *gorm.DB) {
 	if err != nil {
 		panic(err)
 	}
-	return
+	return client
 }
 
-func Healthy(db *gorm.DB) bool {
-	if db == nil {
-		return false
-	}
-	d, err := db.DB()
-	if err != nil {
+func Healthy() bool {
+	if client != nil {
+		db, err := client.DB()
+		if err == nil {
+			err = db.Ping()
+			if err == nil {
+				return true
+			}
+		}
 		log.Error(err)
-		return false
-	}
-	if err = d.Ping(); err != nil {
-		log.Error(err)
-		return false
 	}
 	return true
+}
+
+func Close() {
+
 }

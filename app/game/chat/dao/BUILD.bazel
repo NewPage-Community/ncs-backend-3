@@ -13,7 +13,6 @@ go_library(
         "//app/game/chat/conf",
         "//app/game/chat/event",
         "//pkg/database/redis",
-        "//pkg/log",
         "@com_github_go_redis_redis_v7//:redis",
         "@com_github_golang_mock//gomock",
     ],

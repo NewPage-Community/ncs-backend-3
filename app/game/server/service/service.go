@@ -15,9 +15,9 @@ type Service struct {
 	pb.UnimplementedServerServer
 }
 
-func Init(c *conf.Config) *Service {
+func Init(c *conf.Config, service string) *Service {
 	return &Service{
-		dao: dao.New(c),
+		dao: dao.New(c, service),
 		qq:  qqBot.InitClient(qqBot.ServiceAddr),
 		a2s: a2sSrv.InitClient(a2sSrv.ServiceAddr),
 	}

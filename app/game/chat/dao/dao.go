@@ -4,7 +4,6 @@ import (
 	"backend/app/game/chat/conf"
 	chatEvent "backend/app/game/chat/event"
 	"backend/pkg/database/redis"
-	"backend/pkg/log"
 	"context"
 
 	goredis "github.com/go-redis/redis/v8"
@@ -18,25 +17,22 @@ type Dao interface {
 }
 
 type dao struct {
-	db     *goredis.Client
+	redis  *goredis.Client
 	stream *redis.Stream
 }
 
 func Init(config *conf.Config, service string) (d *dao) {
 	d = &dao{
-		db: redis.Init(config.Redis),
+		redis: redis.Init(config.Redis),
 	}
-	d.stream = redis.NewStream(d.db, service)
+	d.stream = redis.NewStream(d.redis, service)
 	return
 }
 
 func (d *dao) Healthy() bool {
-	return redis.Healthy(d.db)
+	return redis.Healthy()
 }
 
 func (d *dao) Close() {
-	d.stream.Close()
-	if err := d.db.Close(); err != nil {
-		log.Error(err)
-	}
+	redis.Close()
 }

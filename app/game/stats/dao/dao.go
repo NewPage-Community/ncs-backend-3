@@ -3,8 +3,8 @@ package dao
 import (
 	"backend/app/game/stats/conf"
 	"backend/app/game/stats/model"
-	cache "backend/pkg/database/redis"
-	"backend/pkg/log"
+	"backend/pkg/database/redis"
+
 	goredis "github.com/go-redis/redis/v8"
 )
 
@@ -23,17 +23,15 @@ type dao struct {
 
 func Init(config *conf.Config) (d *dao) {
 	d = &dao{
-		redis: cache.Init(config.Redis),
+		redis: redis.Init(config.Redis),
 	}
 	return
 }
 
 func (d *dao) Healthy() bool {
-	return cache.Healthy(d.redis)
+	return redis.Healthy()
 }
 
 func (d *dao) Close() {
-	if err := d.redis.Close(); err != nil {
-		log.Error(err)
-	}
+	redis.Close()
 }

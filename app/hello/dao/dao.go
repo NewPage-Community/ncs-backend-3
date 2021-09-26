@@ -5,6 +5,7 @@ import (
 	"backend/app/hello/model"
 	"backend/pkg/database/mysql"
 	"backend/pkg/log"
+
 	"gorm.io/gorm"
 )
 
@@ -27,7 +28,7 @@ func Init(config *conf.Config) (d *dao) {
 	d = &dao{
 		db: mysql.Init(config.Mysql),
 	}
-	// 数据库自动融合 
+	// 数据库自动融合
 	if err := d.db.AutoMigrate(&model.Hello{}); err != nil {
 		log.Error(err)
 	}
@@ -36,7 +37,7 @@ func Init(config *conf.Config) (d *dao) {
 
 // Healthy Dao层健康检查
 func (d *dao) Healthy() bool {
-	return mysql.Healthy(d.db)
+	return mysql.Healthy()
 }
 
 // Close Dao层连接关闭

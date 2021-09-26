@@ -7,9 +7,11 @@ import (
 	"backend/app/game/server/dao"
 	"backend/app/game/server/model"
 	"context"
+	"sync"
+	"testing"
+
 	"github.com/golang/mock/gomock"
 	. "github.com/smartystreets/goconvey/convey"
-	"testing"
 )
 
 func TestService_AllInfo(t *testing.T) {
@@ -132,6 +134,9 @@ func TestService_ChangeMapNotify(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
+	wg := sync.WaitGroup{}
+	wg.Add(1)
+
 	m := dao.NewMockDao(ctl)
 	m.EXPECT().InfoWithID(int32(1)).Return(&model.Info{
 		ServerID:  1,
@@ -142,6 +147,7 @@ func TestService_ChangeMapNotify(t *testing.T) {
 		Address:   "127.0.0.1:27015",
 		ShortName: "test",
 	}, nil)
+	m.EXPECT().CreateChangeMapEvent(gomock.Any(), gomock.Any()).Return(nil).Do(func(c, d interface{}) { wg.Done() })
 	qq := qqBot.NewMockQQClient(ctl)
 	qq.EXPECT().SendGroupMessage(gomock.Any(), &qqBot.SendGroupMessageReq{
 		Message:    "test 更换地图 test",
@@ -158,4 +164,5 @@ func TestService_ChangeMapNotify(t *testing.T) {
 			So(err, ShouldBeNil)
 		})
 	})
+	wg.Wait()
 }

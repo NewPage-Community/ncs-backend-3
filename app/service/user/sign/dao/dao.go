@@ -3,8 +3,9 @@ package dao
 import (
 	"backend/app/service/user/sign/conf"
 	"backend/app/service/user/sign/model"
-	db "backend/pkg/database/mysql"
+	"backend/pkg/database/mysql"
 	"backend/pkg/log"
+
 	"gorm.io/gorm"
 )
 
@@ -21,7 +22,7 @@ type dao struct {
 
 func New(config *conf.Config) (d *dao) {
 	d = &dao{
-		db: db.Init(config.Mysql),
+		db: mysql.Init(config.Mysql),
 	}
 	if err := d.db.AutoMigrate(&model.Sign{}); err != nil {
 		log.Error(err)
@@ -30,7 +31,7 @@ func New(config *conf.Config) (d *dao) {
 }
 
 func (d *dao) Healthy() bool {
-	return db.Healthy(d.db)
+	return mysql.Healthy()
 }
 
 func (d *dao) Close() {

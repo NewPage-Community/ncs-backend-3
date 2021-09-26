@@ -38,7 +38,7 @@ func Init(config *conf.Config) (d *dao) {
 }
 
 func (d *dao) Healthy() bool {
-	return mysql.Healthy(d.db)
+	return mysql.Healthy()
 }
 
 func (d *dao) Close() {

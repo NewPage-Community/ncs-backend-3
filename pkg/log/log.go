@@ -2,8 +2,11 @@ package log
 
 import (
 	"fmt"
+
 	"go.uber.org/zap"
 )
+
+const callerSkip = 2
 
 type Config struct {
 	Debug bool
@@ -22,9 +25,9 @@ func Init(conf *Config) {
 
 	var err error
 	if conf.Debug {
-		logger, err = zap.NewDevelopment(zap.AddCallerSkip(1))
+		logger, err = zap.NewDevelopment(zap.AddCallerSkip(callerSkip))
 	} else {
-		logger, err = zap.NewProduction(zap.AddCallerSkip(1))
+		logger, err = zap.NewProduction(zap.AddCallerSkip(callerSkip))
 	}
 
 	if err != nil {
@@ -57,4 +60,11 @@ func Debug(args ...interface{}) {
 
 func Panic(args ...interface{}) {
 	logger.Sugar().Panic(args)
+}
+
+func CheckErr(err error) error {
+	if err != nil {
+		logger.Sugar().Info(err)
+	}
+	return err
 }
