@@ -73,11 +73,10 @@ func (s *Service) OnMessage(event qqModel.CQEvent) {
 		s.banPlayer(event, cmd[1:])
 	case "/unban":
 		s.unBanPlayer(event, cmd[1:])
-	case "/changemap":
+	case "/map":
 		s.changeMap(event, cmd[1:])
 	case "/donate":
 		s.donate(event, cmd[1:])
-	case "/player":
 	}
 }
 
