@@ -24,13 +24,13 @@ func Init(config *conf.Config, service string) *Service {
 	s := &Service{
 		account: accountService.InitClient(accountService.ServiceAddr),
 		money:   moneyService.InitClient(moneyService.ServiceAddr),
-		alipay:  nil,
-		wepay:   nil,
+		//alipay:  InitAlipay(config.Alipay),
+		//wepay:   InitWepay(config.Wepay),
 		dao:  dao.Init(config, service),
 		cron: cron.New(),
 	}
-	s.regCron()
-	s.cron.Start()
+	//s.regCron()
+	//s.cron.Start()
 	return s
 }
 
