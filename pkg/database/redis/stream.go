@@ -21,12 +21,11 @@ const (
 )
 
 type Stream struct {
-	client   *goredis.Client
-	group    string
-	comsumer string
-	ctx      context.Context
-	closer   func()
-	wg       sync.WaitGroup
+	client *goredis.Client
+	group  string
+	ctx    context.Context
+	closer func()
+	wg     sync.WaitGroup
 }
 
 type StreamCallback func(context.Context, string)
@@ -35,10 +34,9 @@ var stream *Stream
 
 func NewStream(client *goredis.Client, service string) *Stream {
 	stream = &Stream{
-		client:   client,
-		group:    service,
-		comsumer: "",
-		wg:       sync.WaitGroup{},
+		client: client,
+		group:  service,
+		wg:     sync.WaitGroup{},
 	}
 	stream.ctx, stream.closer = context.WithCancel(context.Background())
 	return stream
@@ -63,24 +61,23 @@ func (s *Stream) Subscribe(topic string, callback StreamCallback) (err error) {
 	}
 
 	// Create comsumer
-	if len(s.comsumer) == 0 {
-		for i := 0; i < idLen; i++ {
-			s.comsumer = getRandomID()
-			res, err := s.client.XGroupCreateConsumer(s.ctx, topic, s.group, s.comsumer).Result()
+	comsumer := ""
+	for i := 0; i < idLen; i++ {
+		comsumer = getRandomID()
+		res, err := s.client.XGroupCreateConsumer(s.ctx, topic, s.group, comsumer).Result()
 
-			// Create successfully
-			if res == 1 {
-				break
-			}
-
-			if err != nil {
-				log.Error(err)
-			} else {
-				// Not things wrong, just keep go on!
-				i--
-			}
-			time.Sleep(comsumerSpawnTime)
+		// Create successfully
+		if res == 1 {
+			break
 		}
+
+		if err != nil {
+			log.Error(err)
+		} else {
+			// Not things wrong, just keep go on!
+			i--
+		}
+		time.Sleep(comsumerSpawnTime)
 	}
 
 	// Loop message from topic
@@ -91,7 +88,7 @@ func (s *Stream) Subscribe(topic string, callback StreamCallback) (err error) {
 			// Read message
 			res, err := s.client.XReadGroup(s.ctx, &goredis.XReadGroupArgs{
 				Group:    s.group,
-				Consumer: s.comsumer,
+				Consumer: comsumer,
 				Streams:  []string{topic, ">"},
 				Count:    1,
 				Block:    0,
@@ -101,7 +98,7 @@ func (s *Stream) Subscribe(topic string, callback StreamCallback) (err error) {
 			if err != nil {
 				// Go to cancel
 				if err.Error() == canceledErr {
-					_ = s.client.XGroupDelConsumer(context.Background(), topic, s.group, s.comsumer)
+					_ = s.client.XGroupDelConsumer(context.Background(), topic, s.group, comsumer)
 					s.wg.Done()
 					return
 				}
