@@ -7,9 +7,6 @@
   "tags": [
     {
       "name": "User"
-    },
-    {
-      "name": "Web"
     }
   ],
   "consumes": [
@@ -123,7 +120,7 @@
     },
     "/backpack/user/{uid}": {
       "get": {
-        "operationId": "Web_GetItems",
+        "operationId": "User_GetItems",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -148,7 +145,7 @@
           }
         ],
         "tags": [
-          "Web"
+          "User"
         ]
       }
     }
@@ -157,14 +154,11 @@
     "protobufAny": {
       "type": "object",
       "properties": {
-        "typeUrl": {
+        "@type": {
           "type": "string"
-        },
-        "value": {
-          "type": "string",
-          "format": "byte"
         }
-      }
+      },
+      "additionalProperties": {}
     },
     "rpcStatus": {
       "type": "object",

@@ -5,7 +5,9 @@
 package dao
 
 import (
+	event "backend/app/game/server/event"
 	model "backend/app/game/server/model"
+	context "context"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
@@ -59,6 +61,20 @@ func (m *MockDao) Close() {
 func (mr *MockDaoMockRecorder) Close() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
+}
+
+// CreateChangeMapEvent mocks base method.
+func (m *MockDao) CreateChangeMapEvent(ctx context.Context, data *event.ChangeMapEventData) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateChangeMapEvent", ctx, data)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateChangeMapEvent indicates an expected call of CreateChangeMapEvent.
+func (mr *MockDaoMockRecorder) CreateChangeMapEvent(ctx, data interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateChangeMapEvent", reflect.TypeOf((*MockDao)(nil).CreateChangeMapEvent), ctx, data)
 }
 
 // Healthy mocks base method.

@@ -8,5 +8,6 @@ go_library(
     deps = [
         "//pkg/conf",
         "//pkg/log",
+        "@com_github_go_redis_redis_v7//:redis",
     ],
 )

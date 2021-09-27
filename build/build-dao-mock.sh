@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install tools
-go get github.com/golang/mock/mockgen
+go install github.com/golang/mock/mockgen
 
 export PATH=$PATH:/$GOPATH/bin
 

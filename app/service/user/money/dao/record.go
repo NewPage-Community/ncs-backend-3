@@ -4,15 +4,19 @@ import (
 	"backend/app/service/user/money/model"
 	"backend/pkg/json"
 	"backend/pkg/log"
-	"github.com/go-redis/redis/v7"
+	"context"
 	"strconv"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 const (
 	KeyPrefix = "ncs:user:money:"
 	TenDays   = 10 * 24 * time.Hour
 )
+
+var ctx = context.Background()
 
 func (d *dao) AddRecord(uid int64, amount int32, reason string) (err error) {
 	now := time.Now().Unix()
@@ -28,7 +32,7 @@ func (d *dao) AddRecord(uid int64, amount int32, reason string) (err error) {
 		return
 	}
 	key := Key(uid)
-	err = d.cache.ZAdd(key, &redis.Z{
+	err = d.cache.ZAdd(ctx, key, &redis.Z{
 		Score:  float64(now),
 		Member: string(data),
 	}).Err()
@@ -41,11 +45,11 @@ func (d *dao) GetRecords(uid int64) (res *model.Records, err error) {
 
 	// DB
 	key := Key(uid)
-	err = d.cache.ZRemRangeByScore(key, "0", now).Err()
+	err = d.cache.ZRemRangeByScore(ctx, key, "0", now).Err()
 	if err != nil {
 		log.Error(err)
 	}
-	jsons, err := d.cache.ZRevRange(key, 0, -1).Result()
+	jsons, err := d.cache.ZRevRange(ctx, key, 0, -1).Result()
 	if err != nil {
 		if err == redis.Nil {
 			err = nil

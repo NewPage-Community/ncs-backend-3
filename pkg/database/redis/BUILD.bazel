@@ -2,10 +2,14 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "redis",
-    srcs = ["redis.go"],
-    importpath = "backend/pkg/cache/redis",
+    srcs = [
+        "redis.go",
+        "stream.go",
+    ],
+    importpath = "backend/pkg/database/redis",
     visibility = ["//visibility:public"],
     deps = [
+        "//pkg/log",
         "@com_github_alicebob_miniredis_v2//:miniredis",
         "@com_github_go_redis_redis_v7//:redis",
     ],

@@ -8,7 +8,7 @@ import (
 
 func regUserService(gws *rpc.Gateways) {
 	gws.AddGateway(
-		accountGW.RegisterWebHandlerFromEndpoint,
+		accountGW.RegisterAccountPublicHandlerFromEndpoint,
 		accountGW.ServiceAddr,
 	)
 	gws.AddGateway(

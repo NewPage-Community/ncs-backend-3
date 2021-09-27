@@ -12,7 +12,7 @@ func regBackpackService(gws *rpc.Gateways) {
 		itemsGW.ServiceAddr,
 	)
 	gws.AddGateway(
-		userGW.RegisterWebHandlerFromEndpoint,
+		userGW.RegisterUserPublicHandlerFromEndpoint,
 		userGW.ServiceAddr,
 	)
 }

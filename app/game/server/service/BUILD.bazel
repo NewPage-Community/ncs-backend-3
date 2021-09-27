@@ -14,6 +14,7 @@ go_library(
         "//app/game/server/api/grpc/v1:grpc",
         "//app/game/server/conf",
         "//app/game/server/dao",
+        "//app/game/server/event",
         "//app/game/server/model",
         "//pkg/ecode",
         "//pkg/log",
@@ -26,7 +27,6 @@ go_test(
     srcs = ["server_test.go"],
     embed = [":service"],
     deps = [
-        "//app/bot/qq/api/grpc/v1:grpc",
         "//app/game/a2s/api/grpc/v1:grpc",
         "//app/game/server/api/grpc/v1:grpc",
         "//app/game/server/dao",

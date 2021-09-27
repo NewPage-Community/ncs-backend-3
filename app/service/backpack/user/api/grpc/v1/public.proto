@@ -1,0 +1,14 @@
+syntax = "proto3";
+package ncs.service.backpack.user.v1;
+option go_package = "backend/app/service/backpack/user/api/grpc/v1";
+
+import "google/api/annotations.proto";
+import "app/service/backpack/user/api/grpc/v1/user.proto";
+
+service UserPublic {
+    rpc GetItems (ncs.service.backpack.user.v1.GetItemsReq) returns (ncs.service.backpack.user.v1.GetItemsResp) {
+        option (google.api.http) = {
+            get: "/backpack/user/{uid}"
+        };
+    }
+}

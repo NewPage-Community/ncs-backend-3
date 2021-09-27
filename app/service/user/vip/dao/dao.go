@@ -3,8 +3,9 @@ package dao
 import (
 	"backend/app/service/user/vip/conf"
 	"backend/app/service/user/vip/model"
-	db "backend/pkg/database/mysql"
+	"backend/pkg/database/mysql"
 	"backend/pkg/log"
+
 	"gorm.io/gorm"
 )
 
@@ -23,7 +24,7 @@ type dao struct {
 
 func New(config *conf.Config) (d *dao) {
 	d = &dao{
-		db: db.Init(config.Mysql),
+		db: mysql.Init(config.Mysql),
 	}
 	// Auto migrate db
 	if err := d.db.AutoMigrate(&model.VIP{}); err != nil {
@@ -36,5 +37,5 @@ func (d *dao) Close() {
 }
 
 func (d *dao) Healthy() bool {
-	return db.Healthy(d.db)
+	return mysql.Healthy()
 }

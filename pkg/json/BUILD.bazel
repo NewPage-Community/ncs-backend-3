@@ -5,5 +5,4 @@ go_library(
     srcs = ["json.go"],
     importpath = "backend/pkg/json",
     visibility = ["//visibility:public"],
-    deps = ["@com_github_json_iterator_go//:go"],
 )

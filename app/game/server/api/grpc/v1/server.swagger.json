@@ -7,9 +7,6 @@
   "tags": [
     {
       "name": "Server"
-    },
-    {
-      "name": "Web"
     }
   ],
   "consumes": [
@@ -21,7 +18,7 @@
   "paths": {
     "/game/server/allinfo": {
       "get": {
-        "operationId": "Web_AllInfo",
+        "operationId": "Server_AllInfo",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -45,7 +42,7 @@
           }
         ],
         "tags": [
-          "Web"
+          "Server"
         ]
       }
     },
@@ -83,7 +80,7 @@
     },
     "/game/server/info/{serverId}": {
       "get": {
-        "operationId": "Web_Info",
+        "operationId": "Server_Info",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -108,7 +105,7 @@
           }
         ],
         "tags": [
-          "Web"
+          "Server"
         ]
       }
     },
@@ -213,14 +210,11 @@
     "protobufAny": {
       "type": "object",
       "properties": {
-        "typeUrl": {
+        "@type": {
           "type": "string"
-        },
-        "value": {
-          "type": "string",
-          "format": "byte"
         }
-      }
+      },
+      "additionalProperties": {}
     },
     "rpcStatus": {
       "type": "object",
@@ -353,6 +347,9 @@
           "format": "int32"
         },
         "map": {
+          "type": "string"
+        },
+        "serverName": {
           "type": "string"
         }
       }

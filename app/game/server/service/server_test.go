@@ -1,15 +1,16 @@
 package service
 
 import (
-	qqBot "backend/app/bot/qq/api/grpc/v1"
 	a2sSrv "backend/app/game/a2s/api/grpc/v1"
 	pb "backend/app/game/server/api/grpc/v1"
 	"backend/app/game/server/dao"
 	"backend/app/game/server/model"
 	"context"
+	"sync"
+	"testing"
+
 	"github.com/golang/mock/gomock"
 	. "github.com/smartystreets/goconvey/convey"
-	"testing"
 )
 
 func TestService_AllInfo(t *testing.T) {
@@ -132,6 +133,9 @@ func TestService_ChangeMapNotify(t *testing.T) {
 	ctl := gomock.NewController(t)
 	defer ctl.Finish()
 
+	wg := sync.WaitGroup{}
+	wg.Add(1)
+
 	m := dao.NewMockDao(ctl)
 	m.EXPECT().InfoWithID(int32(1)).Return(&model.Info{
 		ServerID:  1,
@@ -142,13 +146,9 @@ func TestService_ChangeMapNotify(t *testing.T) {
 		Address:   "127.0.0.1:27015",
 		ShortName: "test",
 	}, nil)
-	qq := qqBot.NewMockQQClient(ctl)
-	qq.EXPECT().SendGroupMessage(gomock.Any(), &qqBot.SendGroupMessageReq{
-		Message:    "test 更换地图 test",
-		AutoEscape: false,
-	}).Return(nil, nil)
+	m.EXPECT().CreateChangeMapEvent(gomock.Any(), gomock.Any()).Return(nil).Do(func(c, d interface{}) { wg.Done() })
 
-	srv := &Service{dao: m, qq: qq}
+	srv := &Service{dao: m}
 	Convey("Test ChangeMapNotify", t, func() {
 		_, err := srv.ChangeMapNotify(context.Background(), &pb.ChangeMapNotifyReq{
 			ServerId: 1,
@@ -158,4 +158,5 @@ func TestService_ChangeMapNotify(t *testing.T) {
 			So(err, ShouldBeNil)
 		})
 	})
+	wg.Wait()
 }

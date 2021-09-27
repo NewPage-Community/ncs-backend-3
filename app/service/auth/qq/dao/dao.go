@@ -5,6 +5,7 @@ import (
 	"backend/app/service/auth/qq/model"
 	"backend/pkg/database/mysql"
 	"backend/pkg/log"
+
 	"gorm.io/gorm"
 )
 
@@ -39,7 +40,7 @@ func Init(config *conf.Config) (d *dao) {
 
 // Healthy Dao层健康检查
 func (d *dao) Healthy() bool {
-	return mysql.Healthy(d.db)
+	return mysql.Healthy()
 }
 
 // Close Dao层连接关闭

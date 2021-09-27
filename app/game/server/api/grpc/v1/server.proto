@@ -67,6 +67,7 @@ message RconAllResp {
 message ChangeMapNotifyReq {
     int32 server_id = 1;
     string map = 2;
+    string server_name = 3;
 }
 
 message ChangeMapNotifyResp {
@@ -106,19 +107,6 @@ service Server {
         option (google.api.http) = {
             post: "/game/server/changemap"
             body: "*"
-        };
-    }
-}
-
-service Web {
-    rpc Info (InfoReq) returns (InfoResp) {
-        option (google.api.http) = {
-            get: "/game/server/info/{server_id}"
-        };
-    }
-    rpc AllInfo (AllInfoReq) returns (AllInfoResp) {
-        option (google.api.http) = {
-            get: "/game/server/allinfo"
         };
     }
 }

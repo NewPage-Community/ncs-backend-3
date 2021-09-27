@@ -12,8 +12,10 @@ go_library(
     deps = [
         "//app/bot/kaiheila/api/grpc/v1:grpc",
         "//app/bot/kaiheila/conf",
+        "//app/bot/kaiheila/dao",
         "//app/game/chat",
-        "//app/game/chat/api/grpc/v1:grpc",
+        "//app/game/chat/event",
+        "//pkg/json",
         "//pkg/log",
         "@com_github_gunslinger23_kaiheila//:kaiheila",
     ],

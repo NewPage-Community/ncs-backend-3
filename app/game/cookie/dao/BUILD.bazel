@@ -12,7 +12,7 @@ go_library(
     deps = [
         "//app/game/cookie/conf",
         "//app/game/cookie/model",
-        "//pkg/cache/redis",
+        "//pkg/database/redis",
         "//pkg/log",
         "@com_github_go_redis_redis_v7//:redis",
         "@com_github_golang_mock//gomock",

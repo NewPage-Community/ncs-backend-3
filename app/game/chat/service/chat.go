@@ -1,9 +1,8 @@
 package service
 
 import (
-	kaiheilaBot "backend/app/bot/kaiheila/api/grpc/v1"
-	"backend/app/game/chat"
 	pb "backend/app/game/chat/api/grpc/v1"
+	event "backend/app/game/chat/event"
 	server "backend/app/game/server/api/grpc/v1"
 	"backend/pkg/log"
 	"context"
@@ -18,63 +17,15 @@ const (
 
 func (s *Service) AllChat(ctx context.Context, req *pb.AllChatReq) (resp *pb.AllChatResp, err error) {
 	resp = &pb.AllChatResp{}
-	serverShortName := ""
 
-	// Non game notify function
-	sendToKaiheila := func() {
-		_, err = s.kaiheila.SendChannelMsg(context.Background(), &kaiheilaBot.SendMessageReq{
-			Type:      10,
-			ChannelId: chat.KaiheilaAllChatChannelID,
-			Content:   fmt.Sprintf(chat.KaiheilaMessage, serverShortName, chat.ServerURL, removeColor(removeInvalidChar(req.Name)), req.Message),
-		})
-		if err != nil {
-			log.Error(err)
-		}
-	}
-	sendToDiscord := func() {
-	}
-	sendToQQ := func() {
-		/*_, err = s.qq.SendGroupMessage(context.Background(), &qqBot.SendGroupMessageReq{
-			Message:    fmt.Sprintf(chat.QQMessage, serverShortName, removeColor(removeInvalidChar(req.Name)), req.Message),
-			AutoEscape: true,
-		})
-		if err != nil {
-			log.Error(err)
-		}*/
+	chatServer, err := s.server.Info(ctx, &server.InfoReq{ServerId: req.ServerId})
+	if err == nil {
+		req.ServerName = chatServer.Info.ShortName
 	}
 
-	// Set non game server short name
-	switch req.ServerId {
-	case chat.KaiheilaID:
-		serverShortName = chat.KaiheilaName
-	case chat.DiscordID:
-		serverShortName = chat.DiscordName
-	case chat.QQID:
-		serverShortName = chat.QQName
-	default:
-		chatServer, err := s.server.Info(ctx, &server.InfoReq{ServerId: req.ServerId})
-		if err == nil {
-			serverShortName = chatServer.Info.ShortName
-		}
-	}
+	// Create event to message queue
+	err = s.dao.CreateAllChatEvent(ctx, (*event.AllChatEventData)(req))
 
-	// Broadcast to non game server
-	if req.ServerId > 0 {
-		go sendToKaiheila()
-		go sendToDiscord()
-		go sendToQQ()
-	}
-
-	// Always send to game server
-	var prefix string
-	if len(serverShortName) > 0 {
-		prefix = " · " + serverShortName
-	}
-	_, err = s.ChatNotify(ctx, &pb.ChatNotifyReq{
-		Uid:     0,
-		Prefix:  fmt.Sprintf(AllChatPrefix, prefix),
-		Message: req.Name + " : " + req.Message,
-	})
 	return
 }
 
@@ -90,4 +41,17 @@ func (s *Service) ChatNotify(ctx context.Context, req *pb.ChatNotifyReq) (resp *
 		Cmd: fmt.Sprintf(ChatNotifyCMD, req.Uid, req.Prefix, req.Message),
 	})
 	return
+}
+
+func (s *Service) AllChatEvent(ctx context.Context, data *event.AllChatEventData) {
+	var prefix string
+	if len(data.ServerName) > 0 {
+		prefix = " · " + data.ServerName
+	}
+	_, err := s.ChatNotify(ctx, &pb.ChatNotifyReq{
+		Uid:     0,
+		Prefix:  fmt.Sprintf(AllChatPrefix, prefix),
+		Message: data.Name + " : " + data.Message,
+	})
+	log.CheckErr(err)
 }

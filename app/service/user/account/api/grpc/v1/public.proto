@@ -1,0 +1,19 @@
+syntax = "proto3";
+package ncs.service.user.account.v1;
+option go_package = "backend/app/service/user/account/api/grpc/v1";
+
+import "google/api/annotations.proto";
+import "app/service/user/account/api/grpc/v1/account.proto";
+
+service AccountPublic {
+    rpc UID (ncs.service.user.account.v1.UIDReq) returns (ncs.service.user.account.v1.UIDResp) {
+        option (google.api.http) = {
+            get: "/user/account/uid/{steam_id}"
+        };
+    }
+    rpc Info (ncs.service.user.account.v1.InfoReq) returns (ncs.service.user.account.v1.InfoResp) {
+        option (google.api.http) = {
+            get: "/user/account/{uid}"
+        };
+    }
+}

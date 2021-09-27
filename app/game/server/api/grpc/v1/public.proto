@@ -1,0 +1,19 @@
+syntax = "proto3";
+package ncs.game.server.v1;
+option go_package = "backend/app/game/server/api/grpc/v1";
+
+import "google/api/annotations.proto";
+import "app/game/server/api/grpc/v1/server.proto";
+
+service ServerPublic {
+    rpc Info (ncs.game.server.v1.InfoReq) returns (ncs.game.server.v1.InfoResp) {
+        option (google.api.http) = {
+            get: "/game/server/info/{server_id}"
+        };
+    }
+    rpc AllInfo (ncs.game.server.v1.AllInfoReq) returns (ncs.game.server.v1.AllInfoResp) {
+        option (google.api.http) = {
+            get: "/game/server/allinfo"
+        };
+    }
+}

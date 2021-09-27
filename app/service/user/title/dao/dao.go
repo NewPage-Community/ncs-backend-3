@@ -5,6 +5,7 @@ import (
 	"backend/app/service/user/title/model"
 	"backend/pkg/database/mysql"
 	"backend/pkg/log"
+
 	"gorm.io/gorm"
 )
 
@@ -34,5 +35,5 @@ func (d *dao) Close() {
 }
 
 func (d *dao) Healthy() bool {
-	return mysql.Healthy(d.db)
+	return mysql.Healthy()
 }

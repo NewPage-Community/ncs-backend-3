@@ -1,14 +1,14 @@
 package json
 
 import (
+	"encoding/json"
 	"fmt"
-	jsoniter "github.com/json-iterator/go"
 	"io"
 )
 
 // Unmarshal ...
 func Unmarshal(data []byte, v interface{}) (err error) {
-	err = jsoniter.Unmarshal(data, v)
+	err = json.Unmarshal(data, v)
 	if err != nil {
 		err = fmt.Errorf("json unmarshal error: %s (%s)", err.Error(), string(data))
 	}
@@ -17,13 +17,13 @@ func Unmarshal(data []byte, v interface{}) (err error) {
 
 // Marshal ...
 func Marshal(v interface{}) (s []byte, err error) {
-	s, err = jsoniter.Marshal(v)
+	s, err = json.Marshal(v)
 	if err != nil {
 		err = fmt.Errorf("json marshal error: %s (%v)", err.Error(), v)
 	}
 	return
 }
 
-func NewDecoder(reader io.Reader) *jsoniter.Decoder {
-	return jsoniter.NewDecoder(reader)
+func NewDecoder(reader io.Reader) *json.Decoder {
+	return json.NewDecoder(reader)
 }

@@ -1,17 +1,17 @@
 package service
 
 import (
-	qqBot "backend/app/bot/qq/api/grpc/v1"
 	a2sSrv "backend/app/game/a2s/api/grpc/v1"
 	pb "backend/app/game/server/api/grpc/v1"
+	"backend/app/game/server/event"
 	"backend/app/game/server/model"
 	"backend/pkg/ecode"
 	"backend/pkg/log"
 	"context"
-	"fmt"
-	"google.golang.org/grpc/codes"
 	"sort"
 	"strconv"
+
+	"google.golang.org/grpc/codes"
 )
 
 func (s *Service) Init(ctx context.Context, req *pb.InitReq) (resp *pb.InitResp, err error) {
@@ -161,10 +161,8 @@ func (s *Service) ChangeMapNotify(ctx context.Context, req *pb.ChangeMapNotifyRe
 	if err != nil {
 		return
 	}
+	req.ServerName = res.ShortName
 
-	_, err = s.qq.SendGroupMessage(ctx, &qqBot.SendGroupMessageReq{
-		Message:    fmt.Sprintf("%s 更换地图 %s", res.ShortName, req.Map),
-		AutoEscape: false,
-	})
+	log.CheckErr(s.dao.CreateChangeMapEvent(ctx, (*event.ChangeMapEventData)(req)))
 	return
 }

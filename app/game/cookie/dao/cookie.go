@@ -2,14 +2,18 @@ package dao
 
 import (
 	"backend/app/game/cookie/model"
-	"github.com/go-redis/redis/v7"
+	"context"
+
+	"github.com/go-redis/redis/v8"
 )
+
+var ctx = context.Background()
 
 func (d *dao) Get(uid int64) (res *model.Cookie, err error) {
 	res = &model.Cookie{
 		UID: uid,
 	}
-	json, err := d.db.HGet(res.Key(), res.GetUID()).Result()
+	json, err := d.db.HGet(ctx, res.Key(), res.GetUID()).Result()
 	if err != nil {
 		if err == redis.Nil {
 			err = nil
@@ -27,7 +31,7 @@ func (d *dao) Set(uid int64, key string, value string) (err error) {
 	}
 
 	// Get cookie
-	json, err := d.db.HGet(c.Key(), c.GetUID()).Result()
+	json, err := d.db.HGet(ctx, c.Key(), c.GetUID()).Result()
 	if err != redis.Nil {
 		if err != nil {
 			return
@@ -46,6 +50,6 @@ func (d *dao) Set(uid int64, key string, value string) (err error) {
 	if err != nil {
 		return
 	}
-	err = d.db.HSet(c.Key(), c.GetUID(), json).Err()
+	err = d.db.HSet(ctx, c.Key(), c.GetUID(), json).Err()
 	return
 }

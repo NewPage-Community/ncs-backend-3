@@ -16,7 +16,7 @@ func main() {
 	config := conf.Init()
 	log.Init(config.Log)
 	tracer.Init(serviceName)
-	srv := service.Init(config)
+	srv := service.Init(config, serviceName)
 
 	// rpc
 	server := api.InitServer(srv, func() bool {

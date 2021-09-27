@@ -2,20 +2,14 @@ image:
   name: registry.new-page.xyz/bazel-public/ubuntu2004-java11:latest
 
 variables:
-  GIT_CLEAN_FLAGS: -ffdx -e .cache/
   GOPROXY: http://goproxy.golang:8080
   GO111MODULE: "on"
 
 before_script:
   - chmod -R +x build
   - mkdir $HOME/.docker
-  - export HTTP_PROXY=$CI_PROXY HTTPS_PROXY=$CI_PROXY NO_PROXY=hkt.v2ray,goproxy.golang,*.new-page.xyz,nexus3.nexus3,*.local
+  - export HTTP_PROXY=$CI_PROXY HTTPS_PROXY=$CI_PROXY NO_PROXY=goproxy.golang,*.new-page.xyz,nexus3.nexus3
   - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
-
-cache:
-  key: bazel_cache
-  paths:
-    - .cache/
 
 stages:
   - build
@@ -28,7 +22,6 @@ lint-golang:
   script:
     - golangci-lint run -v --timeout 5m
   allow_failure: true
-  cache: {}
 
 lint-helm:
   stage: build
@@ -36,14 +29,13 @@ lint-helm:
   script:
     - helm lint ./chart
   allow_failure: true
-  cache: {}
 
 build:
   stage: build
   script:
     - bazel version
-    - bazel build --config=ci --noshow_progress -k //app/... //pkg/...
-    - bazel test --config=ci --noshow_progress -k //app/... //pkg/...
+    - bazel build --config=ci //app/... //pkg/...
+    - bazel test --config=ci //app/... //pkg/...
 
 build-merged:
   stage: build
@@ -52,8 +44,8 @@ build-merged:
     - git config --global user.name "Runner"
     - git pull origin master
     - bazel version
-    - bazel build --config=ci --noshow_progress -k //app/... //pkg/...
-    - bazel test --config=ci --noshow_progress -k //app/... //pkg/...
+    - bazel build --config=ci //app/... //pkg/...
+    - bazel test --config=ci //app/... //pkg/...
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
 
@@ -86,4 +78,3 @@ deploy-ins:
       when: manual
     - when: never
   needs: ["push changed images"]
-  cache: {}

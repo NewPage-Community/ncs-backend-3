@@ -1,8 +1,11 @@
 package dao
 
 import (
+	"backend/app/game/server/event"
 	"backend/app/game/server/model"
 	"backend/pkg/ecode"
+	"context"
+
 	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
 )
@@ -39,4 +42,8 @@ func (d *dao) AllInfo() (res []*model.Info, err error) {
 	// DB
 	err = d.db.Find(&res).Error
 	return
+}
+
+func (d *dao) CreateChangeMapEvent(ctx context.Context, data *event.ChangeMapEventData) error {
+	return event.NewChangeMapEvent(d.stream).Create(ctx, data)
 }

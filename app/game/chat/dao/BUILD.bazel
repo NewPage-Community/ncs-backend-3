@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "dao",
+    srcs = [
+        "chat.go",
+        "dao.go",
+        "dao.mock.go",
+    ],
+    importpath = "backend/app/game/chat/dao",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/game/chat/conf",
+        "//app/game/chat/event",
+        "//pkg/database/redis",
+        "@com_github_go_redis_redis_v7//:redis",
+        "@com_github_golang_mock//gomock",
+    ],
+)

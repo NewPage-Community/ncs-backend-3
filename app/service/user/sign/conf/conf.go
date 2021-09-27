@@ -4,7 +4,7 @@ import (
 	"backend/pkg/conf"
 	"backend/pkg/database/mysql"
 	"backend/pkg/log"
-	"github.com/go-redis/redis/v7"
+	"github.com/go-redis/redis/v8"
 )
 
 type Config struct {

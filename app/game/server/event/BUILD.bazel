@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "event",
+    srcs = ["changemap.go"],
+    importpath = "backend/app/game/server/event",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/game/server/api/grpc/v1:grpc",
+        "//pkg/database/redis",
+        "//pkg/json",
+        "//pkg/log",
+    ],
+)

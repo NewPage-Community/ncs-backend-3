@@ -3,20 +3,24 @@ package dao
 import (
 	"backend/app/game/stats/model"
 	"backend/pkg/ecode"
-	"github.com/go-redis/redis/v7"
-	"google.golang.org/grpc/codes"
+	"context"
 	"strconv"
+
+	"github.com/go-redis/redis/v8"
+	"google.golang.org/grpc/codes"
 )
 
+var ctx = context.Background()
+
 func (d *dao) Get(stats *model.Stats) (err error) {
-	stats.Score, err = d.redis.ZScore(stats.Key(), stats.Member()).Result()
+	stats.Score, err = d.redis.ZScore(ctx, stats.Key(), stats.Member()).Result()
 	if err != nil {
 		if err == redis.Nil {
 			return ecode.Errorf(codes.NotFound, "Can not found UID(%d)", stats.UID)
 		}
 		return ecode.Errorf(codes.Unknown, "Redis err: %s", err)
 	}
-	stats.Rank, err = d.redis.ZRevRank(stats.Key(), stats.Member()).Result()
+	stats.Rank, err = d.redis.ZRevRank(ctx, stats.Key(), stats.Member()).Result()
 	if err != nil {
 		if err == redis.Nil {
 			return ecode.Errorf(codes.NotFound, "Can not found UID(%d)", stats.UID)
@@ -27,7 +31,7 @@ func (d *dao) Get(stats *model.Stats) (err error) {
 }
 
 func (d *dao) GetAll(stats *model.Stats) (res []*model.Stats, err error) {
-	z, err := d.redis.ZRevRangeWithScores(stats.Key(), 0, -1).Result()
+	z, err := d.redis.ZRevRangeWithScores(ctx, stats.Key(), 0, -1).Result()
 	if err != nil {
 		err = ecode.Errorf(codes.Unknown, "Redis err: %s", err)
 		return
@@ -50,7 +54,7 @@ func (d *dao) GetAll(stats *model.Stats) (res []*model.Stats, err error) {
 }
 
 func (d *dao) Set(stats *model.Stats) (err error) {
-	err = d.redis.ZAdd(stats.Key(), &redis.Z{
+	err = d.redis.ZAdd(ctx, stats.Key(), &redis.Z{
 		Score:  stats.Score,
 		Member: stats.Member(),
 	}).Err()
@@ -60,6 +64,6 @@ func (d *dao) Set(stats *model.Stats) (err error) {
 // Incr
 // stats.Score is increment
 func (d *dao) Incr(stats *model.Stats) (err error) {
-	err = d.redis.ZIncrBy(stats.Key(), stats.Score, stats.Member()).Err()
+	err = d.redis.ZIncrBy(ctx, stats.Key(), stats.Score, stats.Member()).Err()
 	return
 }

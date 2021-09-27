@@ -12,9 +12,11 @@ go_library(
     deps = [
         "//app/bot/qq/api/grpc/v1:grpc",
         "//app/bot/qq/conf",
+        "//app/bot/qq/dao",
         "//app/game/chat",
-        "//app/game/chat/api/grpc/v1:grpc",
+        "//app/game/chat/event",
         "//app/game/server/api/grpc/v1:grpc",
+        "//app/game/server/event",
         "//pkg/log",
         "@com_github_gorilla_websocket//:websocket",
         "@com_github_miremid_amy//:amy",
