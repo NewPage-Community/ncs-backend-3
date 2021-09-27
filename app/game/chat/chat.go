@@ -3,13 +3,13 @@ package chat
 const (
 	KaiheilaName = "开黑啦"
 	KaiheilaID   = -100
-	KaiheilaUrl  = ""
+	KaiheilaUrl  = "https://kaihei.co/p4Bl4i"
 	DiscordName  = "Discord"
 	DiscordID    = -101
-	DiscordUrl   = ""
+	DiscordUrl   = "https://discord.gg/nW7N4cy"
 	QQName       = "QQ"
 	QQID         = -102
-	QQUrl        = ""
+	QQUrl        = "https://jq.qq.com/?_wv=1027&k=8khzZZ5s"
 	ServerURL    = "https://game.new-page.xyz"
 )
 
