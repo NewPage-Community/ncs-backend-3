@@ -29,7 +29,7 @@ func (s *Service) donate(event qqModel.CQEvent, cmd []string) {
 	}
 
 	// Send message
-	err = s.Reply(event, "成功处理✅")
+	err = s.Reply(event, SuccessReply)
 	if err != nil {
 		log.Error(err)
 	}

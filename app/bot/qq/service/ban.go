@@ -44,7 +44,7 @@ func (s *Service) banPlayer(event qqModel.CQEvent, cmd []string) {
 	}
 
 	// Reply
-	err = s.Reply(event, "成功处理✅")
+	err = s.Reply(event, SuccessReply)
 	if err != nil {
 		log.Error(err)
 	}
@@ -66,18 +66,22 @@ func (s *Service) unBanPlayer(event qqModel.CQEvent, cmd []string) {
 		return
 	}
 
-	// Add ban
+	// Remove ban
 	ban, err := s.banSrv.Info(ctx, &banService.InfoReq{Uid: uint64(account.Uid)})
-	if err != nil || ban.Info.Id == 0 {
+	if ban.Info.Id == 0 {
+		if err != nil {
+			log.Error(err)
+		}
 		return
 	}
 	_, err = s.banSrv.Remove(ctx, &banService.RemoveReq{Id: ban.Info.Id})
 	if err != nil {
+		log.Error(err)
 		return
 	}
 
 	// Reply
-	err = s.Reply(event, "成功处理✅")
+	err = s.Reply(event, SuccessReply)
 	if err != nil {
 		log.Error(err)
 	}

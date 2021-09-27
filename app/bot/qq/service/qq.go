@@ -17,8 +17,9 @@ import (
 )
 
 const (
-	QQMessage = "[📣%s] %s:\n%s"
-	ServerURL = "https://game.new-page.xyz"
+	QQMessage    = "[📣%s] %s:\n%s"
+	ServerURL    = "https://game.new-page.xyz"
+	SuccessReply = "成功处理 ✅"
 )
 
 func (s *Service) SendGroupMessage(ctx context.Context, req *pb.SendGroupMessageReq) (resp *pb.SendGroupMessageResp, err error) {

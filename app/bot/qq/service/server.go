@@ -53,10 +53,4 @@ func (s *Service) changeMap(event qqModel.CQEvent, cmd []string) {
 		log.Error(err)
 		return
 	}
-
-	// Send message
-	err = s.Reply(event, "成功处理✅")
-	if err != nil {
-		log.Error(err)
-	}
 }
