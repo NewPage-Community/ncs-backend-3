@@ -15,7 +15,7 @@ def push_docker(name, app_name, embed):
         name = name,
         image = ":image",
         format = "Docker",
-        registry = "nexus3.nexus3.svc.cluster.local:8082",
+        registry = "nexus3.nexus3:8082",
         repository = "newpage/ncs/" + app_name,
         tag = "{STABLE_DOCKER_TAG}",
     )
