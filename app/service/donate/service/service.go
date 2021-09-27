@@ -26,9 +26,8 @@ func Init(config *conf.Config, service string) *Service {
 		money:   moneyService.InitClient(moneyService.ServiceAddr),
 		alipay:  nil,
 		wepay:   nil,
-		dao:     dao.Init(config),
-		cron:    cron.New(),
 		dao:  dao.Init(config, service),
+		cron: cron.New(),
 	}
 	s.regCron()
 	s.cron.Start()
