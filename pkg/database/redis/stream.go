@@ -24,6 +24,7 @@ type Stream struct {
 	client   *goredis.Client
 	group    string
 	comsumer string
+	ctx      context.Context
 	closer   func()
 	wg       sync.WaitGroup
 }
@@ -39,6 +40,7 @@ func NewStream(client *goredis.Client, service string) *Stream {
 		comsumer: "",
 		wg:       sync.WaitGroup{},
 	}
+	stream.ctx, stream.closer = context.WithCancel(context.Background())
 	return stream
 }
 
@@ -51,10 +53,8 @@ func (s *Stream) Publish(ctx context.Context, topic, msg string) (err error) {
 }
 
 func (s *Stream) Subscribe(topic string, callback StreamCallback) (err error) {
-	ctx := context.Background()
-
 	// Create group
-	err = s.client.XGroupCreateMkStream(ctx, topic, s.group, "$").Err()
+	err = s.client.XGroupCreateMkStream(s.ctx, topic, s.group, "$").Err()
 	if err != nil {
 		if err.Error() != groupExistErr {
 			return
@@ -66,7 +66,7 @@ func (s *Stream) Subscribe(topic string, callback StreamCallback) (err error) {
 	if len(s.comsumer) == 0 {
 		for i := 0; i < idLen; i++ {
 			s.comsumer = getRandomID()
-			res, err := s.client.XGroupCreateConsumer(ctx, topic, s.group, s.comsumer).Result()
+			res, err := s.client.XGroupCreateConsumer(s.ctx, topic, s.group, s.comsumer).Result()
 
 			// Create successfully
 			if res == 1 {
@@ -88,11 +88,8 @@ func (s *Stream) Subscribe(topic string, callback StreamCallback) (err error) {
 	s.wg.Add(1)
 	go func() {
 		for {
-			ctx := context.Background()
-
 			// Read message
-			ctx, s.closer = context.WithCancel(ctx)
-			res, err := s.client.XReadGroup(ctx, &goredis.XReadGroupArgs{
+			res, err := s.client.XReadGroup(s.ctx, &goredis.XReadGroupArgs{
 				Group:    s.group,
 				Consumer: s.comsumer,
 				Streams:  []string{topic, ">"},
@@ -117,7 +114,7 @@ func (s *Stream) Subscribe(topic string, callback StreamCallback) (err error) {
 							v, _ := m.(string)
 							s.wg.Add(1)
 							go func() {
-								callback(ctx, v)
+								callback(s.ctx, v)
 								s.wg.Done()
 							}()
 						}
