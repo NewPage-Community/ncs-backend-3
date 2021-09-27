@@ -93,6 +93,9 @@
         "uid": {
           "type": "string",
           "format": "int64"
+        },
+        "serverName": {
+          "type": "string"
         }
       }
     },

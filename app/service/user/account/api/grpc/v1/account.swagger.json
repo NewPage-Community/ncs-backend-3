@@ -7,9 +7,6 @@
   "tags": [
     {
       "name": "Account"
-    },
-    {
-      "name": "Web"
     }
   ],
   "consumes": [
@@ -53,7 +50,7 @@
     },
     "/user/account/uid/{steamId}": {
       "get": {
-        "operationId": "Web_UID",
+        "operationId": "Account_UID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -78,13 +75,13 @@
           }
         ],
         "tags": [
-          "Web"
+          "Account"
         ]
       }
     },
     "/user/account/{uid}": {
       "get": {
-        "operationId": "Web_Info",
+        "operationId": "Account_Info",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -109,7 +106,7 @@
           }
         ],
         "tags": [
-          "Web"
+          "Account"
         ]
       },
       "put": {
@@ -160,14 +157,11 @@
     "protobufAny": {
       "type": "object",
       "properties": {
-        "typeUrl": {
+        "@type": {
           "type": "string"
-        },
-        "value": {
-          "type": "string",
-          "format": "byte"
         }
-      }
+      },
+      "additionalProperties": {}
     },
     "rpcStatus": {
       "type": "object",

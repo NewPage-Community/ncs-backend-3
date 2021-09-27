@@ -78,16 +78,3 @@ service Account {
     }
     rpc GetAllUID (GetAllUIDReq) returns (GetAllUIDResp);
 }
-
-service Web {
-    rpc UID (UIDReq) returns (UIDResp) {
-        option (google.api.http) = {
-            get: "/user/account/uid/{steam_id}"
-        };
-    }
-    rpc Info (InfoReq) returns (InfoResp) {
-        option (google.api.http) = {
-            get: "/user/account/{uid}"
-        };
-    }
-}

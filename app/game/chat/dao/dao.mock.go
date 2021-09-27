@@ -47,18 +47,18 @@ func (mr *MockDaoMockRecorder) Close() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockDao)(nil).Close))
 }
 
-// CreateChatEvent mocks base method.
-func (m *MockDao) CreateChatEvent(ctx context.Context, data *event.AllChatEventData) error {
+// CreateAllChatEvent mocks base method.
+func (m *MockDao) CreateAllChatEvent(ctx context.Context, data *event.AllChatEventData) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateChatEvent", ctx, data)
+	ret := m.ctrl.Call(m, "CreateAllChatEvent", ctx, data)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// CreateChatEvent indicates an expected call of CreateChatEvent.
-func (mr *MockDaoMockRecorder) CreateChatEvent(ctx, data interface{}) *gomock.Call {
+// CreateAllChatEvent indicates an expected call of CreateAllChatEvent.
+func (mr *MockDaoMockRecorder) CreateAllChatEvent(ctx, data interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateChatEvent", reflect.TypeOf((*MockDao)(nil).CreateChatEvent), ctx, data)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateAllChatEvent", reflect.TypeOf((*MockDao)(nil).CreateAllChatEvent), ctx, data)
 }
 
 // Healthy mocks base method.
@@ -75,16 +75,16 @@ func (mr *MockDaoMockRecorder) Healthy() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Healthy", reflect.TypeOf((*MockDao)(nil).Healthy))
 }
 
-// ListenChatEvent mocks base method.
-func (m *MockDao) ListenChatEvent(cb event.AllChatCallback) error {
+// ListenAllChatEvent mocks base method.
+func (m *MockDao) ListenAllChatEvent(cb event.AllChatCallback) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListenChatEvent", cb)
+	ret := m.ctrl.Call(m, "ListenAllChatEvent", cb)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// ListenChatEvent indicates an expected call of ListenChatEvent.
-func (mr *MockDaoMockRecorder) ListenChatEvent(cb interface{}) *gomock.Call {
+// ListenAllChatEvent indicates an expected call of ListenAllChatEvent.
+func (mr *MockDaoMockRecorder) ListenAllChatEvent(cb interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListenChatEvent", reflect.TypeOf((*MockDao)(nil).ListenChatEvent), cb)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListenAllChatEvent", reflect.TypeOf((*MockDao)(nil).ListenAllChatEvent), cb)
 }

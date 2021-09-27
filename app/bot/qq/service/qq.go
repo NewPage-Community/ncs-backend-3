@@ -3,8 +3,9 @@ package service
 import (
 	pb "backend/app/bot/qq/api/grpc/v1"
 	"backend/app/game/chat"
-	chatService "backend/app/game/chat/api/grpc/v1"
+	chatEvent "backend/app/game/chat/event"
 	serverService "backend/app/game/server/api/grpc/v1"
+	serverEvent "backend/app/game/server/event"
 	"backend/pkg/log"
 	"context"
 	"encoding/json"
@@ -12,6 +13,11 @@ import (
 
 	qqMessage "github.com/miRemid/amy/message"
 	qqModel "github.com/miRemid/amy/websocket/model"
+)
+
+const (
+	QQMessage = "[📣%s] %s:\n%s"
+	ServerURL = "https://game.new-page.xyz"
 )
 
 func (s *Service) SendGroupMessage(ctx context.Context, req *pb.SendGroupMessageReq) (resp *pb.SendGroupMessageResp, err error) {
@@ -38,14 +44,12 @@ func (s *Service) OnMessage(event qqModel.CQEvent) {
 	}
 
 	if msg.(string)[0] == '#' {
-		_, err := s.chatSrv.AllChat(context.Background(), &chatService.AllChatReq{
-			Name:     event.Map["sender"].(map[string]interface{})["nickname"].(string),
-			Message:  msg.(string)[1:],
-			ServerId: chat.QQID,
-		})
-		if err != nil {
-			log.Error(err)
-		}
+		log.CheckErr(s.dao.CreateAllChatEvent(context.Background(), &chatEvent.AllChatEventData{
+			Name:       event.Map["sender"].(map[string]interface{})["nickname"].(string),
+			Message:    msg.(string)[1:],
+			ServerId:   chat.QQID,
+			ServerName: chat.QQName,
+		}))
 	}
 }
 
@@ -73,7 +77,7 @@ func (s *Service) getServerStatus(event qqModel.CQEvent) {
 			msg += fmt.Sprintf("%s | %s (%d/%d)\n", v.ShortName, v.A2SInfo.Map, v.A2SInfo.Players, v.A2SInfo.MaxPlayers)
 		}
 	}
-	msg += "仪表盘：https://game.new-page.xyz"
+	msg += "仪表盘: " + ServerURL
 
 	// Send message
 	builder := qqMessage.NewCQMsgBuilder()
@@ -82,4 +86,16 @@ func (s *Service) getServerStatus(event qqModel.CQEvent) {
 	if err != nil {
 		log.Error(err)
 	}
+}
+
+func (s *Service) AllChatEvent(ctx context.Context, data *chatEvent.AllChatEventData) {
+
+}
+
+func (s *Service) ChangeMapEvent(ctx context.Context, data *serverEvent.ChangeMapEventData) {
+	_, err := s.SendGroupMessage(ctx, &pb.SendGroupMessageReq{
+		Message:    fmt.Sprintf("%s 更换地图 %s", data.ServerName, data.Map),
+		AutoEscape: false,
+	})
+	log.CheckErr(err)
 }

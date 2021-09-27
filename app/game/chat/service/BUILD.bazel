@@ -4,15 +4,11 @@ go_library(
     name = "service",
     srcs = [
         "chat.go",
-        "helper.go",
         "service.go",
     ],
     importpath = "backend/app/game/chat/service",
     visibility = ["//visibility:public"],
     deps = [
-        "//app/bot/kaiheila/api/grpc/v1:grpc",
-        "//app/bot/qq/api/grpc/v1:grpc",
-        "//app/game/chat",
         "//app/game/chat/api/grpc/v1:grpc",
         "//app/game/chat/conf",
         "//app/game/chat/dao",
@@ -27,9 +23,6 @@ go_test(
     srcs = ["chat_test.go"],
     embed = [":service"],
     deps = [
-        "//app/bot/kaiheila/api/grpc/v1:grpc",
-        "//app/bot/qq/api/grpc/v1:grpc",
-        "//app/game/chat",
         "//app/game/chat/api/grpc/v1:grpc",
         "//app/game/chat/dao",
         "//app/game/server/api/grpc/v1:grpc",

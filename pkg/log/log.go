@@ -62,9 +62,8 @@ func Panic(args ...interface{}) {
 	logger.Sugar().Panic(args)
 }
 
-func CheckErr(err error) error {
+func CheckErr(err error) {
 	if err != nil {
 		logger.Sugar().Info(err)
 	}
-	return err
 }

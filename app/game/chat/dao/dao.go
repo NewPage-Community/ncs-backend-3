@@ -10,8 +10,8 @@ import (
 )
 
 type Dao interface {
-	CreateChatEvent(ctx context.Context, data *chatEvent.AllChatEventData) (err error)
-	ListenChatEvent(cb chatEvent.AllChatCallback) error
+	CreateAllChatEvent(ctx context.Context, data *chatEvent.AllChatEventData) (err error)
+	ListenAllChatEvent(cb chatEvent.AllChatCallback) error
 	Healthy() bool
 	Close()
 }

@@ -27,7 +27,6 @@ go_test(
     srcs = ["server_test.go"],
     embed = [":service"],
     deps = [
-        "//app/bot/qq/api/grpc/v1:grpc",
         "//app/game/a2s/api/grpc/v1:grpc",
         "//app/game/server/api/grpc/v1:grpc",
         "//app/game/server/dao",

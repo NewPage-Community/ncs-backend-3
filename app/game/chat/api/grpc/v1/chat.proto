@@ -9,6 +9,7 @@ message AllChatReq {
     string message = 2;
     int32 server_id = 3;
     int64 uid = 4;
+    string server_name = 5;
 }
 
 message AllChatResp {

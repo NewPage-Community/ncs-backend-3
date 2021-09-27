@@ -8,6 +8,7 @@ import (
 	"backend/pkg/log"
 	"backend/pkg/rpc"
 	"backend/pkg/tracer"
+
 	"google.golang.org/grpc"
 )
 
@@ -19,7 +20,7 @@ func main() {
 	config := conf.Init()
 	log.Init(config.Log)
 	tracer.Init(serviceName)
-	srv := service.Init(config)
+	srv := service.Init(config, serviceName)
 
 	// rpc 服务注册
 	server := rpc.NewServer(nil)

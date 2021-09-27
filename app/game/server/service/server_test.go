@@ -1,7 +1,6 @@
 package service
 
 import (
-	qqBot "backend/app/bot/qq/api/grpc/v1"
 	a2sSrv "backend/app/game/a2s/api/grpc/v1"
 	pb "backend/app/game/server/api/grpc/v1"
 	"backend/app/game/server/dao"
@@ -148,13 +147,8 @@ func TestService_ChangeMapNotify(t *testing.T) {
 		ShortName: "test",
 	}, nil)
 	m.EXPECT().CreateChangeMapEvent(gomock.Any(), gomock.Any()).Return(nil).Do(func(c, d interface{}) { wg.Done() })
-	qq := qqBot.NewMockQQClient(ctl)
-	qq.EXPECT().SendGroupMessage(gomock.Any(), &qqBot.SendGroupMessageReq{
-		Message:    "test 更换地图 test",
-		AutoEscape: false,
-	}).Return(nil, nil)
 
-	srv := &Service{dao: m, qq: qq}
+	srv := &Service{dao: m}
 	Convey("Test ChangeMapNotify", t, func() {
 		_, err := srv.ChangeMapNotify(context.Background(), &pb.ChangeMapNotifyReq{
 			ServerId: 1,

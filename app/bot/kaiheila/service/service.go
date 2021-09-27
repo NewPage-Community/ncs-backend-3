@@ -3,7 +3,9 @@ package service
 import (
 	pb "backend/app/bot/kaiheila/api/grpc/v1"
 	"backend/app/bot/kaiheila/conf"
-	chatService "backend/app/game/chat/api/grpc/v1"
+	"backend/app/bot/kaiheila/dao"
+	"backend/pkg/log"
+
 	"github.com/gunslinger23/kaiheila"
 )
 
@@ -11,27 +13,29 @@ import (
 type Service struct {
 	kaiheilaClient *kaiheila.Client
 	kaiheilaWSS    *kaiheila.WebSocketSession
-	chat           chatService.ChatClient
+	dao            dao.Dao
+	kaiheilaConfig *conf.Kaiheila
 	pb.UnimplementedKaiheilaServer
 }
 
 // Init 服务初始化
-func Init(config *conf.Config) *Service {
+func Init(config *conf.Config, service string) *Service {
 	srv := &Service{
 		kaiheilaClient: kaiheila.NewClient("", kaiheila.TokenBot, config.Kaiheila.Token, 0),
-		chat:           chatService.InitClient(chatService.ServiceAddr),
+		dao:            dao.Init(config, service),
 	}
 	srv.kaiheilaWSS = srv.kaiheilaClient.WebSocketSession(srv.EventHandler)
+	log.CheckErr(srv.dao.ListenAllChatEvent(srv.AllChatEvent))
 	return srv
 }
 
 // Healthy 服务健康检查
 func (s *Service) Healthy() bool {
-	return true
+	return s.dao.Healthy()
 }
 
 // Close 服务关闭
 func (s *Service) Close() {
 	s.kaiheilaWSS.Close()
-	chatService.Close()
+	s.dao.Close()
 }

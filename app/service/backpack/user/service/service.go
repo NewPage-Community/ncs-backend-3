@@ -13,7 +13,7 @@ type Service struct {
 	items itemsSrv.ItemsClient
 	jwt   *jwt.JWT
 	pb.UnimplementedUserServer
-	pb.UnimplementedWebServer
+	pb.UnimplementedUserPublicServer
 }
 
 func Init(config *conf.Config) *Service {
