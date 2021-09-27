@@ -5,7 +5,9 @@
 package dao
 
 import (
+	event "backend/app/service/donate/event"
 	model "backend/app/service/donate/model"
+	context "context"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
@@ -73,6 +75,20 @@ func (m *MockDao) CreateDonate(uid, steamID int64, amount int32, payment model.D
 func (mr *MockDaoMockRecorder) CreateDonate(uid, steamID, amount, payment interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateDonate", reflect.TypeOf((*MockDao)(nil).CreateDonate), uid, steamID, amount, payment)
+}
+
+// CreateDonateEvent mocks base method.
+func (m *MockDao) CreateDonateEvent(ctx context.Context, data *event.DonateEventData) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateDonateEvent", ctx, data)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateDonateEvent indicates an expected call of CreateDonateEvent.
+func (mr *MockDaoMockRecorder) CreateDonateEvent(ctx, data interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateDonateEvent", reflect.TypeOf((*MockDao)(nil).CreateDonateEvent), ctx, data)
 }
 
 // FinishTrade mocks base method.
@@ -146,4 +162,18 @@ func (m *MockDao) Healthy() bool {
 func (mr *MockDaoMockRecorder) Healthy() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Healthy", reflect.TypeOf((*MockDao)(nil).Healthy))
+}
+
+// ListenDonateEvent mocks base method.
+func (m *MockDao) ListenDonateEvent(cb event.DonateCallback) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListenDonateEvent", cb)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// ListenDonateEvent indicates an expected call of ListenDonateEvent.
+func (mr *MockDaoMockRecorder) ListenDonateEvent(cb interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListenDonateEvent", reflect.TypeOf((*MockDao)(nil).ListenDonateEvent), cb)
 }

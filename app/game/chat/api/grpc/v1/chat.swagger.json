@@ -92,7 +92,8 @@
         },
         "uid": {
           "type": "string",
-          "format": "int64"
+          "format": "int64",
+          "title": "MQ"
         },
         "serverName": {
           "type": "string"

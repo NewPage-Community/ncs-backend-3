@@ -4,6 +4,7 @@ import (
 	pb "backend/app/game/chat/api/grpc/v1"
 	event "backend/app/game/chat/event"
 	server "backend/app/game/server/api/grpc/v1"
+	donateEvent "backend/app/service/donate/event"
 	"backend/pkg/log"
 	"context"
 	"fmt"
@@ -52,6 +53,14 @@ func (s *Service) AllChatEvent(ctx context.Context, data *event.AllChatEventData
 		Uid:     0,
 		Prefix:  fmt.Sprintf(AllChatPrefix, prefix),
 		Message: data.Name + " : " + data.Message,
+	})
+	log.CheckErr(err)
+}
+
+func (s *Service) DonateEvent(ctx context.Context, data *donateEvent.DonateEventData) {
+	_, err := s.ChatNotify(ctx, &pb.ChatNotifyReq{
+		Uid:     0,
+		Message: fmt.Sprintf("感谢 {green}%s{default} 捐助了 {green}%d元{default}", data.Username, data.Amount),
 	})
 	log.CheckErr(err)
 }

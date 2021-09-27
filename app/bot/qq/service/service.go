@@ -47,6 +47,7 @@ func Init(config *conf.Config, service string) *Service {
 	go srv.qqWSClient.Run()
 	//srv.dao.ListenAllChatEvent(srv.AllChatEvent)
 	log.CheckErr(srv.dao.ListenChangeMapEvent(srv.ChangeMapEvent))
+	log.CheckErr(srv.dao.ListenDonateEvent(srv.DonateEvent))
 	return srv
 }
 

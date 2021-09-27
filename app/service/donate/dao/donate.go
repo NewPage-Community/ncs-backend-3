@@ -1,13 +1,16 @@
 package dao
 
 import (
+	"backend/app/service/donate/event"
 	"backend/app/service/donate/model"
+	"context"
 	"errors"
 	"fmt"
-	"gorm.io/gorm"
-	"gorm.io/gorm/clause"
 	"strconv"
 	"time"
+
+	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 func (d *dao) CreateDonate(uid int64, steamID int64, amount int32, payment model.DonatePayment) (outTradeNo string, err error) {
@@ -75,4 +78,12 @@ func (d *dao) GetCheckTradeList() (res []*model.Donate, err error) {
 	res = make([]*model.Donate, 0)
 	err = d.db.Where(gorm.Expr("status = ?", model.DonateUnPay)).Find(&res).Error
 	return
+}
+
+func (d *dao) CreateDonateEvent(ctx context.Context, data *event.DonateEventData) (err error) {
+	return event.NewDonateEvent(d.stream).Create(ctx, data)
+}
+
+func (d *dao) ListenDonateEvent(cb event.DonateCallback) error {
+	return event.NewDonateEvent(d.stream).Listen(cb)
 }

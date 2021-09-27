@@ -4,6 +4,8 @@ import (
 	"backend/pkg/conf"
 	"backend/pkg/database/mysql"
 	"backend/pkg/log"
+
+	goredis "github.com/go-redis/redis/v8"
 )
 
 type Config struct {
@@ -11,6 +13,7 @@ type Config struct {
 	Alipay *Alipay
 	Wepay  *Wepay
 	Mysql  *mysql.Config
+	Redis  *goredis.Options
 	Donate *Donate
 }
 
@@ -39,6 +42,7 @@ func Init() (c *Config) {
 		&Alipay{},
 		&Wepay{},
 		&mysql.Config{},
+		&goredis.Options{},
 		&Donate{},
 	}
 	conf.Load(c)

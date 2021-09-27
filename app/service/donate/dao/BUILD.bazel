@@ -11,9 +11,12 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//app/service/donate/conf",
+        "//app/service/donate/event",
         "//app/service/donate/model",
         "//pkg/database/mysql",
+        "//pkg/database/redis",
         "//pkg/log",
+        "@com_github_go_redis_redis_v7//:redis",
         "@com_github_golang_mock//gomock",
         "@io_gorm_gorm//:gorm",
         "@io_gorm_gorm//clause",

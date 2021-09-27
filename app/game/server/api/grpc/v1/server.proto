@@ -67,6 +67,7 @@ message RconAllResp {
 message ChangeMapNotifyReq {
     int32 server_id = 1;
     string map = 2;
+    // MQ
     string server_name = 3;
 }
 

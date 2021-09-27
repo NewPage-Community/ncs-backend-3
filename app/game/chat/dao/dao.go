@@ -3,6 +3,7 @@ package dao
 import (
 	"backend/app/game/chat/conf"
 	chatEvent "backend/app/game/chat/event"
+	donateEvent "backend/app/service/donate/event"
 	"backend/pkg/database/redis"
 	"context"
 
@@ -12,6 +13,8 @@ import (
 type Dao interface {
 	CreateAllChatEvent(ctx context.Context, data *chatEvent.AllChatEventData) (err error)
 	ListenAllChatEvent(cb chatEvent.AllChatCallback) error
+	CreateDonateEvent(ctx context.Context, data *donateEvent.DonateEventData) (err error)
+	ListenDonateEvent(cb donateEvent.DonateCallback) error
 	Healthy() bool
 	Close()
 }

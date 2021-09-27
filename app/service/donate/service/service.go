@@ -6,6 +6,7 @@ import (
 	"backend/app/service/donate/dao"
 	accountService "backend/app/service/user/account/api/grpc/v1"
 	moneyService "backend/app/service/user/money/api/grpc/v1"
+
 	"github.com/robfig/cron/v3"
 )
 
@@ -19,7 +20,7 @@ type Service struct {
 	pb.UnimplementedDonateServer
 }
 
-func Init(config *conf.Config) *Service {
+func Init(config *conf.Config, service string) *Service {
 	s := &Service{
 		account: accountService.InitClient(accountService.ServiceAddr),
 		money:   moneyService.InitClient(moneyService.ServiceAddr),
@@ -27,6 +28,7 @@ func Init(config *conf.Config) *Service {
 		wepay:   nil,
 		dao:     dao.Init(config),
 		cron:    cron.New(),
+		dao:  dao.Init(config, service),
 	}
 	s.regCron()
 	s.cron.Start()

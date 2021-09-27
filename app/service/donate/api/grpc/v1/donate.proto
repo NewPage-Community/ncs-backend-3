@@ -46,6 +46,10 @@ message GetDonateListResp {
 message AddDonateReq {
     int64 steam_id = 1;
     int32 amount = 2;
+    // MQ
+    string username = 3;
+    // MQ
+    int64 uid = 4;
 }
 
 message AddDonateResp {

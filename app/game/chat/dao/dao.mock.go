@@ -6,6 +6,7 @@ package dao
 
 import (
 	event "backend/app/game/chat/event"
+	event0 "backend/app/service/donate/event"
 	context "context"
 	reflect "reflect"
 
@@ -61,6 +62,20 @@ func (mr *MockDaoMockRecorder) CreateAllChatEvent(ctx, data interface{}) *gomock
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateAllChatEvent", reflect.TypeOf((*MockDao)(nil).CreateAllChatEvent), ctx, data)
 }
 
+// CreateDonateEvent mocks base method.
+func (m *MockDao) CreateDonateEvent(ctx context.Context, data *event0.DonateEventData) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "CreateDonateEvent", ctx, data)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CreateDonateEvent indicates an expected call of CreateDonateEvent.
+func (mr *MockDaoMockRecorder) CreateDonateEvent(ctx, data interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateDonateEvent", reflect.TypeOf((*MockDao)(nil).CreateDonateEvent), ctx, data)
+}
+
 // Healthy mocks base method.
 func (m *MockDao) Healthy() bool {
 	m.ctrl.T.Helper()
@@ -87,4 +102,18 @@ func (m *MockDao) ListenAllChatEvent(cb event.AllChatCallback) error {
 func (mr *MockDaoMockRecorder) ListenAllChatEvent(cb interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListenAllChatEvent", reflect.TypeOf((*MockDao)(nil).ListenAllChatEvent), cb)
+}
+
+// ListenDonateEvent mocks base method.
+func (m *MockDao) ListenDonateEvent(cb event0.DonateCallback) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListenDonateEvent", cb)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// ListenDonateEvent indicates an expected call of ListenDonateEvent.
+func (mr *MockDaoMockRecorder) ListenDonateEvent(cb interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListenDonateEvent", reflect.TypeOf((*MockDao)(nil).ListenDonateEvent), cb)
 }

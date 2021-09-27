@@ -9,5 +9,6 @@ go_library(
         "//pkg/conf",
         "//pkg/database/mysql",
         "//pkg/log",
+        "@com_github_go_redis_redis_v7//:redis",
     ],
 )

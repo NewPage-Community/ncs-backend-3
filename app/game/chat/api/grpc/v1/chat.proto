@@ -8,7 +8,9 @@ message AllChatReq {
     string name = 1;
     string message = 2;
     int32 server_id = 3;
+    // MQ
     int64 uid = 4;
+    // MQ
     string server_name = 5;
 }
 

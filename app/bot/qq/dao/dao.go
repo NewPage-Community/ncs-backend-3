@@ -4,6 +4,7 @@ import (
 	"backend/app/bot/qq/conf"
 	chatEvent "backend/app/game/chat/event"
 	serverEvent "backend/app/game/server/event"
+	donateEvent "backend/app/service/donate/event"
 	"backend/pkg/database/redis"
 	"context"
 
@@ -15,6 +16,8 @@ type Dao interface {
 	ListenAllChatEvent(cb chatEvent.AllChatCallback) error
 	CreateChangeMapEvent(ctx context.Context, data *serverEvent.ChangeMapEventData) (err error)
 	ListenChangeMapEvent(cb serverEvent.ChangeMapCallback) error
+	CreateDonateEvent(ctx context.Context, data *donateEvent.DonateEventData) (err error)
+	ListenDonateEvent(cb donateEvent.DonateCallback) error
 	Healthy() bool
 	Close()
 }

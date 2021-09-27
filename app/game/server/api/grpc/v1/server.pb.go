@@ -625,8 +625,9 @@ type ChangeMapNotifyReq struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ServerId   int32  `protobuf:"varint,1,opt,name=server_id,json=serverId,proto3" json:"server_id,omitempty"`
-	Map        string `protobuf:"bytes,2,opt,name=map,proto3" json:"map,omitempty"`
+	ServerId int32  `protobuf:"varint,1,opt,name=server_id,json=serverId,proto3" json:"server_id,omitempty"`
+	Map      string `protobuf:"bytes,2,opt,name=map,proto3" json:"map,omitempty"`
+	// MQ
 	ServerName string `protobuf:"bytes,3,opt,name=server_name,json=serverName,proto3" json:"server_name,omitempty"`
 }
 

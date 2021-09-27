@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "event",
+    srcs = ["donate.go"],
+    importpath = "backend/app/service/donate/event",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app/service/donate/api/grpc/v1:grpc",
+        "//pkg/database/redis",
+        "//pkg/json",
+        "//pkg/log",
+    ],
+)

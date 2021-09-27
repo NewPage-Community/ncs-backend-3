@@ -4,6 +4,7 @@ import (
 	pb "backend/app/bot/qq/api/grpc/v1"
 	"backend/app/game/chat"
 	chatEvent "backend/app/game/chat/event"
+	donateEvent "backend/app/service/donate/event"
 
 	serverEvent "backend/app/game/server/event"
 	"backend/pkg/log"
@@ -98,6 +99,14 @@ func (s *Service) AllChatEvent(ctx context.Context, data *chatEvent.AllChatEvent
 func (s *Service) ChangeMapEvent(ctx context.Context, data *serverEvent.ChangeMapEventData) {
 	_, err := s.SendGroupMessage(ctx, &pb.SendGroupMessageReq{
 		Message:    fmt.Sprintf("%s 更换地图 %s", data.ServerName, data.Map),
+		AutoEscape: false,
+	})
+	log.CheckErr(err)
+}
+
+func (s *Service) DonateEvent(ctx context.Context, data *donateEvent.DonateEventData) {
+	_, err := s.SendGroupMessage(ctx, &pb.SendGroupMessageReq{
+		Message:    fmt.Sprintf("🙏 感谢 %s 捐助了 %d元 🙏", data.Username, data.Amount),
 		AutoEscape: false,
 	})
 	log.CheckErr(err)

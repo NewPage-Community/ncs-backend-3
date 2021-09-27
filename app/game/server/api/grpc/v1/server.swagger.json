@@ -350,7 +350,8 @@
           "type": "string"
         },
         "serverName": {
-          "type": "string"
+          "type": "string",
+          "title": "MQ"
         }
       }
     },

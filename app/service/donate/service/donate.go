@@ -2,14 +2,16 @@ package service
 
 import (
 	pb "backend/app/service/donate/api/grpc/v1"
+	"backend/app/service/donate/event"
 	"backend/app/service/donate/model"
 	accountService "backend/app/service/user/account/api/grpc/v1"
 	moneyService "backend/app/service/user/money/api/grpc/v1"
 	"backend/pkg/log"
 	"context"
+	"time"
+
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"time"
 )
 
 const (
@@ -82,6 +84,16 @@ func (s *Service) FinishDonate(outTradeNo string) (err error) {
 	})
 	if err != nil {
 		return
+	}
+
+	// Send to MQ
+	info, err := s.account.Info(ctx, &accountService.InfoReq{Uid: db.UID})
+	if err == nil {
+		log.Error(s.dao.CreateDonateEvent(ctx, &event.DonateEventData{
+			Uid:      db.UID,
+			Amount:   db.Amount,
+			Username: info.Info.Username,
+		}))
 	}
 
 	err = s.dao.FinishTrade(outTradeNo)

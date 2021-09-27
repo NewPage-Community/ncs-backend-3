@@ -20,6 +20,7 @@ func Init(config *conf.Config, service string) (s *Service) {
 		dao:    dao.Init(config, service),
 	}
 	log.CheckErr(s.dao.ListenAllChatEvent(s.AllChatEvent))
+	log.CheckErr(s.dao.ListenDonateEvent(s.DonateEvent))
 	return
 }
 

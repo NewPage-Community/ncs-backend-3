@@ -21,6 +21,7 @@ go_library(
         "//app/game/server/api/grpc/v1:grpc",
         "//app/game/server/event",
         "//app/service/donate/api/grpc/v1:grpc",
+        "//app/service/donate/event",
         "//app/service/user/account/api/grpc/v1:grpc",
         "//app/service/user/ban/api/grpc/v1:grpc",
         "//pkg/log",
