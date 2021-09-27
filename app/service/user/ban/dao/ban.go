@@ -3,9 +3,10 @@ package dao
 import (
 	"backend/app/service/user/ban/model"
 	"backend/pkg/ecode"
+	"time"
+
 	"google.golang.org/grpc/codes"
 	"gorm.io/gorm"
-	"time"
 )
 
 const (
@@ -46,7 +47,7 @@ func (d *dao) Add(info *model.Ban) (err error) {
 
 func (d *dao) Remove(info *model.Ban) (err error) {
 	// IMPORTANT!!! id empty will delete all recode!!!
-	if !info.IsValid() {
+	if info.ID == 0 {
 		err = ecode.Errorf(codes.InvalidArgument, "ID is empty")
 		return
 	}
