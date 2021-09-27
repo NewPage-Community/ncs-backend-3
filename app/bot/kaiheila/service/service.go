@@ -23,6 +23,7 @@ func Init(config *conf.Config, service string) *Service {
 	srv := &Service{
 		kaiheilaClient: kaiheila.NewClient("", kaiheila.TokenBot, config.Kaiheila.Token, 0),
 		dao:            dao.Init(config, service),
+		kaiheilaConfig: config.Kaiheila,
 	}
 	srv.kaiheilaWSS = srv.kaiheilaClient.WebSocketSession(srv.EventHandler)
 	log.CheckErr(srv.dao.ListenAllChatEvent(srv.AllChatEvent))

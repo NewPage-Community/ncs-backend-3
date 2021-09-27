@@ -16,11 +16,13 @@ type Config struct {
 }
 
 type QQConfig struct {
-	Address  string
-	APIPort  int
-	WSPort   int
-	Token    string
-	QQGroups []int
+	Address     string
+	APIPort     int
+	WSPort      int
+	Token       string
+	QQGroups    []int64
+	AdminGroups []int64
+	Admins      []int64
 }
 
 // Init 初始化配置

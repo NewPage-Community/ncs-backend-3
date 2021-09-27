@@ -3,8 +3,11 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "service",
     srcs = [
+        "ban.go",
+        "player.go",
         "qq.go",
         "qqwebsocket.go",
+        "server.go",
         "service.go",
     ],
     importpath = "backend/app/bot/qq/service",
@@ -17,6 +20,9 @@ go_library(
         "//app/game/chat/event",
         "//app/game/server/api/grpc/v1:grpc",
         "//app/game/server/event",
+        "//app/service/donate/api/grpc/v1:grpc",
+        "//app/service/user/account/api/grpc/v1:grpc",
+        "//app/service/user/ban/api/grpc/v1:grpc",
         "//pkg/log",
         "@com_github_gorilla_websocket//:websocket",
         "@com_github_miremid_amy//:amy",

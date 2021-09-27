@@ -4,12 +4,13 @@ import (
 	pb "backend/app/bot/qq/api/grpc/v1"
 	"backend/app/game/chat"
 	chatEvent "backend/app/game/chat/event"
-	serverService "backend/app/game/server/api/grpc/v1"
+
 	serverEvent "backend/app/game/server/event"
 	"backend/pkg/log"
 	"context"
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	qqMessage "github.com/miRemid/amy/message"
 	qqModel "github.com/miRemid/amy/websocket/model"
@@ -23,8 +24,8 @@ const (
 func (s *Service) SendGroupMessage(ctx context.Context, req *pb.SendGroupMessageReq) (resp *pb.SendGroupMessageResp, err error) {
 	resp = &pb.SendGroupMessageResp{}
 	builder := qqMessage.NewCQMsgBuilder()
-	for _, v := range s.qqGroups {
-		_, err1 := s.qqAPIClient.SendGroupMsg(builder.GroupMsg(v, req.Message, req.AutoEscape), true)
+	for _, v := range s.qqConfig.QQGroups {
+		_, err1 := s.qqAPIClient.SendGroupMsg(builder.GroupMsg(int(v), req.Message, req.AutoEscape), true)
 		if err1 != nil {
 			log.Error(err1)
 		}
@@ -38,9 +39,20 @@ func (s *Service) OnMessage(event qqModel.CQEvent) {
 		return
 	}
 
-	switch msg.(string) {
-	case "状态":
-		s.getServerStatus(event)
+	// Group only
+	if t := event.Map["message_type"].(string); t != "group" {
+		return
+	}
+
+	// Get event
+	groupID, err := event.Map["group_id"].(json.Number).Int64()
+	if err != nil {
+		return
+	}
+
+	// Service auth group only
+	if !s.InGroup(groupID) && !s.IsAdminGroup(groupID) {
+		return
 	}
 
 	if msg.(string)[0] == '#' {
@@ -51,41 +63,29 @@ func (s *Service) OnMessage(event qqModel.CQEvent) {
 			ServerName: chat.QQName,
 		}))
 	}
+
+	cmd := strings.Split(msg.(string), " ")
+	switch cmd[0] {
+	case "状态", "狀態", "/status":
+		s.getServerStatus(event, groupID)
+	case "/ban":
+		s.banPlayer(event, cmd[1:])
+	case "/unban":
+		s.unBanPlayer(event, cmd[1:])
+	case "/changemap":
+		s.changeMap(event, cmd[1:])
+	case "/donate":
+		s.donate(event, cmd[1:])
+	case "/player":
+	}
 }
 
-func (s *Service) getServerStatus(event qqModel.CQEvent) {
-	// Group only
-	if t := event.Map["message_type"].(string); t != "group" {
-		return
-	}
-	// Get event
-	groupID, err := event.Map["group_id"].(json.Number).Int64()
-	if err != nil {
-		return
-	}
-
-	// Build message
-	var msg string
-	resp, err := s.serverSrv.AllInfo(context.Background(), &serverService.AllInfoReq{A2S: true})
-	if err != nil {
-		log.Error(err)
-		return
-	}
-
-	for _, v := range resp.Info {
-		if v.A2SInfo.MaxPlayers > 0 {
-			msg += fmt.Sprintf("%s | %s (%d/%d)\n", v.ShortName, v.A2SInfo.Map, v.A2SInfo.Players, v.A2SInfo.MaxPlayers)
-		}
-	}
-	msg += "仪表盘: " + ServerURL
-
-	// Send message
+func (s *Service) Reply(event qqModel.CQEvent, message string) (err error) {
+	group, _ := event.Map["group_id"].(json.Number).Int64()
 	builder := qqMessage.NewCQMsgBuilder()
-	m := builder.GroupMsg(int(groupID), fmt.Sprintf("[CQ:reply,id=%s]%s", event.Map["message_id"], msg), false)
+	m := builder.GroupMsg(int(group), fmt.Sprintf("[CQ:reply,id=%s]%s", event.Map["message_id"], message), false)
 	_, err = s.qqAPIClient.SendGroupMsg(m, true)
-	if err != nil {
-		log.Error(err)
-	}
+	return
 }
 
 func (s *Service) AllChatEvent(ctx context.Context, data *chatEvent.AllChatEventData) {
@@ -98,4 +98,31 @@ func (s *Service) ChangeMapEvent(ctx context.Context, data *serverEvent.ChangeMa
 		AutoEscape: false,
 	})
 	log.CheckErr(err)
+}
+
+func (s *Service) InGroup(id int64) bool {
+	for _, v := range s.qqConfig.QQGroups {
+		if v == id {
+			return true
+		}
+	}
+	return false
+}
+
+func (s *Service) IsAdminGroup(id int64) bool {
+	for _, v := range s.qqConfig.AdminGroups {
+		if v == id {
+			return true
+		}
+	}
+	return false
+}
+
+func (s *Service) IsAdmin(id int64) bool {
+	for _, v := range s.qqConfig.Admins {
+		if v == id {
+			return true
+		}
+	}
+	return false
 }

@@ -59,6 +59,7 @@ func (s *Stream) Subscribe(topic string, callback StreamCallback) (err error) {
 		if err.Error() != groupExistErr {
 			return
 		}
+		err = nil
 	}
 
 	// Create comsumer

@@ -5,6 +5,9 @@ import (
 	"backend/app/bot/qq/conf"
 	"backend/app/bot/qq/dao"
 	serverService "backend/app/game/server/api/grpc/v1"
+	donateService "backend/app/service/donate/api/grpc/v1"
+	accountService "backend/app/service/user/account/api/grpc/v1"
+	banService "backend/app/service/user/ban/api/grpc/v1"
 	"backend/pkg/log"
 
 	"github.com/miRemid/amy"
@@ -16,7 +19,10 @@ type Service struct {
 	qqWSClient  *MsgClient
 	qqAPIClient *amy.API
 	serverSrv   serverService.ServerClient
-	qqGroups    []int
+	banSrv      banService.BanClient
+	accountSrv  accountService.AccountClient
+	donateSrv   donateService.DonateClient
+	qqConfig    *conf.QQConfig
 	dao         dao.Dao
 	pb.UnimplementedQQServer
 }
@@ -27,7 +33,10 @@ func Init(config *conf.Config, service string) *Service {
 		qqAPIClient: amy.NewAmyAPI(config.QQConfig.Address, config.QQConfig.APIPort),
 		qqWSClient:  NewWSClient(config.QQConfig.Address, config.QQConfig.WSPort),
 		serverSrv:   serverService.InitClient(serverService.ServiceAddr),
-		qqGroups:    config.QQConfig.QQGroups,
+		banSrv:      banService.InitClient(banService.ServiceAddr),
+		accountSrv:  accountService.InitClient(accountService.ServiceAddr),
+		donateSrv:   donateService.InitClient(donateService.ServiceAddr),
+		qqConfig:    config.QQConfig,
 		dao:         dao.Init(config, service),
 	}
 	srv.qqAPIClient.SetToken(config.QQConfig.Token)
@@ -49,5 +58,8 @@ func (s *Service) Healthy() bool {
 // Close 服务关闭
 func (s *Service) Close() {
 	serverService.Close()
+	banService.Close()
+	accountService.Close()
+	donateService.Close()
 	s.dao.Close()
 }
