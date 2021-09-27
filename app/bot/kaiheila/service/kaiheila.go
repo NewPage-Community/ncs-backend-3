@@ -51,6 +51,10 @@ func (s *Service) EventHandler(event kaiheila.EventMsg) {
 }
 
 func (s *Service) AllChatEvent(ctx context.Context, data *chatEvent.AllChatEventData) {
+	// Skip itself
+	if data.ServerId == chat.KaiheilaID {
+		return
+	}
 	_, err := s.SendChannelMsg(ctx, &pb.SendMessageReq{
 		Type:      10,
 		ChannelId: s.kaiheilaConfig.AllChatChannelID,

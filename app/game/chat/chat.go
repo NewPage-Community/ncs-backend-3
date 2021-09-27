@@ -22,6 +22,6 @@ func GetUrl(serverID int) string {
 	case QQID:
 		return QQUrl
 	default:
-		return ""
+		return ServerURL
 	}
 }

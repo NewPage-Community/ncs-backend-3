@@ -90,7 +90,10 @@ func (s *Service) Reply(event qqModel.CQEvent, message string) (err error) {
 }
 
 func (s *Service) AllChatEvent(ctx context.Context, data *chatEvent.AllChatEventData) {
-
+	// Skip itself
+	if data.ServerId == chat.QQID {
+		return
+	}
 }
 
 func (s *Service) ChangeMapEvent(ctx context.Context, data *serverEvent.ChangeMapEventData) {
