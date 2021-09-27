@@ -134,7 +134,7 @@ go_repository(
     sha256 = "c3e28d8820056e7cc870dbb5f18b4f7f7cbd4e1b14633a6317cef895fdb35203",
     strip_prefix = "go-containerregistry-0.5.1",
     urls = [
-        "https://nexus3.nexus3:8081/repository/github/google/go-containerregistry/archive/v0.5.1.tar.gz",
+        "http://nexus3.nexus3:8081/repository/github/google/go-containerregistry/archive/v0.5.1.tar.gz",
         "https://nexus.new-page.xyz/repository/github/google/go-containerregistry/archive/v0.5.1.tar.gz",
     ],
 )
