@@ -5,6 +5,7 @@ import (
 	"backend/app/bot/qq/conf"
 	"backend/app/bot/qq/dao"
 	serverService "backend/app/game/server/api/grpc/v1"
+	"backend/pkg/log"
 
 	"github.com/miRemid/amy"
 	"github.com/miRemid/amy/websocket/model"
