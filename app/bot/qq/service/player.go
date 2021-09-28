@@ -4,6 +4,7 @@ import (
 	donateService "backend/app/service/donate/api/grpc/v1"
 	"backend/pkg/log"
 	"context"
+	"encoding/json"
 	"strconv"
 
 	qqModel "github.com/miRemid/amy/websocket/model"
@@ -19,7 +20,8 @@ func (s *Service) donate(event qqModel.CQEvent, cmd []string) {
 	}
 
 	// Admin only
-	if !s.IsAdmin(event.Map["user_id"].(int64)) {
+	userID, _ := event.Map["user_id"].(json.Number).Int64()
+	if !s.IsAdmin(userID) {
 		return
 	}
 
