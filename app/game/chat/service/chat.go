@@ -60,7 +60,7 @@ func (s *Service) AllChatEvent(ctx context.Context, data *event.AllChatEventData
 func (s *Service) DonateEvent(ctx context.Context, data *donateEvent.DonateEventData) {
 	_, err := s.ChatNotify(ctx, &pb.ChatNotifyReq{
 		Uid:     0,
-		Message: fmt.Sprintf("感谢 {green}%s{default} 捐助了 {green}%d元{default}", data.Username, data.Amount),
+		Message: fmt.Sprintf("感谢 {green}%s{default} 捐助了 {green}%d元{default} !", data.Username, data.Amount),
 	})
 	log.CheckErr(err)
 }
