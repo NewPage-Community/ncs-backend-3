@@ -15,7 +15,7 @@ func (s *Service) donate(event qqModel.CQEvent, cmd []string) {
 	steamid, _ := strconv.ParseInt(cmd[0], 0, 0)
 	amount, _ := strconv.Atoi(cmd[1])
 
-	if steamid == 0 || amount == 0 {
+	if steamid <= 0 || amount <= 0 {
 		return
 	}
 

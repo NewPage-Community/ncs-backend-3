@@ -41,7 +41,7 @@ func (s *Service) changeMap(event qqModel.CQEvent, cmd []string) {
 	mapName := cmd[1]
 
 	// Invalid args
-	if serverID == 0 || len(mapName) == 0 {
+	if serverID <= 0 || len(mapName) == 0 {
 		return
 	}
 

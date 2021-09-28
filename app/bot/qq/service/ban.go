@@ -18,7 +18,7 @@ func (s *Service) banPlayer(event qqModel.CQEvent, cmd []string) {
 	reason := cmd[2]
 
 	// Invalid args
-	if steamid == 0 || days == 0 {
+	if steamid <= 0 || days <= 0 {
 		return
 	}
 
@@ -55,7 +55,7 @@ func (s *Service) unBanPlayer(event qqModel.CQEvent, cmd []string) {
 	steamid, _ := strconv.ParseInt(cmd[0], 0, 0)
 
 	// Invalid args
-	if steamid == 0 {
+	if steamid <= 0 {
 		return
 	}
 

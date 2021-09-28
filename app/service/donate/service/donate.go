@@ -25,7 +25,7 @@ const (
 func (s *Service) CreateDonate(ctx context.Context, req *pb.CreateDonateReq) (resp *pb.CreateDonateResp, err error) {
 	resp = &pb.CreateDonateResp{}
 
-	if req.SteamId == 0 || req.Amount == 0 {
+	if req.SteamId <= 0 || req.Amount <= 0 {
 		err = status.Error(codes.InvalidArgument, "Invalid args")
 		return
 	}
@@ -159,7 +159,7 @@ func (s *Service) GetDonateList(ctx context.Context, req *pb.GetDonateListReq) (
 func (s *Service) AddDonate(ctx context.Context, req *pb.AddDonateReq) (resp *pb.AddDonateResp, err error) {
 	resp = &pb.AddDonateResp{}
 
-	if req.SteamId == 0 || req.Amount == 0 {
+	if req.SteamId <= 0 || req.Amount <= 0 {
 		err = status.Error(codes.InvalidArgument, "Invalid args")
 		return
 	}
