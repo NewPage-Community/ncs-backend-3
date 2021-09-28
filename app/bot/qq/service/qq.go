@@ -70,14 +70,19 @@ func (s *Service) OnMessage(event qqModel.CQEvent) {
 	switch cmd[0] {
 	case "状态", "狀態", "/status":
 		s.getServerStatus(event, groupID)
-	case "/ban":
-		s.banPlayer(event, cmd[1:])
-	case "/unban":
-		s.unBanPlayer(event, cmd[1:])
-	case "/map":
-		s.changeMap(event, cmd[1:])
-	case "/donate":
-		s.donate(event, cmd[1:])
+	}
+
+	if s.IsAdminGroup(groupID) {
+		switch cmd[0] {
+		case "/ban":
+			s.banPlayer(event, cmd[1:])
+		case "/unban":
+			s.unBanPlayer(event, cmd[1:])
+		case "/map":
+			s.changeMap(event, cmd[1:])
+		case "/donate":
+			s.donate(event, cmd[1:])
+		}
 	}
 }
 
