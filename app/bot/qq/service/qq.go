@@ -20,7 +20,7 @@ import (
 const (
 	QQMessage    = "[📣%s] %s:\n%s"
 	ServerURL    = "https://game.new-page.xyz"
-	SuccessReply = "成功处理 ✅"
+	SuccessReply = "✅成功处理✅"
 )
 
 func (s *Service) SendGroupMessage(ctx context.Context, req *pb.SendGroupMessageReq) (resp *pb.SendGroupMessageResp, err error) {
@@ -99,11 +99,17 @@ func (s *Service) AllChatEvent(ctx context.Context, data *chatEvent.AllChatEvent
 	if data.ServerId == chat.QQID {
 		return
 	}
+
+	_, err := s.SendGroupMessage(ctx, &pb.SendGroupMessageReq{
+		Message:    fmt.Sprintf("📣%s📣\n%s : %s", data.ServerName, data.Name, data.Message),
+		AutoEscape: false,
+	})
+	log.CheckErr(err)
 }
 
 func (s *Service) ChangeMapEvent(ctx context.Context, data *serverEvent.ChangeMapEventData) {
 	_, err := s.SendGroupMessage(ctx, &pb.SendGroupMessageReq{
-		Message:    fmt.Sprintf("%s 更换地图 %s", data.ServerName, data.Map),
+		Message:    fmt.Sprintf("🗺%s🗺\n更换地图 %s", data.ServerName, data.Map),
 		AutoEscape: false,
 	})
 	log.CheckErr(err)
@@ -111,7 +117,7 @@ func (s *Service) ChangeMapEvent(ctx context.Context, data *serverEvent.ChangeMa
 
 func (s *Service) DonateEvent(ctx context.Context, data *donateEvent.DonateEventData) {
 	_, err := s.SendGroupMessage(ctx, &pb.SendGroupMessageReq{
-		Message:    fmt.Sprintf("🙏 感谢 %s 捐助了 %d元 🙏", data.Username, data.Amount),
+		Message:    fmt.Sprintf("🙏捐助信息🙏\n感谢 %s 捐助了 %d元", data.Username, data.Amount),
 		AutoEscape: false,
 	})
 	log.CheckErr(err)
