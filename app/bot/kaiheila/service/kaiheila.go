@@ -58,7 +58,7 @@ func (s *Service) AllChatEvent(ctx context.Context, data *chatEvent.AllChatEvent
 	_, err := s.SendChannelMsg(ctx, &pb.SendMessageReq{
 		Type:      10,
 		ChannelId: s.kaiheilaConfig.AllChatChannelID,
-		Content:   fmt.Sprintf(KaiheilaMessage, data.ServerName, chat.GetUrl(int(data.ServerId)), removeColor(removeInvalidChar(data.Name)), data.Message),
+		Content:   fmt.Sprintf(KaiheilaMessage, data.ServerName, chat.GetUrl(int(data.ServerId)), chat.RemoveColor(data.Name), data.Message),
 	})
 	log.CheckErr(err)
 }

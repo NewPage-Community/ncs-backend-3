@@ -101,7 +101,7 @@ func (s *Service) AllChatEvent(ctx context.Context, data *chatEvent.AllChatEvent
 	}
 
 	_, err := s.SendGroupMessage(ctx, &pb.SendGroupMessageReq{
-		Message:    fmt.Sprintf("📣%s📣\n%s : %s", data.ServerName, data.Name, data.Message),
+		Message:    fmt.Sprintf("📣%s📣\n%s : %s", data.ServerName, chat.RemoveColor(data.Name), data.Message),
 		AutoEscape: false,
 	})
 	log.CheckErr(err)
