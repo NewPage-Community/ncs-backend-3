@@ -17,7 +17,7 @@ go_library(
         "//pkg/database/redis",
         "//pkg/json",
         "//pkg/log",
-        "@com_github_go_redis_redis_v7//:redis",
+        "@com_github_go_redis_redis_v8//:redis",
         "@com_github_golang_mock//gomock",
         "@io_gorm_gorm//:gorm",
         "@io_gorm_gorm//clause",

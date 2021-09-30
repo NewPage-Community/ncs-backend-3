@@ -3,6 +3,8 @@ package dao
 import (
 	"backend/app/bot/kaiheila/conf"
 	chatEvent "backend/app/game/chat/event"
+	serverEvent "backend/app/game/server/event"
+	donateEvent "backend/app/service/donate/event"
 	"backend/pkg/database/redis"
 	"context"
 
@@ -12,6 +14,10 @@ import (
 type Dao interface {
 	CreateAllChatEvent(ctx context.Context, data *chatEvent.AllChatEventData) (err error)
 	ListenAllChatEvent(cb chatEvent.AllChatCallback) error
+	CreateChangeMapEvent(ctx context.Context, data *serverEvent.ChangeMapEventData) (err error)
+	ListenChangeMapEvent(cb serverEvent.ChangeMapCallback) error
+	CreateDonateEvent(ctx context.Context, data *donateEvent.DonateEventData) (err error)
+	ListenDonateEvent(cb donateEvent.DonateCallback) error
 	Healthy() bool
 	Close()
 }

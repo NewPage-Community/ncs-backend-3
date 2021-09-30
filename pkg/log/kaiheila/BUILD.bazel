@@ -1,0 +1,13 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "kaiheila",
+    srcs = ["kaiheila.go"],
+    importpath = "backend/pkg/log/kaiheila",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_lonelyevil_khl//:khl",
+        "@org_uber_go_zap//:zap",
+        "@org_uber_go_zap//zapcore",
+    ],
+)

@@ -67,3 +67,7 @@ func CheckErr(err error) {
 		logger.Sugar().Info(err)
 	}
 }
+
+func GetLogger() *zap.Logger {
+	return logger
+}

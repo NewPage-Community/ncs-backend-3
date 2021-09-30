@@ -4,9 +4,8 @@ import (
 	pb "backend/app/bot/qq/api/grpc/v1"
 	"backend/app/game/chat"
 	chatEvent "backend/app/game/chat/event"
-	donateEvent "backend/app/service/donate/event"
-
 	serverEvent "backend/app/game/server/event"
+	donateEvent "backend/app/service/donate/event"
 	"backend/pkg/log"
 	"context"
 	"encoding/json"

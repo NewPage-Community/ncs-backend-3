@@ -11,6 +11,6 @@ go_library(
     deps = [
         "//pkg/log",
         "@com_github_alicebob_miniredis_v2//:miniredis",
-        "@com_github_go_redis_redis_v7//:redis",
+        "@com_github_go_redis_redis_v8//:redis",
     ],
 )

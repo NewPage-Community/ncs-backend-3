@@ -5,14 +5,14 @@ import (
 	"backend/app/bot/kaiheila/conf"
 	"backend/app/bot/kaiheila/dao"
 	"backend/pkg/log"
+	khlLogger "backend/pkg/log/kaiheila"
 
-	"github.com/gunslinger23/kaiheila"
+	"github.com/lonelyevil/khl"
 )
 
 // Service 服务结构定义
 type Service struct {
-	kaiheilaClient *kaiheila.Client
-	kaiheilaWSS    *kaiheila.WebSocketSession
+	kaiheilaClient *khl.Session
 	dao            dao.Dao
 	kaiheilaConfig *conf.Kaiheila
 	pb.UnimplementedKaiheilaServer
@@ -21,12 +21,15 @@ type Service struct {
 // Init 服务初始化
 func Init(config *conf.Config, service string) *Service {
 	srv := &Service{
-		kaiheilaClient: kaiheila.NewClient("", kaiheila.TokenBot, config.Kaiheila.Token, 0),
+		kaiheilaClient: khl.New(config.Kaiheila.Token, khlLogger.NewLogger(log.GetLogger())),
 		dao:            dao.Init(config, service),
 		kaiheilaConfig: config.Kaiheila,
 	}
-	srv.kaiheilaWSS = srv.kaiheilaClient.WebSocketSession(srv.EventHandler)
+	srv.kaiheilaClient.AddHandler(srv.EventHandler)
+	log.CheckErr(srv.kaiheilaClient.Open())
 	log.CheckErr(srv.dao.ListenAllChatEvent(srv.AllChatEvent))
+	log.CheckErr(srv.dao.ListenChangeMapEvent(srv.ChangeMapEvent))
+	log.CheckErr(srv.dao.ListenDonateEvent(srv.DonateEvent))
 	return srv
 }
 
@@ -37,6 +40,6 @@ func (s *Service) Healthy() bool {
 
 // Close 服务关闭
 func (s *Service) Close() {
-	s.kaiheilaWSS.Close()
+	_ = s.kaiheilaClient.Close()
 	s.dao.Close()
 }

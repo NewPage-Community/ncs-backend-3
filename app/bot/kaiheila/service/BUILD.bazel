@@ -3,7 +3,6 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "service",
     srcs = [
-        "helper.go",
         "kaiheila.go",
         "service.go",
     ],
@@ -15,8 +14,11 @@ go_library(
         "//app/bot/kaiheila/dao",
         "//app/game/chat",
         "//app/game/chat/event",
+        "//app/game/server/event",
+        "//app/service/donate/event",
         "//pkg/json",
         "//pkg/log",
-        "@com_github_gunslinger23_kaiheila//:kaiheila",
+        "//pkg/log/kaiheila",
+        "@com_github_lonelyevil_khl//:khl",
     ],
 )

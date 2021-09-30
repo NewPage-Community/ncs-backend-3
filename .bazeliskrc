@@ -1,2 +1,3 @@
 BAZELISK_BASE_URL=https://nexus.new-page.xyz/repository/github/bazelbuild/bazel/releases/download
 USE_BAZEL_VERSION=4.2.1
+BAZELISK_HOME=./.cache/bazelisk

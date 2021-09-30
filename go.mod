@@ -16,7 +16,7 @@ require (
 	github.com/gorilla/websocket v1.4.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.6.0
-	github.com/gunslinger23/kaiheila v0.0.0-20210925075025-d5b9c95ee0f4
+	github.com/lonelyevil/khl v0.0.14
 	github.com/miRemid/amy v0.1.3
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/pkg/errors v0.9.1 // indirect

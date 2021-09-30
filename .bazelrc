@@ -1,1 +1,32 @@
-build/root/.bazelrc
+startup --host_jvm_args=-XX:+UseParallelGC --host_jvm_args=-Xmx6g --host_jvm_args=-Xms1g
+
+# Slow log
+run --show_progress_rate_limit=5
+build --show_progress_rate_limit=5
+test --show_progress_rate_limit=5
+
+# local cache
+startup --output_user_root=./.cache/bazel
+
+# Include git version info
+build --workspace_status_command build/print-workspace-status.sh
+run --workspace_status_command build/print-workspace-status.sh
+
+# Show us information about failures.
+build --verbose_failures
+test --test_output=errors
+
+# Cache
+build --remote_cache=https://cache.new-page.xyz/bazel
+test --remote_cache=https://cache.new-page.xyz/bazel
+
+# Keep run
+build -k
+test -k
+
+# CI
+build:ci -j 8
+build:ci --remote_cache=http://bazel-remote-cache:8080
+test:ci -j 8
+test:ci --remote_cache=http://bazel-remote-cache:8080
+run:ci -j 8

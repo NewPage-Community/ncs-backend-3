@@ -15,7 +15,7 @@ go_library(
         "//app/game/server/event",
         "//app/service/donate/event",
         "//pkg/database/redis",
-        "@com_github_go_redis_redis_v7//:redis",
+        "@com_github_go_redis_redis_v8//:redis",
         "@com_github_golang_mock//gomock",
     ],
 )

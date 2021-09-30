@@ -10,6 +10,6 @@ go_library(
         "//pkg/database/mysql",
         "//pkg/log",
         "//pkg/steam",
-        "@com_github_go_redis_redis_v7//:redis",
+        "@com_github_go_redis_redis_v8//:redis",
     ],
 )

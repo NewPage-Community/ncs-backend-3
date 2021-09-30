@@ -18,6 +18,7 @@ type Config struct {
 type Kaiheila struct {
 	Token            string
 	AllChatChannelID string
+	BotChannelID     string
 }
 
 // Init 初始化配置
