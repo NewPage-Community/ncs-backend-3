@@ -24,13 +24,13 @@ func (s *Service) getServerStatus(event qqModel.CQEvent, groupID int64) {
 			if s.IsAdminGroup(groupID) {
 				msg += fmt.Sprintf("#%d ", v.ServerId)
 			}
-			playerIcon := ""
+			msg += fmt.Sprintf("%s 🗺 %s ", v.ShortName, v.A2SInfo.Map)
 			if v.A2SInfo.Players > 0 {
-				playerIcon = "♿️"
+				msg += fmt.Sprintf("♿️ %d/%d", v.A2SInfo.Players, v.A2SInfo.MaxPlayers)
 			} else {
-				playerIcon = "🈳"
+				msg += "🈳"
 			}
-			msg += fmt.Sprintf("%s 🗺 %s %s %d/%d\n", v.ShortName, v.A2SInfo.Map, playerIcon, v.A2SInfo.Players, v.A2SInfo.MaxPlayers)
+			msg += "\n"
 		}
 	}
 	msg += "仪表盘: " + ServerURL
