@@ -4,6 +4,7 @@ go_library(
     name = "service",
     srcs = [
         "kaiheila.go",
+        "server.go",
         "service.go",
     ],
     importpath = "backend/app/bot/kaiheila/service",
@@ -14,9 +15,9 @@ go_library(
         "//app/bot/kaiheila/dao",
         "//app/game/chat",
         "//app/game/chat/event",
+        "//app/game/server/api/grpc/v1:grpc",
         "//app/game/server/event",
         "//app/service/donate/event",
-        "//pkg/json",
         "//pkg/log",
         "//pkg/log/kaiheila",
         "@com_github_lonelyevil_khl//:khl",

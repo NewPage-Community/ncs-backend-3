@@ -6,7 +6,6 @@ import (
 	chatEvent "backend/app/game/chat/event"
 	serverEvent "backend/app/game/server/event"
 	donateEvent "backend/app/service/donate/event"
-	"backend/pkg/json"
 	"backend/pkg/log"
 	"context"
 	"fmt"
@@ -36,9 +35,6 @@ func (s *Service) SendChannelMsg(ctx context.Context, req *pb.SendMessageReq) (r
 }
 
 func (s *Service) EventHandler(event *khl.TextMessageContext) {
-	raw, _ := json.Marshal(event)
-	log.Info(string(raw))
-
 	// All chat event
 	if !event.Extra.Author.Bot &&
 		event.Common.TargetID == s.kaiheilaConfig.AllChatChannelID &&
@@ -49,6 +45,14 @@ func (s *Service) EventHandler(event *khl.TextMessageContext) {
 			ServerId:   chat.KaiheilaID,
 			ServerName: chat.KaiheilaName,
 		}))
+	}
+	if !event.Extra.Author.Bot &&
+		event.Common.TargetID == s.kaiheilaConfig.BotChannelID &&
+		event.Common.Type == khl.MessageTypeText {
+		switch event.Common.Content {
+		case "状态", "狀態", "/status":
+			s.getServerStatus(event)
+		}
 	}
 }
 
@@ -66,10 +70,12 @@ func (s *Service) AllChatEvent(ctx context.Context, data *chatEvent.AllChatEvent
 			Content: data.Message,
 		}))
 
-	_, err := s.SendChannelMsg(ctx, &pb.SendMessageReq{
-		Type:      10,
-		ChannelId: s.kaiheilaConfig.AllChatChannelID,
-		Content:   khl.CardMessage{card}.MustBuildMessage(),
+	_, err := s.kaiheilaClient.MessageCreate(&khl.MessageCreate{
+		MessageCreateBase: khl.MessageCreateBase{
+			Type:     khl.MessageTypeCard,
+			TargetID: s.kaiheilaConfig.AllChatChannelID,
+			Content:  khl.CardMessage{card}.MustBuildMessage(),
+		},
 	})
 	log.CheckErr(err)
 }
@@ -83,10 +89,12 @@ func (s *Service) ChangeMapEvent(ctx context.Context, data *serverEvent.ChangeMa
 			Content: fmt.Sprintf("[%s](%s) `%s`", data.ServerName, chat.GetUrl(int(data.ServerId)), data.Map),
 		}))
 
-	_, err := s.SendChannelMsg(ctx, &pb.SendMessageReq{
-		Type:      10,
-		ChannelId: s.kaiheilaConfig.BotChannelID,
-		Content:   khl.CardMessage{card}.MustBuildMessage(),
+	_, err := s.kaiheilaClient.MessageCreate(&khl.MessageCreate{
+		MessageCreateBase: khl.MessageCreateBase{
+			Type:     khl.MessageTypeCard,
+			TargetID: s.kaiheilaConfig.BotChannelID,
+			Content:  khl.CardMessage{card}.MustBuildMessage(),
+		},
 	})
 	log.CheckErr(err)
 }
@@ -101,10 +109,12 @@ func (s *Service) DonateEvent(ctx context.Context, data *donateEvent.DonateEvent
 			Content: fmt.Sprintf("感谢 [%s](%s) 捐助 **%d元**", data.Username, steamUrl, data.Amount),
 		}))
 
-	_, err := s.SendChannelMsg(ctx, &pb.SendMessageReq{
-		Type:      10,
-		ChannelId: s.kaiheilaConfig.BotChannelID,
-		Content:   khl.CardMessage{card}.MustBuildMessage(),
+	_, err := s.kaiheilaClient.MessageCreate(&khl.MessageCreate{
+		MessageCreateBase: khl.MessageCreateBase{
+			Type:     khl.MessageTypeCard,
+			TargetID: s.kaiheilaConfig.BotChannelID,
+			Content:  khl.CardMessage{card}.MustBuildMessage(),
+		},
 	})
 	log.CheckErr(err)
 }

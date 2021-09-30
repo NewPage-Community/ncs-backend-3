@@ -15,7 +15,7 @@ const (
 	QQName       = "QQ"
 	QQID         = -102
 	QQUrl        = "https://jq.qq.com/?_wv=1027&k=8khzZZ5s"
-	ServerURL    = "https://game.new-page.xyz"
+	ServerURL    = "https://game.new-page.xyz/play#servers"
 )
 
 func GetUrl(serverID int) string {

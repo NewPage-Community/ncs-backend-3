@@ -4,6 +4,7 @@ import (
 	pb "backend/app/bot/kaiheila/api/grpc/v1"
 	"backend/app/bot/kaiheila/conf"
 	"backend/app/bot/kaiheila/dao"
+	serverService "backend/app/game/server/api/grpc/v1"
 	"backend/pkg/log"
 	khlLogger "backend/pkg/log/kaiheila"
 
@@ -15,6 +16,7 @@ type Service struct {
 	kaiheilaClient *khl.Session
 	dao            dao.Dao
 	kaiheilaConfig *conf.Kaiheila
+	serverSrv      serverService.ServerClient
 	pb.UnimplementedKaiheilaServer
 }
 
@@ -24,6 +26,7 @@ func Init(config *conf.Config, service string) *Service {
 		kaiheilaClient: khl.New(config.Kaiheila.Token, khlLogger.NewLogger(log.GetLogger())),
 		dao:            dao.Init(config, service),
 		kaiheilaConfig: config.Kaiheila,
+		serverSrv:      serverService.InitClient(serverService.ServiceAddr),
 	}
 	srv.kaiheilaClient.AddHandler(srv.EventHandler)
 	log.CheckErr(srv.kaiheilaClient.Open())
@@ -41,5 +44,6 @@ func (s *Service) Healthy() bool {
 // Close 服务关闭
 func (s *Service) Close() {
 	_ = s.kaiheilaClient.Close()
+	serverService.Close()
 	s.dao.Close()
 }

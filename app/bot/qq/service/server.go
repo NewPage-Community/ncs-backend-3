@@ -25,15 +25,17 @@ func (s *Service) getServerStatus(event qqModel.CQEvent, groupID int64) {
 				msg += fmt.Sprintf("#%d ", v.ServerId)
 			}
 			msg += fmt.Sprintf("%s 🗺 %s ", v.ShortName, v.A2SInfo.Map)
-			if v.A2SInfo.Players > 0 {
+			if v.A2SInfo.Players == 0 {
+				msg += "🈳"
+			} else if v.A2SInfo.Players < v.A2SInfo.MaxPlayers {
 				msg += fmt.Sprintf("♿️ %d/%d", v.A2SInfo.Players, v.A2SInfo.MaxPlayers)
 			} else {
-				msg += "🈳"
+				msg += fmt.Sprintf("🈵 %d", v.A2SInfo.Players)
 			}
 			msg += "\n"
 		}
 	}
-	msg += "仪表盘: " + ServerURL
+	msg += "查看服务器详细: " + ServerURL
 
 	// Send message
 	err = s.Reply(event, msg)
