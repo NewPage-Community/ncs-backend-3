@@ -7,7 +7,17 @@ import (
 
 	"github.com/lonelyevil/khl"
 	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
+)
+
+type loggerLevel int
+
+const (
+	traceLevel = loggerLevel(iota)
+	debugLevel = loggerLevel(iota)
+	infoLevel
+	warnLevel
+	errorLevel
+	fatalLevel
 )
 
 type LoggerAdapter struct {
@@ -19,32 +29,32 @@ func NewLogger(l *zap.Logger) *LoggerAdapter {
 }
 
 func (l LoggerAdapter) Trace() khl.Entry {
-	return &EntryAdapter{l.l, l.l.Debug}
+	return &EntryAdapter{l.l, traceLevel}
 }
 
 func (l LoggerAdapter) Debug() khl.Entry {
-	return &EntryAdapter{l.l, l.l.Debug}
+	return &EntryAdapter{l.l, debugLevel}
 }
 
 func (l LoggerAdapter) Info() khl.Entry {
-	return &EntryAdapter{l.l, l.l.Info}
+	return &EntryAdapter{l.l, infoLevel}
 }
 
 func (l LoggerAdapter) Warn() khl.Entry {
-	return &EntryAdapter{l.l, l.l.Warn}
+	return &EntryAdapter{l.l, warnLevel}
 }
 
 func (l LoggerAdapter) Error() khl.Entry {
-	return &EntryAdapter{l.l, l.l.Error}
+	return &EntryAdapter{l.l, errorLevel}
 }
 
 func (l LoggerAdapter) Fatal() khl.Entry {
-	return &EntryAdapter{l.l, l.l.Fatal}
+	return &EntryAdapter{l.l, fatalLevel}
 }
 
 type EntryAdapter struct {
-	e      *zap.Logger
-	caller func(msg string, fields ...zapcore.Field)
+	e *zap.Logger
+	t loggerLevel
 }
 
 func (e *EntryAdapter) Bool(key string, b bool) khl.Entry {
@@ -98,11 +108,22 @@ func (e *EntryAdapter) Interface(key string, i interface{}) khl.Entry {
 }
 
 func (e *EntryAdapter) Msg(msg string) {
-	e.caller(msg)
+	switch e.t {
+	case traceLevel, debugLevel:
+		e.e.Debug(msg)
+	case infoLevel:
+		e.e.Info(msg)
+	case warnLevel:
+		e.e.Warn(msg)
+	case errorLevel:
+		e.e.Error(msg)
+	case fatalLevel:
+		e.e.Fatal(msg)
+	}
 }
 
 func (e *EntryAdapter) Msgf(f string, i ...interface{}) {
-	e.caller(fmt.Sprintf(f, i...))
+	e.Msg(fmt.Sprintf(f, i...))
 }
 
 func (e *EntryAdapter) Str(key string, s string) khl.Entry {
