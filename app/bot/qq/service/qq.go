@@ -52,7 +52,8 @@ func (s *Service) OnMessage(event qqModel.CQEvent) {
 	}
 
 	// Service auth group only
-	if !s.InGroup(groupID) && !s.IsAdminGroup(groupID) {
+	isAdminGroup := s.IsAdminGroup(groupID)
+	if !s.InGroup(groupID) && !isAdminGroup {
 		return
 	}
 
@@ -71,7 +72,7 @@ func (s *Service) OnMessage(event qqModel.CQEvent) {
 		s.getServerStatus(event, groupID)
 	}
 
-	if s.IsAdminGroup(groupID) {
+	if isAdminGroup {
 		switch cmd[0] {
 		case "/ban":
 			s.banPlayer(event, cmd[1:])
