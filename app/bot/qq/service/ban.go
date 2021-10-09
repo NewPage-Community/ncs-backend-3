@@ -15,7 +15,11 @@ func (s *Service) banPlayer(event qqModel.CQEvent, cmd []string) {
 	ctx := context.Background()
 	steamid, _ := strconv.ParseInt(cmd[0], 0, 0)
 	days, _ := strconv.Atoi(cmd[1])
-	reason := cmd[2]
+	reason := ""
+	for _, v := range cmd[2:] {
+		reason += v + " "
+	}
+	reason = reason[:len(reason)-1]
 
 	// Invalid args
 	if steamid <= 0 || days <= 0 {
