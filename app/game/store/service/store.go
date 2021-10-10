@@ -11,6 +11,7 @@ import (
 	"backend/pkg/ecode"
 	"context"
 	"fmt"
+
 	"google.golang.org/grpc/codes"
 )
 
@@ -18,10 +19,10 @@ const (
 	PassBoxID          = passModel.PassPointBoxID
 	Pass1Price         = int32(6888)
 	Pass2Price         = int32(9888)
-	VIPMonthPrice      = int32(1000)
-	VIPSeasonPrice     = int32(2700)
-	VIPSemiannualPrice = int32(5280)
-	VIPAnnualPrice     = int32(10000)
+	VIPMonthPrice      = int32(2000)
+	VIPSeasonPrice     = int32(5400)
+	VIPSemiannualPrice = int32(10560)
+	VIPAnnualPrice     = int32(20000)
 	Month              = int64(2592000)
 	BuyVIPPoint        = int32(50)
 )
