@@ -11,6 +11,7 @@ import (
 type Dao interface {
 	Get(stats *model.Stats) error
 	GetAll(stats *model.Stats) ([]*model.Stats, error)
+	GetPartly(stats *model.Stats, start int64, end int64) ([]*model.Stats, int64, error)
 	Set(stats *model.Stats) error
 	Incr(stats *model.Stats) error
 	Healthy() bool

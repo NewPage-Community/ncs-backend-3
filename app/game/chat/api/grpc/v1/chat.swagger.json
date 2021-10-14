@@ -96,7 +96,8 @@
           "title": "MQ"
         },
         "serverName": {
-          "type": "string"
+          "type": "string",
+          "title": "MQ"
         }
       }
     },

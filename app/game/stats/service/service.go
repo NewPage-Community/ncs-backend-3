@@ -9,6 +9,7 @@ import (
 type Service struct {
 	dao dao.Dao
 	pb.UnimplementedStatsServer
+	pb.UnimplementedStatsPublicServer
 }
 
 func Init(config *conf.Config) *Service {

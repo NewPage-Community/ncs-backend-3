@@ -1,0 +1,32 @@
+syntax = "proto3";
+package ncs.game.stats.v1;
+option go_package = "backend/app/game/stats/api/grpc/v1";
+
+import "google/api/annotations.proto";
+import "app/game/stats/api/grpc/v1/stats.proto";
+
+message GetPartlyReq {
+    string range = 1;
+    string stats_name = 2;
+    string version = 3;
+    int64 start = 4;
+    int64 end = 5;
+}
+
+message GetPartlyResp {
+    int64 total = 1;
+    repeated ncs.game.stats.v1.GetResp data = 2;
+}
+
+service StatsPublic {
+    rpc GetPartly (GetPartlyReq) returns (GetPartlyResp) {
+        option (google.api.http) = {
+            get: "/game/stats/{stats_name}/{version}/{range}/{start}/{end}"
+        };
+    }
+    rpc Get (ncs.game.stats.v1.GetReq) returns (ncs.game.stats.v1.GetResp) {
+        option (google.api.http) = {
+            get: "/game/stats/user/{uid}/{stats_name}/{version}/{range}"
+        };
+    }
+}

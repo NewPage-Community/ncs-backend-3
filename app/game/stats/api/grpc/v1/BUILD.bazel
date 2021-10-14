@@ -4,6 +4,10 @@ go_library(
     name = "grpc",
     srcs = [
         "client.go",
+        "public.pb.go",
+        "public.pb.gw.go",
+        "public_grpc.pb.go",
+        "public_grpc.pb.mock.go",
         "server.go",
         "stats.pb.go",
         "stats.pb.gw.go",

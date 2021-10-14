@@ -13,6 +13,7 @@ type Service struct {
 	qq  qqBot.QQClient
 	a2s a2sSrv.A2SClient
 	pb.UnimplementedServerServer
+	pb.UnimplementedServerPublicServer
 }
 
 func Init(c *conf.Config, service string) *Service {

@@ -50,7 +50,7 @@ push_docker_changed:
 		"
 
 .PHONY: build-test
-build:
+build-test:
 	$(BAZEL_CMD) /bin/bash -c "\
 		bazel build -k --noshow_progress //app/... //pkg/... && \
 		bazel test -k --noshow_progress //app/... //pkg/... \
@@ -91,4 +91,10 @@ dao-mock:
 	$(GO_CMD) /bin/bash -c "\
 		go mod download && \
 		build/build-dao-mock.sh app \
+		"
+
+.PHONY: test
+test:
+	$(BAZEL_CMD) /bin/bash -c "\
+		bazel test -k --noshow_progress //app/... //pkg/... \
 		"

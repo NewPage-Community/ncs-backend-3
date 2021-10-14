@@ -5,6 +5,7 @@ import (
 	"backend/app/game/stats/model"
 	"backend/pkg/ecode"
 	"context"
+
 	"google.golang.org/grpc/codes"
 )
 
@@ -218,5 +219,49 @@ func (s *Service) Incrs(ctx context.Context, req *pb.IncrsReq) (resp *pb.IncrRes
 			return
 		}
 	}
+	return
+}
+
+func (s *Service) GetPartly(ctx context.Context, req *pb.GetPartlyReq) (resp *pb.GetPartlyResp, err error) {
+	resp = &pb.GetPartlyResp{}
+
+	if req.StatsName == "" {
+		err = ecode.Errorf(codes.InvalidArgument, "Empty stats name")
+		return
+	}
+	if req.Version == "" {
+		err = ecode.Errorf(codes.InvalidArgument, "Empty version")
+		return
+	}
+	if req.Range == "" {
+		req.Range = StatsAllRange
+	}
+	if req.Start < 1 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid start")
+		return
+	}
+	if req.End < 1 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid end")
+		return
+	}
+
+	res, total, err := s.dao.GetPartly(&model.Stats{
+		Range:     req.Range,
+		StatsName: req.StatsName,
+		Version:   req.Version,
+	}, req.Start, req.End)
+	if err != nil {
+		return
+	}
+
+	resp.Total = total
+	for _, v := range res {
+		resp.Data = append(resp.Data, &pb.GetResp{
+			Uid:   v.UID,
+			Score: float32(v.Score),
+			Rank:  v.Rank,
+		})
+	}
+
 	return
 }

@@ -15,6 +15,7 @@ go_library(
     deps = [
         "//app/game/cookie/api/grpc/v1:grpc",
         "//app/game/server/api/grpc/v1:grpc",
+        "//app/game/stats/api/grpc/v1:grpc",
         "//app/service/auth/qq/api/grpc/v1:grpc",
         "//app/service/auth/steam/api/grpc/v1:grpc",
         "//app/service/backpack/items/api/grpc/v1:grpc",

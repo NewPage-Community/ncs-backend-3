@@ -433,7 +433,8 @@ type AddDonateReq struct {
 	Amount  int32 `protobuf:"varint,2,opt,name=amount,proto3" json:"amount,omitempty"`
 	// MQ
 	Username string `protobuf:"bytes,3,opt,name=username,proto3" json:"username,omitempty"`
-	Uid      int64  `protobuf:"varint,4,opt,name=uid,proto3" json:"uid,omitempty"`
+	// MQ
+	Uid int64 `protobuf:"varint,4,opt,name=uid,proto3" json:"uid,omitempty"`
 }
 
 func (x *AddDonateReq) Reset() {

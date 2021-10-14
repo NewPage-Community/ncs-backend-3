@@ -30,7 +30,8 @@ type AllChatReq struct {
 	Message  string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 	ServerId int32  `protobuf:"varint,3,opt,name=server_id,json=serverId,proto3" json:"server_id,omitempty"`
 	// MQ
-	Uid        int64  `protobuf:"varint,4,opt,name=uid,proto3" json:"uid,omitempty"`
+	Uid int64 `protobuf:"varint,4,opt,name=uid,proto3" json:"uid,omitempty"`
+	// MQ
 	ServerName string `protobuf:"bytes,5,opt,name=server_name,json=serverName,proto3" json:"server_name,omitempty"`
 }
 

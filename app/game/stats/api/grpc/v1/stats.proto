@@ -79,16 +79,16 @@ service Stats {
         option (google.api.http) = {
             get: "/game/stats/user/{uid}/{stats_name}/{version}"
             additional_bindings: {
-				get: "/game/stats/user/{uid}/{stats_name}/{version}/{range}"
-			}
+                get: "/game/stats/user/{uid}/{stats_name}/{version}/{range}"
+            }
         };
     }
     rpc GetAll (GetAllReq) returns (GetAllResp) {
         option (google.api.http) = {
             get: "/game/stats/{stats_name}/{version}"
             additional_bindings: {
-				get: "/game/stats/{stats_name}/{version}/{range}"
-			}
+                get: "/game/stats/{stats_name}/{version}/{range}"
+            }
         };
     }
     rpc Gets (GetsReq) returns (GetsResp) {

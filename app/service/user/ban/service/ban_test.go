@@ -9,13 +9,14 @@ import (
 	"backend/pkg/log"
 	"backend/pkg/steam"
 	"context"
+	"sync"
+	"testing"
+	"time"
+
 	"github.com/golang/mock/gomock"
 	. "github.com/smartystreets/goconvey/convey"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"sync"
-	"testing"
-	"time"
 )
 
 func TestService_Add(t *testing.T) {
@@ -150,7 +151,8 @@ func TestService_BanCheck(t *testing.T) {
 	steam2.EXPECT().IsPlayingSharedGame(uint64(2), 1).
 		Return(steam.PlayingSharedGame{LenderSteamID: 3}, nil)
 	steam2.EXPECT().IsPlayingSharedGame(uint64(2), 2).
-		Return(steam.PlayingSharedGame{LenderSteamID: 0}, nil).Times(1)
+		Return(steam.PlayingSharedGame{LenderSteamID: 0}, nil).
+		Do(func(steamID interface{}, appID interface{}) { wg.Done() })
 
 	server := serverService.NewMockServerClient(ctl)
 	server.EXPECT().RconAll(gomock.Any(), &serverService.RconAllReq{
@@ -179,6 +181,7 @@ func TestService_BanCheck(t *testing.T) {
 			t.Log(res)
 		})
 		Convey("Check record not found", func() {
+			wg.Add(1)
 			res, err := srv.BanCheck(context.TODO(), &pb.Info2Req{
 				Uid:      2,
 				ServerId: 1,
@@ -189,6 +192,7 @@ func TestService_BanCheck(t *testing.T) {
 			So(err, ShouldBeNil)
 			So(res.Info.Id, ShouldEqual, 0)
 			t.Log(res)
+			wg.Wait()
 		})
 		/*Convey("Check record not found but block ip", func() {
 			res, err := srv.BanCheck(context.TODO(), &pb.Info2Req{

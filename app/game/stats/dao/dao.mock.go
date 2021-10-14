@@ -75,6 +75,22 @@ func (mr *MockDaoMockRecorder) GetAll(stats interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*MockDao)(nil).GetAll), stats)
 }
 
+// GetPartly mocks base method.
+func (m *MockDao) GetPartly(stats *model.Stats, start, end int64) ([]*model.Stats, int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPartly", stats, start, end)
+	ret0, _ := ret[0].([]*model.Stats)
+	ret1, _ := ret[1].(int64)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// GetPartly indicates an expected call of GetPartly.
+func (mr *MockDaoMockRecorder) GetPartly(stats, start, end interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPartly", reflect.TypeOf((*MockDao)(nil).GetPartly), stats, start, end)
+}
+
 // Healthy mocks base method.
 func (m *MockDao) Healthy() bool {
 	m.ctrl.T.Helper()
