@@ -456,10 +456,6 @@
           "items": {
             "$ref": "#/definitions/v1StatsInfo"
           }
-        },
-        "total": {
-          "type": "string",
-          "format": "int64"
         }
       }
     },
@@ -556,6 +552,10 @@
           "format": "float"
         },
         "rank": {
+          "type": "string",
+          "format": "int64"
+        },
+        "total": {
           "type": "string",
           "format": "int64"
         }

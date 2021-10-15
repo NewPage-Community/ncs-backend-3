@@ -98,7 +98,8 @@ func (s *Service) Gets(ctx context.Context, req *pb.GetsReq) (resp *pb.GetsResp,
 			StatsName: v.StatsName,
 			Version:   v.Version,
 		}
-		resp.Total, err = s.dao.Get(info)
+		var total int64
+		total, err = s.dao.Get(info)
 		if err != nil {
 			return
 		}
@@ -109,6 +110,7 @@ func (s *Service) Gets(ctx context.Context, req *pb.GetsReq) (resp *pb.GetsResp,
 			Uid:       info.UID,
 			Score:     float32(info.Score),
 			Rank:      info.Rank,
+			Total:     total,
 		})
 	}
 	return
