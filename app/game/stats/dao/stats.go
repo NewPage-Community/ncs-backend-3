@@ -12,22 +12,32 @@ import (
 
 var ctx = context.Background()
 
-func (d *dao) Get(stats *model.Stats) (err error) {
+func (d *dao) Get(stats *model.Stats) (total int64, err error) {
+	total, err = d.redis.ZCard(ctx, stats.Key()).Result()
+	if err != nil {
+		err = ecode.Errorf(codes.Unknown, "Redis err: %s", err)
+		return
+	}
+
 	stats.Score, err = d.redis.ZScore(ctx, stats.Key(), stats.Member()).Result()
 	if err != nil {
 		if err == redis.Nil {
-			return ecode.Errorf(codes.NotFound, "Can not found UID(%d)", stats.UID)
+			err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", stats.UID)
+			return
 		}
-		return ecode.Errorf(codes.Unknown, "Redis err: %s", err)
+		err = ecode.Errorf(codes.Unknown, "Redis err: %s", err)
+		return
 	}
 	stats.Rank, err = d.redis.ZRevRank(ctx, stats.Key(), stats.Member()).Result()
 	// ZSet rank start from 0
 	stats.Rank++
 	if err != nil {
 		if err == redis.Nil {
-			return ecode.Errorf(codes.NotFound, "Can not found UID(%d)", stats.UID)
+			err = ecode.Errorf(codes.NotFound, "Can not found UID(%d)", stats.UID)
+			return
 		}
-		return ecode.Errorf(codes.Unknown, "Redis err: %s", err)
+		err = ecode.Errorf(codes.Unknown, "Redis err: %s", err)
+		return
 	}
 	return
 }

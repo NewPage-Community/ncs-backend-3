@@ -47,11 +47,12 @@ func (mr *MockDaoMockRecorder) Close() *gomock.Call {
 }
 
 // Get mocks base method.
-func (m *MockDao) Get(stats *model.Stats) error {
+func (m *MockDao) Get(stats *model.Stats) (int64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", stats)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Get indicates an expected call of Get.

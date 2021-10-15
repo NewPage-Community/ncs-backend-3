@@ -430,6 +430,10 @@
         "rank": {
           "type": "string",
           "format": "int64"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
@@ -452,6 +456,10 @@
           "items": {
             "$ref": "#/definitions/v1StatsInfo"
           }
+        },
+        "total": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },

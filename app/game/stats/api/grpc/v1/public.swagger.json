@@ -179,6 +179,10 @@
         "rank": {
           "type": "string",
           "format": "int64"
+        },
+        "total": {
+          "type": "string",
+          "format": "int64"
         }
       }
     }

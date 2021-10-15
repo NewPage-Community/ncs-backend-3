@@ -15,6 +15,7 @@ message GetResp {
     int64 uid = 1;
     float score = 2;
     int64 rank = 3;
+    int64 total = 4;
 }
 
 message GetAllReq {
@@ -42,6 +43,7 @@ message StatsInfo {
 
 message GetsResp {
     repeated StatsInfo stats = 1;
+    int64 total = 2;
 }
 
 message SetReq {

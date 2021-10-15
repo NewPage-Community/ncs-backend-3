@@ -38,7 +38,7 @@ func (s *Service) Get(ctx context.Context, req *pb.GetReq) (resp *pb.GetResp, er
 		StatsName: req.StatsName,
 		Version:   req.Version,
 	}
-	err = s.dao.Get(info)
+	resp.Total, err = s.dao.Get(info)
 	if err != nil {
 		return
 	}
@@ -98,7 +98,7 @@ func (s *Service) Gets(ctx context.Context, req *pb.GetsReq) (resp *pb.GetsResp,
 			StatsName: v.StatsName,
 			Version:   v.Version,
 		}
-		err = s.dao.Get(info)
+		resp.Total, err = s.dao.Get(info)
 		if err != nil {
 			return
 		}
