@@ -58,7 +58,26 @@ func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.Buy
 
 	amount := int32(0)
 	if item.Id == PassBoxID {
+		// Fix requirement amount of pass box
 		amount = 1
+
+		// Check pass box amount in user backpack
+		res, err := s.user.HaveItem(ctx, &userService.HaveItemReq{
+			Uid: req.Uid,
+			Id:  PassBoxID,
+		})
+		if err != nil {
+			return resp, err
+		}
+		if res.Have {
+			if res.Item.Amount == 0 {
+				_, _ = s.user.RemoveItem(ctx, &userService.RemoveItemReq{
+					Uid:  req.Uid,
+					Item: &userService.Item{Id: PassBoxID},
+					All:  true,
+				})
+			}
+		}
 	}
 
 	// Buy

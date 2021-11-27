@@ -57,6 +57,16 @@ message BuyVIPReq {
 message BuyVIPResp {
 }
 
+// TODO: Refund
+message RefundItemReq {
+    int64 uid = 1;
+    int32 item_id = 2;
+    int32 amount = 3;
+}
+
+message RefundItemResp {
+}
+
 service Store {
     rpc BuyItem (BuyItemReq) returns (BuyItemResp) {
         option (google.api.http) = {

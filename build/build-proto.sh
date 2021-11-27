@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Change source in china
+sed -i 's@/deb.debian.org/@/mirrors.aliyun.com/@g;s@/security.debian.org/@/mirrors.aliyun.com/@g' /etc/apt/sources.list
+
 # Install tools
 apt update
 apt install -y protobuf-compiler

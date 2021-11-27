@@ -228,6 +228,9 @@
       "properties": {
         "have": {
           "type": "boolean"
+        },
+        "item": {
+          "$ref": "#/definitions/v1Item"
         }
       }
     },

@@ -51,6 +51,7 @@ message HaveItemReq {
 
 message HaveItemResp {
     bool have = 1;
+    Item item = 2;
 }
 
 message AddAllItemsReq {

@@ -7,8 +7,9 @@ import (
 	"backend/pkg/ecode"
 	"backend/pkg/rpc/gateway"
 	"context"
-	"google.golang.org/grpc/codes"
 	"time"
+
+	"google.golang.org/grpc/codes"
 )
 
 func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.GetItemsResp, err error) {
@@ -111,6 +112,7 @@ func (s *Service) Init(ctx context.Context, req *pb.InitReq) (resp *pb.InitResp,
 func (s *Service) HaveItem(ctx context.Context, req *pb.HaveItemReq) (resp *pb.HaveItemResp, err error) {
 	resp = &pb.HaveItemResp{
 		Have: false,
+		Item: &pb.Item{},
 	}
 
 	if req.Uid <= 0 {
@@ -129,6 +131,9 @@ func (s *Service) HaveItem(ctx context.Context, req *pb.HaveItemReq) (resp *pb.H
 	if v, ok := (*res.Items)[req.Id]; ok {
 		if !v.IsExpired(time.Now().Unix()) {
 			resp.Have = true
+			resp.Item.Id = v.ID
+			resp.Item.Amount = v.Amount
+			resp.Item.ExprTime = v.ExprTime
 		}
 	}
 	return

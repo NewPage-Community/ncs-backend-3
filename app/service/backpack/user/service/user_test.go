@@ -5,9 +5,10 @@ import (
 	"backend/app/service/backpack/user/dao"
 	"backend/app/service/backpack/user/model"
 	"context"
+	"testing"
+
 	"github.com/golang/mock/gomock"
 	. "github.com/smartystreets/goconvey/convey"
-	"testing"
 )
 
 func TestService_AddItems(t *testing.T) {
@@ -129,6 +130,7 @@ func TestService_HaveItem(t *testing.T) {
 			})
 			So(err, ShouldBeNil)
 			So(res.Have, ShouldBeTrue)
+			So(res.Item.Id, ShouldEqual, 1)
 		})
 		Convey("Check invalid id", func() {
 			res, err := srv.HaveItem(context.TODO(), &pb.HaveItemReq{
