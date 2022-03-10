@@ -3,13 +3,14 @@ package ncs.service.backpack.items.v1;
 option go_package = "backend/app/service/backpack/items/api/grpc/v1";
 
 import "google/api/annotations.proto";
+import "google/protobuf/struct.proto";
 
 message Item {
     int32 id = 1;
     string name = 2;
     string description = 3;
     int32 type = 4;
-    map<string, string> attributes = 5;
+    google.protobuf.Struct attributes = 5;
     // Store
     int32 price = 6;
     float discount = 7;

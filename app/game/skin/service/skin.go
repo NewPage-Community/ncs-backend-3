@@ -6,6 +6,7 @@ import (
 	userService "backend/app/service/backpack/user/api/grpc/v1"
 	"backend/pkg/ecode"
 	"context"
+
 	"google.golang.org/grpc/codes"
 )
 
@@ -25,11 +26,11 @@ func (s *Service) GetSkins(ctx context.Context, req *pb.GetSkinsReq) (resp *pb.G
 
 	for _, v := range items.Items {
 		resp.Info = append(resp.Info, &pb.SkinInfo{
-			Id:       v.Id,
-			Name:     v.Name,
-			SkinPath: v.Attributes["skin_path"],
-			ArmPath:  v.Attributes["arm_path"],
-			Price:    v.Price,
+			Id:   v.Id,
+			Name: v.Name,
+			//SkinPath: v.Attributes["skin_path"],
+			//ArmPath:  v.Attributes["arm_path"],
+			Price: v.Price,
 		})
 	}
 	return
