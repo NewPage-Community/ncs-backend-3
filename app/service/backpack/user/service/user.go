@@ -7,6 +7,7 @@ import (
 	"backend/pkg/ecode"
 	"backend/pkg/rpc/gateway"
 	"context"
+	"sort"
 	"time"
 
 	"google.golang.org/grpc/codes"
@@ -41,6 +42,10 @@ func (s *Service) GetItems(ctx context.Context, req *pb.GetItemsReq) (resp *pb.G
 			})
 		}
 	}
+
+	sort.SliceStable(resp.Items, func(i, j int) bool {
+		return resp.Items[i].Id < resp.Items[j].Id
+	})
 
 	resp.Uid = res.UID
 	return
