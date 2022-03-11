@@ -26,7 +26,7 @@ test -k
 
 # CI
 build:ci -j 8
-build:ci --remote_cache=http://bazel-remote-cache:8080
+build:ci --remote_cache=http://bazel-cache:8080
 test:ci -j 8
-test:ci --remote_cache=http://bazel-remote-cache:8080
+test:ci --remote_cache=http://bazel-cache:8080
 run:ci -j 8
