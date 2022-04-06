@@ -14,7 +14,7 @@ type Dao interface {
 	Pay(uid int64, price uint32, reason string) error
 	Give(uid int64, money uint32, reason string) error
 	GetRecords(uid int64, days uint32) (*model.Records, error)
-	Gift(uid, target uint64, money uint32) (err error)
+	Gift(uid, target uint64, money uint32) (remaining uint32, err error)
 	Healthy() bool
 	Close()
 }

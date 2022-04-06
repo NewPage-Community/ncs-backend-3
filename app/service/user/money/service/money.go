@@ -100,6 +100,6 @@ func (s *Service) Gift(ctx context.Context, req *pb.GiftReq) (resp *pb.GiftResp,
 		return
 	}
 
-	err = s.dao.Gift(req.Uid, req.Target, req.Money)
+	resp.Remaining, err = s.dao.Gift(req.Uid, req.Target, req.Money)
 	return
 }

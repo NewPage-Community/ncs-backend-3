@@ -118,7 +118,7 @@ func TestService_Gift(t *testing.T) {
 	defer ctl.Finish()
 
 	d := dao.NewMockDao(ctl)
-	d.EXPECT().Gift(uint64(1), uint64(2), uint32(1)).Return(nil)
+	d.EXPECT().Gift(uint64(1), uint64(2), uint32(1)).Return(uint32(0), nil)
 
 	srv := &Service{dao: d}
 

@@ -77,11 +77,12 @@ func (mr *MockDaoMockRecorder) GetRecords(uid, days interface{}) *gomock.Call {
 }
 
 // Gift mocks base method.
-func (m *MockDao) Gift(uid, target uint64, money uint32) error {
+func (m *MockDao) Gift(uid, target uint64, money uint32) (uint32, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Gift", uid, target, money)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(uint32)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Gift indicates an expected call of Gift.

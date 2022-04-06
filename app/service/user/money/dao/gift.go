@@ -12,8 +12,8 @@ const (
 	GiftLimit = 200
 )
 
-func (d *dao) Gift(uid, target uint64, money uint32) (err error) {
-	return d.db.Transaction(func(tx *gorm.DB) error {
+func (d *dao) Gift(uid, target uint64, money uint32) (remaining uint32, err error) {
+	err = d.db.Transaction(func(tx *gorm.DB) error {
 		gifts := []model.Gift{}
 		if err = tx.Where("created_at >= ? AND uid = ?", getZeroTime(time.Now()), uid).Find(&gifts).Error; err != nil {
 			return err
@@ -23,10 +23,11 @@ func (d *dao) Gift(uid, target uint64, money uint32) (err error) {
 		for _, v := range gifts {
 			amount += v.Money
 		}
-		if amount+int32(money) >= GiftLimit {
+		if uint32(amount)+money >= GiftLimit {
 			err = fmt.Errorf("reach gift limit %d", amount)
 			return err
 		}
+		remaining = GiftLimit - uint32(amount) + money
 
 		if err = d.pay(tx, int64(uid), money, fmt.Sprintf("赠送 UID:%d 软妹币", target)); err != nil {
 			return err
@@ -40,6 +41,7 @@ func (d *dao) Gift(uid, target uint64, money uint32) (err error) {
 			Money:  int32(money),
 		}).Error
 	})
+	return
 }
 
 func getZeroTime(d time.Time) time.Time {

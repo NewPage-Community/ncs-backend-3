@@ -273,7 +273,13 @@
       }
     },
     "v1GiftResp": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "remaining": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
     },
     "v1GiveResp": {
       "type": "object"

@@ -53,6 +53,7 @@ message GiftReq {
 }
 
 message GiftResp {
+    uint32 remaining = 1;
 }
 
 service Money {
