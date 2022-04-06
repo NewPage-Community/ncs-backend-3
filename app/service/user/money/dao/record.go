@@ -21,7 +21,7 @@ func (d *dao) addRecord(tx *gorm.DB, uid int64, amount int32, reason string) (er
 
 func (d *dao) GetRecords(uid int64, days uint32) (res *model.Records, err error) {
 	res = &model.Records{}
-	lastTime := time.Now().Add(time.Duration(days) * -24 * time.Hour).Unix()
+	lastTime := getZeroTime(time.Now().AddDate(0, 0, -int(days))).Unix()
 
 	// DB
 	err = d.db.Find(res, "created_at >= ?", lastTime).Error
