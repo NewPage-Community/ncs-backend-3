@@ -2,7 +2,6 @@ package dao
 
 import (
 	"backend/app/service/user/money/model"
-	"errors"
 	"fmt"
 	"time"
 
@@ -11,10 +10,6 @@ import (
 
 const (
 	GiftLimit = 200
-)
-
-var (
-	ErrReachGiftLimit = errors.New("reach gift limit")
 )
 
 func (d *dao) Gift(uid, target uint64, money uint32) (err error) {
