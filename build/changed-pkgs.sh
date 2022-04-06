@@ -11,8 +11,6 @@ else
     last_commit="HEAD^"
 fi
 
-echo -e "Compare to ${last_commit}"
-
 # Get diff
 files=$(git diff ${last_commit} HEAD --name-only --diff-filter=ACM | grep -E -i "\.(go|bazel)$")
 

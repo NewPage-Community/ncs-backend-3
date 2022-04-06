@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#set -x
+
 function push_changed() {
     pkgs=$(build/changed-pkgs.sh)
     exitCode=$?
