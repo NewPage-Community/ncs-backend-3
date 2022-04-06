@@ -8,7 +8,7 @@ variables:
 before_script:
   - chmod -R +x build
   - mkdir $HOME/.docker
-  - export HTTP_PROXY=$CI_PROXY HTTPS_PROXY=$CI_PROXY NO_PROXY=goproxy.golang,*.new-page.xyz,nexus3.nexus3
+  - export HTTP_PROXY=$CI_PROXY HTTPS_PROXY=$CI_PROXY NO_PROXY=goproxy.golang,nexus3.nexus3,new-page.xyz
   - echo $DOCKER_AUTH_CONFIG > $HOME/.docker/config.json
 
 stages:
