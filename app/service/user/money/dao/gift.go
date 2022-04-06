@@ -28,8 +28,8 @@ func (d *dao) Gift(uid, target uint64, money uint32) (err error) {
 		for _, v := range gifts {
 			amount += v.Money
 		}
-		if amount >= GiftLimit {
-			err = ErrReachGiftLimit
+		if amount+int32(money) >= GiftLimit {
+			err = fmt.Errorf("reach gift limit %d", amount)
 			return err
 		}
 
