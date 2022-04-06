@@ -8,6 +8,7 @@ load(
 def init_rules_go():
     go_download_sdk(
         name = "go_sdk",
+        version = "1.17",
         urls = [
             "http://nexus3.nexus3:8081/repository/golang/{}",
             "https://nexus.new-page.xyz/repository/golang/{}",
