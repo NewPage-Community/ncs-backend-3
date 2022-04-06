@@ -22,6 +22,7 @@ type MoneyClient interface {
 	Pay(ctx context.Context, in *PayReq, opts ...grpc.CallOption) (*PayResp, error)
 	Give(ctx context.Context, in *GiveReq, opts ...grpc.CallOption) (*GiveResp, error)
 	Records(ctx context.Context, in *RecordsReq, opts ...grpc.CallOption) (*RecordsResp, error)
+	Gift(ctx context.Context, in *GiftReq, opts ...grpc.CallOption) (*GiftResp, error)
 }
 
 type moneyClient struct {
@@ -68,6 +69,15 @@ func (c *moneyClient) Records(ctx context.Context, in *RecordsReq, opts ...grpc.
 	return out, nil
 }
 
+func (c *moneyClient) Gift(ctx context.Context, in *GiftReq, opts ...grpc.CallOption) (*GiftResp, error) {
+	out := new(GiftResp)
+	err := c.cc.Invoke(ctx, "/ncs.service.user.money.v1.Money/Gift", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MoneyServer is the server API for Money service.
 // All implementations must embed UnimplementedMoneyServer
 // for forward compatibility
@@ -76,6 +86,7 @@ type MoneyServer interface {
 	Pay(context.Context, *PayReq) (*PayResp, error)
 	Give(context.Context, *GiveReq) (*GiveResp, error)
 	Records(context.Context, *RecordsReq) (*RecordsResp, error)
+	Gift(context.Context, *GiftReq) (*GiftResp, error)
 	mustEmbedUnimplementedMoneyServer()
 }
 
@@ -94,6 +105,9 @@ func (UnimplementedMoneyServer) Give(context.Context, *GiveReq) (*GiveResp, erro
 }
 func (UnimplementedMoneyServer) Records(context.Context, *RecordsReq) (*RecordsResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Records not implemented")
+}
+func (UnimplementedMoneyServer) Gift(context.Context, *GiftReq) (*GiftResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Gift not implemented")
 }
 func (UnimplementedMoneyServer) mustEmbedUnimplementedMoneyServer() {}
 
@@ -180,6 +194,24 @@ func _Money_Records_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Money_Gift_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GiftReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MoneyServer).Gift(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ncs.service.user.money.v1.Money/Gift",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MoneyServer).Gift(ctx, req.(*GiftReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Money_ServiceDesc is the grpc.ServiceDesc for Money service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -202,6 +234,10 @@ var Money_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Records",
 			Handler:    _Money_Records_Handler,
+		},
+		{
+			MethodName: "Gift",
+			Handler:    _Money_Gift_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

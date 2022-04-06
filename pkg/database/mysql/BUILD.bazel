@@ -2,7 +2,10 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "mysql",
-    srcs = ["mysql.go"],
+    srcs = [
+        "model.go",
+        "mysql.go",
+    ],
     importpath = "backend/pkg/database/mysql",
     visibility = ["//visibility:public"],
     deps = [

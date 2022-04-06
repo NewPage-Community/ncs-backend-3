@@ -13,7 +13,6 @@ go_library(
         "//app/service/user/money/conf",
         "//app/service/user/money/dao",
         "//pkg/ecode",
-        "//pkg/log",
         "@org_golang_google_grpc//codes",
     ],
 )

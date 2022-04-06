@@ -10,9 +10,10 @@ import (
 	vipService "backend/app/service/user/vip/api/grpc/v1"
 	ctx "context"
 	"errors"
+	"testing"
+
 	"github.com/golang/mock/gomock"
 	. "github.com/smartystreets/goconvey/convey"
-	"testing"
 )
 
 func TestService_BuyItem(t *testing.T) {
@@ -24,20 +25,20 @@ func TestService_BuyItem(t *testing.T) {
 		Type: 0,
 	}).Return(&itemsService.GetItemsResp{
 		Items: []*itemsService.Item{
-			{Id: 1, Available: true},
-			{Id: 2, Available: true},
+			{Id: 1, Available: true, Price: 2, Discount: 1.0},
+			{Id: 2, Available: true, Price: 2, Discount: 1.0},
 		},
 	}, nil).Times(2)
 
 	money := moneyService.NewMockMoneyClient(ctl)
 	money.EXPECT().Pay(gomock.Any(), &moneyService.PayReq{
 		Uid:    1,
-		Price:  1,
+		Price:  2,
 		Reason: "购买 ",
 	}).Return(nil, nil).Times(2)
 	money.EXPECT().Give(gomock.Any(), &moneyService.GiveReq{
 		Uid:    1,
-		Money:  1,
+		Money:  2,
 		Reason: "退款 ",
 	}).Return(nil, nil)
 
@@ -65,7 +66,7 @@ func TestService_BuyItem(t *testing.T) {
 			_, err := srv.BuyItem(ctx.TODO(), &pb.BuyItemReq{
 				Uid:    1,
 				ItemId: 1,
-				Price:  1,
+				Price:  2,
 			})
 			So(err, ShouldBeNil)
 		})
@@ -73,7 +74,7 @@ func TestService_BuyItem(t *testing.T) {
 			_, err := srv.BuyItem(ctx.TODO(), &pb.BuyItemReq{
 				Uid:    1,
 				ItemId: 2,
-				Price:  1,
+				Price:  2,
 			})
 			So(err, ShouldBeNil)
 		})

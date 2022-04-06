@@ -39,10 +39,20 @@ message Record {
 
 message RecordsReq {
     int64 uid = 1;
+    uint32 days = 2;
 }
 
 message RecordsResp {
     repeated Record records = 1;
+}
+
+message GiftReq {
+    uint64 uid = 1;
+    uint64 target = 2;
+    uint32 money = 3;
+}
+
+message GiftResp {
 }
 
 service Money {
@@ -65,7 +75,13 @@ service Money {
     }
     rpc Records (RecordsReq) returns (RecordsResp) {
         option (google.api.http) = {
-            get: "/user/money/{uid}/records"
+            get: "/user/money/{uid}/records/{days}"
+        };
+    }
+    rpc Gift (GiftReq) returns (GiftResp) {
+        option (google.api.http) = {
+            post: "/user/money/{uid}/gift"
+            body: "*"
         };
     }
 }

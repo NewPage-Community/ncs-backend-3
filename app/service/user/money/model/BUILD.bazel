@@ -3,10 +3,14 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "model",
     srcs = [
+        "gift.go",
         "money.go",
         "record.go",
     ],
     importpath = "backend/app/service/user/money/model",
     visibility = ["//visibility:public"],
-    deps = ["//pkg/json"],
+    deps = [
+        "//pkg/database/mysql",
+        "//pkg/json",
+    ],
 )

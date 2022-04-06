@@ -5,6 +5,7 @@ go_library(
     srcs = [
         "dao.go",
         "dao.mock.go",
+        "gift.go",
         "money.go",
         "record.go",
     ],
@@ -14,10 +15,7 @@ go_library(
         "//app/service/user/money/conf",
         "//app/service/user/money/model",
         "//pkg/database/mysql",
-        "//pkg/database/redis",
-        "//pkg/json",
         "//pkg/log",
-        "@com_github_go_redis_redis_v8//:redis",
         "@com_github_golang_mock//gomock",
         "@io_gorm_gorm//:gorm",
         "@io_gorm_gorm//clause",

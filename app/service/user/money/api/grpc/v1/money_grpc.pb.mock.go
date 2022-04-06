@@ -55,6 +55,26 @@ func (mr *MockMoneyClientMockRecorder) Get(ctx, in interface{}, opts ...interfac
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockMoneyClient)(nil).Get), varargs...)
 }
 
+// Gift mocks base method.
+func (m *MockMoneyClient) Gift(ctx context.Context, in *GiftReq, opts ...grpc.CallOption) (*GiftResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "Gift", varargs...)
+	ret0, _ := ret[0].(*GiftResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Gift indicates an expected call of Gift.
+func (mr *MockMoneyClientMockRecorder) Gift(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Gift", reflect.TypeOf((*MockMoneyClient)(nil).Gift), varargs...)
+}
+
 // Give mocks base method.
 func (m *MockMoneyClient) Give(ctx context.Context, in *GiveReq, opts ...grpc.CallOption) (*GiveResp, error) {
 	m.ctrl.T.Helper()
@@ -151,6 +171,21 @@ func (m *MockMoneyServer) Get(arg0 context.Context, arg1 *GetReq) (*GetResp, err
 func (mr *MockMoneyServerMockRecorder) Get(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockMoneyServer)(nil).Get), arg0, arg1)
+}
+
+// Gift mocks base method.
+func (m *MockMoneyServer) Gift(arg0 context.Context, arg1 *GiftReq) (*GiftResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Gift", arg0, arg1)
+	ret0, _ := ret[0].(*GiftResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Gift indicates an expected call of Gift.
+func (mr *MockMoneyServerMockRecorder) Gift(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Gift", reflect.TypeOf((*MockMoneyServer)(nil).Gift), arg0, arg1)
 }
 
 // Give mocks base method.

@@ -3,8 +3,8 @@ package service
 import (
 	pb "backend/app/service/user/money/api/grpc/v1"
 	"backend/pkg/ecode"
-	"backend/pkg/log"
 	"context"
+
 	"google.golang.org/grpc/codes"
 )
 
@@ -37,15 +37,11 @@ func (s *Service) Pay(ctx context.Context, req *pb.PayReq) (resp *pb.PayResp, er
 		return
 	}
 
-	err = s.dao.Pay(req.Uid, req.Price)
+	err = s.dao.Pay(req.Uid, uint32(req.Price), req.Reason)
 	if err != nil {
 		return
 	}
 
-	recordErr := s.dao.AddRecord(req.Uid, -req.Price, req.Reason)
-	if recordErr != nil {
-		log.Warn(recordErr)
-	}
 	return
 }
 
@@ -61,15 +57,11 @@ func (s *Service) Give(ctx context.Context, req *pb.GiveReq) (resp *pb.GiveResp,
 		return
 	}
 
-	err = s.dao.Give(req.Uid, req.Money)
+	err = s.dao.Give(req.Uid, uint32(req.Money), req.Reason)
 	if err != nil {
 		return
 	}
 
-	recordErr := s.dao.AddRecord(req.Uid, req.Money, req.Reason)
-	if recordErr != nil {
-		log.Warn(recordErr)
-	}
 	return
 }
 
@@ -81,17 +73,33 @@ func (s *Service) Records(ctx context.Context, req *pb.RecordsReq) (resp *pb.Rec
 		return
 	}
 
-	res, err := s.dao.GetRecords(req.Uid)
+	res, err := s.dao.GetRecords(req.Uid, req.Days)
 	if err != nil {
 		return
 	}
 
 	for _, v := range *res {
 		resp.Records = append(resp.Records, &pb.Record{
-			Timestamp: v.Timestamp,
+			Timestamp: v.CreatedAt.Unix(),
 			Amount:    v.Amount,
 			Reason:    v.Reason,
 		})
 	}
+	return
+}
+
+func (s *Service) Gift(ctx context.Context, req *pb.GiftReq) (resp *pb.GiftResp, err error) {
+	resp = &pb.GiftResp{}
+
+	if req.Uid <= 0 || req.Target <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid UID or Target(%d, %d)", req.Uid, req.Target)
+		return
+	}
+	if req.Money == 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Invalid Money(%d)", req.Money)
+		return
+	}
+
+	err = s.dao.Gift(req.Uid, req.Target, req.Money)
 	return
 }

@@ -2,70 +2,28 @@ package dao
 
 import (
 	"backend/app/service/user/money/model"
-	"backend/pkg/json"
-	"backend/pkg/log"
-	"context"
-	"strconv"
 	"time"
 
-	"github.com/go-redis/redis/v8"
+	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
-const (
-	KeyPrefix = "ncs:user:money:"
-	TenDays   = 10 * 24 * time.Hour
-)
-
-var ctx = context.Background()
-
-func (d *dao) AddRecord(uid int64, amount int32, reason string) (err error) {
-	now := time.Now().Unix()
+func (d *dao) addRecord(tx *gorm.DB, uid int64, amount int32, reason string) (err error) {
 	info := &model.Record{
-		Timestamp: now,
-		Amount:    amount,
-		Reason:    reason,
+		UID:    uint64(uid),
+		Amount: amount,
+		Reason: reason,
 	}
 
 	// DB
-	data, err := info.JSON()
-	if err != nil {
-		return
-	}
-	key := Key(uid)
-	err = d.cache.ZAdd(ctx, key, &redis.Z{
-		Score:  float64(now),
-		Member: string(data),
-	}).Err()
-	return
+	return tx.Clauses(clause.Insert{Modifier: "IGNORE"}).Create(info).Error
 }
 
-func (d *dao) GetRecords(uid int64) (res *model.Records, err error) {
+func (d *dao) GetRecords(uid int64, days uint32) (res *model.Records, err error) {
 	res = &model.Records{}
-	now := strconv.FormatInt(time.Now().Add(-TenDays).Unix(), 10)
+	lastTime := time.Now().Add(time.Duration(days) * -24 * time.Hour).Unix()
 
 	// DB
-	key := Key(uid)
-	err = d.cache.ZRemRangeByScore(ctx, key, "0", now).Err()
-	if err != nil {
-		log.Error(err)
-	}
-	jsons, err := d.cache.ZRevRange(ctx, key, 0, -1).Result()
-	if err != nil {
-		if err == redis.Nil {
-			err = nil
-		}
-		return
-	}
-	for _, v := range jsons {
-		data := &model.Record{}
-		err = json.Unmarshal([]byte(v), data)
-		if err == nil {
-			*res = append(*res, data)
-		}
-	}
+	err = d.db.Find(res, "created_at >= ?", lastTime).Error
 	return
-}
-
-func Key(uid int64) string {
-	return KeyPrefix + strconv.FormatInt(uid, 10)
 }

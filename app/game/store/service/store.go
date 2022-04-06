@@ -11,6 +11,7 @@ import (
 	"backend/pkg/ecode"
 	"context"
 	"fmt"
+	"math"
 
 	"google.golang.org/grpc/codes"
 )
@@ -48,11 +49,15 @@ func (s *Service) BuyItem(ctx context.Context, req *pb.BuyItemReq) (resp *pb.Buy
 	}
 
 	if item == nil {
-		err = ecode.Errorf(codes.Unknown, "Can not found ItemID(%d)", req.ItemId)
+		err = ecode.Errorf(codes.InvalidArgument, "Can not found ItemID(%d)", req.ItemId)
 		return
 	}
 	if !item.Available {
-		err = ecode.Errorf(codes.Unknown, "item(%d) is not available", req.ItemId)
+		err = ecode.Errorf(codes.InvalidArgument, "item(%d) is not available", req.ItemId)
+		return
+	}
+	if math.Abs(float64(item.Discount*float32(item.Price)-float32(req.Price))) > 1.0 {
+		err = ecode.Errorf(codes.InvalidArgument, "item(%d) price %d invalid", req.ItemId, req.Price)
 		return
 	}
 

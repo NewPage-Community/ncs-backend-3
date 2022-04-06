@@ -47,6 +47,55 @@
         ]
       }
     },
+    "/user/money/{uid}/gift": {
+      "post": {
+        "operationId": "Money_Gift",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GiftResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "target": {
+                  "type": "string",
+                  "format": "uint64"
+                },
+                "money": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "Money"
+        ]
+      }
+    },
     "/user/money/{uid}/give": {
       "post": {
         "operationId": "Money_Give",
@@ -143,7 +192,7 @@
         ]
       }
     },
-    "/user/money/{uid}/records": {
+    "/user/money/{uid}/records/{days}": {
       "get": {
         "operationId": "Money_Records",
         "responses": {
@@ -166,6 +215,13 @@
             "in": "path",
             "required": true,
             "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "days",
+            "in": "path",
+            "required": true,
+            "type": "integer",
             "format": "int64"
           }
         ],
@@ -215,6 +271,9 @@
           "format": "int32"
         }
       }
+    },
+    "v1GiftResp": {
+      "type": "object"
     },
     "v1GiveResp": {
       "type": "object"
