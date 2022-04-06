@@ -33,7 +33,7 @@ func (d *dao) Gift(uid, target uint64, money uint32) (err error) {
 			return err
 		}
 
-		if err = d.pay(tx, int64(uid), money, fmt.Sprintf("赠送 UID:%d 软妹币", uid)); err != nil {
+		if err = d.pay(tx, int64(uid), money, fmt.Sprintf("赠送 UID:%d 软妹币", target)); err != nil {
 			return err
 		}
 		if err = d.give(tx, int64(target), money, fmt.Sprintf("UID:%d 赠送软妹币", uid)); err != nil {
