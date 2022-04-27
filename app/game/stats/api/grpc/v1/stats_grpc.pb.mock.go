@@ -76,14 +76,14 @@ func (mr *MockStatsClientMockRecorder) GetAll(ctx, in interface{}, opts ...inter
 }
 
 // GetGlobal mocks base method.
-func (m *MockStatsClient) GetGlobal(ctx context.Context, in *GetReq, opts ...grpc.CallOption) (*GetResp, error) {
+func (m *MockStatsClient) GetGlobal(ctx context.Context, in *GetGlobalReq, opts ...grpc.CallOption) (*GetGlobalResp, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetGlobal", varargs...)
-	ret0, _ := ret[0].(*GetResp)
+	ret0, _ := ret[0].(*GetGlobalResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
@@ -289,10 +289,10 @@ func (mr *MockStatsServerMockRecorder) GetAll(arg0, arg1 interface{}) *gomock.Ca
 }
 
 // GetGlobal mocks base method.
-func (m *MockStatsServer) GetGlobal(arg0 context.Context, arg1 *GetReq) (*GetResp, error) {
+func (m *MockStatsServer) GetGlobal(arg0 context.Context, arg1 *GetGlobalReq) (*GetGlobalResp, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetGlobal", arg0, arg1)
-	ret0, _ := ret[0].(*GetResp)
+	ret0, _ := ret[0].(*GetGlobalResp)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

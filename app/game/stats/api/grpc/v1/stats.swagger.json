@@ -101,7 +101,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1GetResp"
+              "$ref": "#/definitions/v1GetGlobalResp"
             }
           },
           "default": {
@@ -129,13 +129,6 @@
             "in": "query",
             "required": false,
             "type": "string"
-          },
-          {
-            "name": "uid",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "int64"
           }
         ],
         "tags": [
@@ -184,7 +177,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1GetResp"
+              "$ref": "#/definitions/v1GetGlobalResp"
             }
           },
           "default": {
@@ -212,13 +205,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "uid",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "format": "int64"
           }
         ],
         "tags": [
@@ -645,6 +631,15 @@
           "items": {
             "$ref": "#/definitions/v1GetResp"
           }
+        }
+      }
+    },
+    "v1GetGlobalResp": {
+      "type": "object",
+      "properties": {
+        "score": {
+          "type": "number",
+          "format": "float"
         }
       }
     },
