@@ -117,6 +117,9 @@ func (d *dao) GetGlobal(stats *model.Stats) (err error) {
 			return
 		}
 	}
+	if len(res) == 0 {
+		return
+	}
 	stats.Score, err = strconv.ParseFloat(res, 64)
 	if err != nil {
 		err = ecode.Errorf(codes.Unknown, "strconv parse float err: %s", err)

@@ -223,9 +223,9 @@ func (s *Service) CheckTrade() {
 	}
 }
 
-func (s *Service) regCron() {
-	_, err := s.cron.AddFunc(DonateCheckSchedule, s.CheckTrade)
-	if err != nil {
-		log.Error(err)
-	}
-}
+// func (s *Service) regCron() {
+// 	_, err := s.cron.AddFunc(DonateCheckSchedule, s.CheckTrade)
+// 	if err != nil {
+// 		log.Error(err)
+// 	}
+// }
