@@ -14,6 +14,9 @@ type Dao interface {
 	GetPartly(stats *model.Stats, start int64, end int64) ([]*model.Stats, int64, error)
 	Set(stats *model.Stats) error
 	Incr(stats *model.Stats) error
+	GetGlobal(stats *model.Stats) (err error)
+	SetGlobal(stats *model.Stats) (err error)
+	IncrGlobal(stats *model.Stats) (err error)
 	Healthy() bool
 	Close()
 }

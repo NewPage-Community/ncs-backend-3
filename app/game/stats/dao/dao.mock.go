@@ -76,6 +76,20 @@ func (mr *MockDaoMockRecorder) GetAll(stats interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*MockDao)(nil).GetAll), stats)
 }
 
+// GetGlobal mocks base method.
+func (m *MockDao) GetGlobal(stats *model.Stats) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetGlobal", stats)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// GetGlobal indicates an expected call of GetGlobal.
+func (mr *MockDaoMockRecorder) GetGlobal(stats interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGlobal", reflect.TypeOf((*MockDao)(nil).GetGlobal), stats)
+}
+
 // GetPartly mocks base method.
 func (m *MockDao) GetPartly(stats *model.Stats, start, end int64) ([]*model.Stats, int64, error) {
 	m.ctrl.T.Helper()
@@ -120,6 +134,20 @@ func (mr *MockDaoMockRecorder) Incr(stats interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Incr", reflect.TypeOf((*MockDao)(nil).Incr), stats)
 }
 
+// IncrGlobal mocks base method.
+func (m *MockDao) IncrGlobal(stats *model.Stats) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "IncrGlobal", stats)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// IncrGlobal indicates an expected call of IncrGlobal.
+func (mr *MockDaoMockRecorder) IncrGlobal(stats interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IncrGlobal", reflect.TypeOf((*MockDao)(nil).IncrGlobal), stats)
+}
+
 // Set mocks base method.
 func (m *MockDao) Set(stats *model.Stats) error {
 	m.ctrl.T.Helper()
@@ -132,4 +160,18 @@ func (m *MockDao) Set(stats *model.Stats) error {
 func (mr *MockDaoMockRecorder) Set(stats interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Set", reflect.TypeOf((*MockDao)(nil).Set), stats)
+}
+
+// SetGlobal mocks base method.
+func (m *MockDao) SetGlobal(stats *model.Stats) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetGlobal", stats)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SetGlobal indicates an expected call of SetGlobal.
+func (mr *MockDaoMockRecorder) SetGlobal(stats interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetGlobal", reflect.TypeOf((*MockDao)(nil).SetGlobal), stats)
 }

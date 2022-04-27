@@ -19,10 +19,6 @@ func (s *Stats) Key() string {
 	return KeyPrefix + s.Range + ":" + s.StatsName + ":" + s.Version
 }
 
-func (s *Stats) IsValid() bool {
-	return s.UID > 0
-}
-
 func (s *Stats) Member() string {
 	return strconv.FormatInt(s.UID, 10)
 }

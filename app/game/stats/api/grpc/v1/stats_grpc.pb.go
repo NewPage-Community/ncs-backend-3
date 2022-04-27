@@ -25,6 +25,9 @@ type StatsClient interface {
 	Sets(ctx context.Context, in *SetsReq, opts ...grpc.CallOption) (*SetResp, error)
 	Incr(ctx context.Context, in *IncrReq, opts ...grpc.CallOption) (*IncrResp, error)
 	Incrs(ctx context.Context, in *IncrsReq, opts ...grpc.CallOption) (*IncrResp, error)
+	GetGlobal(ctx context.Context, in *GetReq, opts ...grpc.CallOption) (*GetResp, error)
+	SetGlobal(ctx context.Context, in *SetGlobalReq, opts ...grpc.CallOption) (*SetGlobalResp, error)
+	IncrGlobal(ctx context.Context, in *IncrGlobalReq, opts ...grpc.CallOption) (*IncrGlobalResp, error)
 }
 
 type statsClient struct {
@@ -98,6 +101,33 @@ func (c *statsClient) Incrs(ctx context.Context, in *IncrsReq, opts ...grpc.Call
 	return out, nil
 }
 
+func (c *statsClient) GetGlobal(ctx context.Context, in *GetReq, opts ...grpc.CallOption) (*GetResp, error) {
+	out := new(GetResp)
+	err := c.cc.Invoke(ctx, "/ncs.game.stats.v1.Stats/GetGlobal", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *statsClient) SetGlobal(ctx context.Context, in *SetGlobalReq, opts ...grpc.CallOption) (*SetGlobalResp, error) {
+	out := new(SetGlobalResp)
+	err := c.cc.Invoke(ctx, "/ncs.game.stats.v1.Stats/SetGlobal", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *statsClient) IncrGlobal(ctx context.Context, in *IncrGlobalReq, opts ...grpc.CallOption) (*IncrGlobalResp, error) {
+	out := new(IncrGlobalResp)
+	err := c.cc.Invoke(ctx, "/ncs.game.stats.v1.Stats/IncrGlobal", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // StatsServer is the server API for Stats service.
 // All implementations must embed UnimplementedStatsServer
 // for forward compatibility
@@ -109,6 +139,9 @@ type StatsServer interface {
 	Sets(context.Context, *SetsReq) (*SetResp, error)
 	Incr(context.Context, *IncrReq) (*IncrResp, error)
 	Incrs(context.Context, *IncrsReq) (*IncrResp, error)
+	GetGlobal(context.Context, *GetReq) (*GetResp, error)
+	SetGlobal(context.Context, *SetGlobalReq) (*SetGlobalResp, error)
+	IncrGlobal(context.Context, *IncrGlobalReq) (*IncrGlobalResp, error)
 	mustEmbedUnimplementedStatsServer()
 }
 
@@ -136,6 +169,15 @@ func (UnimplementedStatsServer) Incr(context.Context, *IncrReq) (*IncrResp, erro
 }
 func (UnimplementedStatsServer) Incrs(context.Context, *IncrsReq) (*IncrResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Incrs not implemented")
+}
+func (UnimplementedStatsServer) GetGlobal(context.Context, *GetReq) (*GetResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGlobal not implemented")
+}
+func (UnimplementedStatsServer) SetGlobal(context.Context, *SetGlobalReq) (*SetGlobalResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetGlobal not implemented")
+}
+func (UnimplementedStatsServer) IncrGlobal(context.Context, *IncrGlobalReq) (*IncrGlobalResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IncrGlobal not implemented")
 }
 func (UnimplementedStatsServer) mustEmbedUnimplementedStatsServer() {}
 
@@ -276,6 +318,60 @@ func _Stats_Incrs_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Stats_GetGlobal_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StatsServer).GetGlobal(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ncs.game.stats.v1.Stats/GetGlobal",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StatsServer).GetGlobal(ctx, req.(*GetReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Stats_SetGlobal_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetGlobalReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StatsServer).SetGlobal(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ncs.game.stats.v1.Stats/SetGlobal",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StatsServer).SetGlobal(ctx, req.(*SetGlobalReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Stats_IncrGlobal_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IncrGlobalReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(StatsServer).IncrGlobal(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ncs.game.stats.v1.Stats/IncrGlobal",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(StatsServer).IncrGlobal(ctx, req.(*IncrGlobalReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Stats_ServiceDesc is the grpc.ServiceDesc for Stats service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -310,6 +406,18 @@ var Stats_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Incrs",
 			Handler:    _Stats_Incrs_Handler,
+		},
+		{
+			MethodName: "GetGlobal",
+			Handler:    _Stats_GetGlobal_Handler,
+		},
+		{
+			MethodName: "SetGlobal",
+			Handler:    _Stats_SetGlobal_Handler,
+		},
+		{
+			MethodName: "IncrGlobal",
+			Handler:    _Stats_IncrGlobal_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

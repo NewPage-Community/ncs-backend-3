@@ -76,6 +76,36 @@ message IncrsReq {
 message IncrResp {
 }
 
+message GetGlobalReq {
+    string range = 1;
+    string stats_name = 2;
+    string version = 3;
+}
+
+message GetGlobalResp {
+    float score = 1;
+}
+
+message SetGlobalReq {
+    string range = 1;
+    string stats_name = 2;
+    string version = 3;
+    float score = 4;
+}
+
+message SetGlobalResp {
+}
+
+message IncrGlobalReq {
+    string range = 1;
+    string stats_name = 2;
+    string version = 3;
+    float increment = 4;
+}
+
+message IncrGlobalResp {
+}
+
 service Stats {
     rpc Get (GetReq) returns (GetResp) {
         option (google.api.http) = {
@@ -95,7 +125,7 @@ service Stats {
     }
     rpc Gets (GetsReq) returns (GetsResp) {
         option (google.api.http) = {
-            post: "/game/stats/gets"
+            post: "/game/stats/user/gets"
             body: "*"
         };
     }
@@ -121,6 +151,30 @@ service Stats {
         option (google.api.http) = {
             post: "/game/stats/user/incrs"
             body: "*"
+        };
+    }
+    rpc GetGlobal (GetReq) returns (GetResp) {
+        option (google.api.http) = {
+            get: "/game/stats/global/{stats_name}/{version}"
+            additional_bindings: {
+                get: "/game/stats/global/{stats_name}/{version}/{range}"
+            }
+        };
+    }
+    rpc SetGlobal (SetGlobalReq) returns (SetGlobalResp) {
+        option (google.api.http) = {
+            post: "/game/stats/global/{stats_name}/{version}"
+            additional_bindings: {
+                post: "/game/stats/global/{stats_name}/{version}/{range}"
+            }
+        };
+    }
+    rpc IncrGlobal (IncrGlobalReq) returns (IncrGlobalResp) {
+        option (google.api.http) = {
+            post: "/game/stats/global/incr/{stats_name}/{version}"
+            additional_bindings: {
+                post: "/game/stats/global/incr/{stats_name}/{version}/{range}"
+            }
         };
     }
 }

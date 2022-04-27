@@ -108,3 +108,43 @@ func (d *dao) GetPartly(stats *model.Stats, start int64, end int64) (res []*mode
 	}
 	return
 }
+
+func (d *dao) GetGlobal(stats *model.Stats) (err error) {
+	res, err := d.redis.Get(ctx, stats.Key()).Result()
+	if err != nil {
+		err = ecode.Errorf(codes.Unknown, "Redis err: %s", err)
+		return
+	}
+	stats.Score, err = strconv.ParseFloat(res, 64)
+	if err != nil {
+		err = ecode.Errorf(codes.Unknown, "strconv parse float err: %s", err)
+		return
+	}
+	return
+}
+
+func (d *dao) SetGlobal(stats *model.Stats) (err error) {
+	err = d.redis.Set(ctx, stats.Key(), strconv.FormatFloat(stats.Score, 'f', -1, 64), 0).Err()
+	if err != nil {
+		err = ecode.Errorf(codes.Unknown, "Redis err: %s", err)
+		return
+	}
+	return
+}
+
+// stats.Score is increment
+func (d *dao) IncrGlobal(stats *model.Stats) (err error) {
+	incr := stats.Score
+	err = d.GetGlobal(stats)
+	if err != nil {
+		err = ecode.Errorf(codes.Unknown, "Redis err: %s", err)
+		return
+	}
+	stats.Score += incr
+	err = d.SetGlobal(stats)
+	if err != nil {
+		err = ecode.Errorf(codes.Unknown, "Redis err: %s", err)
+		return
+	}
+	return
+}

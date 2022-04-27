@@ -75,6 +75,26 @@ func (mr *MockStatsClientMockRecorder) GetAll(ctx, in interface{}, opts ...inter
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*MockStatsClient)(nil).GetAll), varargs...)
 }
 
+// GetGlobal mocks base method.
+func (m *MockStatsClient) GetGlobal(ctx context.Context, in *GetReq, opts ...grpc.CallOption) (*GetResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetGlobal", varargs...)
+	ret0, _ := ret[0].(*GetResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetGlobal indicates an expected call of GetGlobal.
+func (mr *MockStatsClientMockRecorder) GetGlobal(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGlobal", reflect.TypeOf((*MockStatsClient)(nil).GetGlobal), varargs...)
+}
+
 // Gets mocks base method.
 func (m *MockStatsClient) Gets(ctx context.Context, in *GetsReq, opts ...grpc.CallOption) (*GetsResp, error) {
 	m.ctrl.T.Helper()
@@ -115,6 +135,26 @@ func (mr *MockStatsClientMockRecorder) Incr(ctx, in interface{}, opts ...interfa
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Incr", reflect.TypeOf((*MockStatsClient)(nil).Incr), varargs...)
 }
 
+// IncrGlobal mocks base method.
+func (m *MockStatsClient) IncrGlobal(ctx context.Context, in *IncrGlobalReq, opts ...grpc.CallOption) (*IncrGlobalResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "IncrGlobal", varargs...)
+	ret0, _ := ret[0].(*IncrGlobalResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// IncrGlobal indicates an expected call of IncrGlobal.
+func (mr *MockStatsClientMockRecorder) IncrGlobal(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IncrGlobal", reflect.TypeOf((*MockStatsClient)(nil).IncrGlobal), varargs...)
+}
+
 // Incrs mocks base method.
 func (m *MockStatsClient) Incrs(ctx context.Context, in *IncrsReq, opts ...grpc.CallOption) (*IncrResp, error) {
 	m.ctrl.T.Helper()
@@ -153,6 +193,26 @@ func (mr *MockStatsClientMockRecorder) Set(ctx, in interface{}, opts ...interfac
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Set", reflect.TypeOf((*MockStatsClient)(nil).Set), varargs...)
+}
+
+// SetGlobal mocks base method.
+func (m *MockStatsClient) SetGlobal(ctx context.Context, in *SetGlobalReq, opts ...grpc.CallOption) (*SetGlobalResp, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "SetGlobal", varargs...)
+	ret0, _ := ret[0].(*SetGlobalResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SetGlobal indicates an expected call of SetGlobal.
+func (mr *MockStatsClientMockRecorder) SetGlobal(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetGlobal", reflect.TypeOf((*MockStatsClient)(nil).SetGlobal), varargs...)
 }
 
 // Sets mocks base method.
@@ -228,6 +288,21 @@ func (mr *MockStatsServerMockRecorder) GetAll(arg0, arg1 interface{}) *gomock.Ca
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAll", reflect.TypeOf((*MockStatsServer)(nil).GetAll), arg0, arg1)
 }
 
+// GetGlobal mocks base method.
+func (m *MockStatsServer) GetGlobal(arg0 context.Context, arg1 *GetReq) (*GetResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetGlobal", arg0, arg1)
+	ret0, _ := ret[0].(*GetResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetGlobal indicates an expected call of GetGlobal.
+func (mr *MockStatsServerMockRecorder) GetGlobal(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetGlobal", reflect.TypeOf((*MockStatsServer)(nil).GetGlobal), arg0, arg1)
+}
+
 // Gets mocks base method.
 func (m *MockStatsServer) Gets(arg0 context.Context, arg1 *GetsReq) (*GetsResp, error) {
 	m.ctrl.T.Helper()
@@ -258,6 +333,21 @@ func (mr *MockStatsServerMockRecorder) Incr(arg0, arg1 interface{}) *gomock.Call
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Incr", reflect.TypeOf((*MockStatsServer)(nil).Incr), arg0, arg1)
 }
 
+// IncrGlobal mocks base method.
+func (m *MockStatsServer) IncrGlobal(arg0 context.Context, arg1 *IncrGlobalReq) (*IncrGlobalResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "IncrGlobal", arg0, arg1)
+	ret0, _ := ret[0].(*IncrGlobalResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// IncrGlobal indicates an expected call of IncrGlobal.
+func (mr *MockStatsServerMockRecorder) IncrGlobal(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IncrGlobal", reflect.TypeOf((*MockStatsServer)(nil).IncrGlobal), arg0, arg1)
+}
+
 // Incrs mocks base method.
 func (m *MockStatsServer) Incrs(arg0 context.Context, arg1 *IncrsReq) (*IncrResp, error) {
 	m.ctrl.T.Helper()
@@ -286,6 +376,21 @@ func (m *MockStatsServer) Set(arg0 context.Context, arg1 *SetReq) (*SetResp, err
 func (mr *MockStatsServerMockRecorder) Set(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Set", reflect.TypeOf((*MockStatsServer)(nil).Set), arg0, arg1)
+}
+
+// SetGlobal mocks base method.
+func (m *MockStatsServer) SetGlobal(arg0 context.Context, arg1 *SetGlobalReq) (*SetGlobalResp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetGlobal", arg0, arg1)
+	ret0, _ := ret[0].(*SetGlobalResp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// SetGlobal indicates an expected call of SetGlobal.
+func (mr *MockStatsServerMockRecorder) SetGlobal(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetGlobal", reflect.TypeOf((*MockStatsServer)(nil).SetGlobal), arg0, arg1)
 }
 
 // Sets mocks base method.

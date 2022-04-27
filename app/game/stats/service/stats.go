@@ -267,3 +267,79 @@ func (s *Service) GetPartly(ctx context.Context, req *pb.GetPartlyReq) (resp *pb
 
 	return
 }
+
+func (s *Service) GetGlobal(ctx context.Context, req *pb.GetGlobalReq) (resp *pb.GetGlobalResp, err error) {
+	resp = &pb.GetGlobalResp{}
+
+	if req.StatsName == "" {
+		err = ecode.Errorf(codes.InvalidArgument, "Empty stats name")
+		return
+	}
+	if req.Version == "" {
+		err = ecode.Errorf(codes.InvalidArgument, "Empty version")
+		return
+	}
+	if req.Range == "" {
+		req.Range = StatsAllRange
+	}
+
+	info := &model.Stats{
+		Range:     req.Range,
+		StatsName: req.StatsName,
+		Version:   req.Version,
+	}
+	err = s.dao.GetGlobal(info)
+	if err != nil {
+		return
+	}
+	resp.Score = float32(info.Score)
+	return
+}
+
+func (s *Service) SetGlobal(ctx context.Context, req *pb.SetGlobalReq) (resp *pb.SetGlobalResp, err error) {
+	resp = &pb.SetGlobalResp{}
+
+	if req.StatsName == "" {
+		err = ecode.Errorf(codes.InvalidArgument, "Empty stats name")
+		return
+	}
+	if req.Version == "" {
+		err = ecode.Errorf(codes.InvalidArgument, "Empty version")
+		return
+	}
+	if req.Range == "" {
+		req.Range = StatsAllRange
+	}
+
+	err = s.dao.SetGlobal(&model.Stats{
+		Range:     req.Range,
+		StatsName: req.StatsName,
+		Version:   req.Version,
+		Score:     float64(req.Score),
+	})
+	return
+}
+
+func (s *Service) IncrGlobal(ctx context.Context, req *pb.IncrGlobalReq) (resp *pb.IncrGlobalResp, err error) {
+	resp = &pb.IncrGlobalResp{}
+
+	if req.StatsName == "" {
+		err = ecode.Errorf(codes.InvalidArgument, "Empty stats name")
+		return
+	}
+	if req.Version == "" {
+		err = ecode.Errorf(codes.InvalidArgument, "Empty version")
+		return
+	}
+	if req.Range == "" {
+		req.Range = StatsAllRange
+	}
+
+	err = s.dao.IncrGlobal(&model.Stats{
+		Range:     req.Range,
+		StatsName: req.StatsName,
+		Version:   req.Version,
+		Score:     float64(req.Increment),
+	})
+	return
+}
