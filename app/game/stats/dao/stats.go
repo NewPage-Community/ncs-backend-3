@@ -112,8 +112,10 @@ func (d *dao) GetPartly(stats *model.Stats, start int64, end int64) (res []*mode
 func (d *dao) GetGlobal(stats *model.Stats) (err error) {
 	res, err := d.redis.Get(ctx, stats.Key()).Result()
 	if err != nil {
-		err = ecode.Errorf(codes.Unknown, "Redis err: %s", err)
-		return
+		if err != redis.Nil {
+			err = ecode.Errorf(codes.Unknown, "Redis err: %s", err)
+			return
+		}
 	}
 	stats.Score, err = strconv.ParseFloat(res, 64)
 	if err != nil {
