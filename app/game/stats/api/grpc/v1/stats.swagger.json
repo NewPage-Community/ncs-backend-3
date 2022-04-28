@@ -45,6 +45,23 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "range": {
+                  "type": "string"
+                },
+                "increment": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
           }
         ],
         "tags": [
@@ -87,6 +104,20 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "increment": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
           }
         ],
         "tags": [
@@ -163,6 +194,23 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "range": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
           }
         ],
         "tags": [
@@ -245,6 +293,20 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "score": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
           }
         ],
         "tags": [

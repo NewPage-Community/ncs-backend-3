@@ -164,16 +164,20 @@ service Stats {
     rpc SetGlobal (SetGlobalReq) returns (SetGlobalResp) {
         option (google.api.http) = {
             post: "/game/stats/global/{stats_name}/{version}"
+            body: "*"
             additional_bindings: {
                 post: "/game/stats/global/{stats_name}/{version}/{range}"
+                body: "*"
             }
         };
     }
     rpc IncrGlobal (IncrGlobalReq) returns (IncrGlobalResp) {
         option (google.api.http) = {
             post: "/game/stats/global/incr/{stats_name}/{version}"
+            body: "*"
             additional_bindings: {
                 post: "/game/stats/global/incr/{stats_name}/{version}/{range}"
+                body: "*"
             }
         };
     }
