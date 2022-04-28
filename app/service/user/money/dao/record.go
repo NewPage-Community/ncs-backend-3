@@ -24,6 +24,6 @@ func (d *dao) GetRecords(uid int64, days uint32) (res *model.Records, err error)
 	lastTime := getZeroTime(time.Now().AddDate(0, 0, -int(days)+1))
 
 	// DB
-	err = d.db.Where("created_at >= ? AND uid = ?", lastTime, uid).Find(res).Error
+	err = d.db.Where("created_at >= ? AND uid = ?", lastTime, uid).Order("created_at desc").Find(res).Error
 	return
 }
