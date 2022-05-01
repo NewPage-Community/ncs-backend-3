@@ -24,6 +24,7 @@ type Config struct {
 }
 
 var client *gorm.DB
+var local *time.Location
 
 func (conf *Config) GetDSN() string {
 	return fmt.Sprintf(
@@ -69,11 +70,15 @@ func (conf *Config) GetLogger() logger.Interface {
 func Init(conf *Config) *gorm.DB {
 	var err error
 	conf.Init()
+	local, _ = time.LoadLocation("Asia/Shanghai")
 	conn := func() (*gorm.DB, error) {
 		return gorm.Open(mysql.Open(conf.GetDSN()), &gorm.Config{
 			Logger:                 conf.GetLogger(),
 			SkipDefaultTransaction: true,
 			PrepareStmt:            true,
+			NowFunc: func() time.Time {
+				return time.Now().In(local)
+			},
 		})
 	}
 
