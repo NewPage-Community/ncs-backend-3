@@ -52,7 +52,7 @@ ingress:
   tls:
   - hosts:
     - api.new-page.xyz
-    secretName: api-newpage-xyz-cert
+    secretName: wildcard-newpage-xyz-cert
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
