@@ -79,7 +79,7 @@ func (d *dao) give(tx *gorm.DB, uid int64, money uint32, reason string) (err err
 	err = tx.Clauses(clause.OnConflict{
 		Columns: []clause.Column{{Name: "uid"}},
 		DoUpdates: clause.Assignments(map[string]interface{}{
-			"rmb":        gorm.Expr("rmb + ?", money),
+			"rmb":        gorm.Expr("rmb + ?", int32(money)),
 			"updated_at": time.Now(),
 		}),
 	}).Create(&model.Money{
