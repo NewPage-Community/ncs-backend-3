@@ -4,6 +4,7 @@ go_library(
     name = "steam",
     srcs = [
         "IPlayerService.go",
+        "ISteamUser.go",
         "code.go",
         "error.go",
         "steam.go",

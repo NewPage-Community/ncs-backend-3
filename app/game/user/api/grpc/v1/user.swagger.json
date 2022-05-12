@@ -127,6 +127,12 @@
         "uid": {
           "type": "string",
           "format": "int64"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },

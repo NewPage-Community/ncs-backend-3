@@ -15,6 +15,7 @@ const (
 
 type APIClient interface {
 	IsPlayingSharedGame(steamID uint64, appID int) (res PlayingSharedGame, err error)
+	GetUserGroupList(steamID uint64) (res UserGroupList, err error)
 }
 
 type API struct {

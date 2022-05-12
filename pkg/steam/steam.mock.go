@@ -5,34 +5,50 @@
 package steam
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockAPIClient is a mock of APIClient interface
+// MockAPIClient is a mock of APIClient interface.
 type MockAPIClient struct {
 	ctrl     *gomock.Controller
 	recorder *MockAPIClientMockRecorder
 }
 
-// MockAPIClientMockRecorder is the mock recorder for MockAPIClient
+// MockAPIClientMockRecorder is the mock recorder for MockAPIClient.
 type MockAPIClientMockRecorder struct {
 	mock *MockAPIClient
 }
 
-// NewMockAPIClient creates a new mock instance
+// NewMockAPIClient creates a new mock instance.
 func NewMockAPIClient(ctrl *gomock.Controller) *MockAPIClient {
 	mock := &MockAPIClient{ctrl: ctrl}
 	mock.recorder = &MockAPIClientMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockAPIClient) EXPECT() *MockAPIClientMockRecorder {
 	return m.recorder
 }
 
-// IsPlayingSharedGame mocks base method
+// GetUserGroupList mocks base method.
+func (m *MockAPIClient) GetUserGroupList(steamID uint64) (UserGroupList, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserGroupList", steamID)
+	ret0, _ := ret[0].(UserGroupList)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserGroupList indicates an expected call of GetUserGroupList.
+func (mr *MockAPIClientMockRecorder) GetUserGroupList(steamID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserGroupList", reflect.TypeOf((*MockAPIClient)(nil).GetUserGroupList), steamID)
+}
+
+// IsPlayingSharedGame mocks base method.
 func (m *MockAPIClient) IsPlayingSharedGame(steamID uint64, appID int) (PlayingSharedGame, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "IsPlayingSharedGame", steamID, appID)
@@ -41,7 +57,7 @@ func (m *MockAPIClient) IsPlayingSharedGame(steamID uint64, appID int) (PlayingS
 	return ret0, ret1
 }
 
-// IsPlayingSharedGame indicates an expected call of IsPlayingSharedGame
+// IsPlayingSharedGame indicates an expected call of IsPlayingSharedGame.
 func (mr *MockAPIClientMockRecorder) IsPlayingSharedGame(steamID, appID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsPlayingSharedGame", reflect.TypeOf((*MockAPIClient)(nil).IsPlayingSharedGame), steamID, appID)

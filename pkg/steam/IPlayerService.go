@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	SrvName = "IPlayerService"
+	IPlayerServiceSrv = "IPlayerService"
 )
 
 type PlayingSharedGame struct {
@@ -22,7 +22,7 @@ func (a *API) IsPlayingSharedGame(steamID uint64, appID int) (res PlayingSharedG
 		Response PlayingSharedGame
 	}{}
 	err = a.request(APIRequest{
-		Service: SrvName,
+		Service: IPlayerServiceSrv,
 		Method:  "IsPlayingSharedGame",
 		Version: 1,
 	}, v, &data)

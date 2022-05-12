@@ -10,9 +10,11 @@ go_library(
     visibility = ["//visibility:public"],
     deps = [
         "//app/game/user/api/grpc/v1:grpc",
+        "//app/game/user/conf",
         "//app/service/backpack/user/api/grpc/v1:grpc",
         "//app/service/user/account/api/grpc/v1:grpc",
         "//pkg/ecode",
+        "//pkg/steam",
         "@org_golang_google_grpc//codes",
     ],
 )

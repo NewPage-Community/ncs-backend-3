@@ -6,6 +6,7 @@ import (
 	account_pb "backend/app/service/user/account/api/grpc/v1"
 	"backend/pkg/ecode"
 	"context"
+
 	"google.golang.org/grpc/codes"
 )
 
@@ -41,6 +42,15 @@ func (s *Service) PlayerConnect(ctx context.Context, req *pb.PlayerConnectReq) (
 	} else {
 		// Found UID
 		resp.Uid = uid.Uid
+	}
+
+	// Get steam groups
+	groups, err := s.steam.GetUserGroupList(uint64(req.SteamId))
+	if err != nil {
+		return
+	}
+	for _, v := range groups.Group {
+		resp.Groups = append(resp.Groups, v.GID)
 	}
 
 	// Change name

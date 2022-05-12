@@ -8,5 +8,6 @@ go_library(
     deps = [
         "//pkg/conf",
         "//pkg/log",
+        "//pkg/steam",
     ],
 )
