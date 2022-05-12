@@ -10,9 +10,9 @@ const (
 )
 
 type UserGroupList struct {
-	Group []struct {
-		GID string `json:"gid"`
-	} `json:"group"`
+	Groups []struct {
+		GID string
+	}
 }
 
 func (a *API) GetUserGroupList(steamID uint64) (res UserGroupList, err error) {

@@ -49,7 +49,7 @@ func (s *Service) PlayerConnect(ctx context.Context, req *pb.PlayerConnectReq) (
 	if err != nil {
 		return
 	}
-	for _, v := range groups.Group {
+	for _, v := range groups.Groups {
 		resp.Groups = append(resp.Groups, v.GID)
 	}
 
