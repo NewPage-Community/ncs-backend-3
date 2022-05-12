@@ -14,6 +14,7 @@ go_library(
         "//app/service/backpack/user/api/grpc/v1:grpc",
         "//app/service/user/account/api/grpc/v1:grpc",
         "//pkg/ecode",
+        "//pkg/log",
         "//pkg/steam",
         "@org_golang_google_grpc//codes",
     ],
