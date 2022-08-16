@@ -4,6 +4,9 @@ import (
 	"backend/pkg/log"
 	"backend/pkg/rpc/gateway"
 	"context"
+	"net/http"
+	"time"
+
 	"github.com/golang/glog"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
@@ -14,7 +17,6 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/encoding/protojson"
-	"net/http"
 )
 
 var grpcGatewayTag = opentracing.Tag{Key: string(ext.Component), Value: "grpc-gateway"}
@@ -113,8 +115,11 @@ func (gws *Gateways) Gateway(health func() bool) {
 	mux.HandleFunc("/healthz", HttpHealthHandler(health))
 	mux.HandleFunc("/", tracingWrapper(gws.mux))
 	gws.server = &http.Server{
-		Addr:    ":23333",
-		Handler: mux,
+		Addr: ":23333",
+		Handler: gateway.WebsocketProxy(
+			mux,
+			gateway.WithPingControl(10*time.Second),
+		),
 	}
 
 	go func() {
