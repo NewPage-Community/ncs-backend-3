@@ -3,6 +3,11 @@ package rpc
 import (
 	"backend/pkg/log"
 	"context"
+	"net"
+	"net/http"
+	"strconv"
+	"time"
+
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/opentracing/opentracing-go"
@@ -10,10 +15,6 @@ import (
 	"google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/reflection"
-	"net"
-	"net/http"
-	"strconv"
-	"time"
 )
 
 type Server struct {
@@ -24,27 +25,25 @@ type Server struct {
 }
 
 type ServerConfig struct {
-	Network           string
-	GrpcPort          int
-	HealthPort        int
-	Timeout           time.Duration
-	IdleTimeout       time.Duration
-	MaxLifeTime       time.Duration
-	ForceCloseWait    time.Duration
-	KeepAliveInterval time.Duration
-	KeepAliveTimeout  time.Duration
+	Network               string
+	GrpcPort              int
+	HealthPort            int
+	MaxConnectionIdle     time.Duration
+	MaxConnectionAge      time.Duration
+	MaxConnectionAgeGrace time.Duration
+	KeepAliveInterval     time.Duration
+	KeepAliveTimeout      time.Duration
 }
 
 var _defaultSerConf = &ServerConfig{
-	Network:           "tcp",
-	GrpcPort:          2333,
-	HealthPort:        23333,
-	Timeout:           10 * time.Second,
-	IdleTimeout:       60 * time.Second,
-	MaxLifeTime:       2 * time.Hour,
-	ForceCloseWait:    20 * time.Second,
-	KeepAliveInterval: 60 * time.Second,
-	KeepAliveTimeout:  20 * time.Second,
+	Network:               "tcp",
+	GrpcPort:              2333,
+	HealthPort:            23333,
+	MaxConnectionIdle:     60 * time.Second,
+	MaxConnectionAge:      2 * time.Hour,
+	MaxConnectionAgeGrace: 20 * time.Second,
+	KeepAliveInterval:     60 * time.Second,
+	KeepAliveTimeout:      20 * time.Second,
 }
 
 func NewServer(conf *ServerConfig) *Server {
@@ -57,17 +56,14 @@ func NewServer(conf *ServerConfig) *Server {
 }
 
 func (conf *ServerConfig) Init() {
-	if conf.Timeout <= 0 {
-		conf.Timeout = _defaultSerConf.Timeout
+	if conf.MaxConnectionIdle <= 0 {
+		conf.MaxConnectionIdle = _defaultSerConf.MaxConnectionIdle
 	}
-	if conf.IdleTimeout <= 0 {
-		conf.IdleTimeout = _defaultSerConf.IdleTimeout
+	if conf.MaxConnectionAge <= 0 {
+		conf.MaxConnectionAge = _defaultSerConf.MaxConnectionAge
 	}
-	if conf.MaxLifeTime <= 0 {
-		conf.MaxLifeTime = _defaultSerConf.MaxLifeTime
-	}
-	if conf.ForceCloseWait <= 0 {
-		conf.ForceCloseWait = _defaultSerConf.ForceCloseWait
+	if conf.MaxConnectionAgeGrace <= 0 {
+		conf.MaxConnectionAgeGrace = _defaultSerConf.MaxConnectionAgeGrace
 	}
 	if conf.KeepAliveInterval <= 0 {
 		conf.KeepAliveInterval = _defaultSerConf.KeepAliveInterval
@@ -89,11 +85,14 @@ func (conf *ServerConfig) Init() {
 func (s *Server) Grpc(reg func(s *grpc.Server)) {
 	// Options
 	keepParam := grpc.KeepaliveParams(keepalive.ServerParameters{
-		MaxConnectionIdle:     s.config.IdleTimeout,
-		MaxConnectionAgeGrace: s.config.ForceCloseWait,
+		MaxConnectionIdle:     s.config.MaxConnectionIdle,
+		MaxConnectionAge:      s.config.MaxConnectionAge,
+		MaxConnectionAgeGrace: s.config.MaxConnectionAgeGrace,
 		Time:                  s.config.KeepAliveInterval,
 		Timeout:               s.config.KeepAliveTimeout,
-		MaxConnectionAge:      s.config.MaxLifeTime,
+	})
+	keepPolicy := grpc.KeepaliveEnforcementPolicy(keepalive.EnforcementPolicy{
+		PermitWithoutStream: true,
 	})
 	tracer := grpc_opentracing.WithTracer(opentracing.GlobalTracer())
 	opts := []grpc.ServerOption{
@@ -104,6 +103,7 @@ func (s *Server) Grpc(reg func(s *grpc.Server)) {
 			grpc_opentracing.StreamServerInterceptor(tracer),
 		)),
 		keepParam,
+		keepPolicy,
 	}
 
 	// Network

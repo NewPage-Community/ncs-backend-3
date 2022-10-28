@@ -2,26 +2,32 @@ package rpc
 
 import (
 	"context"
+	"time"
+
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	"github.com/grpc-ecosystem/go-grpc-middleware/retry"
+	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	ot "github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"time"
+	"google.golang.org/grpc/keepalive"
 )
 
 type ClientConfig struct {
-	Dial      time.Duration
-	Timeout   time.Duration
-	MaxRetry  uint
-	RetryCode []codes.Code
+	Dial                time.Duration
+	Time                time.Duration
+	Timeout             time.Duration
+	PermitWithoutStream bool
+	MaxRetry            uint
+	RetryCode           []codes.Code
 }
 
 var _defaultCliConf = &ClientConfig{
-	Dial:     10 * time.Second,
-	Timeout:  10 * time.Second,
-	MaxRetry: 3,
+	Dial:                10 * time.Second,
+	Time:                10 * time.Second,
+	Timeout:             1 * time.Second,
+	PermitWithoutStream: true,
+	MaxRetry:            3,
 	RetryCode: []codes.Code{
 		codes.DataLoss,
 		codes.Unavailable,
@@ -36,6 +42,11 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 	conf.Init()
 
 	// Options
+	keepParam := grpc.WithKeepaliveParams(keepalive.ClientParameters{
+		Time:                conf.Time,
+		Timeout:             conf.Timeout,
+		PermitWithoutStream: conf.PermitWithoutStream,
+	})
 	retry := []grpc_retry.CallOption{
 		grpc_retry.WithMax(conf.MaxRetry),
 		grpc_retry.WithCodes(conf.RetryCode...),
@@ -55,6 +66,8 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 			),
 		),
 		grpc.WithInsecure(),
+		keepParam,
+		grpc.WithDefaultServiceConfig(`{"loadBalancingPolicy":"round_robin"}`),
 	}
 
 	// Initialize
@@ -63,7 +76,9 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 		ctx, cancel = context.WithTimeout(ctx, conf.Dial)
 		defer cancel()
 	}
-	conn, err := grpc.DialContext(ctx, target, opts...)
+	// Use dns with balancer
+	dnsTarget := "dns:///" + target
+	conn, err := grpc.DialContext(ctx, dnsTarget, opts...)
 	if err != nil {
 		panic(err)
 	}

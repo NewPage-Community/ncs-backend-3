@@ -5,9 +5,10 @@ import (
 	"backend/pkg/log"
 	"context"
 	"fmt"
+	"net/http"
+
 	"google.golang.org/grpc/codes"
 	health "google.golang.org/grpc/health/grpc_health_v1"
-	"net/http"
 )
 
 func (s *Server) Check(ctx context.Context, in *health.HealthCheckRequest) (*health.HealthCheckResponse, error) {
@@ -36,7 +37,7 @@ func HttpHealthHandler(health func() bool) http.HandlerFunc {
 				log.Error(err)
 			}
 		} else {
-			http.Error(w, "Unhealthy", 503)
+			http.Error(w, "Unhealthy", http.StatusServiceUnavailable)
 		}
 	}
 }

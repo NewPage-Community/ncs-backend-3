@@ -9,7 +9,9 @@ metadata:
     app: {{ .app }}
     {{- include "ncs-services.labels" $this | nindent 4 }}
 spec:
-  type: {{ $this.Values.service.type }}
+  clusterIP: None
+  selector:
+    app: {{ .app }}
   ports:
     - port: 2333
       targetPort: grpc
@@ -19,7 +21,5 @@ spec:
       targetPort: health
       protocol: TCP
       name: health
-  selector:
-    app: {{ .app }}
 ---
 {{- end -}}

@@ -12,6 +12,7 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/encoding/protojson"
 	"net/http"
@@ -56,7 +57,8 @@ func metadataModify(id string) func(ctx context.Context, req *http.Request) meta
 }
 
 func (gws *Gateways) AddGateway(handler regHandler, endpoint string) {
-	err := handler(gws.ctx, gws.mux, endpoint, gws.opts)
+	dnsEndpoint := "dns:///" + endpoint
+	err := handler(gws.ctx, gws.mux, dnsEndpoint, gws.opts)
 	if err != nil {
 		glog.Fatal(err)
 	}
@@ -101,6 +103,12 @@ func NewGateway(name string) *Gateways {
 				),
 			),
 			grpc.WithInsecure(),
+			grpc.WithKeepaliveParams(keepalive.ClientParameters{
+				Time:                _defaultCliConf.Time,
+				Timeout:             _defaultCliConf.Timeout,
+				PermitWithoutStream: _defaultCliConf.PermitWithoutStream,
+			}),
+			grpc.WithDefaultServiceConfig(`{"loadBalancingPolicy":"round_robin"}`),
 		},
 		ctx:    ctx,
 		cancel: cancel,
