@@ -6,16 +6,14 @@ import (
 	"context"
 	"fmt"
 	"strconv"
-	"time"
 
-	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	qqModel "github.com/miRemid/amy/websocket/model"
 )
 
 func (s *Service) getServerStatus(event qqModel.CQEvent, groupID int64) {
 	// Build message
 	var msg string
-	resp, err := s.serverSrv.AllInfo(context.Background(), &serverService.AllInfoReq{A2S: true}, grpc_retry.WithPerRetryTimeout(10*time.Second))
+	resp, err := s.serverSrv.AllInfo(context.Background(), &serverService.AllInfoReq{A2S: true})
 	if err != nil {
 		log.Error(err)
 		return

@@ -15,19 +15,21 @@ import (
 
 type ClientConfig struct {
 	Dial                time.Duration
-	Time                time.Duration
-	Timeout             time.Duration
+	KeepaliveInterval   time.Duration
+	KeepaliveTimeout    time.Duration
 	PermitWithoutStream bool
-	MaxRetry            uint
-	RetryCode           []codes.Code
+
+	// Request retry
+	RetryMaxTime uint
+	RetryCode    []codes.Code
 }
 
 var _defaultCliConf = &ClientConfig{
 	Dial:                10 * time.Second,
-	Time:                10 * time.Second,
-	Timeout:             1 * time.Second,
+	KeepaliveInterval:   10 * time.Second,
+	KeepaliveTimeout:    1 * time.Second,
 	PermitWithoutStream: true,
-	MaxRetry:            3,
+	RetryMaxTime:        3,
 	RetryCode: []codes.Code{
 		codes.DataLoss,
 		codes.Unavailable,
@@ -43,14 +45,13 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 
 	// Options
 	keepParam := grpc.WithKeepaliveParams(keepalive.ClientParameters{
-		Time:                conf.Time,
-		Timeout:             conf.Timeout,
+		Time:                conf.KeepaliveInterval,
+		Timeout:             conf.KeepaliveTimeout,
 		PermitWithoutStream: conf.PermitWithoutStream,
 	})
 	retry := []grpc_retry.CallOption{
-		grpc_retry.WithMax(conf.MaxRetry),
+		grpc_retry.WithMax(conf.RetryMaxTime),
 		grpc_retry.WithCodes(conf.RetryCode...),
-		grpc_retry.WithPerRetryTimeout(conf.Timeout),
 	}
 	tracer := grpc_opentracing.WithTracer(ot.GlobalTracer())
 	opts := []grpc.DialOption{
@@ -89,11 +90,8 @@ func (conf *ClientConfig) Init() {
 	if conf.Dial <= 0 {
 		conf.Dial = _defaultCliConf.Dial
 	}
-	if conf.Timeout <= 0 {
-		conf.Timeout = _defaultCliConf.Timeout
-	}
-	if conf.MaxRetry <= 0 {
-		conf.MaxRetry = _defaultCliConf.MaxRetry
+	if conf.RetryMaxTime <= 0 {
+		conf.RetryMaxTime = _defaultCliConf.RetryMaxTime
 	}
 	if len(conf.RetryCode) <= 0 {
 		conf.RetryCode = _defaultCliConf.RetryCode
