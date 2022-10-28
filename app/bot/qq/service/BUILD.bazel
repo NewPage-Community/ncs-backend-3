@@ -26,6 +26,7 @@ go_library(
         "//app/service/user/ban/api/grpc/v1:grpc",
         "//pkg/log",
         "@com_github_gorilla_websocket//:websocket",
+        "@com_github_grpc_ecosystem_go_grpc_middleware//retry",
         "@com_github_miremid_amy//:amy",
         "@com_github_miremid_amy//message",
         "@com_github_miremid_amy//websocket/model",

@@ -6,14 +6,16 @@ import (
 	"backend/pkg/log"
 	"context"
 	"fmt"
+	"time"
 
+	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	"github.com/lonelyevil/khl"
 )
 
 func (s *Service) getServerStatus(event *khl.TextMessageContext) {
 	// Build message
 	var msg string
-	resp, err := s.serverSrv.AllInfo(context.Background(), &serverService.AllInfoReq{A2S: true})
+	resp, err := s.serverSrv.AllInfo(context.Background(), &serverService.AllInfoReq{A2S: true}, grpc_retry.WithPerRetryTimeout(10*time.Second))
 	if err != nil {
 		log.Error(err)
 		return
