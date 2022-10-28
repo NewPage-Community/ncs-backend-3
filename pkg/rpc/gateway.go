@@ -15,6 +15,7 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/encoding/protojson"
 )
@@ -58,7 +59,8 @@ func metadataModify(id string) func(ctx context.Context, req *http.Request) meta
 }
 
 func (gws *Gateways) AddGateway(handler regHandler, endpoint string) {
-	err := handler(gws.ctx, gws.mux, endpoint, gws.opts)
+	dnsEndpoint := "dns:///" + endpoint
+	err := handler(gws.ctx, gws.mux, dnsEndpoint, gws.opts)
 	if err != nil {
 		glog.Fatal(err)
 	}
@@ -96,13 +98,18 @@ func NewGateway(name string) *Gateways {
 				grpc_middleware.ChainUnaryClient(
 					grpc_opentracing.UnaryClientInterceptor(tracer),
 					grpc_retry.UnaryClientInterceptor(
-						grpc_retry.WithMax(_defaultCliConf.MaxRetry),
+						grpc_retry.WithMax(_defaultCliConf.RetryMaxTime),
 						grpc_retry.WithCodes(_defaultCliConf.RetryCode...),
-						grpc_retry.WithPerRetryTimeout(_defaultCliConf.Timeout),
 					),
 				),
 			),
 			grpc.WithInsecure(),
+			grpc.WithKeepaliveParams(keepalive.ClientParameters{
+				Time:                _defaultCliConf.KeepaliveInterval,
+				Timeout:             _defaultCliConf.KeepaliveTimeout,
+				PermitWithoutStream: _defaultCliConf.PermitWithoutStream,
+			}),
+			grpc.WithDefaultServiceConfig(`{"loadBalancingPolicy":"round_robin"}`),
 		},
 		ctx:    ctx,
 		cancel: cancel,

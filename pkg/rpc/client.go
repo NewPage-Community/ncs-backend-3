@@ -2,26 +2,34 @@ package rpc
 
 import (
 	"context"
+	"time"
+
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
-	"github.com/grpc-ecosystem/go-grpc-middleware/retry"
+	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	ot "github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"time"
+	"google.golang.org/grpc/keepalive"
 )
 
 type ClientConfig struct {
-	Dial      time.Duration
-	Timeout   time.Duration
-	MaxRetry  uint
-	RetryCode []codes.Code
+	Dial                time.Duration
+	KeepaliveInterval   time.Duration
+	KeepaliveTimeout    time.Duration
+	PermitWithoutStream bool
+
+	// Request retry
+	RetryMaxTime uint
+	RetryCode    []codes.Code
 }
 
 var _defaultCliConf = &ClientConfig{
-	Dial:     10 * time.Second,
-	Timeout:  10 * time.Second,
-	MaxRetry: 3,
+	Dial:                10 * time.Second,
+	KeepaliveInterval:   10 * time.Second,
+	KeepaliveTimeout:    1 * time.Second,
+	PermitWithoutStream: true,
+	RetryMaxTime:        3,
 	RetryCode: []codes.Code{
 		codes.DataLoss,
 		codes.Unavailable,
@@ -36,10 +44,14 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 	conf.Init()
 
 	// Options
+	keepParam := grpc.WithKeepaliveParams(keepalive.ClientParameters{
+		Time:                conf.KeepaliveInterval,
+		Timeout:             conf.KeepaliveTimeout,
+		PermitWithoutStream: conf.PermitWithoutStream,
+	})
 	retry := []grpc_retry.CallOption{
-		grpc_retry.WithMax(conf.MaxRetry),
+		grpc_retry.WithMax(conf.RetryMaxTime),
 		grpc_retry.WithCodes(conf.RetryCode...),
-		grpc_retry.WithPerRetryTimeout(conf.Timeout),
 	}
 	tracer := grpc_opentracing.WithTracer(ot.GlobalTracer())
 	opts := []grpc.DialOption{
@@ -55,6 +67,8 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 			),
 		),
 		grpc.WithInsecure(),
+		keepParam,
+		grpc.WithDefaultServiceConfig(`{"loadBalancingPolicy":"round_robin"}`),
 	}
 
 	// Initialize
@@ -63,7 +77,9 @@ func Dial(ctx context.Context, target string, conf *ClientConfig) *grpc.ClientCo
 		ctx, cancel = context.WithTimeout(ctx, conf.Dial)
 		defer cancel()
 	}
-	conn, err := grpc.DialContext(ctx, target, opts...)
+	// Use dns with balancer
+	dnsTarget := "dns:///" + target
+	conn, err := grpc.DialContext(ctx, dnsTarget, opts...)
 	if err != nil {
 		panic(err)
 	}
@@ -74,11 +90,8 @@ func (conf *ClientConfig) Init() {
 	if conf.Dial <= 0 {
 		conf.Dial = _defaultCliConf.Dial
 	}
-	if conf.Timeout <= 0 {
-		conf.Timeout = _defaultCliConf.Timeout
-	}
-	if conf.MaxRetry <= 0 {
-		conf.MaxRetry = _defaultCliConf.MaxRetry
+	if conf.RetryMaxTime <= 0 {
+		conf.RetryMaxTime = _defaultCliConf.RetryMaxTime
 	}
 	if len(conf.RetryCode) <= 0 {
 		conf.RetryCode = _defaultCliConf.RetryCode
