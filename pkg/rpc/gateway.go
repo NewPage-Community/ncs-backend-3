@@ -4,6 +4,8 @@ import (
 	"backend/pkg/log"
 	"backend/pkg/rpc/gateway"
 	"context"
+	"net/http"
+
 	"github.com/golang/glog"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
@@ -15,7 +17,6 @@ import (
 	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/encoding/protojson"
-	"net/http"
 )
 
 var grpcGatewayTag = opentracing.Tag{Key: string(ext.Component), Value: "grpc-gateway"}
@@ -96,16 +97,15 @@ func NewGateway(name string) *Gateways {
 				grpc_middleware.ChainUnaryClient(
 					grpc_opentracing.UnaryClientInterceptor(tracer),
 					grpc_retry.UnaryClientInterceptor(
-						grpc_retry.WithMax(_defaultCliConf.MaxRetry),
+						grpc_retry.WithMax(_defaultCliConf.RetryMaxTime),
 						grpc_retry.WithCodes(_defaultCliConf.RetryCode...),
-						grpc_retry.WithPerRetryTimeout(_defaultCliConf.Timeout),
 					),
 				),
 			),
 			grpc.WithInsecure(),
 			grpc.WithKeepaliveParams(keepalive.ClientParameters{
-				Time:                _defaultCliConf.Time,
-				Timeout:             _defaultCliConf.Timeout,
+				Time:                _defaultCliConf.KeepaliveInterval,
+				Timeout:             _defaultCliConf.KeepaliveTimeout,
 				PermitWithoutStream: _defaultCliConf.PermitWithoutStream,
 			}),
 			grpc.WithDefaultServiceConfig(`{"loadBalancingPolicy":"round_robin"}`),
