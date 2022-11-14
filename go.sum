@@ -48,8 +48,8 @@ github.com/HdrHistogram/hdrhistogram-go v1.1.2/go.mod h1:yDgFjdqOqDEKOvasDdhWNXY
 github.com/Knetic/govaluate v3.0.1-0.20171022003610-9aa49832a739+incompatible/go.mod h1:r7JcOSlj0wfOMncg0iLm8Leh48TZaKVeNIfJntJ2wa0=
 github.com/Masterminds/semver/v3 v3.1.1 h1:hLg3sBzpNErnxhQtUy/mmLR2I9foDujNK030IGemrRc=
 github.com/Masterminds/semver/v3 v3.1.1/go.mod h1:VPu/7SZ7ePZ3QOrcuXROw5FAcLl4a0cBrbBpGY/8hQs=
-github.com/NewPage-Community/go-source-server-query v1.1.2 h1:SG5ium+DslLdPaPc8MzS9wAZ4jQWUHbf7i0VzPXVodg=
-github.com/NewPage-Community/go-source-server-query v1.1.2/go.mod h1:Lx7mHDRx/tsEI4tRSoScvpHYAjk/bDqqr/mTFx5RsV4=
+github.com/NewPage-Community/go-source-server-query v1.1.3 h1:9bdT5sMAtux6vvA128ouXyqygdnjD08gJG18xzOL2L4=
+github.com/NewPage-Community/go-source-server-query v1.1.3/go.mod h1:Lx7mHDRx/tsEI4tRSoScvpHYAjk/bDqqr/mTFx5RsV4=
 github.com/Shopify/sarama v1.19.0/go.mod h1:FVkBWblsNy7DGZRfXLU0O9RCGt5g3g3yEuWXgklEdEo=
 github.com/Shopify/toxiproxy v2.1.4+incompatible/go.mod h1:OXgGpZ6Cli1/URJOF1DMxUHB2q5Ap20/P/eIdh4G0pI=
 github.com/VividCortex/gohistogram v1.0.0/go.mod h1:Pf5mBqqDxYaXu3hDrrU+w6nw50o/4+TcAqDqk/vUH7g=

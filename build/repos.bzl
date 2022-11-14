@@ -1071,8 +1071,8 @@ def go_repositories():
     go_repository(
         name = "com_github_newpage_community_go_source_server_query",
         importpath = "github.com/NewPage-Community/go-source-server-query",
-        sum = "h1:SG5ium+DslLdPaPc8MzS9wAZ4jQWUHbf7i0VzPXVodg=",
-        version = "v1.1.2",
+        sum = "h1:9bdT5sMAtux6vvA128ouXyqygdnjD08gJG18xzOL2L4=",
+        version = "v1.1.3",
     )
     go_repository(
         name = "com_github_niemeyer_pretty",

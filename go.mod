@@ -6,7 +6,7 @@ replace google.golang.org/grpc => google.golang.org/grpc v1.37.1
 
 require (
 	github.com/HdrHistogram/hdrhistogram-go v1.1.2 // indirect
-	github.com/NewPage-Community/go-source-server-query v1.1.2
+	github.com/NewPage-Community/go-source-server-query v1.1.3
 	github.com/alicebob/miniredis/v2 v2.15.1
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
