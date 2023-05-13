@@ -10,8 +10,8 @@ def init_rules_go():
         name = "go_sdk",
         version = "1.17",
         urls = [
-            "http://nexus3.nexus3:8081/repository/golang/{}",
-            "https://nexus.new-page.xyz/repository/golang/{}",
+            "http://nexus3.nexus3:8081/repository/google/go/{}",
+            "https://nexus.new-page.xyz/repository/google/go/{}",
             "https://dl.google.com/go/{}",
         ],
     )
