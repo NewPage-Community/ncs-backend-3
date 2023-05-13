@@ -40,25 +40,25 @@ def init_rules_docker():
     container_pull(
         name = "go_image_base",
         digest = BASE_DIGESTS["latest"],
-        registry = "registry.new-page.xyz",
+        registry = "gcr.io",
         repository = "distroless/base",
     )
     container_pull(
-    name = "go_debug_image_base",
-    digest = BASE_DIGESTS["debug"],
-    registry = "registry.new-page.xyz",
-    repository = "distroless/base",
+        name = "go_debug_image_base",
+        digest = BASE_DIGESTS["debug"],
+        registry = "gcr.io",
+        repository = "distroless/base",
     )
     container_pull(
         name = "go_image_static",
         digest = STATIC_DIGESTS["latest"],
-        registry = "registry.new-page.xyz",
+        registry = "gcr.io",
         repository = "distroless/static",
     )
     container_pull(
         name = "go_debug_image_static",
         digest = STATIC_DIGESTS["debug"],
-        registry = "registry.new-page.xyz",
+        registry = "gcr.io",
         repository = "distroless/static",
     )
     go_repository(
