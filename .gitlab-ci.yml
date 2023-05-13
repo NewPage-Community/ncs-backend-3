@@ -1,5 +1,5 @@
 image:
-  name: registry.new-page.xyz/bazel-public/ubuntu2004-java11:latest
+  name: gcr.io/bazel-public/ubuntu2004-java11:latest
 
 variables:
   GOPROXY: http://goproxy.golang:8080
@@ -18,14 +18,14 @@ stages:
 
 lint-golang:
   stage: build
-  image: registry.new-page.xyz/golangci/golangci-lint:latest-alpine
+  image: golangci/golangci-lint:latest-alpine
   script:
     - golangci-lint run -v --timeout 5m
   allow_failure: true
 
 lint-helm:
   stage: build
-  image: registry.new-page.xyz/alpine/helm:3.2.3
+  image: alpine/helm:3.2.3
   script:
     - helm lint ./chart
   allow_failure: true
@@ -68,7 +68,7 @@ force push all images:
 
 deploy-ins:
   stage: deploy
-  image: registry.new-page.xyz/alpine/helm:3.2.3
+  image: alpine/helm:3.2.3
   script:
     - mkdir ~/.kube && echo -n $KUBE_CONFIG | base64 -d > ~/.kube/config
     - helm upgrade --install --namespace ncs -f ./chart/ins.yaml ncs ./chart
