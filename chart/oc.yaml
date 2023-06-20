@@ -1,0 +1,120 @@
+# NCS values.yaml
+
+ncs-services:
+  configMap:
+    name: ncs
+  services:
+    - app: ncs-game-server
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/game-server
+      tag: latest
+      port: 2333
+    - app: ncs-service-user-account
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-user-account
+      tag: latest
+      port: 2333
+    - app: ncs-service-user-admin
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-user-admin
+      tag: latest
+      port: 2333
+    - app: ncs-service-user-ban
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-user-ban
+      tag: latest
+      port: 2333
+    - app: ncs-service-user-sign
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-user-sign
+      tag: latest
+      port: 2333
+    - app: ncs-service-user-vip
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-user-vip
+      tag: latest
+      port: 2333
+    - app: ncs-game-user
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/game-user
+      tag: latest
+      port: 2333
+    - app: ncs-service-pass-user
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-pass-user
+      tag: latest
+      port: 2333
+    - app: ncs-service-pass-reward
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-pass-reward
+      tag: latest
+      port: 2333
+    - app: ncs-service-backpack-user
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-backpack-user
+      tag: latest
+      port: 2333
+    - app: ncs-service-backpack-items
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-backpack-items
+      tag: latest
+      port: 2333
+    - app: ncs-service-user-money
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-user-money
+      tag: latest
+      port: 2333
+    - app: ncs-game-store
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/game-store
+      tag: latest
+      port: 2333
+    - app: ncs-game-stats
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/game-stats
+      tag: latest
+      port: 2333
+    - app: ncs-game-pass
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/game-pass
+      tag: latest
+      port: 2333
+    - app: ncs-game-cookie
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/game-cookie
+      tag: latest
+      port: 2333
+    - app: ncs-game-chat
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/game-chat
+      tag: latest
+      port: 2333
+    - app: ncs-service-donate
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/service-donate
+      tag: latest
+      port: 2333
+    - app: ncs-game-cvar
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/game-cvar
+      tag: latest
+      port: 2333
+    - app: ncs-bot-kaiheila
+      version: v1
+      image: registry.new-page.xyz/newpage/ncs/bot-kaiheila
+      tag: latest
+      port: 2333
+
+ncs-gateway-web:
+  ingress:
+    hosts:
+      - host: api.new-page.xyz
+        paths:
+        - /ncs/oc/web(/|$)(.*)
+
+ncs-gateway-game:
+  ingress:
+    hosts:
+      - host: api.new-page.xyz
+        paths:
+        - /ncs/oc/game(/|$)(.*)
