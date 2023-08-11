@@ -76,15 +76,15 @@ func (mr *MockDaoMockRecorder) Healthy() *gomock.Call {
 }
 
 // Set mocks base method.
-func (m *MockDao) Set(uid int64, key, value string) error {
+func (m *MockDao) Set(uid int64, key, value string, timestamp int64) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Set", uid, key, value)
+	ret := m.ctrl.Call(m, "Set", uid, key, value, timestamp)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Set indicates an expected call of Set.
-func (mr *MockDaoMockRecorder) Set(uid, key, value interface{}) *gomock.Call {
+func (mr *MockDaoMockRecorder) Set(uid, key, value, timestamp interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Set", reflect.TypeOf((*MockDao)(nil).Set), uid, key, value)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Set", reflect.TypeOf((*MockDao)(nil).Set), uid, key, value, timestamp)
 }

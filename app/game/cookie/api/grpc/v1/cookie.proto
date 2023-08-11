@@ -12,6 +12,7 @@ message GetCookieReq {
 message GetCookieResp {
     string value = 1;
     bool exist = 2;
+    int64 last_updated = 3;
 }
 
 message GetAllCookieReq {
@@ -27,6 +28,7 @@ message SetCookieReq {
     string key = 2;
     string value = 3;
     bool notify = 4;
+    int64 timestamp = 5;
 }
 
 message SetCookieResp {

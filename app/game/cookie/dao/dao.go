@@ -11,7 +11,7 @@ import (
 
 type Dao interface {
 	Get(uid int64) (*model.Cookie, error)
-	Set(uid int64, key string, value string) error
+	Set(uid int64, key string, value string, timestamp int64) error
 	Healthy() bool
 	Close()
 }

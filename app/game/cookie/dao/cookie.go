@@ -20,14 +20,14 @@ func (d *dao) Get(uid int64) (res *model.Cookie, err error) {
 		}
 		return
 	}
-	err = res.GetCookieFromJSON(json)
+	err = res.MergeCookieData(json)
 	return
 }
 
-func (d *dao) Set(uid int64, key string, value string) (err error) {
+func (d *dao) Set(uid int64, key string, value string, timestamp int64) (err error) {
 	c := &model.Cookie{
 		UID:    uid,
-		Cookie: make(map[string]string),
+		Cookie: make(map[string]model.CookieModel),
 	}
 
 	// Get cookie
@@ -36,14 +36,19 @@ func (d *dao) Set(uid int64, key string, value string) (err error) {
 		if err != nil {
 			return
 		}
-		err = c.GetCookieFromJSON(json)
+		err = c.MergeCookieData(json)
 		if err != nil {
 			return
 		}
 	}
 
 	// Set cookie
-	c.Cookie[key] = value
+	if c.Cookie[key].LastUpdated < timestamp {
+		c.Cookie[key] = model.CookieModel{
+			Value:       value,
+			LastUpdated: timestamp,
+		}
+	}
 
 	// Save cookie
 	json, err = c.CookieJSON()

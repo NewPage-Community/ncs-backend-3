@@ -164,6 +164,10 @@
         },
         "exist": {
           "type": "boolean"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
@@ -182,6 +186,10 @@
         },
         "notify": {
           "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },

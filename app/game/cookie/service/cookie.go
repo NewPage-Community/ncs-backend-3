@@ -2,11 +2,13 @@ package service
 
 import (
 	pb "backend/app/game/cookie/api/grpc/v1"
+	"backend/app/game/cookie/model"
 	serverSrv "backend/app/game/server/api/grpc/v1"
 	"backend/pkg/ecode"
 	"backend/pkg/rpc/gateway"
 	"context"
 	"fmt"
+
 	"google.golang.org/grpc/codes"
 )
 
@@ -31,7 +33,10 @@ func (s *Service) GetCookie(ctx context.Context, req *pb.GetCookieReq) (resp *pb
 	if err != nil {
 		return
 	}
-	resp.Value, resp.Exist = cookie.Cookie[req.Key]
+	var model model.CookieModel
+	model, resp.Exist = cookie.Cookie[req.Key]
+	resp.Value = model.Value
+	resp.LastUpdated = model.LastUpdated
 	return
 }
 
@@ -52,7 +57,10 @@ func (s *Service) GetAllCookie(ctx context.Context, req *pb.GetAllCookieReq) (re
 	if err != nil {
 		return
 	}
-	resp.Cookie = cookie.Cookie
+	resp.Cookie = make(map[string]string)
+	for key, model := range cookie.Cookie {
+		resp.Cookie[key] = model.Value
+	}
 	return
 }
 
@@ -72,8 +80,12 @@ func (s *Service) SetCookie(ctx context.Context, req *pb.SetCookieReq) (resp *pb
 		err = ecode.Errorf(codes.InvalidArgument, "Key is empty")
 		return
 	}
+	if req.Timestamp <= 0 {
+		err = ecode.Errorf(codes.InvalidArgument, "Timestamp is empty")
+		return
+	}
 
-	err = s.dao.Set(req.Uid, req.Key, req.Value)
+	err = s.dao.Set(req.Uid, req.Key, req.Value, req.Timestamp)
 
 	// Game server notify
 	if err == nil && req.Notify {

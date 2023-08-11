@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Change source in china
-sed -i 's@/deb.debian.org/@/mirrors.aliyun.com/@g;s@/security.debian.org/@/mirrors.aliyun.com/@g' /etc/apt/sources.list
+sed -i 's/deb.debian.org/mirrors.aliyun.com/g' /etc/apt/sources.list.d/debian.sources
+sed -i 's/http:/https:/g' /etc/apt/sources.list.d/debian.sources
 
 # Install tools
 apt update
