@@ -2,7 +2,7 @@
 GO_VERSION      = latest
 # Docker image
 HELM_IMG        = alpine/helm
-BAZEL_IMG       = registry.new-page.xyz/bazel-public/ubuntu2004-java11
+BAZEL_IMG       = gcr.io/bazel-public/ubuntu2004-java11
 GO_IMG          = golang:$(GO_VERSION)
 GOLANGCI_IMG    = golangci/golangci-lint:latest-alpine
 # Golang
@@ -11,7 +11,7 @@ ifdef GOPATH
 endif
 # Docker command
 PROXY_PASS      = --network host --env HTTP_PROXY=$(HTTP_PROXY) --env HTTPS_PROXY=$(HTTPS_PROXY) --env http_proxy=$(http_proxy) --env https_proxy=$(https_proxy) --env NO_PROXY=goproxy.cn,new-page.xyz
-DOCKER_CMD      = docker run --rm --init -v $(shell pwd):/apps -w /apps --entrypoint "" $(PROXY_PASS)
+DOCKER_CMD      = docker run --rm --init -v $(shell pwd):/apps -w /apps --entrypoint "" $(PROXY_PASS) --platform linux/amd64
 GO_ENV          = --env GOPROXY=https://goproxy.cn,direct $(GO_PATH_SET)
 # Tools run on docker
 HELM_CMD        = $(DOCKER_CMD) $(HELM_IMG)
