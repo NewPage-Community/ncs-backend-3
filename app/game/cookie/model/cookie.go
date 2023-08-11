@@ -64,7 +64,6 @@ func (c *Cookie) MergeCookieData(data string) error {
 			}
 		} else {
 			// ingore invalid data
-			fmt.Printf("%v", cookie)
 			value, ok := v.(map[string]interface{})["value"].(string)
 			if !ok {
 				continue
