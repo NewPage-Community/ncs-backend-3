@@ -109,7 +109,7 @@ func TestService_SetCookie(t *testing.T) {
 
 func TestMergeCookieData(t *testing.T) {
 	// Test case 1: valid input
-	input1 := `{"uid": 123, "cookie": {"key1": {"value": "val1", "last_updated": 1234567890}}}`
+	input1 := `{"key1": {"value": "val1", "last_updated": 1234567890}}`
 	expectedOutput1 := &model.Cookie{
 		UID: 123,
 		Cookie: map[string]model.CookieModel{
@@ -119,7 +119,7 @@ func TestMergeCookieData(t *testing.T) {
 			},
 		},
 	}
-	c1 := &model.Cookie{}
+	c1 := &model.Cookie{UID: 123}
 	err1 := c1.MergeCookieData(input1)
 	if err1 != nil {
 		t.Errorf("Test case 1 failed: expected nil error, but got %v", err1)
@@ -129,15 +129,15 @@ func TestMergeCookieData(t *testing.T) {
 	}
 
 	// Test case 2: invalid JSON input
-	input2 := `{"uid": 123, "cookie": {"key1": {"value": "val1", "last_updated": 1234567890}`
-	c2 := &model.Cookie{}
+	input2 := `{"key1": {"value": "val1", "last_updated": 1234567890}`
+	c2 := &model.Cookie{UID: 123}
 	err2 := c2.MergeCookieData(input2)
 	if err2 == nil {
 		t.Errorf("Test case 2 failed: expected non-nil error, but got nil")
 	}
 
 	// Test case 3: old format input
-	input3 := `{"uid": 123, "cookie": {"key1": "val1"}}`
+	input3 := `{"key1": "val1"}`
 	expectedOutput3 := &model.Cookie{
 		UID: 123,
 		Cookie: map[string]model.CookieModel{
@@ -147,7 +147,7 @@ func TestMergeCookieData(t *testing.T) {
 			},
 		},
 	}
-	c3 := &model.Cookie{}
+	c3 := &model.Cookie{UID: 123}
 	err3 := c3.MergeCookieData(input3)
 	if err3 != nil {
 		t.Errorf("Test case 3 failed: expected nil error, but got %v", err3)

@@ -47,17 +47,14 @@ func (c *Cookie) GetCookieFromJSON(data string) error {
 }
 
 func (c *Cookie) MergeCookieData(data string) error {
-	var dataFormat struct {
-		UID    int64                  `json:"uid"`
-		Cookie map[string]interface{} `json:"cookie"`
-	}
-	err := json.Unmarshal([]byte(data), &dataFormat)
+	var cookie map[string]interface{}
+	err := json.Unmarshal([]byte(data), &cookie)
 	if err != nil {
 		return err
 	}
 
 	var newCookie = make(map[string]CookieModel)
-	for k, v := range dataFormat.Cookie {
+	for k, v := range cookie {
 		// check type
 		if _, ok := v.(string); ok {
 			// old format need to convert
@@ -67,6 +64,7 @@ func (c *Cookie) MergeCookieData(data string) error {
 			}
 		} else {
 			// ingore invalid data
+			fmt.Printf("%v", cookie)
 			value, ok := v.(map[string]interface{})["value"].(string)
 			if !ok {
 				continue
@@ -81,7 +79,6 @@ func (c *Cookie) MergeCookieData(data string) error {
 			}
 		}
 	}
-	c.UID = dataFormat.UID
 	c.Cookie = newCookie
 	return nil
 }
