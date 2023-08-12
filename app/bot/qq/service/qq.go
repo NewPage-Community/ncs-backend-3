@@ -82,6 +82,8 @@ func (s *Service) OnMessage(event qqModel.CQEvent) {
 			s.changeMap(event, cmd[1:])
 		case "/donate":
 			s.donate(event, cmd[1:])
+		case "/kick":
+			s.kickPlayer(event, cmd[1:])
 		}
 	}
 }
