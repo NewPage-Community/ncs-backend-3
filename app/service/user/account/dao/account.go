@@ -8,10 +8,8 @@ import (
 	"strconv"
 	"time"
 
-	"gorm.io/gorm"
-
-	"github.com/go-redis/redis/v8"
 	"google.golang.org/grpc/codes"
+	"gorm.io/gorm"
 )
 
 var ctx = context.Background()
@@ -25,9 +23,7 @@ func (d *dao) UID(steamID int64) (res *model.Info, err error) {
 		res.UID = cacheRes
 		return
 	}
-	if err == redis.Nil {
-		err = nil
-	}
+	// ignore redis.Nil error
 
 	// DB
 	err = d.db.Where(&model.Info{SteamID: steamID}).First(res).Error
@@ -53,9 +49,7 @@ func (d *dao) Info(uid int64) (res *model.Info, err error) {
 			return
 		}
 	}
-	if err == redis.Nil {
-		err = nil
-	}
+	// ignore redis.Nil error
 
 	// DB
 	err = d.db.Where(&model.Info{UID: uid}).First(res).Error

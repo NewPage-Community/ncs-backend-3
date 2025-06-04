@@ -50,7 +50,7 @@ func NewAPIClient(url, key string, timeout int) *API {
 
 func (a *API) request(req APIRequest, values url.Values, v interface{}) error {
 	if values == nil {
-		return InvalidRequestValuesErr
+		return ErrInvalidRequestValues
 	}
 	values.Add("format", "json")
 	values.Add("key", a.APIKey)
@@ -70,7 +70,11 @@ func (a *API) request(req APIRequest, values url.Values, v interface{}) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if cerr := resp.Body.Close(); cerr != nil && err == nil {
+			err = cerr
+		}
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("%s > %v", apiURL, resp.StatusCode)

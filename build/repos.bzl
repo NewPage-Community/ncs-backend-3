@@ -1354,15 +1354,28 @@ def go_repositories():
     go_repository(
         name = "com_github_smartwalle_alipay_v3",
         importpath = "github.com/smartwalle/alipay/v3",
-        sum = "h1:gkpOI/LqjCENFh6Bq08e/7IPiXU8gWKkGaaOR4/POmw=",
-        version = "v3.1.6",
+        sum = "h1:cRDN+fpDWTVHnuHIF/vsJETskRXS/S+fDOdAkzXmV/Q=",
+        version = "v3.2.25",
     )
     go_repository(
-        name = "com_github_smartwalle_crypto4go",
-        importpath = "github.com/smartwalle/crypto4go",
-        sum = "h1:9DUEOOsPhmp00438L4oBdcL8EZG1zumecft5bWj5phI=",
-        version = "v1.0.2",
+        name = "com_github_smartwalle_ncrypto",
+        importpath = "github.com/smartwalle/ncrypto",
+        sum = "h1:P2rqQxDepJwgeO5ShoC+wGcK2wNJDmcdBOWAksuIgx8=",
+        version = "v1.0.4",
     )
+    go_repository(
+        name = "com_github_smartwalle_ngx",
+        importpath = "github.com/smartwalle/ngx",
+        sum = "h1:pUXDvWRZJIHVrCKA1uZ15YwNti+5P4GuJGbpJ4WvpMw=",
+        version = "v1.0.9",
+    )
+    go_repository(
+        name = "com_github_smartwalle_nsign",
+        importpath = "github.com/smartwalle/nsign",
+        sum = "h1:8poAgG7zBd8HkZy9RQDwasC6XZvJpDGQWSjzL2FZL6E=",
+        version = "v1.0.9",
+    )
+
     go_repository(
         name = "com_github_smartystreets_assertions",
         importpath = "github.com/smartystreets/assertions",

@@ -99,7 +99,9 @@ func GetOpenID(accessToken string) (openID string, err error) {
 	}
 
 	data, err := ioutil.ReadAll(resp.Body)
-	resp.Body.Close()
+	if cerr := resp.Body.Close(); cerr != nil && err == nil {
+		err = cerr
+	}
 	if err != nil {
 		return
 	}

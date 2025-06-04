@@ -53,15 +53,16 @@ func (s *Service) NotifyCVarToServer(ctx context.Context, cvar *model.CVar) (err
 
 	for _, v := range res.Info {
 		if cvar.IsType(v.GameId, v.ModId, v.ServerId) {
-			go func() {
+			serverID := v.ServerId
+			go func(id int32) {
 				_, err := s.server.Rcon(ctx, &serverService.RconReq{
-					ServerId: v.ServerId,
+					ServerId: id,
 					Cmd:      fmt.Sprintf("%s \"%s\"", cvar.Key, cvar.Value),
 				})
 				if err != nil {
 					log.Warn(err)
 				}
-			}()
+			}(serverID)
 		}
 	}
 	return

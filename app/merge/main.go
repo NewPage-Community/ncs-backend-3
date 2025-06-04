@@ -124,10 +124,14 @@ func SkinMerge() {
 		}
 		Create(pb)
 		count++
-		fmt.Fprintf(os.Stdout, "Merged %d skins\r", count)
+		if _, err := fmt.Fprintf(os.Stdout, "Merged %d skins\r", count); err != nil {
+			fmt.Println(err)
+		}
 	}
 
-	rows.Close()
+	if err := rows.Close(); err != nil {
+		fmt.Println(err)
+	}
 
 	// user
 	fmt.Println("Start to merge skin users data!")
@@ -196,12 +200,16 @@ func SkinMerge() {
 		}
 		Create(bpModel)
 		count++
-		fmt.Fprintf(os.Stdout, "Merged %d users\r", count)
+		if _, err := fmt.Fprintf(os.Stdout, "Merged %d users\r", count); err != nil {
+			fmt.Println(err)
+		}
 	}
 
 	fmt.Println("Merged", count, "user")
 
-	rows.Close()
+	if err := rows.Close(); err != nil {
+		fmt.Println(err)
+	}
 }
 
 func UserMerge() {
@@ -241,10 +249,14 @@ func UserMerge() {
 			})
 		}
 		count++
-		fmt.Fprintf(os.Stdout, "Merged %d users\r", count)
+		if _, err := fmt.Fprintf(os.Stdout, "Merged %d users\r", count); err != nil {
+			fmt.Println(err)
+		}
 	}
 	fmt.Println("Merged", count, "user")
-	rows.Close()
+	if err := rows.Close(); err != nil {
+		fmt.Println(err)
+	}
 }
 
 func Create(value interface{}) {

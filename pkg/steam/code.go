@@ -2,23 +2,23 @@ package steam
 
 import (
 	"fmt"
-	. "net/http"
+	"net/http"
 )
 
 func APICodeError(code int) error {
 	switch code {
-	case StatusOK:
+	case http.StatusOK:
 		return nil
-	case StatusBadRequest:
-		return InvalidRequestValuesErr
-	case StatusUnauthorized, StatusForbidden:
-		return InvalidAPIKeyErr
-	case StatusTooManyRequests:
-		return TooManyRequestsErr
-	case StatusInternalServerError:
-		return InternalServerErr
-	case StatusServiceUnavailable:
-		return ServiceUnavailableErr
+	case http.StatusBadRequest:
+		return ErrInvalidRequestValues
+	case http.StatusUnauthorized, http.StatusForbidden:
+		return ErrInvalidAPIKey
+	case http.StatusTooManyRequests:
+		return ErrTooManyRequests
+	case http.StatusInternalServerError:
+		return ErrInternalServer
+	case http.StatusServiceUnavailable:
+		return ErrServiceUnavailable
 	default:
 		return fmt.Errorf("api unknow status code: %d", code)
 	}

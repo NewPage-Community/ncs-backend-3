@@ -3,6 +3,7 @@ package service
 import (
 	"backend/app/service/donate/conf"
 	"backend/pkg/log"
+	"context"
 	"fmt"
 	"github.com/smartwalle/alipay/v3"
 	"strconv"
@@ -26,22 +27,19 @@ func InitAlipay(config *conf.Alipay) *Alipay {
 }
 
 func (s *Alipay) CheckTrade(outTradeNo string) (bool, error) {
-	// Query trade
-	res, err := s.client.TradeQuery(alipay.TradeQuery{
+	res, err := s.client.TradeQuery(context.Background(), alipay.TradeQuery{
 		OutTradeNo: outTradeNo,
 	})
-	// Finish trade when it is success
 	if err == nil {
-		if res.Content.TradeStatus == alipay.TradeStatusSuccess {
+		if res.TradeStatus == alipay.TradeStatusSuccess {
 			return true, nil
 		}
 	}
-
 	return false, err
 }
 
 func (s *Alipay) CreateTrade(outTradeNo string, steamID int64, totalAmount int32) (qrCode string, err error) {
-	res, err := s.client.TradePreCreate(alipay.TradePreCreate{
+	res, err := s.client.TradePreCreate(context.Background(), alipay.TradePreCreate{
 		Trade: alipay.Trade{
 			Subject:        TradeSubject,
 			OutTradeNo:     outTradeNo,
@@ -54,16 +52,16 @@ func (s *Alipay) CreateTrade(outTradeNo string, steamID int64, totalAmount int32
 		return
 	}
 	if !res.IsSuccess() {
-		log.Error(res.Content.Msg, res.Content.SubMsg)
-		err = fmt.Errorf("%s - %s", res.Content.Code, res.Content.SubCode)
+		log.Error(res.Msg, res.SubMsg)
+		err = fmt.Errorf("%s - %s", res.Code, res.SubCode)
 	} else {
-		qrCode = res.Content.QRCode
+		qrCode = res.QRCode
 	}
 	return
 }
 
 func (s *Alipay) CancelTrade(outTradeNo string) (err error) {
-	_, err = s.client.TradeCancel(alipay.TradeCancel{
+	_, err = s.client.TradeCancel(context.Background(), alipay.TradeCancel{
 		OutTradeNo: outTradeNo,
 	})
 	return

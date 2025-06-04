@@ -187,11 +187,12 @@ func (s *Service) BuyPass(ctx context.Context, req *pb.BuyPassReq) (resp *pb.Buy
 	}
 
 	var price int32
-	if req.Type == 1 {
+	switch req.Type {
+	case 1:
 		price = Pass1Price
-	} else if req.Type == 2 {
+	case 2:
 		price = Pass2Price
-	} else {
+	default:
 		err = ecode.Errorf(codes.InvalidArgument, "Invalid Type(%d)", req.Type)
 		return
 	}
